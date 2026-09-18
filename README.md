@@ -6,7 +6,7 @@ are not "zero reachable". A negative world width is absence.
 Aletheia is a compiled language model: the weights are produced in one pass by
 exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
 The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `datalog.py`.
+artifact of that sitting. Aletheia wrote `datalog.py` and `policy.py`.
 
 ## Problems
 
