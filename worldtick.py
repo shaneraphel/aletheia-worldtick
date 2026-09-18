@@ -7,6 +7,7 @@ import argparse
 import sys
 
 from datalog import datalog_fixpoint
+from policy import policy_iteration
 
 
 def verify_precision() -> str:
@@ -26,6 +27,14 @@ def verify_precision() -> str:
         pass
     else:
         raise SystemExit("negative n accepted")
+    if policy_iteration([[1, 3], [0, 2]]) != 1:
+        raise SystemExit("policy identity failed")
+    try:
+        policy_iteration([])
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("empty rewards accepted")
     return "ok"
 
 
