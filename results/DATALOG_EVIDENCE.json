@@ -1,0 +1,39 @@
+{
+  "schema": "worldtick.datalog_bench.v1",
+  "seed": 20260919,
+  "n_nodes": 256,
+  "n_facts": 8,
+  "n_edges": 512,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "datalog_seconds_median": 0.0003089579986408353,
+  "bfs_seconds_median": 0.0001294169924221933,
+  "datalog_seconds": [
+    0.0003089579986408353,
+    0.00023358402540907264,
+    0.0002880840329453349,
+    0.00023483403492718935,
+    0.0006241659866645932,
+    0.0003950000391341746,
+    0.0003697079955600202
+  ],
+  "bfs_seconds": [
+    0.0001247919863089919,
+    9.533303091302514e-05,
+    0.00011883396655321121,
+    0.00017770897829905152,
+    0.0001294169924221933,
+    0.0002448330051265657,
+    0.0001455420278944075
+  ],
+  "reach_first": 214,
+  "reach_second": 214,
+  "reach_identical": true,
+  "reach_equals_bfs": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
