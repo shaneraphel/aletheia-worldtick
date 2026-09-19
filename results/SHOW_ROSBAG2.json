@@ -1,0 +1,18 @@
+{
+  "schema": "worldtick.show_rosbag2.v1",
+  "used": "https://github.com/ros2/rosbag2",
+  "built": "three rosbag2 samples, world reach 3; empty bag is absence",
+  "theirs": {
+    "storage": "sqlite3",
+    "empty_messages": 0
+  },
+  "ours": {
+    "n": 3,
+    "reach": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
