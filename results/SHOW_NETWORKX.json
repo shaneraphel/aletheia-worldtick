@@ -1,0 +1,19 @@
+{
+  "schema": "worldtick.show_networkx.v1",
+  "used": "https://github.com/networkx/networkx",
+  "built": "3-node world reach 3; empty facts are absence",
+  "theirs": {
+    "package": "networkx",
+    "version": "3.6.1",
+    "empty_nodes": [],
+    "n_reach": 3
+  },
+  "ours": {
+    "datalog_fixpoint": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
