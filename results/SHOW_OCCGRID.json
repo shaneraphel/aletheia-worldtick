@@ -1,0 +1,13 @@
+{
+  "schema": "worldtick.show_occgrid.v1",
+  "used": "https://wiki.ros.org/map_server",
+  "built": "1x3 OccupancyGrid chain, reach 3; empty facts are absence",
+  "ours": {
+    "reach": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
