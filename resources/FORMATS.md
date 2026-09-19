@@ -17,4 +17,5 @@ ROS 2 rosbag2 is a folder of `metadata.yaml` plus sqlite3. Zero messages refuse.
 
 ```bash
 python3.12 show_rosbag2.py
+python3.12 show_rosbags.py
 ```
