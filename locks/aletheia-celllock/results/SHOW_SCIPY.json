@@ -1,0 +1,20 @@
+{
+  "schema": "celllock.show_scipy.v1",
+  "used": "https://github.com/scipy/scipy",
+  "built": "five-site world cells 4; empty sites are absence",
+  "theirs": {
+    "package": "scipy",
+    "version": "1.17.1",
+    "empty": "ValueError: No points given",
+    "npoints": 5,
+    "ridge_vertices": 8
+  },
+  "ours": {
+    "voronoi_unbounded": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

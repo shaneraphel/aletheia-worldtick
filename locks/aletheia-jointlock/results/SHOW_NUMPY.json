@@ -1,0 +1,22 @@
+{
+  "schema": "jointlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "two-link reach (2,0); unreachable pose is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_hypot": 0.0,
+    "reach_2_0": 2.0
+  },
+  "ours": {
+    "two_link_ik": [
+      0.0,
+      0.0
+    ],
+    "unreachable": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "spanlock.segspt_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "segspt_seconds_median": 0.0025472909983363934,
+  "naive_seconds_median": 4.587500006891787e-05,
+  "segspt_seconds": [
+    0.002875334001146257,
+    0.0025472909983363934,
+    0.0021741670025221538,
+    0.0022826660024293233,
+    0.0060940420007682405,
+    0.0023872499987191986,
+    0.0026969159989675973
+  ],
+  "naive_seconds": [
+    4.9457998102298006e-05,
+    4.587500006891787e-05,
+    3.504200140014291e-05,
+    4.337499922257848e-05,
+    0.0005058749993622769,
+    5.958399924566038e-05,
+    3.9874998037703335e-05
+  ],
+  "sum_first": 14133,
+  "sum_second": 14133,
+  "sum_identical": true,
+  "sum_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

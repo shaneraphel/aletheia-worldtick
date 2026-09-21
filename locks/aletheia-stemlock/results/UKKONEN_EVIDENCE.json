@@ -1,0 +1,37 @@
+{
+  "schema": "stemlock.ukkonen_bench.v1",
+  "seed": 20260919,
+  "n": 2048,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "ukkonen_seconds_median": 0.0030627910018665716,
+  "len_seconds_median": 1.7909987946040928e-06,
+  "ukkonen_seconds": [
+    0.003854542002954986,
+    0.003747750000911765,
+    0.0030627910018665716,
+    0.0023221669980557635,
+    0.002675834002729971,
+    0.002268000000185566,
+    0.003782167001190828
+  ],
+  "len_seconds": [
+    2.91600008495152e-06,
+    1.7909987946040928e-06,
+    1.3749995559919626e-06,
+    6.250011210795492e-07,
+    8.329989213962108e-07,
+    2.2909989638719708e-06,
+    3.25000291923061e-06
+  ],
+  "links_first": 3307,
+  "links_second": 3307,
+  "links_identical": true,
+  "links_ge_one": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

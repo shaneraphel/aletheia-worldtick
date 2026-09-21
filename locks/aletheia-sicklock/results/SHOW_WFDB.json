@@ -1,0 +1,36 @@
+{
+  "schema": "sicklock.show_wfdb_official.v1",
+  "used": "https://github.com/MIT-LCP/wfdb-python",
+  "built": "official wfdb reads five samples, sick 0 and 4, and .atr go/end; four orders; empty header is absence",
+  "theirs": {
+    "package": "wfdb",
+    "version": "4.3.1",
+    "n_samples": 5,
+    "empty": "raised",
+    "atr": [
+      "go",
+      "end"
+    ],
+    "atr_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 5,
+    "sick": [
+      0,
+      4
+    ],
+    "sequences": 4,
+    "empty_atr": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

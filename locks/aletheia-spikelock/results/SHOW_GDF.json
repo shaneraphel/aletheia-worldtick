@@ -1,0 +1,15 @@
+{
+  "schema": "spikelock.show_gdf.v1",
+  "used": "https://biosig.sourceforge.net/",
+  "built": "three GDF 1.25 samples, occupancy 3; empty GDF is absence",
+  "ours": {
+    "n": 3,
+    "version": "GDF 1.25",
+    "nyquist": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

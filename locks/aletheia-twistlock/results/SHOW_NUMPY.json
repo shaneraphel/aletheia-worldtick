@@ -1,0 +1,19 @@
+{
+  "schema": "twistlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "wrist hypot 5; empty frame is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0,
+    "hypot_3_4": 5.0
+  },
+  "ours": {
+    "givens_hypot": 5,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

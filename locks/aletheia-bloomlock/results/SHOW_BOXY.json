@@ -1,0 +1,50 @@
+{
+  "schema": "bloomlock.show_boxy.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads BOXY onsets [1,2,3] on S1_D1 DC and stim 1.0/2.0 at 1.0/2.0 s; empty BOXY is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 4,
+    "empty_boxy": "raised",
+    "empty_stim": 0,
+    "ch_names": [
+      "S1_D1 DC",
+      "S1_D1 AC",
+      "S1_D1 Ph"
+    ],
+    "annot": [
+      "1.0",
+      "2.0"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "dc": [
+      1.0,
+      2.0,
+      3.0,
+      0.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      1,
+      2,
+      3
+    ],
+    "empty": "raised",
+    "empty_stim": "raised",
+    "annot": [
+      "1.0",
+      "2.0"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

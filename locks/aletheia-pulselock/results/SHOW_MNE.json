@@ -1,0 +1,53 @@
+{
+  "schema": "pulselock.show_mne.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE annotations copy BIDS trial_type go/end; empty trial_type is absence; MNE reads the pulse EDF and GDF; strength 22; empty EDF is absence",
+  "theirs": {
+    "package": "mne",
+    "annot_description": [
+      "go",
+      "end"
+    ],
+    "edf_annot": [
+      "go",
+      "end"
+    ],
+    "edf_annot_onset": [
+      1.0,
+      2.0
+    ],
+    "annot_onset": [
+      1.0,
+      2.0
+    ],
+    "empty_annot_n": 0,
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "edf_n_times": 5,
+    "gdf_n_times": 5,
+    "empty_edf": "raised"
+  },
+  "ours": {
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty_annot": "raised",
+    "edf_annot": [
+      "go",
+      "end"
+    ],
+    "samples": [
+      1,
+      2,
+      3,
+      -1,
+      2
+    ],
+    "strength": 22
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

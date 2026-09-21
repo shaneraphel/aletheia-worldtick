@@ -1,0 +1,15 @@
+{
+  "schema": "stemlock.show_gdf.v1",
+  "used": "https://biosig.sourceforge.net/",
+  "built": "GDF samples aba have 3 suffix links; empty GDF is absence",
+  "ours": {
+    "n": 3,
+    "word": "aba",
+    "links": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

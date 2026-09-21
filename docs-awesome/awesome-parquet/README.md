@@ -1,0 +1,217 @@
+# Awesome Parquet [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+
+[![Parquet Logo](assets/logo.svg)](https://parquet.apache.org/)
+
+> Open-source resources for using the Parquet format. This list only includes resources for the generic Parquet format. If you are looking for GeoParquet resources (tools, libraries, data providers), please check out [geoparquet.org](https://geoparquet.org/#implementations).
+
+## Contents
+
+- [Libraries](#libraries)
+  - [C GLib](#c-glib)
+  - [C++](#c)
+  - [Dart](#dart)
+  - [Go](#go)
+  - [Java](#java)
+  - [JavaScript](#javascript)
+  - [Julia](#julia)
+  - [.NET](#net)
+  - [PHP](#php)
+  - [Python](#python)
+  - [R](#r)
+  - [Ruby](#ruby)
+  - [Rust](#rust)
+  - [Swift](#swift)
+  - [VBA](#vba)
+- [Tools](#tools)
+  - [Command-line](#command-line)
+  - [Desktop applications](#desktop-applications)
+  - [Plugins and extensions](#plugins-and-extensions)
+  - [Terminal UI](#terminal-ui)
+  - [Web](#web)
+- [Resources](#resources)
+  - [Blogs](#blogs)
+  - [Documentation](#documentation)
+  - [Educative resources](#educative-resources)
+  - [Parquet engineering](#parquet-engineering)
+  - [Tests](#tests)
+- [Related formats](#related-formats)
+
+## Libraries
+
+### C GLib
+
+- [Arrow GLib](https://arrow.apache.org/docs/c_glib/parquet-glib/index.html) - A wrapper library for Arrow C++.
+- [DuckDB](https://duckdb.org/docs/stable/clients/c/overview) - An in-process database library that supports reading and writing Parquet files.
+
+### C++
+
+- [Apache Arrow C++](https://github.com/apache/arrow/tree/main/cpp) - A library with support for reading and writing Parquet files.
+- [DuckDB C++ API](https://duckdb.org/docs/stable/clients/cpp) - Internal DuckDB C++ API.
+- [libcudf](https://docs.rapids.ai/api/cudf/stable/libcudf_docs/) - A GPU-accelerated DataFrame library for tabular data processing.
+
+### Dart
+
+- [DuckDB.Dart](https://duckdb.org/docs/stable/clients/dart) - DuckDB Dart bindings.
+
+### Go
+
+- [duckdb-go](https://duckdb.org/docs/stable/clients/go) - DuckDB Go client.
+- [parquet](https://pkg.go.dev/github.com/apache/arrow-go/v18/parquet) - Official Go implementation of Apache Arrow.
+- [parsyl/parquet](https://github.com/parsyl/parquet) - A Go library for reading and writing Parquet files.
+
+### Java
+
+- [cudf](https://github.com/rapidsai/cudf/tree/main/java) - Java bindings for cudf, to be able to process large amounts of data on a GPU.
+- [duckdb-java](https://duckdb.org/docs/stable/clients/java) - DuckDB Java/JDBC API.
+- [hardwood](https://github.com/hardwood-hq/hardwood) - A minimal dependency implementation of Apache Parquet.
+- [parquet-carpet](https://github.com/jerolba/parquet-carpet) - A Java library for serializing and deserializing Parquet files efficiently using Java records.
+- [parquet-java](https://github.com/apache/parquet-java) - A Java implementation of the Parquet format, owned by the Apache Software Foundation.
+
+### JavaScript
+
+- [duckdb-node-neo](https://duckdb.org/docs/stable/clients/node_neo/overview) - DuckDB Node.js client.
+- [duckdb-wasm](https://duckdb.org/docs/stable/clients/wasm/overview) - WebAssembly version of DuckDB.
+- [hyparquet](https://github.com/hyparquet/hyparquet) - A lightweight, dependency-free, pure JavaScript library for parsing Apache Parquet files.
+- [lakeql](https://github.com/earonesty/lakeql) - Pure JavaScript duck-compatible SQL query engine for Parquet and Iceberg data in object storage.
+- [parquet-wasm](https://kylebarron.dev/parquet-wasm/) - WebAssembly bindings to read and write the Apache Parquet format to and from Apache Arrow using the Rust parquet and arrow crates.
+
+### Julia
+
+- [DuckDB](https://duckdb.org/docs/stable/clients/julia) - Official DuckDB Julia package.
+- [Parquet.jl](https://github.com/JuliaIO/Parquet.jl) - Julia implementation of Parquet columnar file format reader.
+
+### .NET
+
+- [Parquet.Net](https://github.com/aloneguid/parquet-dotnet) - A fully managed Parquet library for .NET.
+- [ParquetSharp](https://g-research.github.io/ParquetSharp/) - A .NET wrapper over the C++ Parquet library that integrates with [.NET Arrow](https://github.com/apache/arrow-dotnet).
+
+### PHP
+
+- [duckdb-php](https://duckdb.org/docs/stable/clients/php) - DuckDB API for PHP.
+
+### Python
+
+- [duckdb-python](https://duckdb.org/docs/stable/clients/python/overview) - DuckDB Python client.
+- [fastparquet](https://github.com/dask/fastparquet/) - A Python implementation of the Parquet columnar file format. 
+- [pyarrow](https://arrow.apache.org/docs/python/parquet.html) - A Python API for functionality provided by the Arrow C++ libraries, along with tools for Arrow integration and interoperability with Pandas, NumPy, and other software in the Python ecosystem.
+- [pylibcudf](https://docs.rapids.ai/api/cudf/stable/pylibcudf/) - A lightweight Cython interface to libcudf that provides near-zero overhead for GPU-accelerated data processing in Python.
+- [rugo](https://rugo.dev/) - A lightweight, dependency-free Python library for Apache Parquet files.
+
+### R
+
+- [arrow](https://arrow.apache.org/docs/r/articles/arrow.html) - The `arrow` package provides an Arrow C++ backend to `dplyr`, and access to the Arrow C++ library through familiar base R and tidyverse functions, or `R6` classes.
+- [duckdb-r](https://duckdb.org/docs/stable/clients/r) - DuckDB R package.
+- [nanoparquet](https://nanoparquet.r-lib.org/) - A reader and writer for a common subset of Parquet files.
+
+### Ruby
+
+- [Red Parquet](https://github.com/apache/arrow/tree/main/ruby/red-parquet) - The Ruby bindings of Apache Parquet, based on GObject Introspection.
+
+### Rust
+
+- [datafusion](https://datafusion.apache.org) - An extensible query engine written in Rust that can read/write Parquet files using SQL or a DataFrame API.
+- [duckdb-rs](https://duckdb.org/docs/stable/clients/rust) - DuckDB Rust client.
+- [parquet](https://arrow.apache.org/rust/parquet/index.html) - The official Native Rust implementation of Apache Parquet, part of the Apache Arrow project.
+- [Polars](https://github.com/pola-rs/polars) - A DataFrame interface on top of an OLAP Query Engine that supports reading and writing Parquet files, with bindings for Python.
+
+### Swift
+
+- [duckdb-swift](https://duckdb.org/docs/stable/clients/swift) - DuckDB Swift client.
+
+### VBA
+
+- [duckdb-vba](https://github.com/EtienneLenoir/duckdb-vba) - Excel/VBA bridge for DuckDB, enabling users to read, query, transform, and export Parquet files directly from Excel through a native DLL bridge.
+
+## Tools
+
+### Command-line
+
+- [Agentsor File Contracts](https://github.com/linkoinsight/agentsor-file) - Python CLI for checking a Parquet file against an explicit TOML contract.
+- [DataFusion CLI](https://datafusion.apache.org/user-guide/cli/overview.html) - A single, dependency-free executable that can read and write Parquet files, with a SQL interface.
+- [DuckDB CLI](https://duckdb.org/docs/stable/clients/cli/overview.html) - A single, dependency-free executable that can read and write Parquet files, with a SQL interface.
+- [nail](https://github.com/Vitruves/nail-parquet) - Command-line tool for analyzing, transforming, and exploring data files.
+- [ODBC to Parquet](https://github.com/pacman82/odbc2parquet) - A command-line tool to query an ODBC data source and write the result into a parquet file.
+- [parquet-cli](https://github.com/apache/parquet-java/tree/master/parquet-cli) - Java-based CLI tool for exploring parquet files.
+- [parquet-cli-standalone](https://github.com/marcelmay/parquet-cli-standalone) - A JAR file for the parquet-cli tool which can be run without any dependencies.
+- [parquet-grep](https://github.com/hyparam/parquet-grep) - A CLI tool to search for strings in Parquet files.
+- [parquet-tools](https://pypi.org/project/parquet-tools/) - Python-based CLI tool for exploring parquet files (part of Apache Arrow).
+- [Spark](https://spark.apache.org/) - A multi-language engine for executing data engineering, data science, and machine learning on single-node machines or clusters.
+
+### Desktop applications
+
+- [DBConvert Streams](https://github.com/slotix/dbconvert-streams-public) - A desktop SQL tool for querying Parquet, CSV, JSON, databases, and S3-compatible storage in one workspace.
+- [Munquet](https://gitlab.com/zulfian1732/munquet) - A desktop tool to convert CSV files to Parquet.
+- [Pink Parquet](https://pinkparquet.com/) - A free and open-source, user-friendly viewer for Parquet files for Windows.
+- [Tad](https://github.com/antonycourtney/tad) - An application for viewing and analyzing tabular data sets.
+
+### Plugins and extensions
+
+- [KoldStore](https://github.com/kalamdb/koldstore) - PostgreSQL tiered storage that moves historical rows to Parquet while keeping the original table fully queryable and supporting updates and deletes.
+- [nf-parquet](https://github.com/nextflow-io/nf-parquet) - A Nextflow plugin able to read and write parquet files.
+
+### Terminal UI
+
+- [Datanomy](https://github.com/raulcd/datanomy) - A terminal-based tool for visualizing a Parquet file's metadata and structure.
+- [DataTUI](https://www.datatui.io/) - A keyboard-first terminal UI for exploring Parquet with tabs, sorting, filtering, SQL (Polars), and more.
+- [parqeye](https://github.com/kaushiksrini/parqeye) - Peek inside Parquet files right from your terminal.
+- [parquetlens](https://github.com/cfahlgren1/parquetlens) - Parquet previewer with a csvlens-style TUI.
+- [Tabiew](https://github.com/shshemi/tabiew) - A lightweight TUI application to view and query tabular data files, such as CSV, TSV, and parquet.
+
+### Web
+
+- [Datasette](https://lite.datasette.io/) - A tool to explore datasets, with support for reading Parquet files.
+- [DataStudio](https://github.com/dataspren-analytics/datastudio) - Explore and visualize data, entirely in your browser.
+- [DBConvert Streams Parquet Viewer](https://streams.dbconvert.com/parquet-viewer) - A browser-local viewer for inspecting Parquet metadata and rows, running read-only SQL, and exporting results.
+- [GeoParquet Viewer](https://geoparquet.info/) - A table and map viewer for Parquet files in the browser.
+- [Onyxia Data Explorer](https://datalab.sspcloud.fr/data-explorer) - A web-based tool to explore Parquet files in the browser.
+- [Parquet File Visualizer](https://julien.ledem.net/experiment/parquet-visualizer.html) - Claude-code generated parquet metadata visualizer that runs in your browser.
+- [Parquet Viewer](https://parquet-viewer.xiangpeng.systems/) - View parquet files online.
+- [parquet.to](https://parquet.to) - Convert Parquet to and from CSV, JSON and Excel, with a viewer, SQL editor, chart builder and row editor.
+- [ParquetKit](https://parquetkit.com) - View, query with SQL, and convert Parquet files entirely in the browser, powered by DuckDB-Wasm and hyparquet.
+- [Parquetly](https://www.parquetly.com) - View Parquet files in the browser, with schema, row group and column chunk statistics, SQL via DuckDB-Wasm, and export to CSV or JSON, all without uploading the file.
+- [Quak](https://manzt.github.io/quak) - A scalable data profiler for quickly scanning large tables.
+
+## Resources
+
+### Blogs
+
+- [icem7](https://www.icem7.fr/?s=parquet) - Un blog sur les outils de data science, avec des articles de fond sur Parquet.
+- [Hyparquet: The Quest for Instant Data](https://blog.hyperparam.app/2025/07/24/quest-for-instant-data/) - 6 optimization tricks to read Parquet files faster in the browser.
+- [Querying Parquet with Precision Using DuckDB](https://duckdb.org/2021/06/25/querying-parquet.html) - Describes how DuckDB optimizes queries to a Parquet file using projection & filter pushdown.
+- [Why Parquet Is the Go-To Format for Data Engineers](https://luminousmen.com/post/why-parquet-is-the-goto-format-for-data-engineers) - A graphical description of the Parquet format with optimization and best practices.
+- [Column Storage for the AI Era](https://sympathetic.ink/2025/12/11/Column-Storage-for-the-AI-era.html) - A proposal by the creator of Parquet to better support AI workloads by adding encodings and metadata.
+- [I spent 8 hours learning Parquet. Here’s what I discovered](https://vutr.substack.com/p/the-overview-of-parquet-file-format) - A graphical description of the Parquet format.
+
+### Documentation
+
+- [Parquet](https://github.com/apache/parquet-format) - The specification for Apache Parquet and Apache Thrift definitions to read and write Parquet metadata.
+- [Apache Parquet Documentation](https://parquet.apache.org/docs/) - The official documentation for Apache Parquet.
+
+### Educative resources
+
+- [ssphub](https://ssphub.github.io/ssphub-ateliers-parquet/) - Un atelier de l'Insee illustrant l'utilisation des données du recensement 🇫🇷 diffusées au format Parquet.
+
+### Parquet engineering
+
+- [Handling Parquet Files](https://duckdb.org/docs/stable/guides/performance/file_formats#handling-parquet-files) - Recommendations about the row group size and the Parquet file sizes.
+- [Les filtres de Bloom dans Parquet](https://www.icem7.fr/outils/les-filtres-de-bloom-dans-parquet/) - Un article de fond sur les filtres de Bloom dans Parquet, utiles pour indexer des colonnes non triées, à forte cardinalité.
+- [Paging Through a Parquet File in DuckDB: file_row_number or OFFSET?](https://rusty.today/blog/paging-parquet-duckdb-file-row-number-vs-offset/) - In-depth investigation about paging through a Parquet file, with recommendations about row group size.
+- [Tips for Writing Parquet Files](https://duckdb.org/docs/stable/data/parquet/tips#tips-for-writing-parquet-files) - Tips for choosing the right parameters when writing Parquet files, such as the row group size and the number of row groups per file.
+
+### Tests
+
+- [parquet-testing](https://github.com/apache/parquet-testing) - Testing Data and Utilities for Apache Parquet.
+
+## Related formats
+
+- [F3](https://github.com/future-file-format/F3) - A data file format that is designed with efficiency, interoperability, and extensibility in mind.
+- [GeoParquet](https://geoparquet.org/) - Specification for storing geospatial vector data (point, line, polygon) in Parquet.
+- [Iceberg](https://iceberg.apache.org/) - A high-performance format for huge analytic tables that supports Parquet as one of its storage formats.
+- [Lance](https://github.com/lancedb/lance) - Modern columnar data format for ML and LLMs.
+- [Nimble](https://github.com/facebookincubator/nimble) - File format for storage of large columnar datasets.
+- [ORC](https://orc.apache.org/) - Self-describing type-aware columnar file format designed for Hadoop workloads.
+- [Vortex](https://github.com/vortex-data/vortex) - A columnar file format designed for high-performance data processing.
+
+## Contributing
+
+Contributions welcome! Read the [contribution guidelines](contributing.md) first.

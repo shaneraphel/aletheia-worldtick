@@ -1,0 +1,19 @@
+{
+  "schema": "tourlock.show_networkx.v1",
+  "used": "https://github.com/networkx/networkx",
+  "built": "4-node tour length 4; empty graph is absence",
+  "theirs": {
+    "package": "networkx",
+    "version": "3.6.1",
+    "empty_nodes": [],
+    "n_nodes": 4
+  },
+  "ours": {
+    "shortest_path_visit": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

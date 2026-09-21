@@ -1,0 +1,41 @@
+{
+  "schema": "spikelock.edfocc_bench.v1",
+  "seed": 20260919,
+  "n_samples": 8,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "edf_seconds_median": 6.441600271500647e-05,
+  "repeat_seconds_median": 6.666599801974371e-05,
+  "edf_seconds": [
+    6.441600271500647e-05,
+    0.00015916599659249187,
+    6.24169988441281e-05,
+    4.8082998546306044e-05,
+    4.720799915958196e-05,
+    0.001690791999862995,
+    0.00018995899881701916
+  ],
+  "repeat_seconds": [
+    0.0014345000017783605,
+    8.145799802150577e-05,
+    5.012499605072662e-05,
+    4.820900358026847e-05,
+    4.941599763697013e-05,
+    0.00020962499547749758,
+    6.666599801974371e-05
+  ],
+  "samples_first": 8,
+  "samples_second": 8,
+  "samples_identical": true,
+  "bids_occupancy": 2,
+  "xdf_occupancy": 1,
+  "brainvision_occupancy": 8,
+  "wfdb_occupancy": 8,
+  "edf_bytes": 528,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

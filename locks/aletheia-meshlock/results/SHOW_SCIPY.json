@@ -1,0 +1,19 @@
+{
+  "schema": "meshlock.show_scipy.v1",
+  "used": "https://github.com/scipy/scipy",
+  "built": "five-site contact mesh 4 triangles; empty sites are absence",
+  "theirs": {
+    "package": "scipy",
+    "version": "1.17.1",
+    "empty": "ValueError: No points given",
+    "triangles": 4
+  },
+  "ours": {
+    "delaun_tris": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

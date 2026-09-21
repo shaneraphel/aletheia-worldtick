@@ -1,0 +1,43 @@
+{
+  "schema": "spikelock.show_wfdb_official.v1",
+  "used": "https://github.com/MIT-LCP/wfdb-python",
+  "built": "official wfdb reads 8 format-16 samples and .atr go/end; empty header is absence",
+  "theirs": {
+    "package": "wfdb",
+    "version": "4.3.1",
+    "n_samples": 8,
+    "n_signals": 1,
+    "empty": "raised",
+    "atr": [
+      "go",
+      "end"
+    ],
+    "atr_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "empty_atr": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

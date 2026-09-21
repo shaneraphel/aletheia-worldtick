@@ -1,0 +1,50 @@
+{
+  "schema": "stemlock.show_eyelink.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads EyeLink aba and go/end; suffix links 3; empty EyeLink is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_asc": "raised",
+    "ch_names": [
+      "xpos_left",
+      "ypos_left",
+      "pupil_left"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "pupil": [
+      97.0,
+      98.0,
+      97.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      97,
+      98,
+      97
+    ],
+    "word": "aba",
+    "links": 3,
+    "empty": "raised",
+    "empty_msg": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

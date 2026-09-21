@@ -1,0 +1,40 @@
+{
+  "schema": "sicklock.infsq_bench.v1",
+  "seed": 20260919,
+  "n": 5,
+  "sick": [
+    0,
+    4
+  ],
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "sick_seconds_median": 5.83400105824694e-06,
+  "repeat_seconds_median": 5.83400105824694e-06,
+  "sick_seconds": [
+    7.875001756474376e-06,
+    6.708003638777882e-06,
+    5.750000127591193e-06,
+    5.665999196935445e-06,
+    5.667003279086202e-06,
+    5.916001100558788e-06,
+    5.83400105824694e-06
+  ],
+  "repeat_seconds": [
+    6.124995707068592e-06,
+    5.9580052038654685e-06,
+    5.708003300242126e-06,
+    5.708003300242126e-06,
+    5.750000127591193e-06,
+    5.83400105824694e-06,
+    5.916997906751931e-06
+  ],
+  "seq_first": 4,
+  "seq_second": 4,
+  "seq_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

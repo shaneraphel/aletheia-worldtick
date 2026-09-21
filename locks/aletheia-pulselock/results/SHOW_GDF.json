@@ -1,0 +1,20 @@
+{
+  "schema": "pulselock.show_gdf.v1",
+  "used": "https://biosig.sourceforge.net/",
+  "built": "GDF samples [1,2,3,-1,2] have strength 22; empty GDF is absence",
+  "ours": {
+    "samples": [
+      1,
+      2,
+      3,
+      -1,
+      2
+    ],
+    "strength": 22,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "steplock.rkutta_bench.v1",
+  "seed": 20260919,
+  "n_steps": 200000,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "rkutta_seconds_median": 0.016529917000298155,
+  "len_seconds_median": 1.1250012903474271e-06,
+  "rkutta_seconds": [
+    0.015460582999367034,
+    0.015783041999384295,
+    0.017480624999734573,
+    0.013962000000901753,
+    0.016842291999637382,
+    0.016529917000298155,
+    0.018932041002699407
+  ],
+  "len_seconds": [
+    1.6669982869643718e-06,
+    1.0420008038636297e-06,
+    1.0830008250195533e-06,
+    2.624998160172254e-06,
+    8.749993867240846e-07,
+    1.1250012903474271e-06,
+    1.2500022421590984e-06
+  ],
+  "occupancy_first": 200000,
+  "occupancy_second": 200000,
+  "occupancy_identical": true,
+  "occupancy_equals_len": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

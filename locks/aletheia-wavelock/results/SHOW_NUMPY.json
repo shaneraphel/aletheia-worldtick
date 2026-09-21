@@ -1,0 +1,19 @@
+{
+  "schema": "wavelock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "prefix rank 3; empty sample tape is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_count": 0,
+    "rank_1": 3
+  },
+  "ours": {
+    "wavelet_rank": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

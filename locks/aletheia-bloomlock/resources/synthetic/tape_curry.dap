@@ -1,0 +1,14 @@
+NumSamples = 3
+SampleFreqHz = 1
+DataFormat = ASCII
+SampleTimeUsec = 1000000
+NumChannels = 1
+StartYear = 2026
+StartMonth = 9
+StartDay = 21
+StartHour = 1
+StartMin = 0
+StartSec = 0
+StartMillisec = 0
+DEVICE_PARAMETERS START
+DATA_UNITS = uV

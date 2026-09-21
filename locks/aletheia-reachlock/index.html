@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Aletheia Reachlock</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #07090d; color: #e8f0ea;
+    font-family: "Avenir Next", "Segoe UI", sans-serif; }
+  #wrap { display: flex; flex-direction: column; align-items: center; padding: 18px 12px 32px; }
+  h1 { font-weight: 600; letter-spacing: .16em; font-size: 18px; margin: 0 0 6px; }
+  p { margin: 0 0 14px; color: #9db5a8; font-size: 13px; max-width: 720px; text-align: center; }
+  canvas { background: #0b100f; box-shadow: 0 12px 48px #000a; border: 1px solid #1d3a30;
+    width: min(720px, 100%); height: auto; cursor: crosshair; }
+  #hud { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px;
+    color: #b7d4c6; margin-top: 12px; max-width: 720px; text-align: center; word-break: break-all; }
+  #status { letter-spacing: .08em; margin-bottom: 6px; }
+  #status.ok { color: #7dffb3; }
+  #status.refuse { color: #ff7a7a; }
+  #status.absent { color: #ffd27a; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <h1>ALETHEIA · REACHLOCK</h1>
+  <p>Click to set a target. Unreachable is a refusal: the arm keeps the last valid pose.
+  Disk clearance is <code>r²</code> in integers. The field hash is identical on every frame
+  with the same disks.</p>
+  <canvas id="c" width="720" height="720"></canvas>
+  <div id="hud">
+    <div id="status" class="ok">REACH</div>
+    <div id="hash"></div>
+  </div>
+</div>
+<script>
+const L1 = 140, L2 = 140;
+const OX = 360, OY = 360;
+const DISKS = [[480, 280, 54], [280, 500, 42], [520, 500, 48]];
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d", { alpha: false });
+const statusEl = document.getElementById("status");
+const hashEl = document.getElementById("hash");
+let target = { x: 220, y: 40 };
+let pose = { s: 0, e: 0 };
+let lastGood = { s: 0, e: 0, x: 220, y: 40 };
+
+function diskClearance2(px, py, cx, cy, radius) {
+  if (radius < 0) throw new Error("radius is absence");
+  const dx = px - cx, dy = py - cy;
+  return dx * dx + dy * dy - radius * radius;
+}
+
+function twoLinkIk(x, y, l1, l2) {
+  if (l1 <= 0 || l2 <= 0) throw new Error("link length is absence");
+  const d2 = x * x + y * y;
+  const reach = (l1 + l2) * (l1 + l2);
+  const fold = (l1 - l2) * (l1 - l2);
+  if (d2 > reach || d2 < fold) throw new Error("unreachable");
+  let cosE = (d2 - l1 * l1 - l2 * l2) / (2 * l1 * l2);
+  cosE = Math.max(-1, Math.min(1, cosE));
+  const elbow = Math.acos(cosE);
+  const shoulder = Math.atan2(y, x) - Math.atan2(l2 * Math.sin(elbow), l1 + l2 * Math.cos(elbow));
+  return { s: shoulder, e: elbow };
+}
+
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function fieldRows() {
+  const rows = [];
+  for (let y = 0; y < 720; y += 24) {
+    for (let x = 0; x < 720; x += 24) {
+      let best = null;
+      for (const [cx, cy, r] of DISKS) {
+        const c = diskClearance2(x, y, cx, cy, r);
+        best = best === null ? c : Math.min(best, c);
+      }
+      rows.push(String(best));
+    }
+  }
+  return rows.join("\n");
+}
+
+function setStatus(kind, text) {
+  statusEl.className = kind;
+  statusEl.textContent = text;
+}
+
+function draw() {
+  ctx.fillStyle = "#0b100f";
+  ctx.fillRect(0, 0, 720, 720);
+  for (let y = 0; y < 720; y += 24) {
+    for (let x = 0; x < 720; x += 24) {
+      let best = null;
+      for (const [cx, cy, r] of DISKS) {
+        const c = diskClearance2(x, y, cx, cy, r);
+        best = best === null ? c : Math.min(best, c);
+      }
+      const t = Math.max(-1, Math.min(1, best / 20000));
+      ctx.fillStyle = t < 0
+        ? `rgba(180, 40, 50, ${0.18 - t * 0.18})`
+        : `rgba(40, 140, 90, ${0.06 + t * 0.10})`;
+      ctx.fillRect(x, y, 24, 24);
+    }
+  }
+  for (const [cx, cy, r] of DISKS) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255, 90, 90, 0.22)";
+    ctx.fill();
+    ctx.strokeStyle = "#ff8a8a";
+    ctx.stroke();
+  }
+  const mx = OX + L1 * Math.cos(pose.s);
+  const my = OY + L1 * Math.sin(pose.s);
+  const ex = mx + L2 * Math.cos(pose.s + pose.e);
+  const ey = my + L2 * Math.sin(pose.s + pose.e);
+  ctx.strokeStyle = "#7dffb3";
+  ctx.lineWidth = 8;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(OX, OY);
+  ctx.lineTo(mx, my);
+  ctx.lineTo(ex, ey);
+  ctx.stroke();
+  ctx.fillStyle = "#e8f0ea";
+  for (const [x, y] of [[OX, OY], [mx, my], [ex, ey]]) {
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.beginPath();
+  ctx.arc(OX + target.x, OY + target.y, 5, 0, Math.PI * 2);
+  ctx.strokeStyle = "#ffd27a";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+async function refreshHash() {
+  hashEl.textContent = "field " + await sha256Hex(fieldRows());
+}
+
+function applyTarget(wx, wy) {
+  target = { x: wx, y: wy };
+  try {
+    pose = twoLinkIk(wx, wy, L1, L2);
+    lastGood = { ...pose, x: wx, y: wy };
+    setStatus("ok", "REACH");
+  } catch (err) {
+    pose = { s: lastGood.s, e: lastGood.e };
+    setStatus("refuse", "REFUSAL · unreachable");
+  }
+  draw();
+}
+
+canvas.addEventListener("pointerdown", (ev) => {
+  const rect = canvas.getBoundingClientRect();
+  const sx = canvas.width / rect.width;
+  const sy = canvas.height / rect.height;
+  applyTarget((ev.clientX - rect.left) * sx - OX, (ev.clientY - rect.top) * sy - OY);
+});
+
+applyTarget(220, 40);
+refreshHash();
+</script>
+</body>
+</html>

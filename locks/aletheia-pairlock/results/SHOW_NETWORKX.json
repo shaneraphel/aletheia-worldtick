@@ -1,0 +1,19 @@
+{
+  "schema": "pairlock.show_networkx.v1",
+  "used": "https://github.com/networkx/networkx",
+  "built": "four-finger pairing 2; empty n is absence",
+  "theirs": {
+    "package": "networkx",
+    "version": "3.6.1",
+    "empty_matching": [],
+    "paired": 2
+  },
+  "ours": {
+    "blossom_paired": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,266 @@
+{
+  "schema": "bloomlock.show_xdf.v1",
+  "used": "https://github.com/sccn/xdf",
+  "built": "XDF StreamHeader+Samples [1,2,3] maybe-membership 1; official pyxdf n_streams is 2",
+  "theirs": {
+    "package": "pyxdf",
+    "version": "1.17.5",
+    "n_streams": 10,
+    "header_streamcount": 10,
+    "official_samples": [
+      1,
+      2,
+      3
+    ],
+    "official_markers": [
+      "go",
+      "end"
+    ],
+    "marker_format": "string",
+    "official_accel": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "accel_format": "float32",
+    "official_gyro": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "gyro_format": "float32",
+    "official_orient": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "orient_format": "float32",
+    "official_mag": [
+      [
+        0.25,
+        0.0,
+        0.5
+      ],
+      [
+        -0.25,
+        0.0,
+        0.5
+      ]
+    ],
+    "mag_format": "float32",
+    "official_can": [
+      [
+        0.25,
+        1.0,
+        0.0
+      ],
+      [
+        -0.25,
+        1.0,
+        0.0
+      ]
+    ],
+    "can_format": "float32",
+    "official_can_id": [
+      256,
+      512
+    ],
+    "can_id_format": "int16",
+    "official_wheel": [
+      [
+        8.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ]
+    ],
+    "wheel_format": "float32",
+    "official_pedal": [
+      [
+        0.25,
+        0.25,
+        0.25
+      ],
+      [
+        0.5,
+        0.1875,
+        0.375
+      ]
+    ],
+    "pedal_format": "float32",
+    "clock_times": [
+      0.0
+    ],
+    "footer_sample_count": 3,
+    "empty": "raised"
+  },
+  "ours": {
+    "n": 10,
+    "maybe": 1,
+    "markers": [
+      "go",
+      "end"
+    ],
+    "accel": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "gyro": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "oxts": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "oxts_gyro": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "orient": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "oxts_orient": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "mag": [
+      [
+        0.25,
+        0.0,
+        0.5
+      ],
+      [
+        -0.25,
+        0.0,
+        0.5
+      ]
+    ],
+    "heading": [
+      0.0,
+      3.141592653589793
+    ],
+    "can": [
+      [
+        0.25,
+        1.0,
+        0.0
+      ],
+      [
+        -0.25,
+        1.0,
+        0.0
+      ]
+    ],
+    "can_id": [
+      256,
+      512
+    ],
+    "wheel": [
+      [
+        8.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ]
+    ],
+    "pedal": [
+      [
+        0.25,
+        0.25,
+        0.25
+      ],
+      [
+        0.5,
+        0.1875,
+        0.375
+      ]
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

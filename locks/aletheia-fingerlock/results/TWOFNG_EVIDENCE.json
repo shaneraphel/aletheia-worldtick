@@ -1,0 +1,36 @@
+{
+  "schema": "fingerlock.twofng_bench.v1",
+  "seed": 20260919,
+  "n": 8,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "finger_seconds_median": 3.7500001781154424e-05,
+  "repeat_seconds_median": 3.749999814317562e-05,
+  "finger_seconds": [
+    3.841700163320638e-05,
+    0.0001062500014086254,
+    3.5958000808022916e-05,
+    3.7500001781154424e-05,
+    3.704099799506366e-05,
+    3.720899985637516e-05,
+    3.879200085066259e-05
+  ],
+  "repeat_seconds": [
+    3.766699956031516e-05,
+    3.645799733931199e-05,
+    3.6124998587183654e-05,
+    3.954099884140305e-05,
+    3.7290999898687005e-05,
+    3.7707999581471086e-05,
+    3.749999814317562e-05
+  ],
+  "dist_first": 12,
+  "dist_second": 12,
+  "dist_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

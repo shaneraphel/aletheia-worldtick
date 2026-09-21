@@ -1,0 +1,37 @@
+{
+  "schema": "remainlock.crt_bench.v1",
+  "seed": 20260919,
+  "n_pairs": 2000,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "crt_seconds_median": 0.002904041961301118,
+  "brute_seconds_median": 0.003883084049448371,
+  "crt_seconds": [
+    0.004243290983140469,
+    0.004425666993483901,
+    0.002904041961301118,
+    0.002719000040087849,
+    0.003603958000894636,
+    0.002503541996702552,
+    0.0024788329610601068
+  ],
+  "brute_seconds": [
+    0.003883084049448371,
+    0.005237624980509281,
+    0.003606459009461105,
+    0.003458124992903322,
+    0.003939999965950847,
+    0.003646249999292195,
+    0.00398325000423938
+  ],
+  "xor_first": 80,
+  "xor_second": 80,
+  "xor_identical": true,
+  "xor_equals_brute": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "lanelock.floyd_bench.v1",
+  "seed": 20260919,
+  "n": 65536,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "floyd_seconds_median": 7.70896440371871e-06,
+  "set_walk_seconds_median": 4.332978278398514e-06,
+  "floyd_seconds": [
+    8.958973921835423e-06,
+    8.000002708286047e-06,
+    7.70896440371871e-06,
+    7.6669966802001e-06,
+    8.000002708286047e-06,
+    7.6669966802001e-06,
+    7.6669966802001e-06
+  ],
+  "set_walk_seconds": [
+    5.582987796515226e-06,
+    4.708010237663984e-06,
+    4.165980499237776e-06,
+    4.084024112671614e-06,
+    4.04199818149209e-06,
+    4.332978278398514e-06,
+    8.66700429469347e-06
+  ],
+  "cycle_first": 1,
+  "cycle_second": 1,
+  "cycle_identical": true,
+  "cycle_equals_set_walk": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

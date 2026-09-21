@@ -1,0 +1,7 @@
+<mujoco model="two_link">
+  <worldbody>
+    <body name="upper"><geom type="capsule" size="0.05" fromto="0 0 0 1.0 0 0"/>
+      <body name="fore"><geom type="capsule" size="0.05" fromto="0 0 0 1.0 0 0"/></body>
+    </body>
+  </worldbody>
+</mujoco>

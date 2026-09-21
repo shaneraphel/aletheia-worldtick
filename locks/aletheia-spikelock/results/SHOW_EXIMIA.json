@@ -1,0 +1,43 @@
+{
+  "schema": "spikelock.show_eximia.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads 8 Eximia samples on Cz; empty Eximia is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 8,
+    "empty_nxe": "raised",
+    "ch32": "Cz",
+    "cz": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "n_annot": 0
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "empty_samples": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

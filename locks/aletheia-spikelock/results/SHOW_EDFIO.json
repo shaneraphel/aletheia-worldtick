@@ -1,0 +1,42 @@
+{
+  "schema": "spikelock.show_edfio.v1",
+  "used": "https://github.com/the-siesta-group/edfio",
+  "built": "edfio reads 8 EDF samples; empty EDF is absence",
+  "theirs": {
+    "package": "edfio",
+    "version": "0.4.16",
+    "n_signals": 1,
+    "n_samples": 8,
+    "empty": "raised",
+    "annot": [
+      "go",
+      "end"
+    ],
+    "annot_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "edf_annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

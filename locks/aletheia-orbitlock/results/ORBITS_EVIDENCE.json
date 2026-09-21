@@ -1,0 +1,36 @@
+{
+  "schema": "orbitlock.orbits_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "dsu_seconds_median": 0.004201750001811888,
+  "naive_seconds_median": 0.0024897500006773043,
+  "dsu_seconds": [
+    0.004201750001811888,
+    0.0033333329993183725,
+    0.004797916000825353,
+    0.004320042000472313,
+    0.003684375002194429,
+    0.004936375000397675,
+    0.0040542919996369164
+  ],
+  "naive_seconds": [
+    0.0021873339974263217,
+    0.0024664169977768324,
+    0.0031492499983869493,
+    0.0023594590020366013,
+    0.002961917001812253,
+    0.0024897500006773043,
+    0.0027093339995190036
+  ],
+  "orbits_first": 637,
+  "orbits_second": 637,
+  "orbits_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

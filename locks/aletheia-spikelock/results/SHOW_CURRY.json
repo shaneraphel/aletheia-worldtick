@@ -1,0 +1,59 @@
+{
+  "schema": "spikelock.show_curry.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads 8 Curry samples on Cz and event 1/2 at 1.0/2.0 s; empty Curry is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 8,
+    "empty_curry": "raised",
+    "empty_evt": 0,
+    "ch_names": [
+      "Cz"
+    ],
+    "annot": [
+      "1",
+      "2"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "cz_uv": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "read_s": 4.613834832998691
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "empty_evt": "raised",
+    "annot": [
+      "1",
+      "2"
+    ],
+    "occupancy_s": 0.00036604198976419866
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

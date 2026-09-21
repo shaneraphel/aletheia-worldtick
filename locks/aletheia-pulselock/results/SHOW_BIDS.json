@@ -1,0 +1,22 @@
+{
+  "schema": "pulselock.show_bids.v1",
+  "used": "https://bids.neuroimaging.io/",
+  "built": "BIDS events [1,2,3,-1,2] have strength 22; XDF markers copy to trial_type go/end",
+  "ours": {
+    "n": 6,
+    "strength": 22,
+    "markers": [
+      "go",
+      "end"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

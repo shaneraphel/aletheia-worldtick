@@ -1,0 +1,13 @@
+{
+  "schema": "handlock.show_mjcf.v1",
+  "used": "https://mujoco.readthedocs.io/en/stable/XMLreference.html",
+  "built": "MJCF 2x2 cost, assignment 2; empty numeric is absence",
+  "ours": {
+    "cost": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

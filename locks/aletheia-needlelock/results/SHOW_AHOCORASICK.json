@@ -1,0 +1,20 @@
+{
+  "schema": "needlelock.show_ahocorasick.v1",
+  "used": "https://github.com/WojciechMula/pyahocorasick",
+  "note": "https://github.com/WojciechMula/pyahocorasick/issues/225",
+  "built": "overlapping needle occupancy on abcabc; empty text is absence",
+  "theirs": {
+    "package": "pyahocorasick",
+    "version": "2.3.1",
+    "empty_add_word": "accepted",
+    "hits_abcabc": 4
+  },
+  "ours": {
+    "aho_hits_abcabc": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

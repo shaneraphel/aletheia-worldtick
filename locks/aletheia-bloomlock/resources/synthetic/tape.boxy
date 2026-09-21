@@ -1,0 +1,13 @@
+BOXY.EXE: ISS Imagent 0.84
+1 Detector Channels
+1 External MUX Channels
+1 Update Rate (Hz)
+
+#DATA BEGINS
+time,A-DC1,A-AC1,A-Ph1,digaux
+dummy
+0	1.0	0	0	0
+1	2.0	0	0	1
+2	3.0	0	0	2
+3	0	0	0	0
+#DATA ENDS

@@ -1,0 +1,37 @@
+{
+  "schema": "flowlock.dinic_bench.v1",
+  "seed": 20260919,
+  "n": 24,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "dinic_seconds_median": 0.00017391600340488367,
+  "ford_seconds_median": 0.00011054200149374083,
+  "dinic_seconds": [
+    0.00022079200061853044,
+    0.00016062500071711838,
+    0.00015449999773409218,
+    0.00017391600340488367,
+    0.00022220900063985027,
+    0.00017999999909079634,
+    0.00015350000103353523
+  ],
+  "ford_seconds": [
+    0.0001315000008617062,
+    0.00011270799950580113,
+    0.00011054200149374083,
+    0.00019704200167325325,
+    0.00010712499715737067,
+    0.00010754100003396161,
+    0.0001053749983839225
+  ],
+  "flow_first": 12,
+  "flow_second": 12,
+  "flow_identical": true,
+  "flow_equals_ford": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

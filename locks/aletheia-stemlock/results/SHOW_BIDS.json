@@ -1,0 +1,23 @@
+{
+  "schema": "stemlock.show_bids.v1",
+  "used": "https://bids.neuroimaging.io/",
+  "built": "BIDS events aba have 3 suffix links; empty events are absence",
+  "ours": {
+    "n": 4,
+    "word": "aba",
+    "links": 3,
+    "markers": [
+      "go",
+      "end"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

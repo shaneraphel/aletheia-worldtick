@@ -1,0 +1,49 @@
+{
+  "schema": "bloomlock.show_curry.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads Curry onsets [1,2,3] on Cz and event 1/2 at 1.0/2.0 s; empty Curry is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_curry": "raised",
+    "empty_evt": 0,
+    "ch_names": [
+      "Cz"
+    ],
+    "annot": [
+      "1",
+      "2"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "cz_uv": [
+      1,
+      2,
+      3
+    ],
+    "read_s": 4.3636710830032825
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      1,
+      2,
+      3
+    ],
+    "empty": "raised",
+    "empty_evt": "raised",
+    "annot": [
+      "1",
+      "2"
+    ],
+    "occupancy_s": 0.00030283399973995984
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "woodlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "3x3 forest steps 6; empty forest is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0,
+    "n_cells": 9
+  },
+  "ours": {
+    "cut_off_trees": 6,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
