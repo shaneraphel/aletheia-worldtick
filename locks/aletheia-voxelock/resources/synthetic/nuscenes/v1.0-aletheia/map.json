@@ -1,0 +1,10 @@
+[
+  {
+    "token": "m0",
+    "log_tokens": [
+      "l0"
+    ],
+    "category": "semantic_prior",
+    "filename": "maps/aletheia.png"
+  }
+]

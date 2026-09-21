@@ -1,0 +1,20 @@
+{
+  "instance": [
+    {
+      "token": "i0",
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "token": "i1",
+      "translation": [
+        2.0,
+        2.0,
+        2.0
+      ]
+    }
+  ]
+}

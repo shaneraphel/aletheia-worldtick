@@ -1,0 +1,14 @@
+[
+  {
+    "utime": 1,
+    "brake_sensor": 0.25,
+    "steering_sensor": 0.25,
+    "throttle_sensor": 0.25
+  },
+  {
+    "utime": 2,
+    "brake_sensor": 0.5,
+    "steering_sensor": 0.1875,
+    "throttle_sensor": 0.375
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "token": "lidar",
+    "channel": "LIDAR_TOP",
+    "modality": "lidar"
+  },
+  {
+    "token": "cam",
+    "channel": "CAM_FRONT",
+    "modality": "camera"
+  },
+  {
+    "token": "radar",
+    "channel": "RADAR_FRONT",
+    "modality": "radar"
+  },
+  {
+    "token": "cam_back",
+    "channel": "CAM_BACK",
+    "modality": "camera"
+  },
+  {
+    "token": "cam_fl",
+    "channel": "CAM_FRONT_LEFT",
+    "modality": "camera"
+  },
+  {
+    "token": "radar_back",
+    "channel": "RADAR_BACK",
+    "modality": "radar"
+  },
+  {
+    "token": "radar_left",
+    "channel": "RADAR_LEFT",
+    "modality": "radar"
+  },
+  {
+    "token": "radar_right",
+    "channel": "RADAR_RIGHT",
+    "modality": "radar"
+  },
+  {
+    "token": "cam_fr",
+    "channel": "CAM_FRONT_RIGHT",
+    "modality": "camera"
+  },
+  {
+    "token": "cam_bl",
+    "channel": "CAM_BACK_LEFT",
+    "modality": "camera"
+  },
+  {
+    "token": "cam_br",
+    "channel": "CAM_BACK_RIGHT",
+    "modality": "camera"
+  },
+  {
+    "token": "lidar_front",
+    "channel": "LIDAR_FRONT",
+    "modality": "lidar"
+  },
+  {
+    "token": "lidar_back",
+    "channel": "LIDAR_BACK",
+    "modality": "lidar"
+  },
+  {
+    "token": "mag",
+    "channel": "MAGNETOMETER",
+    "modality": "imu"
+  }
+]

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><title>Expo aisle bind</title>
+<style>body{font-family:ui-sans-serif,system-ui,sans-serif;margin:2rem;max-width:44rem}</style></head>
+<body>
+<h1>Expo aisle bind</h1>
+<p>Booths require an aisle.</p>
+<label>aisle <input id="aisle" value="A1" /></label>
+<label>team <input id="team" value="team-a" /></label>
+<button id="go">Register</button>
+<pre id="out"></pre>
+<script>
+const BOOTHS = {};
+function register(team, aisle) {
+  if (!aisle) throw new Error("expo booth requires an aisle");
+  (BOOTHS[aisle] ||= []).push({team});
+}
+document.getElementById("go").onclick = () => {
+  const out = document.getElementById("out");
+  try {
+    register(document.getElementById("team").value, document.getElementById("aisle").value);
+    out.textContent = JSON.stringify(BOOTHS, null, 2);
+  } catch (e) { out.textContent = e.message; }
+};
+</script>
+</body></html>
