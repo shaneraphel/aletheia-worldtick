@@ -1,0 +1,338 @@
+[
+  {
+    "token": "cs0",
+    "sensor_token": "lidar",
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs1",
+    "sensor_token": "cam",
+    "translation": [
+      0.0,
+      0.0,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        8.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        8.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs2",
+    "sensor_token": "radar",
+    "translation": [
+      0,
+      0,
+      0.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs3",
+    "sensor_token": "cam_back",
+    "translation": [
+      0,
+      -1,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        8.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        8.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs4",
+    "sensor_token": "cam_fl",
+    "translation": [
+      -0.5,
+      0.5,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        8.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        8.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs5",
+    "sensor_token": "radar_back",
+    "translation": [
+      0.0,
+      -0.5,
+      0.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs6",
+    "sensor_token": "radar_left",
+    "translation": [
+      -0.5,
+      0.0,
+      0.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs7",
+    "sensor_token": "radar_right",
+    "translation": [
+      0.5,
+      0.0,
+      0.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs8",
+    "sensor_token": "cam_fr",
+    "translation": [
+      0.5,
+      0.4,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        1.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        1.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs9",
+    "sensor_token": "cam_bl",
+    "translation": [
+      -0.5,
+      -0.4,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        1.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        1.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs10",
+    "sensor_token": "cam_br",
+    "translation": [
+      0.5,
+      -0.4,
+      1.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": [
+      [
+        1.0,
+        0.0,
+        4.0
+      ],
+      [
+        0.0,
+        1.0,
+        4.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  {
+    "token": "cs11",
+    "sensor_token": "lidar_front",
+    "translation": [
+      0.5,
+      0.0,
+      1.8
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "cs12",
+    "sensor_token": "lidar_back",
+    "translation": [
+      -0.5,
+      0.0,
+      1.8
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "csm0",
+    "sensor_token": "mag",
+    "translation": [
+      0.25,
+      0.0,
+      0.5
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "camera_intrinsic": []
+  },
+  {
+    "token": "csm1",
+    "sensor_token": "mag",
+    "translation": [
+      -0.25,
+      0.0,
+      0.5
+    ],
+    "rotation": [
+      6.123233995736766e-17,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "camera_intrinsic": []
+  }
+]

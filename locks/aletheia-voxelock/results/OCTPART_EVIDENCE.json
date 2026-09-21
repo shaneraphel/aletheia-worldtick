@@ -1,0 +1,37 @@
+{
+  "schema": "voxelock.octpart_bench.v1",
+  "seed": 20260919,
+  "n": 200000,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "octpart_seconds_median": 0.012522583001555176,
+  "naive_seconds_median": 0.01416600000084145,
+  "octpart_seconds": [
+    0.012522583001555176,
+    0.011607458000071347,
+    0.011231124997721054,
+    0.011396249999961583,
+    0.01352170800237218,
+    0.01392633299838053,
+    0.013954500002000714
+  ],
+  "naive_seconds": [
+    0.014824375000898726,
+    0.012498125001002336,
+    0.012828208000428276,
+    0.01416600000084145,
+    0.015998625000065658,
+    0.01585904199964716,
+    0.013724415999604389
+  ],
+  "ne_first": 25020,
+  "ne_second": 25020,
+  "ne_identical": true,
+  "ne_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

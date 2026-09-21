@@ -1,0 +1,11 @@
+[
+  {
+    "token": "sc0",
+    "name": "aletheia",
+    "description": "two boxes",
+    "log_token": "l0",
+    "nbr_samples": 1,
+    "first_sample_token": "s0",
+    "last_sample_token": "s0"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "token": "i0",
+    "category_token": "c0",
+    "nbr_annotations": 1,
+    "first_annotation_token": "a0",
+    "last_annotation_token": "a0",
+    "translation": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "token": "i1",
+    "category_token": "c0",
+    "nbr_annotations": 1,
+    "first_annotation_token": "a1",
+    "last_annotation_token": "a1",
+    "translation": [
+      2,
+      2,
+      2
+    ]
+  }
+]

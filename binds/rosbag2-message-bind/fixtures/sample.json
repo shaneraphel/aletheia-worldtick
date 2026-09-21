@@ -1,0 +1,8 @@
+{
+  "bag2_id": "b-a",
+  "rows": [
+    {
+      "typ": "sensor_msgs/msg/Image"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "utime": 1,
+    "FL_wheel_speed": 8.0,
+    "FR_wheel_speed": 8.0,
+    "RL_wheel_speed": 8.0,
+    "RR_wheel_speed": 8.0,
+    "odom_speed": 1.0
+  },
+  {
+    "utime": 2,
+    "FL_wheel_speed": 16.0,
+    "FR_wheel_speed": 16.0,
+    "RL_wheel_speed": 16.0,
+    "RR_wheel_speed": 16.0,
+    "odom_speed": 1.0
+  }
+]

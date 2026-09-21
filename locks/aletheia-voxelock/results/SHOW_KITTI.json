@@ -1,0 +1,14 @@
+{
+  "schema": "voxelock.show_kitti.v1",
+  "used": "https://www.cvlibs.net/datasets/kitti/",
+  "built": "two KITTI points, NE occupancy 1; empty bin is absence",
+  "ours": {
+    "n_points": 2,
+    "ne": 1,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

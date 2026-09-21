@@ -1,0 +1,8 @@
+{
+  "cluster_id": "sample-a",
+  "rows": [
+    {
+      "host": "row-a"
+    }
+  ]
+}
