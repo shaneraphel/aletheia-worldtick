@@ -1,0 +1,8 @@
+{
+  "isolate_id": "sample-a",
+  "rows": [
+    {
+      "cmd": "row-a"
+    }
+  ]
+}

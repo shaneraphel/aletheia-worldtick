@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><title>Sandbox isolate bind</title>
+<style>body{font-family:ui-sans-serif,system-ui,sans-serif;margin:2rem;max-width:44rem}</style></head>
+<body>
+<h1>Sandbox isolate bind</h1>
+<p>Jobs require an isolate id.</p>
+<label>isolate <input id="iso" value="iso-a" /></label>
+<label>cmd <input id="cmd" value="echo" /></label>
+<button id="go">Enqueue</button>
+<pre id="out"></pre>
+<script>
+const JOBS = {};
+function enqueue(cmd, isolateId) {
+  if (!isolateId) throw new Error("sandbox job requires an isolate id");
+  (JOBS[isolateId] ||= []).push({cmd});
+}
+document.getElementById("go").onclick = () => {
+  const out = document.getElementById("out");
+  try {
+    enqueue(document.getElementById("cmd").value, document.getElementById("iso").value);
+    out.textContent = JSON.stringify(JOBS, null, 2);
+  } catch (e) { out.textContent = e.message; }
+};
+</script>
+</body></html>

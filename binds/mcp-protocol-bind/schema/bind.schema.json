@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "mcp-protocol-bind playable event",
+  "type": "object",
+  "required": [
+    "protocol_version",
+    "transport",
+    "jsonrpc"
+  ],
+  "properties": {
+    "protocol_version": {
+      "type": "string"
+    },
+    "transport": {
+      "type": "string"
+    },
+    "jsonrpc": {
+      "type": "string"
+    },
+    "method": {
+      "type": "string"
+    }
+  }
+}

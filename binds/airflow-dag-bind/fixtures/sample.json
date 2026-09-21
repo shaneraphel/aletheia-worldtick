@@ -1,0 +1,8 @@
+{
+  "dag_id": "sample-a",
+  "rows": [
+    {
+      "op": "row-a"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><title>MCP protocol bind</title>
+<style>body{font-family:ui-sans-serif,system-ui,sans-serif;margin:2rem;max-width:44rem}</style></head>
+<body>
+<h1>MCP protocol bind</h1>
+<p>JSON-RPC 2.0 is accepted only on protocol 2025-11-25 over Streamable HTTP.</p>
+<label>protocol <input id="ver" value="2025-11-25" /></label>
+<label>transport <input id="tr" value="streamable-http" /></label>
+<button id="go">Accept</button>
+<pre id="out"></pre>
+<script>
+function accept(event) {
+  if (event.protocol_version !== "2025-11-25") throw new Error("mcp session requires protocol 2025-11-25");
+  if (event.transport !== "streamable-http") throw new Error("mcp session requires streamable http");
+  if (event.jsonrpc === "2.0") return "ok";
+  return "ignored";
+}
+document.getElementById("go").onclick = () => {
+  const out = document.getElementById("out");
+  try {
+    out.textContent = accept({
+      jsonrpc: "2.0",
+      protocol_version: document.getElementById("ver").value,
+      transport: document.getElementById("tr").value,
+    });
+  } catch (e) { out.textContent = e.message; }
+};
+</script>
+</body></html>

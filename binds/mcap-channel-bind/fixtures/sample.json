@@ -1,0 +1,8 @@
+{
+  "mcap_id": "m-a",
+  "rows": [
+    {
+      "topic": "/imu/data"
+    }
+  ]
+}

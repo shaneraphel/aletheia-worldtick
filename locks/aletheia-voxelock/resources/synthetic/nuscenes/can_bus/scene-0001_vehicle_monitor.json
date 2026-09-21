@@ -1,0 +1,22 @@
+[
+  {
+    "utime": 1,
+    "steering": 0.25,
+    "vehicle_speed": 1.0,
+    "yaw_rate": 0.0,
+    "can_id": 256,
+    "gear_position": 7,
+    "brake": 0,
+    "throttle": 0
+  },
+  {
+    "utime": 2,
+    "steering": -0.25,
+    "vehicle_speed": 1.0,
+    "yaw_rate": 0.0,
+    "can_id": 512,
+    "gear_position": 7,
+    "brake": 0,
+    "throttle": 0
+  }
+]

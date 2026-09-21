@@ -1,0 +1,8 @@
+{
+  "geoparquet_id": "g-a",
+  "rows": [
+    {
+      "geom": "POINT(0 0)"
+    }
+  ]
+}

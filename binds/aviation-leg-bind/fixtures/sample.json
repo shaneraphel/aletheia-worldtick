@@ -1,0 +1,8 @@
+{
+  "flight_id": "sample-a",
+  "rows": [
+    {
+      "route": "row-a"
+    }
+  ]
+}
