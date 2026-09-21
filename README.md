@@ -64,3 +64,10 @@ Pinned `python3.12 datalog_bench.py`. Numbers are copied from `results/DATALOG_E
 ## License
 
 MIT
+
+## Atlas
+
+100 small `*-bind` libraries, `aletheia-voxelock`, and 6 BCI/robotics resource
+lists now live in this repo under `binds/`, `locks/`, and `docs-awesome/`.
+See `ATLAS.md` for the full index. Each subdirectory keeps the files of its
+former standalone repository.

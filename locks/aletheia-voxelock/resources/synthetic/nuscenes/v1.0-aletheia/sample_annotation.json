@@ -1,0 +1,60 @@
+[
+  {
+    "token": "a0",
+    "sample_token": "s0",
+    "instance_token": "i0",
+    "visibility_token": "v4",
+    "attribute_tokens": [
+      "at0"
+    ],
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "size": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "num_lidar_pts": 1,
+    "num_radar_pts": 0,
+    "next": "",
+    "prev": ""
+  },
+  {
+    "token": "a1",
+    "sample_token": "s0",
+    "instance_token": "i1",
+    "visibility_token": "v4",
+    "attribute_tokens": [
+      "at0"
+    ],
+    "translation": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "size": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "rotation": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "num_lidar_pts": 1,
+    "num_radar_pts": 0,
+    "next": "",
+    "prev": ""
+  }
+]

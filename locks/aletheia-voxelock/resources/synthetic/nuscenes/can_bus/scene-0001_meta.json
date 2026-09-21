@@ -1,0 +1,23 @@
+{
+  "ms_imu": {
+    "n": 2
+  },
+  "pose": {
+    "n": 2
+  },
+  "steeranglefeedback": {
+    "n": 2
+  },
+  "vehicle_monitor": {
+    "n": 2
+  },
+  "zoe_veh_info": {
+    "n": 2
+  },
+  "zoesensors": {
+    "n": 2
+  },
+  "route": {
+    "n": 2
+  }
+}

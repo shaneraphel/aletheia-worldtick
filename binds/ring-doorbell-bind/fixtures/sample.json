@@ -1,0 +1,8 @@
+{
+  "doorbell_id": "sample-a",
+  "rows": [
+    {
+      "event": "row-a"
+    }
+  ]
+}

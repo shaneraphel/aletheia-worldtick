@@ -1,0 +1,367 @@
+{
+  "schema": "voxelock.show_nuscenes.v1",
+  "used": "https://github.com/nutonomy/nuscenes-devkit",
+  "built": "official zoesensors brake/steering/throttle copy the Pedal stream; empty pedals are absence",
+  "theirs": {
+    "package": "nuscenes-devkit",
+    "status": "loaded",
+    "n_annotation": 2,
+    "n_sample_data": 13,
+    "lidar_channel": "sd0",
+    "lidar_front": "sd11",
+    "lidar_back": "sd12",
+    "camera_channel": "sd1",
+    "radar_channel": "sd2",
+    "radar_back": "sd5",
+    "radar_left": "sd6",
+    "radar_right": "sd7",
+    "cam_back": "sd3",
+    "cam_front_left": "sd4",
+    "cam_front_right": "sd8",
+    "cam_back_left": "sd9",
+    "cam_back_right": "sd10",
+    "lidar_points": 2,
+    "lidar_front_points": 2,
+    "lidar_back_points": 2,
+    "radar_points": 2,
+    "radar_back_points": 2,
+    "radar_left_points": 2,
+    "radar_right_points": 2,
+    "camera_size": [
+      8,
+      8
+    ],
+    "empty_lidar_points": 0,
+    "empty_camera": "raised",
+    "translations": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        2
+      ]
+    ],
+    "empty_version": "raised",
+    "n_ego_pose": 3,
+    "ego_accel": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "lidar_front_ego": "ep1",
+    "lidar_back_ego": "ep2",
+    "ego_rot": [
+      [
+        0.8775825618903728,
+        0.0,
+        0.0,
+        0.479425538604203
+      ],
+      [
+        0.8775825618903728,
+        0.0,
+        0.0,
+        -0.479425538604203
+      ]
+    ],
+    "n_calibrated_sensor": 15,
+    "mag_channel": "MAGNETOMETER",
+    "mag_calib": [
+      [
+        0.25,
+        0.0,
+        0.5
+      ],
+      [
+        -0.25,
+        0.0,
+        0.5
+      ]
+    ],
+    "mag_calib_rot": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        6.123233995736766e-17,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "can_steer": [
+      0.25,
+      -0.25
+    ],
+    "can_imu": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "can_pose": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "empty_can": "raised",
+    "vm_steer": [
+      0.25,
+      -0.25
+    ],
+    "vm_speed": [
+      1.0,
+      1.0
+    ],
+    "vm_can_id": [
+      256,
+      512
+    ],
+    "zoe_fl": [
+      8.0,
+      16.0
+    ],
+    "zoe_wheels": [
+      [
+        8.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ]
+    ],
+    "zoe_brake": [
+      0.25,
+      0.5
+    ],
+    "zoe_sensors": [
+      [
+        0.25,
+        0.25,
+        0.25
+      ],
+      [
+        0.5,
+        0.1875,
+        0.375
+      ]
+    ]
+  },
+  "ours": {
+    "n": 2,
+    "table_n": 2,
+    "lidar_n": 2,
+    "lidar_front_n": 2,
+    "lidar_back_n": 2,
+    "ne": 1,
+    "table_ne": 1,
+    "lidar_ne": 1,
+    "empty": "raised",
+    "empty_lidar": "raised",
+    "camera": {
+      "width": 8,
+      "height": 8,
+      "mode": "RGB"
+    },
+    "empty_camera": "raised",
+    "radar_n": 2,
+    "radar_ne": 1,
+    "radar_back_n": 2,
+    "radar_left_n": 2,
+    "radar_right_n": 2,
+    "empty_radar": "raised",
+    "cam_back": 8,
+    "cam_front_left": 8,
+    "cam_front_right": 8,
+    "cam_back_left": 8,
+    "cam_back_right": 8,
+    "oxts": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "oxts_gyro": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "ego": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "sample_ego": [
+      [
+        "sd11",
+        "ep1"
+      ],
+      [
+        "sd12",
+        "ep2"
+      ]
+    ],
+    "oxts_orient": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "ego_rot": [
+      [
+        0.8775825618903728,
+        0.0,
+        0.0,
+        0.479425538604203
+      ],
+      [
+        0.8775825618903728,
+        0.0,
+        0.0,
+        -0.479425538604203
+      ]
+    ],
+    "calib_mag": [
+      [
+        0.25,
+        0.0,
+        0.5
+      ],
+      [
+        -0.25,
+        0.0,
+        0.5
+      ]
+    ],
+    "calib_rot": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        6.123233995736766e-17,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "can_steer": [
+      0.25,
+      -0.25
+    ],
+    "can_imu": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    ],
+    "vehicle_monitor": [
+      [
+        0.25,
+        1.0,
+        256
+      ],
+      [
+        -0.25,
+        1.0,
+        512
+      ]
+    ],
+    "zoe_wheels": [
+      [
+        8.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      [
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ]
+    ],
+    "zoe_sensors": [
+      [
+        0.25,
+        0.25,
+        0.25
+      ],
+      [
+        0.5,
+        0.1875,
+        0.375
+      ]
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

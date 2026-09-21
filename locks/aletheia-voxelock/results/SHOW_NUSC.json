@@ -1,0 +1,14 @@
+{
+  "schema": "voxelock.show_nusc.v1",
+  "used": "https://www.nuscenes.org/nuscenes",
+  "built": "two nuScenes translations, NE occupancy 1; empty sample is absence",
+  "ours": {
+    "n": 2,
+    "ne": 1,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
