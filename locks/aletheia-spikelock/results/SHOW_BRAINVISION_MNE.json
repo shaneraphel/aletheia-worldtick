@@ -1,0 +1,43 @@
+{
+  "schema": "spikelock.show_brainvision_mne.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "MNE reads the BrainVision tape, 8 samples; empty .vhdr is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 8,
+    "n_channels": 1,
+    "empty_vhdr": "raised",
+    "vmrk_stim": [
+      "Stimulus/go",
+      "Stimulus/end"
+    ],
+    "vmrk_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      1,
+      2,
+      3,
+      -1,
+      2,
+      0,
+      4,
+      5
+    ],
+    "empty": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

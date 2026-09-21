@@ -1,0 +1,19 @@
+{
+  "schema": "racelock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "target 3 uses 2 instructions; negative target is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0,
+    "target": 3
+  },
+  "ours": {
+    "race_car": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

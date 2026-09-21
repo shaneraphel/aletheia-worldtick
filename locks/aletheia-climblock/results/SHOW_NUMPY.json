@@ -1,0 +1,19 @@
+{
+  "schema": "climblock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "3x3 height path 4; empty field is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_max": "raised",
+    "field_max": 9
+  },
+  "ours": {
+    "longest_increasing_path": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

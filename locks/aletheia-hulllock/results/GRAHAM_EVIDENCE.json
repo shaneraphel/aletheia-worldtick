@@ -1,0 +1,37 @@
+{
+  "schema": "hulllock.graham_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "graham_seconds_median": 0.009089459003007505,
+  "jarvis_seconds_median": 0.041086499997618375,
+  "graham_seconds": [
+    0.008187082999938866,
+    0.008038666001084493,
+    0.009089459003007505,
+    0.009216458001901628,
+    0.008835417000227608,
+    0.010202000001299893,
+    0.009593791997758672
+  ],
+  "jarvis_seconds": [
+    0.0437893329981307,
+    0.04399679199923412,
+    0.042760166001244215,
+    0.041086499997618375,
+    0.03261541699976078,
+    0.04004391600028612,
+    0.03920487499999581
+  ],
+  "hull_first": 21,
+  "hull_second": 21,
+  "hull_identical": true,
+  "hull_equals_jarvis": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

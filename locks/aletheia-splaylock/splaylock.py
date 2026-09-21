@@ -1,0 +1,38 @@
+#!/usr/bin/env python3.12
+"""Splaylock — splay-to-root occupancy check."""
+
+from __future__ import annotations
+
+import argparse
+import sys
+
+from splay import splay_root
+
+
+def verify_precision() -> str:
+    if splay_root([2, 1, 3], 1) != 1:
+        raise SystemExit("splay identity failed")
+    if splay_root([2, 1, 3], 1) != splay_root([2, 1, 3], 1):
+        raise SystemExit("splay mismatch")
+    try:
+        splay_root([], 1)
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("empty splay accepted")
+    return "ok"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Splaylock — splay-to-root occupancy check")
+    parser.add_argument("--verify-precision", action="store_true")
+    args = parser.parse_args()
+    if args.verify_precision:
+        print("precision_ok", verify_precision())
+        return 0
+    parser.print_help()
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

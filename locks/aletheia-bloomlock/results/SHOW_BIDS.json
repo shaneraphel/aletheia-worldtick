@@ -1,0 +1,22 @@
+{
+  "schema": "bloomlock.show_bids.v1",
+  "used": "https://bids.neuroimaging.io/",
+  "built": "BIDS events [1,2,3] maybe-membership 1; empty events are absence",
+  "ours": {
+    "n": 4,
+    "maybe": 1,
+    "markers": [
+      "go",
+      "end"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

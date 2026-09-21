@@ -1,0 +1,16 @@
+{
+  "schema": "fingerlock.show_mano.v1",
+  "used": "https://mano.is.tue.mpg.de/",
+  "built": "16 MANO-shaped joints, two-finger 3; empty pose is absence",
+  "ours": {
+    "n": 16,
+    "word": "CAKE",
+    "dist": 3,
+    "empty": "raised"
+  },
+  "note": "MPI MANO model weights are not in this repo",
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

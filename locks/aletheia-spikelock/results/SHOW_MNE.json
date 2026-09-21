@@ -1,0 +1,70 @@
+{
+  "schema": "spikelock.show_mne.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE annotations copy BIDS trial_type go/end; empty trial_type is absence; MNE reads the MIT EDF and GDF 1.25 tapes; empty file is absence here",
+  "theirs": {
+    "package": "mne",
+    "annot_description": [
+      "go",
+      "end"
+    ],
+    "edf_annot": [
+      "go",
+      "end"
+    ],
+    "edf_annot_onset": [
+      1.0,
+      2.0
+    ],
+    "annot_onset": [
+      1.0,
+      2.0
+    ],
+    "empty_annot_n": 0,
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "edf_n_times": 8,
+    "gdf_n_times": 8,
+    "empty_edf": "raised",
+    "empty_gdf": "raised",
+    "empty_rawarray_n_times": 0
+  },
+  "ours": {
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty_annot": "raised",
+    "edf_annot": [
+      "go",
+      "end"
+    ],
+    "edf": 8,
+    "gdf": 8,
+    "edf_samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "gdf_samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

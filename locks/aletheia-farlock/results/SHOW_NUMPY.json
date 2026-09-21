@@ -1,0 +1,18 @@
+{
+  "schema": "farlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "four sites, span 12 after one delete; empty points are absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0
+  },
+  "ours": {
+    "min_manhattan_after_remove": 12,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

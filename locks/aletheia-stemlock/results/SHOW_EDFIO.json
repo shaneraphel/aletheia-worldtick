@@ -1,0 +1,31 @@
+{
+  "schema": "stemlock.show_edfio.v1",
+  "used": "https://github.com/the-siesta-group/edfio",
+  "built": "edfio reads EDF samples aba; suffix links 3; empty EDF is absence",
+  "theirs": {
+    "package": "edfio",
+    "version": "0.4.16",
+    "n_samples": 3,
+    "empty": "raised",
+    "annot": [
+      "go",
+      "end"
+    ],
+    "annot_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "word": "aba",
+    "links": 3,
+    "edf_annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

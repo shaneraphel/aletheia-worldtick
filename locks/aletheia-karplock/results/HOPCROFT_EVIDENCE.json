@@ -1,0 +1,37 @@
+{
+  "schema": "karplock.hopcroft_bench.v1",
+  "seed": 20260919,
+  "n": 80,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "hopcroft_seconds_median": 0.0003275829985796008,
+  "greedy_seconds_median": 7.308299973374233e-05,
+  "hopcroft_seconds": [
+    0.00037641699964297004,
+    0.0003275829985796008,
+    0.00032491700039827265,
+    0.00032229099815594964,
+    0.00032450000071548857,
+    0.0003709579978021793,
+    0.0003340420007589273
+  ],
+  "greedy_seconds": [
+    7.708300108788535e-05,
+    7.266600005095825e-05,
+    7.212499986053444e-05,
+    7.120800000848249e-05,
+    7.308299973374233e-05,
+    7.874999937484972e-05,
+    7.433299833792262e-05
+  ],
+  "match_first": 80,
+  "match_second": 80,
+  "match_identical": true,
+  "match_ge_greedy": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

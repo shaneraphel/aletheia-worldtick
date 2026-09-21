@@ -1,0 +1,19 @@
+{
+  "schema": "skiplock.show_sortedcontainers.v1",
+  "used": "https://github.com/grantjenks/python-sortedcontainers",
+  "built": "skip index 2 for key 5; empty list is absence",
+  "theirs": {
+    "package": "sortedcontainers",
+    "version": "2.4.0",
+    "empty_index": "raised",
+    "index_5": 2
+  },
+  "ours": {
+    "skip_search": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

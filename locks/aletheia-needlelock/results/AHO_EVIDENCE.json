@@ -1,0 +1,43 @@
+{
+  "schema": "needlelock.acauto_bench.v1",
+  "seed": 20260919,
+  "n": 65536,
+  "pats": [
+    "ab",
+    "bc",
+    "ca",
+    "aa"
+  ],
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "aho_seconds_median": 0.005757541999628302,
+  "count_seconds_median": 0.020306750000600005,
+  "aho_seconds": [
+    0.006842415998107754,
+    0.007070791998557979,
+    0.005757541999628302,
+    0.004824540999834426,
+    0.005586457999015693,
+    0.00656837499991525,
+    0.0055330839968519285
+  ],
+  "count_seconds": [
+    0.024948458001745166,
+    0.022032875000149943,
+    0.018695665999985067,
+    0.018636625001818174,
+    0.01906816699920455,
+    0.024959125003078952,
+    0.020306750000600005
+  ],
+  "hits_first": 29138,
+  "hits_second": 29138,
+  "hits_identical": true,
+  "hits_equals_count": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

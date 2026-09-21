@@ -1,0 +1,37 @@
+{
+  "schema": "meshlock.delaun_bench.v1",
+  "seed": 20260919,
+  "n": 256,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "delaun_seconds_median": 0.0005092079991300125,
+  "formula_seconds_median": 0.0005383749994507525,
+  "delaun_seconds": [
+    0.0004867919997195713,
+    0.000763249998271931,
+    0.0005092079991300125,
+    0.0008432499998889398,
+    0.0005319999982020818,
+    0.0005019999989599455,
+    0.000497749999340158
+  ],
+  "formula_seconds": [
+    0.0005244169988145586,
+    0.0005636660025629681,
+    0.0004531249978754204,
+    0.0005721660018025432,
+    0.0005609170002571773,
+    0.0005383749994507525,
+    0.0005328750012267847
+  ],
+  "tris_first": 494,
+  "tris_second": 494,
+  "tris_identical": true,
+  "tris_equals_formula": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "remainlock.show_math.v1",
+  "used": "https://docs.python.org/3/library/math.html",
+  "built": "two-modulus clock remainder 8; missing modulus is absence",
+  "theirs": {
+    "package": "math",
+    "empty_gcd": 0,
+    "gcd_3_5": 1
+  },
+  "ours": {
+    "crt_pair": 8,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

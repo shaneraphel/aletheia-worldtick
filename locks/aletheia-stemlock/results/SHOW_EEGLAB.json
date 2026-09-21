@@ -1,0 +1,38 @@
+{
+  "schema": "stemlock.show_eeglab.v1",
+  "used": "https://eeglab.org/",
+  "built": "EEGLAB events aba have 3 suffix links; empty set is absence",
+  "theirs": {
+    "package": "scipy",
+    "version": "1.17.1",
+    "empty_pnts": 0,
+    "mne": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "annot": [
+      "a",
+      "b",
+      "a"
+    ],
+    "onset": [
+      0.0,
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "word": "aba",
+    "links": 3,
+    "empty": "raised",
+    "empty_events": "raised",
+    "annot": [
+      "a",
+      "b",
+      "a"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

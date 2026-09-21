@@ -1,0 +1,19 @@
+{
+  "schema": "prefixlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "four-bin spike prefix 10; empty values are absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_cumsum": [],
+    "prefix_through_3": 10
+  },
+  "ours": {
+    "fenwick_prefix_through_3": 10,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

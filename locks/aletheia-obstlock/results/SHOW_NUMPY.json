@@ -1,0 +1,19 @@
+{
+  "schema": "obstlock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "5x3 lane path 6 with one elim; empty grid is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0,
+    "n_cells": 15
+  },
+  "ours": {
+    "shortest_path_obstacles": 6,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

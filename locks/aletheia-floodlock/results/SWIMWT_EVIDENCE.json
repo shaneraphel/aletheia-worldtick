@@ -1,0 +1,36 @@
+{
+  "schema": "floodlock.swimwt_bench.v1",
+  "seed": 20260919,
+  "n": 6,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "swim_seconds_median": 3.9541999285575e-05,
+  "repeat_seconds_median": 3.941699833376333e-05,
+  "swim_seconds": [
+    4.100000296602957e-05,
+    4.004099901067093e-05,
+    3.975000072387047e-05,
+    3.937499786843546e-05,
+    3.9541999285575e-05,
+    3.937499786843546e-05,
+    3.949999882024713e-05
+  ],
+  "repeat_seconds": [
+    4.012499994132668e-05,
+    3.9541999285575e-05,
+    3.912500324076973e-05,
+    3.9375001506414264e-05,
+    3.920900053344667e-05,
+    3.941699833376333e-05,
+    3.9667000237386674e-05
+  ],
+  "t_first": 12,
+  "t_second": 12,
+  "t_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "nearlock.show_kdtree.v1",
+  "used": "https://github.com/stefankoegl/kdtree",
+  "note": "https://github.com/stefankoegl/kdtree/issues/56",
+  "built": "nearest-x on a two-point contact tape; empty points are absence",
+  "theirs": {
+    "package": "kdtree",
+    "version": "0.16",
+    "empty_search_nn": null,
+    "near_x_on_two_points": 3
+  },
+  "ours": {
+    "kdtree_near_two_points": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

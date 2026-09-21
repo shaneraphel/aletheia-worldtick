@@ -1,0 +1,19 @@
+{
+  "schema": "sicklock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "five children, sick ends 0 and 4, four orders; empty sick set is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_sum": 0.0,
+    "n": 5
+  },
+  "ours": {
+    "infection_sequences": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

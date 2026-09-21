@@ -1,0 +1,32 @@
+{
+  "schema": "stemlock.show_hitachi.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads Hitachi aba on S1_D1 695; empty Hitachi is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_hitachi": "raised",
+    "ch0": "S1_D1 695",
+    "ch0_data": [
+      97.0,
+      98.0,
+      97.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      97,
+      98,
+      97
+    ],
+    "empty": "raised",
+    "empty_samples": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

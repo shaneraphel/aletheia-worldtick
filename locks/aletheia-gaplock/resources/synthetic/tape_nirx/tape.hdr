@@ -1,0 +1,10 @@
+[GeneralInfo]
+NIRStar="15.3"
+Device="NIRScout"
+Date="Mon, Sep 20, 2026"
+Time="14:00:00.000000"
+[ImagingParameters]
+Wavelengths=760 850
+SamplingRate=1
+[DataStructure]
+S-D-Key=1-1:1

@@ -1,0 +1,37 @@
+{
+  "schema": "gridlock.qdtree_bench.v1",
+  "seed": 20260919,
+  "n": 200000,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "qdtree_seconds_median": 0.011498375002702232,
+  "naive_seconds_median": 0.011973042001045542,
+  "qdtree_seconds": [
+    0.012136875000578584,
+    0.011459083998488495,
+    0.011498375002702232,
+    0.010699124999518972,
+    0.012288833000638988,
+    0.010718667002947768,
+    0.01277062499866588
+  ],
+  "naive_seconds": [
+    0.009934082998370286,
+    0.013443040999845834,
+    0.012043875001836568,
+    0.010315665997040924,
+    0.01218716699804645,
+    0.011884791998454602,
+    0.011973042001045542
+  ],
+  "ne_first": 49993,
+  "ne_second": 49993,
+  "ne_identical": true,
+  "ne_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

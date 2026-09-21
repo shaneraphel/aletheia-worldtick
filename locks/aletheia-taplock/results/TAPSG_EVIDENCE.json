@@ -1,0 +1,36 @@
+{
+  "schema": "taplock.tapsg_bench.v1",
+  "seed": 20260919,
+  "n": 5,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "tap_seconds_median": 1.8749997252598405e-06,
+  "repeat_seconds_median": 1.7920028767548501e-06,
+  "tap_seconds": [
+    2.7909991331398487e-06,
+    2.0000006770715117e-06,
+    1.9170038285665214e-06,
+    1.8749997252598405e-06,
+    1.8329956219531596e-06,
+    1.8749997252598405e-06,
+    1.7920028767548501e-06
+  ],
+  "repeat_seconds": [
+    2.125001628883183e-06,
+    1.8330028979107738e-06,
+    1.7920028767548501e-06,
+    1.7499987734481692e-06,
+    1.8749997252598405e-06,
+    1.7920028767548501e-06,
+    1.7499987734481692e-06
+  ],
+  "taps_first": 1,
+  "taps_second": 1,
+  "taps_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

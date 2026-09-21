@@ -1,0 +1,36 @@
+{
+  "schema": "racelock.racecr_bench.v1",
+  "seed": 20260919,
+  "target": 6,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "race_seconds_median": 2.2833002731204033e-05,
+  "repeat_seconds_median": 1.3625001884065568e-05,
+  "race_seconds": [
+    1.4457997167482972e-05,
+    1.3500000932253897e-05,
+    0.00039654099964536726,
+    3.8541002140846103e-05,
+    6.854099774500355e-05,
+    1.0666997695807368e-05,
+    2.2833002731204033e-05
+  ],
+  "repeat_seconds": [
+    1.3625001884065568e-05,
+    1.3250006304588169e-05,
+    7.612500485265628e-05,
+    0.0017421250013285317,
+    0.0003096250002272427,
+    9.83399513643235e-06,
+    9.707997378427535e-06
+  ],
+  "inst_first": 5,
+  "inst_second": 5,
+  "inst_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

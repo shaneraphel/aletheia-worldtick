@@ -1,0 +1,14 @@
+{
+  "schema": "karplock.show_opendrive.v1",
+  "used": "https://www.asam.net/standards/detail/opendrive/",
+  "built": "2x2 OpenDRIVE grasp matching 2; empty network is absence",
+  "ours": {
+    "n_roads": 4,
+    "paired": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

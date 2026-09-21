@@ -1,0 +1,14 @@
+{
+  "schema": "tourlock.show_opendrive.v1",
+  "used": "https://www.asam.net/standards/detail/opendrive/",
+  "built": "four-road OpenDRIVE junction, tour length 4; empty network is absence",
+  "ours": {
+    "n_roads": 4,
+    "tour": 4,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

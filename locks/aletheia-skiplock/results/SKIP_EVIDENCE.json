@@ -1,0 +1,37 @@
+{
+  "schema": "skiplock.skip_bench.v1",
+  "seed": 20260919,
+  "n": 65536,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "skip_seconds_median": 8.417002391070127e-06,
+  "index_seconds_median": 0.0007285000174306333,
+  "skip_seconds": [
+    1.0958989150822163e-05,
+    8.417002391070127e-06,
+    8.25000461190939e-06,
+    5.292007699608803e-06,
+    8.791976142674685e-06,
+    3.408303018659353e-05,
+    6.083049811422825e-06
+  ],
+  "index_seconds": [
+    0.0008283340139314532,
+    0.00046737503726035357,
+    0.0003183750086463988,
+    0.0007285000174306333,
+    0.0016712500364519656,
+    0.0008609580108895898,
+    0.00043945800280198455
+  ],
+  "index_first": 30213,
+  "index_second": 30213,
+  "index_identical": true,
+  "index_equals_list_index": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

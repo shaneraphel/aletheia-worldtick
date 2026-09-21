@@ -1,0 +1,37 @@
+{
+  "schema": "suffixlock.ukkonen_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "ukkonen_seconds_median": 0.0020482499967329204,
+  "unique_suffix_seconds_median": 0.003397541993763298,
+  "ukkonen_seconds": [
+    0.002154999994672835,
+    0.0017611249932087958,
+    0.0020482499967329204,
+    0.0020658340072259307,
+    0.0016955419559963048,
+    0.0026831250288523734,
+    0.0016865410143509507
+  ],
+  "unique_suffix_seconds": [
+    0.0030789169832132757,
+    0.004153957997914404,
+    0.0030670829582959414,
+    0.003943125018849969,
+    0.0034896249999292195,
+    0.003397541993763298,
+    0.0032770830439403653
+  ],
+  "n_links_first": 5905,
+  "n_links_second": 5905,
+  "n_links_identical": true,
+  "n_unique_suffixes": 4096,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

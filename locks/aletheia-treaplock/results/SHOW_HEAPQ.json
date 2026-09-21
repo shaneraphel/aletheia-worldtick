@@ -1,0 +1,18 @@
+{
+  "schema": "treaplock.show_heapq.v1",
+  "used": "https://docs.python.org/3/library/heapq.html",
+  "built": "treap root 3; empty tapes are absence",
+  "theirs": {
+    "package": "stdlib-heapq",
+    "empty_pop": "raised",
+    "min_prio_key": 8
+  },
+  "ours": {
+    "treap_root": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

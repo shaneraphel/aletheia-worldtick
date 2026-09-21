@@ -1,0 +1,36 @@
+{
+  "schema": "camlock.camtree_bench.v1",
+  "seed": 20260919,
+  "n": 64,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "camera_seconds_median": 2.3499997041653842e-05,
+  "repeat_seconds_median": 2.3583001166116446e-05,
+  "camera_seconds": [
+    2.5125002139247954e-05,
+    2.3790998966433108e-05,
+    2.3499997041653842e-05,
+    2.3749998945277184e-05,
+    2.3374999727820978e-05,
+    2.3458000214304775e-05,
+    2.333300290047191e-05
+  ],
+  "repeat_seconds": [
+    2.420799864921719e-05,
+    2.3499997041653842e-05,
+    2.3583001166116446e-05,
+    2.350000067963265e-05,
+    2.3584001610288396e-05,
+    2.329199924133718e-05,
+    2.3666001652600244e-05
+  ],
+  "cover_first": 19,
+  "cover_second": 19,
+  "cover_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

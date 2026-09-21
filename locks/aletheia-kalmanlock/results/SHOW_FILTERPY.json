@@ -1,0 +1,19 @@
+{
+  "schema": "kalmanlock.show_filterpy.v1",
+  "used": "https://github.com/rlabbe/filterpy",
+  "built": "three-step observation occupancy 3; empty tape is absence",
+  "theirs": {
+    "package": "filterpy",
+    "version": "1.4.5",
+    "update_none": "accepted",
+    "x0": 0.0
+  },
+  "ours": {
+    "kalman_filter": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

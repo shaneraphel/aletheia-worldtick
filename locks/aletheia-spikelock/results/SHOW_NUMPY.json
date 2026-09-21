@@ -1,0 +1,19 @@
+{
+  "schema": "spikelock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "three-bin spike occupancy 3; empty tape is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_mean": null,
+    "n_bins": 3
+  },
+  "ours": {
+    "nyquist": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "jointlock.show_urdf.v1",
+  "used": "https://wiki.ros.org/urdf",
+  "built": "two-link URDF reach (2,0); empty robot is absence",
+  "ours": {
+    "n_links": 3,
+    "pose": [
+      0.0,
+      0.0
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

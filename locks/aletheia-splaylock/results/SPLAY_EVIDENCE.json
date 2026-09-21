@@ -1,0 +1,37 @@
+{
+  "schema": "splaylock.splay_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "splay_seconds_median": 0.012656625000090571,
+  "index_seconds_median": 2.2541000362252817e-05,
+  "splay_seconds": [
+    0.045099249997292645,
+    0.01791662500181701,
+    0.012656625000090571,
+    0.009372332999191713,
+    0.015716666999651352,
+    0.00995320799847832,
+    0.009129833000770304
+  ],
+  "index_seconds": [
+    2.3708002117928118e-05,
+    2.2082997020334005e-05,
+    2.341700019314885e-05,
+    2.2541000362252817e-05,
+    2.391599991824478e-05,
+    2.0833998860325664e-05,
+    2.1500000002561137e-05
+  ],
+  "root_first": 969,
+  "root_second": 969,
+  "root_identical": true,
+  "root_equals_target": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

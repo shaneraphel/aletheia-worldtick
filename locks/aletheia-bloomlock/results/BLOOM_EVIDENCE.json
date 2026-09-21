@@ -1,0 +1,37 @@
+{
+  "schema": "bloomlock.bloom_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "bloom_seconds_median": 0.014572207997844089,
+  "set_seconds_median": 0.00015549999807262793,
+  "bloom_seconds": [
+    0.056829541998013156,
+    0.005565499999647727,
+    0.028179291999549605,
+    0.009080125000764383,
+    0.014572207997844089,
+    0.017413665998901706,
+    0.008160834000591421
+  ],
+  "set_seconds": [
+    0.00015899999925750308,
+    0.00012254199828021228,
+    0.00016116699771373533,
+    0.0001565830025356263,
+    0.0001324579970969353,
+    0.00014483300037682056,
+    0.00015549999807262793
+  ],
+  "maybe_first": 1,
+  "maybe_second": 1,
+  "maybe_identical": true,
+  "present_is_one": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

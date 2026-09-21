@@ -1,0 +1,38 @@
+{
+  "schema": "lanelock.kahn_bench.v1",
+  "seed": 20260919,
+  "n_nodes": 256,
+  "n_edges": 512,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "kahn_seconds_median": 0.00012804201105609536,
+  "bfs_seconds_median": 0.00012637500185519457,
+  "kahn_seconds": [
+    0.0001360829919576645,
+    0.00012820801930502057,
+    0.00012929196236655116,
+    0.00012720900122076273,
+    0.0001279159914702177,
+    0.00012804201105609536,
+    0.0001254999660886824
+  ],
+  "bfs_seconds": [
+    0.00013154104817658663,
+    0.00012637500185519457,
+    0.0001514169853180647,
+    0.00012587499804794788,
+    0.00014700001338496804,
+    0.00012433400843292475,
+    0.00012395798694342375
+  ],
+  "layers_first": 18,
+  "layers_second": 18,
+  "layers_identical": true,
+  "layers_equals_bfs": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

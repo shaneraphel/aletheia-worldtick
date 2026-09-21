@@ -1,0 +1,37 @@
+{
+  "schema": "philock.ssa_bench.v1",
+  "seed": 20260919,
+  "n": 512,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "ssa_seconds_median": 9.32919792830944e-05,
+  "naive_seconds_median": 9.916024282574654e-06,
+  "ssa_seconds": [
+    9.495799895375967e-05,
+    9.32919792830944e-05,
+    9.366701124235988e-05,
+    9.345798753201962e-05,
+    9.316694922745228e-05,
+    9.300000965595245e-05,
+    9.32500115595758e-05
+  ],
+  "naive_seconds": [
+    1.108401920646429e-05,
+    1.0374991688877344e-05,
+    9.916024282574654e-06,
+    9.834009688347578e-06,
+    9.583018254488707e-06,
+    1.0209041647613049e-05,
+    9.875046089291573e-06
+  ],
+  "n_phi_first": 125,
+  "n_phi_second": 125,
+  "n_phi_identical": true,
+  "n_phi_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

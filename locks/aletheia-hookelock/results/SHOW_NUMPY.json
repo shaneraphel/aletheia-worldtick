@@ -1,0 +1,19 @@
+{
+  "schema": "hookelock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "three-step spring occupancy 3; empty tape is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_norm": 0.0,
+    "n_steps": 3
+  },
+  "ours": {
+    "hooke_law": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

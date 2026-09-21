@@ -1,0 +1,23 @@
+{
+  "schema": "coinlock.show_networkx.v1",
+  "used": "https://github.com/networkx/networkx",
+  "built": "five coins, jump 2, path 1-3-5; empty coin row is absence",
+  "theirs": {
+    "package": "networkx",
+    "version": "3.6.1",
+    "empty_nodes": 0,
+    "empty_dijkstra": null
+  },
+  "ours": {
+    "cheapest_jump": [
+      1,
+      3,
+      5
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
