@@ -1,0 +1,36 @@
+{
+  "schema": "holdlock.couple_bench.v1",
+  "seed": 20260919,
+  "n": 64,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "swap_seconds_median": 1.0750001820269972e-05,
+  "repeat_seconds_median": 1.0792002285597846e-05,
+  "swap_seconds": [
+    1.1584001185838133e-05,
+    1.091699959943071e-05,
+    1.0750001820269972e-05,
+    1.0750001820269972e-05,
+    1.0666000889614224e-05,
+    1.06250008684583e-05,
+    1.0666000889614224e-05
+  ],
+  "repeat_seconds": [
+    1.1291998816886917e-05,
+    1.0749998182291165e-05,
+    1.0708001354942098e-05,
+    1.0665997251635417e-05,
+    1.083300230675377e-05,
+    1.0792002285597846e-05,
+    1.0832998668774962e-05
+  ],
+  "swaps_first": 29,
+  "swaps_second": 29,
+  "swaps_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "bloomlock.show_gdf.v1",
+  "used": "https://biosig.sourceforge.net/",
+  "built": "GDF onsets [1,2,3] maybe-membership 1; empty GDF is absence",
+  "ours": {
+    "n": 3,
+    "maybe": 1,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

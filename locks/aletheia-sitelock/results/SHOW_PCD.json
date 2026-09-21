@@ -1,0 +1,14 @@
+{
+  "schema": "sitelock.show_pcd.v1",
+  "used": "https://pointclouds.org/documentation/tutorials/pcd_file_format.html",
+  "built": "three PCD sites, Fortune vertex 1; empty cloud is absence",
+  "ours": {
+    "n": 3,
+    "verts": 1,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

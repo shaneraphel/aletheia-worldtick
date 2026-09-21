@@ -1,0 +1,8 @@
+{
+  "TaskName": "spike",
+  "SamplingFrequency": 8,
+  "EEGChannelCount": 1,
+  "RecordingDuration": 1.0,
+  "EEGReference": "n/a",
+  "PowerLineFrequency": "n/a"
+}

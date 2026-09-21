@@ -1,0 +1,26 @@
+{
+  "schema": "gaplock.show_bids.v1",
+  "used": "https://bids.neuroimaging.io/",
+  "built": "BIDS events [1,3,2] give empty-slot day 2; empty events are absence",
+  "ours": {
+    "bulbs": [
+      1,
+      3,
+      2
+    ],
+    "day": 2,
+    "markers": [
+      "go",
+      "end"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

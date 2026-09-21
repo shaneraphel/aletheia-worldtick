@@ -1,0 +1,19 @@
+{
+  "schema": "sidelock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "3 sticks 2 left-visible occupy 3 ways; n=0 is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_count": 0,
+    "n": 3
+  },
+  "ours": {
+    "ways_rearrange_sticks": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

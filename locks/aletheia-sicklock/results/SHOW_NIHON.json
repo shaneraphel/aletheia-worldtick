@@ -1,0 +1,49 @@
+{
+  "schema": "sicklock.show_nihon.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads five Nihon Kohden samples, sick 0 and 4, and go/end; four orders; empty Nihon Kohden is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 5,
+    "empty_eeg": "raised",
+    "empty_log": 0,
+    "ch_names": [
+      "C3"
+    ],
+    "annot": [
+      "go",
+      "end"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 5,
+    "samples": [
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "sick": [
+      0,
+      4
+    ],
+    "sequences": 4,
+    "empty": "raised",
+    "empty_log": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "climblock.lipath_bench.v1",
+  "seed": 20260919,
+  "n": 8,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "climb_seconds_median": 7.050000203889795e-05,
+  "repeat_seconds_median": 7.208299939520657e-05,
+  "climb_seconds": [
+    7.229200127767399e-05,
+    0.00015766599972266704,
+    6.841700087534264e-05,
+    7.050000203889795e-05,
+    7.012500282144174e-05,
+    7.095800174283795e-05,
+    6.991700138314627e-05
+  ],
+  "repeat_seconds": [
+    7.208299939520657e-05,
+    7.02499964972958e-05,
+    6.86249986756593e-05,
+    7.370800085482188e-05,
+    7.450000339304097e-05,
+    7.233399810502306e-05,
+    6.98750009178184e-05
+  ],
+  "path_first": 7,
+  "path_second": 7,
+  "path_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

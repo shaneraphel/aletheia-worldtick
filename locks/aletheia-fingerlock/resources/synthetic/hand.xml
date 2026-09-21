@@ -1,0 +1,10 @@
+<mujoco model="fingers">
+  <worldbody>
+    <body name="hand">
+      <site name="C"/>
+      <site name="A"/>
+      <site name="K"/>
+      <site name="E"/>
+    </body>
+  </worldbody>
+</mujoco>

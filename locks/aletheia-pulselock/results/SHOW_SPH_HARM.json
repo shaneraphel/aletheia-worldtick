@@ -1,0 +1,39 @@
+{
+  "schema": "pulselock.show_sph_harm.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "fixed MNE 1.9.0 import on SciPy 1.17.1 with a 6-line shim; official MNE reads 5 Eximia samples on Cz",
+  "theirs": {
+    "scipy": "1.17.1",
+    "has_sph_harm_before": false,
+    "import_before": "raised",
+    "shim": "applied",
+    "shim_us": 2.0,
+    "mne_import_s": 0.325,
+    "mne": "1.9.0",
+    "n_times": 5,
+    "ch32": "Cz",
+    "cz": [
+      1,
+      2,
+      3,
+      -1,
+      2
+    ],
+    "empty_nxe": "raised",
+    "numeric_match": true
+  },
+  "ours": {
+    "n": 5,
+    "samples": [
+      1,
+      2,
+      3,
+      -1,
+      2
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

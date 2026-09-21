@@ -1,0 +1,37 @@
+{
+  "schema": "pulselock.kstren_bench.v1",
+  "seed": 20260919,
+  "n": 5,
+  "k": 3,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "pulse_seconds_median": 1.733299723127857e-05,
+  "repeat_seconds_median": 1.6833000699989498e-05,
+  "pulse_seconds": [
+    1.9166000129189342e-05,
+    1.733299723127857e-05,
+    1.7541999113745987e-05,
+    1.670899655437097e-05,
+    4.795799759449437e-05,
+    1.7250000382773578e-05,
+    1.3457996828947216e-05
+  ],
+  "repeat_seconds": [
+    1.8082995666190982e-05,
+    1.6833000699989498e-05,
+    1.7167003534268588e-05,
+    1.6584002878516912e-05,
+    4.8667003284208477e-05,
+    1.4375000318977982e-05,
+    1.3917000615037978e-05
+  ],
+  "strength_first": 22,
+  "strength_second": 22,
+  "strength_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

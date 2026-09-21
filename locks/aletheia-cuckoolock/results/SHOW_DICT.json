@@ -1,0 +1,18 @@
+{
+  "schema": "cuckoolock.show_dict.v1",
+  "used": "https://docs.python.org/3/library/stdtypes.html#dict",
+  "built": "three keys placed 3; empty key tape is absence",
+  "theirs": {
+    "package": "stdlib-dict",
+    "empty_get": null,
+    "n_keys": 3
+  },
+  "ours": {
+    "cuckoo_placed": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

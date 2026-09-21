@@ -1,0 +1,37 @@
+{
+  "schema": "wallock.obstc_bench.v1",
+  "seed": 20260919,
+  "n_rows": 3,
+  "n_cols": 3,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "removal_seconds_median": 1.0333002137485892e-05,
+  "repeat_seconds_median": 1.0291994840372354e-05,
+  "removal_seconds": [
+    1.1541000276338309e-05,
+    1.0707997716963291e-05,
+    1.041700306814164e-05,
+    1.0333002137485892e-05,
+    1.0333002137485892e-05,
+    1.0083997040055692e-05,
+    1.0167001164518297e-05
+  ],
+  "repeat_seconds": [
+    1.0667004971764982e-05,
+    1.0457995813339949e-05,
+    1.041700306814164e-05,
+    1.0291994840372354e-05,
+    1.0166993888560683e-05,
+    1.020800118567422e-05,
+    1.0124997061211616e-05
+  ],
+  "removals_first": 2,
+  "removals_second": 2,
+  "removals_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

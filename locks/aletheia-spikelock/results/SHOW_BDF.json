@@ -1,0 +1,54 @@
+{
+  "schema": "spikelock.show_bdf.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE and edfio read 8 BDF samples and BDF Annotations go/end; empty BDF is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 8,
+    "empty_bdf": "raised",
+    "annot": [
+      "go",
+      "end"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "edfio": "0.4.16",
+    "edfio_n_signals": 1,
+    "edfio_n_samples": 8,
+    "edfio_annot": [
+      "go",
+      "end"
+    ],
+    "edfio_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "empty_annot": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

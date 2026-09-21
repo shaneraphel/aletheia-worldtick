@@ -1,0 +1,37 @@
+{
+  "schema": "cyclelock.floyd_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "floyd_seconds_median": 0.0010776660019473638,
+  "setwalk_seconds_median": 0.0006888749994686805,
+  "floyd_seconds": [
+    0.0010669590010365937,
+    0.0010374170014983974,
+    0.0010776660019473638,
+    0.0017488750017946586,
+    0.004411500001879176,
+    0.0022009169988450594,
+    0.0009613330003048759
+  ],
+  "setwalk_seconds": [
+    0.000597417001699796,
+    0.0005503749998752028,
+    0.0007548749999841675,
+    0.003551333000359591,
+    0.0009610410015739035,
+    0.0006888749994686805,
+    0.000408791998779634
+  ],
+  "cycle_first": 1,
+  "cycle_second": 1,
+  "cycle_identical": true,
+  "cycle_equals_setwalk": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

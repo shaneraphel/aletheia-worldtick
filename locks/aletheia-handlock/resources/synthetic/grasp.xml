@@ -1,0 +1,8 @@
+<mujoco model="grasp">
+  <custom>
+    <numeric name="cost" size="4" data="1 2 2 1"/>
+  </custom>
+  <worldbody>
+    <body name="palm"/>
+  </worldbody>
+</mujoco>

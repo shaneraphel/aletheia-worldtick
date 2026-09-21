@@ -1,0 +1,17 @@
+{
+  "schema": "reachlock.show_mjcf.v1",
+  "used": "https://mujoco.readthedocs.io/en/stable/XMLreference.html",
+  "built": "MJCF two capsules, reach (2,0); empty arm is absence",
+  "ours": {
+    "n_geoms": 2,
+    "pose": [
+      0.0,
+      0.0
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

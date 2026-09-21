@@ -1,0 +1,20 @@
+{
+  "schema": "farlock.show_open3d.v1",
+  "used": "https://github.com/isl-org/Open3D",
+  "built": "four PCD sites, Manhattan span 12; empty cloud is absence",
+  "theirs": {
+    "package": "open3d",
+    "version": "0.20.0",
+    "empty_points": 0,
+    "pcd_points": 4
+  },
+  "ours": {
+    "n": 4,
+    "span": 12,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

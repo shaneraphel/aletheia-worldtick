@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8" /><title>Academy module share</title>
+<style>body{font-family:ui-sans-serif,system-ui,sans-serif;margin:2rem;max-width:44rem}</style></head>
+<body>
+<h1>Academy module share</h1>
+<p>Shares require a module id.</p>
+<label>module <input id="mid" value="m1" /></label>
+<label>url <input id="url" value="https://example.test" /></label>
+<button id="go">Share</button>
+<pre id="out"></pre>
+<script>
+const SHARES = {};
+function share(url, note, moduleId) {
+  if (!moduleId) throw new Error("academy share requires a module id");
+  (SHARES[moduleId] ||= []).push({url, note});
+}
+document.getElementById("go").onclick = () => {
+  const out = document.getElementById("out");
+  try {
+    share(document.getElementById("url").value, "note", document.getElementById("mid").value);
+    out.textContent = JSON.stringify(SHARES, null, 2);
+  } catch (e) { out.textContent = e.message; }
+};
+</script>
+</body></html>

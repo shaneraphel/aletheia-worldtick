@@ -1,0 +1,48 @@
+{
+  "schema": "bloomlock.show_snirf.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads SNIRF onsets [1,2,3] on S1_D1 and stim 1.0/2.0 at 1.0/2.0 s; empty SNIRF is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_snirf": "raised",
+    "empty_stim": 0,
+    "ch_names": [
+      "S1_D1 760",
+      "S1_D1 850"
+    ],
+    "annot": [
+      "1.0",
+      "2.0"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "ch0": [
+      1.0,
+      2.0,
+      3.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      1,
+      2,
+      3
+    ],
+    "empty": "raised",
+    "empty_stim": "raised",
+    "annot": [
+      "1.0",
+      "2.0"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

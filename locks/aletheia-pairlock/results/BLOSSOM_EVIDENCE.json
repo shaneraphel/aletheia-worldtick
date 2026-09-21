@@ -1,0 +1,39 @@
+{
+  "schema": "pairlock.blossom_bench.v1",
+  "seed": 20260919,
+  "n": 10,
+  "n_edges": 12,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "blossom_seconds_median": 0.00034724999932223,
+  "greedy_seconds_median": 5.420006345957518e-07,
+  "blossom_seconds": [
+    0.00034816699917428195,
+    0.00034724999932223,
+    0.000338625002768822,
+    0.0003395000021555461,
+    0.0003415000028326176,
+    0.0005676250002579764,
+    0.0003555000002961606
+  ],
+  "greedy_seconds": [
+    8.749993867240846e-07,
+    5.420006345957518e-07,
+    4.169996827840805e-07,
+    4.5900014811195433e-07,
+    4.169996827840805e-07,
+    2.0419975044205785e-06,
+    6.250011210795492e-07
+  ],
+  "match_first": 4,
+  "match_second": 4,
+  "match_identical": true,
+  "greedy_match": 4,
+  "match_ge_greedy": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

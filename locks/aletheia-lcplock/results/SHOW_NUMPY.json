@@ -1,0 +1,19 @@
+{
+  "schema": "lcplock.show_numpy.v1",
+  "used": "https://github.com/numpy/numpy",
+  "built": "banana LCP 3 at index 2; empty suffix tape is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_common": 0,
+    "ana_anana": 3
+  },
+  "ours": {
+    "kasai_lcp_at": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

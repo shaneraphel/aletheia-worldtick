@@ -1,0 +1,2 @@
+pybloom-live==4.0.0
+scipy==1.17.1

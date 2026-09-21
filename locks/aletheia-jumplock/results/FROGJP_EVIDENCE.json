@@ -1,0 +1,36 @@
+{
+  "schema": "jumplock.frogjp_bench.v1",
+  "seed": 20260919,
+  "n_stones": 8,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "jump_seconds_median": 6.250003934837878e-06,
+  "repeat_seconds_median": 6.083995685912669e-06,
+  "jump_seconds": [
+    7.833004929125309e-06,
+    6.374997610691935e-06,
+    6.1250029830262065e-06,
+    6.250003934837878e-06,
+    6.1250029830262065e-06,
+    6.416004907805473e-06,
+    5.9580052038654685e-06
+  ],
+  "repeat_seconds": [
+    6.582995411008596e-06,
+    6.083995685912669e-06,
+    6.124995707068592e-06,
+    6.000002031214535e-06,
+    5.959002010058612e-06,
+    6.124995707068592e-06,
+    6.040994776412845e-06
+  ],
+  "cross_first": true,
+  "cross_second": true,
+  "cross_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

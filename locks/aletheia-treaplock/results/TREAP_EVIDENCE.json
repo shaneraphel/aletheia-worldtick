@@ -1,0 +1,37 @@
+{
+  "schema": "treaplock.treap_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "treap_seconds_median": 0.009842374998697778,
+  "maxprio_seconds_median": 8.900000102585182e-05,
+  "treap_seconds": [
+    0.009508708000794286,
+    0.008033083999180235,
+    0.011483375001262175,
+    0.009842374998697778,
+    0.010383749999164138,
+    0.010780832999444101,
+    0.009599499997420935
+  ],
+  "maxprio_seconds": [
+    7.779199950164184e-05,
+    7.354199988185428e-05,
+    8.900000102585182e-05,
+    9.079200026462786e-05,
+    8.912499833968468e-05,
+    8.866699863574468e-05,
+    8.97919999260921e-05
+  ],
+  "root_first": 1306,
+  "root_second": 1306,
+  "root_identical": true,
+  "root_equals_maxprio": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "slotlock.show_intervaltree.v1",
+  "used": "https://github.com/chaimleib/intervaltree",
+  "built": "two-slot overlap 2 at time 3; empty intervals are absence",
+  "theirs": {
+    "package": "intervaltree",
+    "version": "3.2.1",
+    "empty_at_0": [],
+    "at_3": 2
+  },
+  "ours": {
+    "interval_tree_overlap": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

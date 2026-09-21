@@ -1,0 +1,19 @@
+{
+  "schema": "karplock.show_networkx.v1",
+  "used": "https://github.com/networkx/networkx",
+  "built": "2x2 grasp pairing matching 2; empty edges are absence",
+  "theirs": {
+    "package": "networkx",
+    "version": "3.6.1",
+    "empty_matching": 0,
+    "paired_matching": 2
+  },
+  "ours": {
+    "hopcroft_paired": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

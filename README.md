@@ -67,7 +67,7 @@ MIT
 
 ## Atlas
 
-100 small `*-bind` libraries, `aletheia-voxelock`, and 6 BCI/robotics resource
-lists now live in this repo under `binds/`, `locks/`, and `docs-awesome/`.
+100 small `*-bind` libraries, 66 `*-lock` kernels, 10 resource lists, and 6 small
+tools now live in this repo under `binds/`, `locks/`, `docs-awesome/`, and `tools/`.
 See `ATLAS.md` for the full index. Each subdirectory keeps the files of its
 former standalone repository.

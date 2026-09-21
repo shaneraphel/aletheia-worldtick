@@ -1,0 +1,37 @@
+{
+  "schema": "cuckoolock.cuckoo_bench.v1",
+  "seed": 20260919,
+  "n": 256,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "cuckoo_seconds_median": 0.00012216599861858413,
+  "unique_seconds_median": 4.208999598631635e-06,
+  "cuckoo_seconds": [
+    0.00012608299948624335,
+    0.0001229999979841523,
+    0.00012216599861858413,
+    0.00011841599916806445,
+    0.00012358300227788277,
+    0.00012045800031046383,
+    0.00011937499948544428
+  ],
+  "unique_seconds": [
+    5.41700137546286e-06,
+    4.417001036927104e-06,
+    4.125002305954695e-06,
+    4.208999598631635e-06,
+    4.707999323727563e-06,
+    4.042001819470897e-06,
+    4.083001840626821e-06
+  ],
+  "placed_first": 256,
+  "placed_second": 256,
+  "placed_identical": true,
+  "placed_equals_unique": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

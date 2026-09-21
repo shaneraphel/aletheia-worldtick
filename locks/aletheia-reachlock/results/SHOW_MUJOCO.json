@@ -1,0 +1,23 @@
+{
+  "schema": "reachlock.show_mujoco.v1",
+  "used": "https://github.com/google-deepmind/mujoco",
+  "built": "MJCF two capsules, reach (2,0); empty arm is absence",
+  "theirs": {
+    "package": "mujoco",
+    "version": "3.13.0",
+    "empty_xml": "accepted",
+    "ngeom": 2
+  },
+  "ours": {
+    "n_geoms": 2,
+    "pose": [
+      0.0,
+      0.0
+    ],
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

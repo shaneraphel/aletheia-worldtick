@@ -1,0 +1,21 @@
+{
+  "schema": "fingerlock.show_mujoco.v1",
+  "used": "https://github.com/google-deepmind/mujoco",
+  "built": "MJCF sites CAKE, two-finger 3; empty hand is absence",
+  "theirs": {
+    "package": "mujoco",
+    "version": "3.13.0",
+    "empty_xml": "accepted",
+    "n_sites": 4
+  },
+  "ours": {
+    "word": "CAKE",
+    "n_sites": 4,
+    "dist": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

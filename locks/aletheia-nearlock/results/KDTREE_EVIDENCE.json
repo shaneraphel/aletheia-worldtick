@@ -1,0 +1,37 @@
+{
+  "schema": "nearlock.kdtree_bench.v1",
+  "seed": 20260919,
+  "n": 65536,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "kdtree_seconds_median": 0.01804983400143101,
+  "naive_seconds_median": 0.017401249999238644,
+  "kdtree_seconds": [
+    0.015359582997916732,
+    0.017422582997824065,
+    0.01783320799950161,
+    0.01804983400143101,
+    0.020220999998855405,
+    0.018649916997674154,
+    0.018885959001636365
+  ],
+  "naive_seconds": [
+    0.017019957998854807,
+    0.01751058299851138,
+    0.01686787500148057,
+    0.01690466700165416,
+    0.017401249999238644,
+    0.018010749998211395,
+    0.020642583000153536
+  ],
+  "x_first": 41260,
+  "x_second": 41260,
+  "x_identical": true,
+  "x_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

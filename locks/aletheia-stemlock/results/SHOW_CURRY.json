@@ -1,0 +1,49 @@
+{
+  "schema": "stemlock.show_curry.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads Curry aba on Cz and event 1/2 at 1.0/2.0 s; empty Curry is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_curry": "raised",
+    "empty_evt": 0,
+    "ch_names": [
+      "Cz"
+    ],
+    "annot": [
+      "1",
+      "2"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "cz_uv": [
+      97,
+      98,
+      97
+    ],
+    "read_s": 5.223815834004199
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      97,
+      98,
+      97
+    ],
+    "empty": "raised",
+    "empty_evt": "raised",
+    "annot": [
+      "1",
+      "2"
+    ],
+    "occupancy_s": 0.0003748330054804683
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

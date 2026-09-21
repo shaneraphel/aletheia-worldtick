@@ -1,0 +1,36 @@
+{
+  "schema": "slotlock.interval_bench.v1",
+  "seed": 20260919,
+  "n": 4096,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "overlap_seconds_median": 0.0009870419999060687,
+  "naive_seconds_median": 0.0001840839977376163,
+  "overlap_seconds": [
+    0.0011365000027581118,
+    0.0010679590013751294,
+    0.0009870419999060687,
+    0.0009808340000745375,
+    0.0009822499996516854,
+    0.0009576669981470332,
+    0.0010187499974563252
+  ],
+  "naive_seconds": [
+    0.00017545800074003637,
+    0.0001827079977374524,
+    0.0001871249987743795,
+    0.00018808299864758737,
+    0.0002598749997559935,
+    0.00016987499839160591,
+    0.0001840839977376163
+  ],
+  "count_first": 217,
+  "count_second": 217,
+  "count_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

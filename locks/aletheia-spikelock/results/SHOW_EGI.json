@@ -1,0 +1,59 @@
+{
+  "schema": "spikelock.show_egi.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads 8 EGI samples on E1 and DIN1/DIN2 at 1.0/2.0 s; empty EGI is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 8,
+    "empty_egi": "raised",
+    "empty_evt": 0,
+    "ch_names": [
+      "E1",
+      "DIN1",
+      "DIN2"
+    ],
+    "annot": [
+      "DIN1",
+      "DIN2"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "e1_uv": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ]
+  },
+  "ours": {
+    "n": 8,
+    "samples": [
+      0,
+      1000,
+      2000,
+      1000,
+      0,
+      -1000,
+      -2000,
+      -1000
+    ],
+    "empty": "raised",
+    "empty_evt": "raised",
+    "annot": [
+      "DIN1",
+      "DIN2"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

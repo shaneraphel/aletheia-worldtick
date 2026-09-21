@@ -1,0 +1,36 @@
+{
+  "schema": "bridgelock.tarjan_bench.v1",
+  "seed": 20260919,
+  "n": 64,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "tarjan_seconds_median": 8.270900070783682e-05,
+  "repeat_seconds_median": 8.712500130059198e-05,
+  "tarjan_seconds": [
+    8.270900070783682e-05,
+    6.562500129803084e-05,
+    8.762500146985985e-05,
+    0.00011579100100789219,
+    8.066699956543744e-05,
+    8.062499910010956e-05,
+    0.00014829199790256098
+  ],
+  "repeat_seconds": [
+    9.387500176671892e-05,
+    0.00013000000035390258,
+    8.108300244202837e-05,
+    8.712500130059198e-05,
+    0.0002061669983959291,
+    8.037500083446503e-05,
+    8.520800111000426e-05
+  ],
+  "bridges_first": 0,
+  "bridges_second": 0,
+  "bridges_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

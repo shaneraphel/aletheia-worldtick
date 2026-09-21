@@ -1,0 +1,37 @@
+{
+  "schema": "twistlock.householder_bench.v1",
+  "seed": 20260919,
+  "n_calls": 200000,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "householder_seconds_median": 0.10658712499935064,
+  "naive_seconds_median": 0.058758208997460315,
+  "householder_seconds": [
+    0.10310495799785713,
+    0.10936362500069663,
+    0.10658712499935064,
+    0.10847933300101431,
+    0.1081844580003235,
+    0.10590491599941743,
+    0.10404095800186042
+  ],
+  "naive_seconds": [
+    0.0582822500000475,
+    0.05785745799948927,
+    0.058477374997892184,
+    0.0610826249976526,
+    0.05979124999794294,
+    0.06424033399889595,
+    0.058758208997460315
+  ],
+  "first_first": -13,
+  "first_second": -13,
+  "first_identical": true,
+  "first_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

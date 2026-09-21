@@ -1,0 +1,32 @@
+{
+  "schema": "stemlock.show_nicolet.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE reads Nicolet aba; suffix links 3; empty Nicolet is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_nicolet": "raised",
+    "ch_names": [
+      "Cz"
+    ],
+    "n_annot": 0
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      97,
+      98,
+      97
+    ],
+    "word": "aba",
+    "links": 3,
+    "empty": "raised",
+    "empty_samples": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

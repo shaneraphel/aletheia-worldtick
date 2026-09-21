@@ -1,0 +1,50 @@
+{
+  "schema": "bloomlock.show_bdf.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "official MNE and edfio read BDF onsets [1,2,3] and go/end; maybe-membership 1; empty BDF is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 3,
+    "empty_bdf": "raised",
+    "annot": [
+      "go",
+      "end"
+    ],
+    "onset": [
+      1.0,
+      2.0
+    ],
+    "edfio": "0.4.16",
+    "edfio_n_signals": 1,
+    "edfio_n_samples": 3,
+    "edfio_annot": [
+      "go",
+      "end"
+    ],
+    "edfio_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "n": 3,
+    "samples": [
+      1,
+      2,
+      3
+    ],
+    "maybe": 1,
+    "empty": "raised",
+    "empty_annot": "raised",
+    "annot": [
+      "go",
+      "end"
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

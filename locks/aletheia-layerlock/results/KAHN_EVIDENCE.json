@@ -1,0 +1,37 @@
+{
+  "schema": "layerlock.kahn_bench.v1",
+  "seed": 20260919,
+  "n": 256,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "kahn_seconds_median": 8.274999709101394e-05,
+  "naive_seconds_median": 6.658299753325991e-05,
+  "kahn_seconds": [
+    8.274999709101394e-05,
+    8.054199861362576e-05,
+    7.837500015739352e-05,
+    8.691599941812456e-05,
+    7.937500049592927e-05,
+    8.637499922770076e-05,
+    8.612500096205622e-05
+  ],
+  "naive_seconds": [
+    6.658299753325991e-05,
+    6.458300049416721e-05,
+    6.387499888660386e-05,
+    6.729199958499521e-05,
+    6.950000170036219e-05,
+    8.52089979161974e-05,
+    6.533299892907962e-05
+  ],
+  "layers_first": 0,
+  "layers_second": 0,
+  "layers_identical": true,
+  "layers_equals_naive": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

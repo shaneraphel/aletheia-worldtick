@@ -1,0 +1,38 @@
+{
+  "schema": "obstlock.gridk_bench.v1",
+  "seed": 20260919,
+  "n_rows": 5,
+  "n_cols": 3,
+  "k": 1,
+  "n_trials": 7,
+  "warmup": 1,
+  "n_paired": 7,
+  "path_seconds_median": 1.5165998775046319e-05,
+  "repeat_seconds_median": 1.5083998732734472e-05,
+  "path_seconds": [
+    1.6249996406259015e-05,
+    1.5334000636357814e-05,
+    1.5124998753890395e-05,
+    1.5165998775046319e-05,
+    1.487500048824586e-05,
+    1.5208999684546143e-05,
+    1.4916997315594926e-05
+  ],
+  "repeat_seconds": [
+    1.5665998944314197e-05,
+    1.529200017102994e-05,
+    1.5083998732734472e-05,
+    1.5041998267406598e-05,
+    1.5207999240374193e-05,
+    1.5041001461213455e-05,
+    1.4792000001762062e-05
+  ],
+  "dist_first": 6,
+  "dist_second": 6,
+  "dist_identical": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "implementation": "CPython",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "fingerlock.show_mjcf.v1",
+  "used": "https://mujoco.readthedocs.io/en/stable/XMLreference.html",
+  "built": "MJCF sites CAKE, two-finger 3; empty hand is absence",
+  "ours": {
+    "word": "CAKE",
+    "n_sites": 4,
+    "dist": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

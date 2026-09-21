@@ -1,0 +1,4 @@
+# MNE-Annotations
+# onset, duration, description
+1.0,0.0,go
+2.0,0.0,end

@@ -1,0 +1,36 @@
+{
+  "schema": "sicklock.show_brainvision_mne.v1",
+  "used": "https://github.com/mne-tools/mne-python",
+  "built": "MNE reads five BrainVision samples, sick 0 and 4; four orders; empty .vhdr is absence",
+  "theirs": {
+    "package": "mne",
+    "version": "1.9.0",
+    "import_shim": "scipy.special.sph_harm_y",
+    "n_times": 5,
+    "empty_vhdr": "raised",
+    "vmrk_stim": [
+      "Stimulus/go",
+      "Stimulus/end"
+    ],
+    "vmrk_onset": [
+      1.0,
+      2.0
+    ]
+  },
+  "ours": {
+    "annot": [
+      "go",
+      "end"
+    ],
+    "n": 5,
+    "sick": [
+      0,
+      4
+    ],
+    "sequences": 4
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

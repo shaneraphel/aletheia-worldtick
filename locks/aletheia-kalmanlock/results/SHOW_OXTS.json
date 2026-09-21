@@ -1,0 +1,14 @@
+{
+  "schema": "kalmanlock.show_oxts.v1",
+  "used": "https://www.cvlibs.net/datasets/kitti/raw_data.php",
+  "built": "three OXTS samples, occupancy 3; empty IMU is absence",
+  "ours": {
+    "n": 3,
+    "kalman": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

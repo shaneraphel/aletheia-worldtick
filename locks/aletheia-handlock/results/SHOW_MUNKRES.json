@@ -1,0 +1,32 @@
+{
+  "schema": "handlock.show_munkres.v1",
+  "used": "https://github.com/bmc/munkres",
+  "note": "https://github.com/bmc/munkres/issues/54",
+  "built": "2x2 finger-to-contact assignment; empty cost is absence",
+  "theirs": {
+    "package": "munkres",
+    "version": "1.1.4",
+    "cases": {
+      "empty": "IndexError: list index out of range",
+      "nested_empty": [],
+      "square": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "ours": {
+    "hungar_cost_square": 2,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

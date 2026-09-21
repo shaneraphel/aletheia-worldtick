@@ -1,0 +1,23 @@
+{
+  "schema": "spikelock.show_edf.v1",
+  "used": "https://physionet.org/content/eegmmidb/",
+  "built": "one-channel EDF, 8 samples; empty EDF is absence",
+  "theirs": {
+    "package": "numpy",
+    "version": "2.4.6",
+    "empty_mean": null,
+    "used_also": "https://github.com/mne-tools/mne-python"
+  },
+  "ours": {
+    "edf_occupancy": 8,
+    "bids_occupancy": 2,
+    "xdf_occupancy": 10,
+    "brainvision_occupancy": 8,
+    "wfdb_occupancy": 8,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
