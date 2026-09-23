@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MuJoCo on an MJCF cost tape, and I refused an empty table."""
+"""Show: MuJoCo on an MJCF cost tape (an empty table)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

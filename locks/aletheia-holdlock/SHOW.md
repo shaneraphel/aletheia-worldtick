@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused a missing pair row
+# Show: NetworkX (a missing pair row)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on four
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on four
 seats: the same 1 swap so every couple sits together, plus a refusal when
 the row is missing.
 

@@ -1,7 +1,6 @@
-# Show: I used NumPy, and I refused the empty voxel tape
+# Show: NumPy (the empty voxel tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [numpy/numpy](https://github.com/numpy/numpy) on two lidar points:
+Compared with [numpy/numpy](https://github.com/numpy/numpy) on two lidar points:
 the same NE occupancy 1, plus a refusal when the point tape is empty.
 
 NumPy 2.4.6 `linalg.norm` on an empty array is 0.0.
@@ -13,7 +12,7 @@ python3.12 show_numpy.py
 
 Pinned output: `results/SHOW_NUMPY.json`.
 
-# Show: I used a nuScenes instance tape, and I refused an empty sample
+# Show: a nuScenes instance tape (an empty sample)
 
 Two translations occupy the NE child. Official `NuScenes()` reads
 `LIDAR_TOP`, `LIDAR_FRONT`, `LIDAR_BACK`, `RADAR_FRONT`, `RADAR_BACK`, `RADAR_LEFT`, `RADAR_RIGHT`,

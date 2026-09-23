@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MuJoCo on an MJCF arm, and I refused an empty model."""
+"""Show: MuJoCo on an MJCF arm (an empty model)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

@@ -3,10 +3,6 @@
 Floyd cycle occupancy on a next-pointer tape. Empty next is absence.
 An acyclic walk is a measured 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `floyd.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same three-node loop. Their empty `simple_cycles` is `[]`.
+NetworkX on the same three-node loop. Their empty `simple_cycles` is `[]`.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 floyd_bench.py`. Numbers are copied from `results/FLOYD_EVIDE
 | `floyd_cycle` median | 0.0010776660019473638 s |
 | set-walk median | 0.0006888749994686805 s |
 | cycle (twice) | 1 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

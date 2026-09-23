@@ -3,10 +3,6 @@
 SSA φ occupancy on a control-flow join. An empty CFG is absence. It is
 not zero φ sites.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `ssa.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 ssa_bench.py
 
 ## Show
 
-I used NetworkX on the same 3-block join. Their empty Graph has no nodes.
+NetworkX on the same 3-block join. Their empty Graph has no nodes.
 This kernel refuses an empty CFG. See `SHOW.md`.
 
 ```bash
@@ -44,8 +40,6 @@ Pinned `python3.12 ssa_bench.py`. Numbers are copied from `results/SSA_EVIDENCE.
 | `ssa_phi_count` median | 9.32919792830944e-05 s |
 | naive join count median | 9.916024282574654e-06 s |
 | n_phi (twice) | 125 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

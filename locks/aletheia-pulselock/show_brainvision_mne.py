@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on a BrainVision pulse tape, and I refused an empty header."""
+"""Show: MNE on a BrainVision pulse tape (an empty header)."""
 from __future__ import annotations
 
 import json

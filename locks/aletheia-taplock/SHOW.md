@@ -1,7 +1,6 @@
-# Show: I used NumPy, and I refused a missing garden width
+# Show: NumPy (a missing garden width)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [numpy/numpy](https://github.com/numpy/numpy) on a width-5 garden:
+Compared with [numpy/numpy](https://github.com/numpy/numpy) on a width-5 garden:
 the same 1 tap, plus a refusal when `n` is 0.
 
 NumPy 2.4.6 `sum` on an empty array is 0.0.

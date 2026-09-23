@@ -3,10 +3,6 @@
 Octree north-east occupancy after one split. Empty points are absence. They
 are not occupancy 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `octpart.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_nuscenes.py
 
 ## Show
 
-I used NumPy on the same two lidar points. Their empty `norm` is 0.0. This
+NumPy on the same two lidar points. Their empty `norm` is 0.0. This
 kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 octpart_bench.py`. Numbers are copied from `results/OCTPART_E
 | `octpart_ne` median | 0.012522583001555176 s |
 | naive median | 0.01416600000084145 s |
 | NE (twice) | 25020 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

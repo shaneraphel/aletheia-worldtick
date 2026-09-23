@@ -4,10 +4,6 @@ Givens hypot and Householder first-entry on integer frames. An empty vector is
 absence. A zero vector is absence. A non-square radius is absence. They are
 not the identity rotation.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `givens.py` and `householder.py`.
 
 ## Problems
 
@@ -26,7 +22,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy hypot on the same wrist frame. Their empty hypot is 0.0. This
+NumPy hypot on the same wrist frame. Their empty hypot is 0.0. This
 kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -45,8 +41,6 @@ Pinned seed 20260919. Numbers are copied from `results/GIVENS_EVIDENCE.json` and
 | `householder_first` median | 0.10658712499935064 s |
 | naive median | 0.058758208997460315 s |
 | first entry (twice) | -13 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

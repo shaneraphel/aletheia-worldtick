@@ -4,10 +4,6 @@ Runge–Kutta tableau occupancy on an embodiment tape. An empty step list is
 absence. A non-positive stage count is absence. A negative step is absence.
 They are not a frozen rest pose.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `rkutta.py`.
 
 ## Problems
 
@@ -25,7 +21,7 @@ python3.12 show_scipy.py
 
 ## Show
 
-I used SciPy `solve_ivp` on an embodiment span. A zero-length span still
+SciPy `solve_ivp` on an embodiment span. A zero-length span still
 returns samples. This kernel refuses an empty tableau. See `SHOW.md`.
 
 ## Evidence
@@ -42,8 +38,6 @@ Pinned `python3.12 rkutta_bench.py`. Numbers are copied from `results/RKUTTA_EVI
 | `runge_kutta` median | 0.016529917000298155 s |
 | `len` median | 1.1250012903474271e-06 s |
 | occupancy (twice) | 200000 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on a Neuroscan CNT tape, and I refused an empty recording."""
+"""Show: MNE on a Neuroscan CNT tape (an empty recording)."""
 from __future__ import annotations
 
 import json

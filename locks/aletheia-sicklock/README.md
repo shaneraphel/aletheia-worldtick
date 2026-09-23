@@ -3,10 +3,6 @@
 Infection-order occupancy on a world-model / BCI line of children. A missing
 sick set is absence. It is not sequence count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `infsq.py`.
 
 ## Problems
 
@@ -30,7 +26,7 @@ python3.12 show_bids.py
 
 ## Show
 
-I used NumPy on the same five children. Their empty `sum` is 0.0.
+NumPy on the same five children. Their empty `sum` is 0.0.
 `infection_sequences(5, [])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -47,8 +43,6 @@ Pinned `python3.12 infsq_bench.py`. Numbers are copied from `results/INFSQ_EVIDE
 | `infection_sequences` median | 5.83400105824694e-06 s |
 | repeat median | 5.83400105824694e-06 s |
 | sequences (twice) | 4 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## BCI resources
 

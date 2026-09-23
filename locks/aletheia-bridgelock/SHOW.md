@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused the empty edge tape
+# Show: NetworkX (the empty edge tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on a
 triangle-plus-pending lane: the same 1 bridge, plus a refusal when the
 edge tape is empty.
 

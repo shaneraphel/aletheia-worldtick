@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused a missing vertex
+# Show: NetworkX (a missing vertex)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on four
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on four
 lane components: the same 2 orbits, plus a refusal when `n` is negative.
 
 NetworkX 3.6.1 `number_connected_components` on an empty Graph is 0.

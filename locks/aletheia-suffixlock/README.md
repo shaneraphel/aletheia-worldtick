@@ -3,10 +3,6 @@
 Suffix-link occupancy on a token tape. Empty text is absence. It is not
 zero links.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `ukkonen.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 ukkonen_bench.py
 
 ## Show
 
-I used WojciechMula/pyahocorasick on `aba`. Their empty `add_word` is accepted.
+WojciechMula/pyahocorasick on `aba`. Their empty `add_word` is accepted.
 This kernel refuses. See `SHOW.md`.
 
 ```bash
@@ -45,8 +41,6 @@ Pinned `python3.12 ukkonen_bench.py`. Numbers are copied from `results/UKKONEN_E
 | unique-suffix set median | 0.003397541993763298 s |
 | n_links (twice) | 5905 |
 | n_unique_suffixes | 4096 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

@@ -3,10 +3,6 @@
 Cuckoo-hash occupancy on a key tape. Empty keys and a failed rehash are
 absence. They are not placed count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `cuckoo.py`.
 
 ## Problems
 
@@ -22,7 +18,7 @@ python3.12 cuckoo_bench.py
 
 ## Show
 
-I used a stdlib dict on the same three keys. Their empty `get` is `None`.
+a stdlib dict on the same three keys. Their empty `get` is `None`.
 This kernel refuses an empty key tape. See `SHOW.md`.
 
 ```bash
@@ -43,8 +39,6 @@ Pinned `python3.12 cuckoo_bench.py`. Numbers are copied from `results/CUCKOO_EVI
 | `cuckoo_placed` median | 0.00012216599861858413 s |
 | unique median | 4.208999598631635e-06 s |
 | placed (twice) | 256 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

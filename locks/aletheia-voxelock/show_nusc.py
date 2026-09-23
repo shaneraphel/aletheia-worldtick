@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a nuScenes instance tape, and I refused an empty sample."""
+"""Show: a nuScenes instance tape (an empty sample)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

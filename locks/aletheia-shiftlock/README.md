@@ -3,10 +3,6 @@
 Non-overlapping job occupancy on an autonomous-driving fleet tape. An empty
 job list is absence. It is not profit 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `jobsc.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same four jobs. Their empty `sum` is 0.0.
+NumPy on the same four jobs. Their empty `sum` is 0.0.
 `job_scheduling([], [], [])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 jobsc_bench.py`. Numbers are copied from `results/JOBSC_EVIDE
 | `job_scheduling` median | 3.0410010367631912e-06 s |
 | repeat median | 2.959000994451344e-06 s |
 | profit (twice) | 120 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

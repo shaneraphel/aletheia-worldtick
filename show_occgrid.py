@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a ROS OccupancyGrid world, and I refused empty facts."""
+"""Show: a ROS OccupancyGrid world (empty facts)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

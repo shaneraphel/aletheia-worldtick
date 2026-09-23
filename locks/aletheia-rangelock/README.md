@@ -3,10 +3,6 @@
 Range-tree inclusive box occupancy. Empty points are absence. They are not
 count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `rngtree.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_sortedcontainers.py
 
 ## Show
 
-I used sortedcontainers on the same lane box. Their empty `irange` is `[]`.
+sortedcontainers on the same lane box. Their empty `irange` is `[]`.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 rngtree_bench.py`. Numbers are copied from `results/RNGTREE_E
 | `rngtree_count` median | 0.004823041999770794 s |
 | naive median | 0.005065000001195585 s |
 | count (twice) | 53145 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

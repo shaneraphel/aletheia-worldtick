@@ -3,10 +3,6 @@
 Hungarian min-assignment on a contact-cost square. An empty cost matrix is
 absence. A non-square matrix is absence. They are not assignment cost 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `hungar.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_munkres.py
 
 ## Show
 
-I used Munkres on the same contact square. Their empty `[[]]` is `[]`. This
+Munkres on the same contact square. Their empty `[[]]` is `[]`. This
 kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 hungar_bench.py`. Numbers are copied from `results/HUNGAR_EVI
 | `hungar_cost` median | 0.014876749999530148 s |
 | brute-permutation median | 0.01829025000188267 s |
 | cost (twice) | 2 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

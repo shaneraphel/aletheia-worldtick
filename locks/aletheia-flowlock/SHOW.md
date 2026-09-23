@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused the empty residual
+# Show: NetworkX (the empty residual)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on a
 four-node traffic diamond: the same max-flow 2, plus a refusal when the
 residual tape is empty.
 

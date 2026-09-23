@@ -3,10 +3,6 @@
 Nearest-x after inserts on a contact tape. Empty points are absence. They
 are not coordinate 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `kdtree.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_kdtree.py
 
 ## Show
 
-I used stefankoegl/kdtree on the same contacts. Empty `search_nn` is `None`
+stefankoegl/kdtree on the same contacts. Empty `search_nn` is `None`
 there. This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 kdtree_bench.py`. Numbers are copied from `results/KDTREE_EVI
 | `kdtree_near` median | 0.01804983400143101 s |
 | naive median | 0.017401249999238644 s |
 | x (twice) | 41260 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

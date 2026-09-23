@@ -3,10 +3,6 @@
 Fortune Voronoi-vertex occupancy on a site tape. Empty sites are absence.
 They are not vertex count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `fortun.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_scipy.py
 
 ## Show
 
-I used SciPy `Voronoi` on the same three sites. Empty sites raise there.
+SciPy `Voronoi` on the same three sites. Empty sites raise there.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -39,8 +35,6 @@ Pinned `python3.12 fortun_bench.py`. Numbers are copied from `results/FORTUN_EVI
 | n_paired | 7 |
 | `fortun_verts` median | 0.009291374997701496 s |
 | vertices (twice) | 39 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

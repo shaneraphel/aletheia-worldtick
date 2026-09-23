@@ -3,10 +3,6 @@
 Hooke spring occupancy on a dexterous-hand tape. Empty springs are absence.
 They are not force 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `hooke.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same spring tape. Their empty `norm` is 0.0. This kernel
+NumPy on the same spring tape. Their empty `norm` is 0.0. This kernel
 refuses. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 hooke_bench.py`. Numbers are copied from `results/HOOKE_EVIDE
 | `hooke_law` median | 0.0002168339997297153 s |
 | naive median | 0.0002144999998563435 s |
 | occupancy (twice) | 4096 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

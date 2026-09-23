@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an XDF key tape, and I refused an empty recording."""
+"""Show: an XDF key tape (an empty recording)."""
 from __future__ import annotations
 
 import json

@@ -1,7 +1,6 @@
-# Show: I used pyahocorasick, and I refused the empty text tape
+# Show: pyahocorasick (the empty text tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [WojciechMula/pyahocorasick](https://github.com/WojciechMula/pyahocorasick)
+Compared with [WojciechMula/pyahocorasick](https://github.com/WojciechMula/pyahocorasick)
 on `aba`: suffix-link occupancy 3, plus a refusal when the text is empty.
 
 pyahocorasick 2.3.1 empty `add_word` is accepted.

@@ -3,10 +3,6 @@
 Disjoint-set occupancy on an autonomous-driving lane tape. A negative vertex
 count is absence. It is not 0 components.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `orbits.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on four lane nodes. Their empty Graph has 0 components.
+NetworkX on four lane nodes. Their empty Graph has 0 components.
 `DisjointSet(-1)` raises. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 orbits_bench.py`. Numbers are copied from `results/ORBITS_EVI
 | `n_orbits` median | 0.004201750001811888 s |
 | naive median | 0.0024897500006773043 s |
 | orbits (twice) | 637 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

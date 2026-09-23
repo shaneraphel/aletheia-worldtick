@@ -3,10 +3,6 @@
 Treap-root occupancy on a key and priority tape. Empty tapes and length
 mismatch are absence. They are not root 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `treap.py`.
 
 ## Problems
 
@@ -22,7 +18,7 @@ python3.12 treap_bench.py
 
 ## Show
 
-I used stdlib heapq on the same priorities. Their empty `heappop` raises.
+stdlib heapq on the same priorities. Their empty `heappop` raises.
 This kernel refuses empty tapes. See `SHOW.md`.
 
 ```bash
@@ -43,8 +39,6 @@ Pinned `python3.12 treap_bench.py`. Numbers are copied from `results/TREAP_EVIDE
 | `treap_root` median | 0.009842374998697778 s |
 | max-priority median | 8.900000102585182e-05 s |
 | root (twice) | 1306 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

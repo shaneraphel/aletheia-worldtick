@@ -4,10 +4,6 @@ Johnson routing distance on a directed lane graph. An empty edge list is
 absence. An unreachable destination is absence. A negative cycle is absence.
 They are not distance 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `johnson.py`.
 
 ## Problems
 
@@ -25,7 +21,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same three-node lane. Their empty `johnson` is `{}`.
+NetworkX on the same three-node lane. Their empty `johnson` is `{}`.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -43,8 +39,6 @@ Pinned `python3.12 johnson_bench.py`. Numbers are copied from `results/JOHNSON_E
 | `johnson_dist` median | 0.000372874997992767 s |
 | Dijkstra median | 3.0250001145759597e-05 s |
 | dist (twice) | 5 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

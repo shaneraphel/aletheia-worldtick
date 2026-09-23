@@ -3,10 +3,6 @@
 Frog-jump occupancy on an embodiment foothold tape. Missing stones are
 absence. They are not cannot-cross.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `frogjp.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same eight stones. Their empty graph has 0 nodes.
+NetworkX on the same eight stones. Their empty graph has 0 nodes.
 `can_cross([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 frogjp_bench.py`. Numbers are copied from `results/FROGJP_EVI
 | `can_cross` median | 6.250003934837878e-06 s |
 | repeat median | 6.083995685912669e-06 s |
 | cross (twice) | True |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

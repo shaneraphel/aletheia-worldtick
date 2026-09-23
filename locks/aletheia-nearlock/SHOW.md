@@ -1,7 +1,6 @@
-# Show: I used kdtree, and I refused the empty contact tape
+# Show: kdtree (the empty contact tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [stefankoegl/kdtree](https://github.com/stefankoegl/kdtree) on a
+Compared with [stefankoegl/kdtree](https://github.com/stefankoegl/kdtree) on a
 contact tape: nearest-x for `(3, 4)` among `[(0,0),(3,4)]`, plus a refusal
 when there are no points.
 

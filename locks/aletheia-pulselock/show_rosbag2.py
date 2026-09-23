@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a rosbag2 folder, and I refused an empty bag."""
+"""Show: a rosbag2 folder (an empty bag)."""
 from __future__ import annotations
 import json, platform, sqlite3, sys
 from pathlib import Path

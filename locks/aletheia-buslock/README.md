@@ -3,10 +3,6 @@
 Fewest buses on an autonomous-driving route table. A missing table is
 absence. It is not hop 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `busrts.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same two city routes. Their empty `shortest_path` raises.
+NetworkX on the same two city routes. Their empty `shortest_path` raises.
 `num_buses(None, 1, 6)` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 busrts_bench.py`. Numbers are copied from `results/BUSRTS_EVI
 | `num_buses` median | 5.292000423651189e-06 s |
 | repeat median | 5.375000910134986e-06 s |
 | hops (twice) | 1 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

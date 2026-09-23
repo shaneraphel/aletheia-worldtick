@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used edfio on the pulse EDF tape, and I refused an empty recording."""
+"""Show: edfio on the pulse EDF tape (an empty recording)."""
 from __future__ import annotations
 
 import json

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MuJoCo on an MJCF hand, and I refused an empty site tape."""
+"""Show: MuJoCo on an MJCF hand (an empty site tape)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

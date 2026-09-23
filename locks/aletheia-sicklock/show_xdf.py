@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an XDF sick tape, and I refused an empty recording."""
+"""Show: an XDF sick tape (an empty recording)."""
 from __future__ import annotations
 
 import json

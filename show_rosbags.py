@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used rosbags on a rosbag2 folder, and I refused an empty bag.
+"""Show: rosbags on a rosbag2 folder (an empty bag).
 
 rosbag2_py is absent (no ROS 2). rosbags reads the same MIT folder.
 """

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an EEGLAB set, and I refused an empty recording."""
+"""Show: an EEGLAB set (an empty recording)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

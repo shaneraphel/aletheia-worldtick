@@ -1,7 +1,6 @@
-# Show: I used intervaltree, and I refused the empty slot tape
+# Show: intervaltree (the empty slot tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [chaimleib/intervaltree](https://github.com/chaimleib/intervaltree)
+Compared with [chaimleib/intervaltree](https://github.com/chaimleib/intervaltree)
 on two world-model slots: overlap 2 at time 3, plus a refusal when the
 interval tape is empty.
 

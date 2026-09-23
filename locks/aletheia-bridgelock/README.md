@@ -3,10 +3,6 @@
 Tarjan-bridge occupancy on a world-model lane graph. Empty edges are absence.
 They are not 0 bridges.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `tarjan.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on a triangle plus a pending lane. Their empty Graph has `[]`
+NetworkX on a triangle plus a pending lane. Their empty Graph has `[]`
 bridges. `n_bridges(4, [])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 tarjan_bench.py`. Numbers are copied from `results/TARJAN_EVI
 | `n_bridges` median | 8.270900070783682e-05 s |
 | repeat median | 8.712500130059198e-05 s |
 | bridges (twice) | 0 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

@@ -3,10 +3,6 @@
 Quadtree north-east occupancy after one split. Empty points are absence. They
 are not occupancy 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `qdtree.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same BEV points. Their empty `norm` is 0.0. This
+NumPy on the same BEV points. Their empty `norm` is 0.0. This
 kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 qdtree_bench.py`. Numbers are copied from `results/QDTREE_EVI
 | `qdtree_ne` median | 0.011498375002702232 s |
 | naive median | 0.011973042001045542 s |
 | NE (twice) | 49993 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

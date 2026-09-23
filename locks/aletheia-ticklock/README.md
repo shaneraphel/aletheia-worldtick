@@ -4,10 +4,6 @@ Verlet step occupancy on an embodiment tape. An empty step list is absence. A
 non-positive step count is absence. A negative timestep is absence. They are
 not a frozen rest pose.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `verlet.py`.
 
 ## Problems
 
@@ -25,7 +21,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same Verlet tape. Their empty `norm` is 0.0. This
+NumPy on the same Verlet tape. Their empty `norm` is 0.0. This
 kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -42,8 +38,6 @@ Pinned `python3.12 verlet_bench.py`. Numbers are copied from `results/VERLET_EVI
 | `verlet_integration` median | 0.005282041998725617 s |
 | `len` median | 7.089984137564898e-07 s |
 | occupancy (twice) | 200000 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

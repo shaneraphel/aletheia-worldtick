@@ -3,10 +3,6 @@
 Wavelet-tree prefix rank on a symbol tape. Empty sequences are absence.
 They are not rank 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `wavelet.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_bitarray.py
 
 ## Show
 
-I used bitarray on the same five-symbol tape. Their empty `count(1)` is 0.
+bitarray on the same five-symbol tape. Their empty `count(1)` is 0.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 wavelet_bench.py`. Numbers are copied from `results/WAVELET_E
 | `wavelet_rank` median | 0.007976750002853805 s |
 | naive median | 0.009682708001491847 s |
 | rank (twice) | 24910 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

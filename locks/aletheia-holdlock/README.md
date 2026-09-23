@@ -3,10 +3,6 @@
 Couple-swap occupancy on a dexterous-hand seat row. A missing row is
 absence. It is not swap 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `couple.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on four seats. Their empty matching is `set()`.
+NetworkX on four seats. Their empty matching is `set()`.
 `min_swaps_couples(None)` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 couple_bench.py`. Numbers are copied from `results/COUPLE_EVI
 | `min_swaps_couples` median | 1.0750001820269972e-05 s |
 | repeat median | 1.0792002285597846e-05 s |
 | swaps (twice) | 29 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

@@ -3,10 +3,6 @@
 Ukkonen suffix-link occupancy on a text tape. Empty text is absence.
 It is not link count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `ukkonen.py`.
 
 ## Problems
 
@@ -30,7 +26,7 @@ python3.12 show_bids.py
 
 ## Show
 
-I used pyahocorasick on the same `aba` tape. Empty `add_word` is accepted
+pyahocorasick on the same `aba` tape. Empty `add_word` is accepted
 there. This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -47,8 +43,6 @@ Pinned `python3.12 ukkonen_bench.py`. Numbers are copied from `results/UKKONEN_E
 | `n_suffix_links` median | 0.0030627910018665716 s |
 | `len` median | 1.7909987946040928e-06 s |
 | links (twice) | 3307 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## BCI resources
 

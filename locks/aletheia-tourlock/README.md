@@ -3,10 +3,6 @@
 Visit-every-node occupancy on a world-model graph. An empty graph is
 absence. It is not tour length 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `visitall.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same four-node world. Their empty Graph has no nodes.
+NetworkX on the same four-node world. Their empty Graph has no nodes.
 `shortest_path_visit([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 visitall_bench.py`. Numbers are copied from `results/VISITALL
 | `shortest_path_visit` median | 8.958006219472736e-06 s |
 | repeat median | 9.000003046821803e-06 s |
 | length (twice) | 4 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

@@ -3,10 +3,6 @@
 Rising-water wait on an autonomous-driving elevation grid. An empty grid is
 absence. It is not wait 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `swimwt.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same 2×2 grid. Their empty `max` raises.
+NumPy on the same 2×2 grid. Their empty `max` raises.
 `swim_rising([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 swimwt_bench.py`. Numbers are copied from `results/SWIMWT_EVI
 | `swim_rising` median | 3.9541999285575e-05 s |
 | repeat median | 3.941699833376333e-05 s |
 | wait (twice) | 12 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

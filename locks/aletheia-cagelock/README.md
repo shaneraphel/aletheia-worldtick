@@ -3,10 +3,6 @@
 Containment-wall occupancy on a world-model infection tape. An empty grid is
 absence. It is not wall 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `virusw.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same 4×8 infection tape. Their empty `norm` is 0.0.
+NumPy on the same 4×8 infection tape. Their empty `norm` is 0.0.
 `contain_virus([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 virusw_bench.py`. Numbers are copied from `results/VIRUSW_EVI
 | `contain_virus` median | 2.5082998035941273e-05 s |
 | repeat median | 2.4917004338931292e-05 s |
 | walls (twice) | 10 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

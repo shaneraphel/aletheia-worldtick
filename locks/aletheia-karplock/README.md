@@ -3,10 +3,6 @@
 Hopcroft–Karp matching occupancy on a bipartite edge tape. Empty edges
 are absence. They are not matching size 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `hopcroft.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX Hopcroft–Karp on the same 2×2 pairing. Their empty matching is 0.
+NetworkX Hopcroft–Karp on the same 2×2 pairing. Their empty matching is 0.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 hopcroft_bench.py`. Numbers are copied from `results/HOPCROFT
 | `hopcroft_karp` median | 0.0003275829985796008 s |
 | greedy median | 7.308299973374233e-05 s |
 | matching (twice) | 80 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

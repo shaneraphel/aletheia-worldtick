@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on a Nicolet tape, and I refused an empty recording."""
+"""Show: MNE on a Nicolet tape (an empty recording)."""
 from __future__ import annotations
 
 import json

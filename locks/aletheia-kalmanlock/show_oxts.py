@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a KITTI OXTS tape, and I refused an empty IMU."""
+"""Show: a KITTI OXTS tape (an empty IMU)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

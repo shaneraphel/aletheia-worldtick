@@ -4,10 +4,6 @@ Occupancy-cycle and planning-layer kernels for a next-pose tape. An empty
 next tape is absence. It is not "acyclic 0". A negative node count is
 absence. It is not "zero layers".
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `floyd.py` and `kahn.py`.
 
 ## Problems
 
@@ -26,7 +22,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same pose loop. Their empty `simple_cycles` is `[]`.
+NetworkX on the same pose loop. Their empty `simple_cycles` is `[]`.
 This kernel refuses. See `SHOW.md`.
 
 ## Kernels
@@ -52,8 +48,6 @@ Pinned seed 20260919. Numbers are copied from `results/FLOYD_EVIDENCE.json` and 
 | `kahn_layers` median | 0.00012804201105609536 s |
 | BFS layers median | 0.00012637500185519457 s |
 | layers (twice) | 18 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

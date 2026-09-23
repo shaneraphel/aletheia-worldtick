@@ -1,7 +1,6 @@
-# Show: I used SciPy Voronoi, and I refused the empty site tape
+# Show: SciPy Voronoi (the empty site tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [scipy/scipy](https://github.com/scipy/scipy) on five world-model
+Compared with [scipy/scipy](https://github.com/scipy/scipy) on five world-model
 sites: unbounded-cell occupancy 4 here, plus a refusal when the site tape
 is empty.
 

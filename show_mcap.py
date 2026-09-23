@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an MCAP world log, and I refused an empty log."""
+"""Show: an MCAP world log (an empty log)."""
 from __future__ import annotations
 import io, json, platform, sys
 from pathlib import Path

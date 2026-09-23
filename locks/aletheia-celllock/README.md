@@ -3,10 +3,6 @@
 Voronoi unbounded-cell occupancy on a site tape. Empty sites are absence.
 They are not cell count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `voronoi.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_scipy.py
 
 ## Show
 
-I used SciPy `Voronoi` on the same five world-model sites. Empty sites raise
+SciPy `Voronoi` on the same five world-model sites. Empty sites raise
 there. This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 voronoi_bench.py`. Numbers are copied from `results/VORONOI_E
 | `voronoi_unbounded` median | 0.0026342909986851737 s |
 | hull median | 0.0026052079992950894 s |
 | cells (twice) | 21 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

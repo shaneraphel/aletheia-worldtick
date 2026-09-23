@@ -1,7 +1,6 @@
-# Show: I used FilterPy, and I refused the empty observation tape
+# Show: FilterPy (the empty observation tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [rlabbe/filterpy](https://github.com/rlabbe/filterpy) on a
+Compared with [rlabbe/filterpy](https://github.com/rlabbe/filterpy) on a
 three-step observation tape: occupancy 3 here, plus a refusal when the tape
 is empty.
 

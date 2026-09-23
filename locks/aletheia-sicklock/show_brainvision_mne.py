@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on a BrainVision tape, and I refused an empty sick set."""
+"""Show: MNE on a BrainVision tape (an empty sick set)."""
 from __future__ import annotations
 
 import json

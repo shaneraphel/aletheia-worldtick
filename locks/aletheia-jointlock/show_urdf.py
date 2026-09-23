@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a two-link URDF, and I refused an empty robot."""
+"""Show: a two-link URDF (an empty robot)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

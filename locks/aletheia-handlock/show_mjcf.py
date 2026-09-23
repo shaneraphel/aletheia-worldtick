@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an MJCF cost tape, and I refused an empty custom table."""
+"""Show: an MJCF cost tape (an empty custom table)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

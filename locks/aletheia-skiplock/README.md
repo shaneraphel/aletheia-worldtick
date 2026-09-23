@@ -3,10 +3,6 @@
 Deterministic skip search on a sorted tape. An empty list is absence. A
 missing key is absence. They are not index 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `skiplist.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 skip_bench.py
 
 ## Show
 
-I used grantjenks/python-sortedcontainers on the same tape. Their empty
+grantjenks/python-sortedcontainers on the same tape. Their empty
 `SortedList.index` raises. This kernel refuses. See `SHOW.md`.
 
 ```bash
@@ -44,8 +40,6 @@ Pinned `python3.12 skip_bench.py`. Numbers are copied from `results/SKIP_EVIDENC
 | `skip_search` median | 8.417002391070127e-06 s |
 | `list.index` median | 0.0007285000174306333 s |
 | index (twice) | 30213 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

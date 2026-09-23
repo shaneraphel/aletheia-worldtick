@@ -3,10 +3,6 @@
 K-subarray strength occupancy on a BCI / spike tape. A missing pulse row is
 absence. It is not strength 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `kstren.py`.
 
 ## Problems
 
@@ -30,7 +26,7 @@ python3.12 show_bids.py
 
 ## Show
 
-I used NumPy on the same five pulses. Their empty `sum` is 0.0.
+NumPy on the same five pulses. Their empty `sum` is 0.0.
 `max_k_subarray_strength([], 1)` raises. See `SHOW.md`.
 
 ## Evidence
@@ -47,8 +43,6 @@ Pinned `python3.12 kstren_bench.py`. Numbers are copied from `results/KSTREN_EVI
 | `max_k_subarray_strength` median | 1.733299723127857e-05 s |
 | repeat median | 1.6833000699989498e-05 s |
 | strength (twice) | 22 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## BCI resources
 

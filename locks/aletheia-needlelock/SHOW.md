@@ -1,7 +1,6 @@
-# Show: I used pyahocorasick, and I refused the empty needle
+# Show: pyahocorasick (the empty needle)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [WojciechMula/pyahocorasick](https://github.com/WojciechMula/pyahocorasick)
+Compared with [WojciechMula/pyahocorasick](https://github.com/WojciechMula/pyahocorasick)
 on a token tape: overlapping needles `ab` and `bc` in `abcabc`, plus a refusal
 when the text or a pattern is empty.
 

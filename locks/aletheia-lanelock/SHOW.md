@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused the empty next-pose tape
+# Show: NetworkX (the empty next-pose tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on a
 three-node pose loop: occupancy 1 here, plus a refusal when the next tape
 is empty.
 

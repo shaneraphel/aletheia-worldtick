@@ -4,10 +4,6 @@ Blossom maximum matching on a pairing graph. An empty vertex set is absence.
 It is not matching size 0. Isolated vertices with `n>=1` and no edges are a
 real count of 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `blossom.py`.
 
 ## Problems
 
@@ -25,7 +21,7 @@ python3.12 show_networkx.py
 
 ## Show
 
-I used NetworkX on the same four-finger pairing. Their empty matching is
+NetworkX on the same four-finger pairing. Their empty matching is
 `set()`. This kernel refuses `n<1`. See `SHOW.md`.
 
 ## Evidence
@@ -44,8 +40,6 @@ Pinned `python3.12 blossom_bench.py`. Numbers are copied from `results/BLOSSOM_E
 | greedy median | 5.420006345957518e-07 s |
 | match (twice) | 4 |
 | greedy match | 4 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

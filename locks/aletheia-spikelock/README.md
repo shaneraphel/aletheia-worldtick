@@ -3,10 +3,6 @@
 Sample-occupancy for a spike or EEG tape. An empty tape is absence. A
 non-positive sample count is absence. Rate 0 is a stored DC sample.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `nyqst.py`.
 
 ## Problems
 
@@ -46,7 +42,7 @@ Empty EDF / header-only BIDS / 0-stream XDF / 0-channel BrainVision / 0-signal W
 
 ## Show
 
-I used NumPy on the same spike bins. Their empty `mean` is `nan`. This
+NumPy on the same spike bins. Their empty `mean` is `nan`. This
 kernel refuses. See `SHOW.md`.
 
 ## Kernels
@@ -79,8 +75,6 @@ Pinned `python3.12 nyquist_bench.py`. Numbers are copied from `results/NYQUIST_E
 | XDF streams | 1 |
 | BrainVision samples | 8 |
 | WFDB samples | 8 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

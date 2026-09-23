@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used XDF StreamHeader+Samples, and official pyxdf n_streams is 2."""
+"""Show: XDF StreamHeader+Samples, and official pyxdf n_streams is 2."""
 from __future__ import annotations
 
 import json

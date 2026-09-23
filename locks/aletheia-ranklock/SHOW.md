@@ -1,7 +1,6 @@
-# Show: I used bitarray, and I refused the empty symbol tape
+# Show: bitarray (the empty symbol tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [ilanschnell/bitarray](https://github.com/ilanschnell/bitarray) on
+Compared with [ilanschnell/bitarray](https://github.com/ilanschnell/bitarray) on
 a five-symbol spike tape: the same rank 3 of symbol 1, plus a refusal when
 the tape is empty.
 

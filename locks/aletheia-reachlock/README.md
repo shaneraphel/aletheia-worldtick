@@ -5,10 +5,6 @@ An empty field is absence. A disk of radius 0 is a stored point, not a missing
 disk. `disk_clearance2` compares `r²` in integers: same pose and same disks
 hash to the same digest.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `reach.py`, `sdfocc.py`, `causal.py`,
 `mtree.py`, `fenwick.py`, `kalman.py`, `hooke.py`, `bloom.py`, `dinic.py`, and `hopcroft.py`.
 
 ## Problems
@@ -54,7 +50,7 @@ keeps the last valid pose. The field hash is shown on every frame.
 
 ## Show
 
-I used NumPy on the same two-link reach. Their empty `norm` is 0.0.
+NumPy on the same two-link reach. Their empty `norm` is 0.0.
 This kernel refuses an unreachable pose. See `SHOW.md`.
 
 ```bash
@@ -79,8 +75,6 @@ Pinned `python3.12 bench.py`. Numbers are copied from `results/EVIDENCE.json`.
 | integer digest (twice) | `e1fdbc5aaecb149b20e2c37ee61b4e1dde1579d3e7ba8be9e8ff98a2519c08ce` |
 | sign agreement | 200000 / 200000 |
 | `happens_before([0,1],[1,1])` | 1 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 Reproduce:
 

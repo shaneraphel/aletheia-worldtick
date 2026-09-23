@@ -3,10 +3,6 @@
 Bloom maybe-membership on a key tape. Empty keys are absence. They are
 not membership 0. A measured 0 is a real no.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `bloom.py`.
 
 ## Problems
 
@@ -30,7 +26,7 @@ python3.12 show_bids.py
 
 ## Show
 
-I used pybloom-live on the same three keys. Their empty membership is
+pybloom-live on the same three keys. Their empty membership is
 `False`. This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -47,8 +43,6 @@ Pinned `python3.12 bloom_bench.py`. Numbers are copied from `results/BLOOM_EVIDE
 | `bloom_maybe` median | 0.014572207997844089 s |
 | set median | 0.00015549999807262793 s |
 | maybe (twice) | 1 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## BCI resources
 

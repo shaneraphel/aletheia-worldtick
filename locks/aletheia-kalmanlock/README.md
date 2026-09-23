@@ -3,10 +3,6 @@
 Kalman observation occupancy on an autonomous-driving tape. Empty
 observations are absence. They are not state 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `kalman.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_filterpy.py
 
 ## Show
 
-I used FilterPy on an observation tape. Their `update(None)` is accepted.
+FilterPy on an observation tape. Their `update(None)` is accepted.
 This kernel refuses an empty tape. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 kalman_bench.py`. Numbers are copied from `results/KALMAN_EVI
 | `kalman_filter` median | 0.00023762499768054113 s |
 | naive median | 0.00029916700077592395 s |
 | occupancy (twice) | 4096 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

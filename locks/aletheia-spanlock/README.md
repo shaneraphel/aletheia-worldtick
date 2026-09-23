@@ -3,10 +3,6 @@
 Segment-tree range sum on a count tape. Empty arrays and a bad range are
 absence. They are not sum 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `segspt.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same window. Their empty `sum` is 0.0. This kernel
+NumPy on the same window. Their empty `sum` is 0.0. This kernel
 refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 segspt_bench.py`. Numbers are copied from `results/SEGSPT_EVI
 | `segspt_sum` median | 0.0025472909983363934 s |
 | naive median | 4.587500006891787e-05 s |
 | sum (twice) | 14133 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

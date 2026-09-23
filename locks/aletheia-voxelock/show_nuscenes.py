@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used official NuScenes tables, and I refused an empty sample."""
+"""Show: official NuScenes tables (an empty sample)."""
 from __future__ import annotations
 
 import json

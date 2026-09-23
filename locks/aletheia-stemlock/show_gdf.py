@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a BioSig GDF 1.25 tape, and I refused an empty recording."""
+"""Show: a BioSig GDF 1.25 tape (an empty recording)."""
 from __future__ import annotations
 
 import json

@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused the empty corridor
+# Show: NetworkX (the empty corridor)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on a
 three-node lane: the same distance 2, plus a refusal when the edge tape
 is empty.
 

@@ -1,7 +1,6 @@
-# Show: I used NumPy, and I refused the empty sample tape
+# Show: NumPy (the empty sample tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [numpy/numpy](https://github.com/numpy/numpy) on `[1,2,1,3,1]`:
+Compared with [numpy/numpy](https://github.com/numpy/numpy) on `[1,2,1,3,1]`:
 the same prefix rank 3, plus a refusal when the tape is empty.
 
 NumPy 2.4.6 `count_nonzero` on an empty array is 0.

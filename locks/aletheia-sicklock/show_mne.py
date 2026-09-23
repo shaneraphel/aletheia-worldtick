@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on a GDF 1.25 tape, and I refused an empty sick set."""
+"""Show: MNE on a GDF 1.25 tape (an empty sick set)."""
 from __future__ import annotations
 
 import json

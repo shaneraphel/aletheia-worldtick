@@ -3,10 +3,6 @@
 Empty-slot occupancy on a BCI / world-model bloom tape. An empty tape is
 absence. It is not day 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `kslots.py`.
 
 ## Problems
 
@@ -30,7 +26,7 @@ python3.12 show_bids.py
 
 ## Show
 
-I used NumPy on the same three blooms. Their empty `count_nonzero` is 0.
+NumPy on the same three blooms. Their empty `count_nonzero` is 0.
 `k_empty_slots([], 1)` raises. See `SHOW.md`.
 
 ## Evidence
@@ -48,8 +44,6 @@ Pinned `python3.12 kslots_bench.py`. Numbers are copied from `results/KSLOTS_EVI
 | `k_empty_slots` median | 1.1660013115033507e-06 s |
 | repeat median | 1.0840012691915035e-06 s |
 | day (twice) | 2 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## BCI resources
 

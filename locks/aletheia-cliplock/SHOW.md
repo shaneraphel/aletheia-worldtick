@@ -1,7 +1,6 @@
-# Show: I used SciPy ConvexHull, and I refused the empty contact tape
+# Show: SciPy ConvexHull (the empty contact tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [scipy/scipy](https://github.com/scipy/scipy) on five grasp contacts:
+Compared with [scipy/scipy](https://github.com/scipy/scipy) on five grasp contacts:
 interior discard 1 here, plus a refusal when the point tape is empty.
 
 SciPy 1.17.1 `ConvexHull` on no points raises. `aktous_discard([])` raises.

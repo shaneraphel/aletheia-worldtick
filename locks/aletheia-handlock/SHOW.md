@@ -1,7 +1,6 @@
-# Show: I used Munkres, and I refused the empty cost
+# Show: Munkres (the empty cost)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [bmc/munkres](https://github.com/bmc/munkres) on a dexterous-hand
+Compared with [bmc/munkres](https://github.com/bmc/munkres) on a dexterous-hand
 contact square: the same 2×2 assignment, plus a refusal when the cost tape is
 empty.
 

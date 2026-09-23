@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an MJCF two-link arm, and I refused an empty model."""
+"""Show: an MJCF two-link arm (an empty model)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

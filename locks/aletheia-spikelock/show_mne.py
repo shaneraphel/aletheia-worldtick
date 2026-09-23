@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on EDF and GDF tapes, and I refused empty recordings."""
+"""Show: MNE on EDF and GDF tapes (empty recordings)."""
 from __future__ import annotations
 
 import json

@@ -3,10 +3,6 @@
 Longest increasing path on a world-model height field. An empty field is
 absence. It is not path 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `lipath.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same 3×3 field. Their empty `max` raises.
+NumPy on the same 3×3 field. Their empty `max` raises.
 `longest_increasing_path([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 lipath_bench.py`. Numbers are copied from `results/LIPATH_EVI
 | `longest_increasing_path` median | 7.050000203889795e-05 s |
 | repeat median | 7.208299939520657e-05 s |
 | path (twice) | 7 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

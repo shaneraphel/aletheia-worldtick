@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used MNE on the pulse EDF and GDF tapes."""
+"""Show: MNE on the pulse EDF and GDF tapes."""
 from __future__ import annotations
 
 import json

@@ -3,10 +3,6 @@
 Akl–Toussaint interior discard on a contact tape. Empty points are absence.
 They are not discard count 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `aktous.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_scipy.py
 
 ## Show
 
-I used SciPy `ConvexHull` on the same five contacts. Empty points raise there.
+SciPy `ConvexHull` on the same five contacts. Empty points raise there.
 This kernel refuses. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 aktous_bench.py`. Numbers are copied from `results/AKTOUS_EVI
 | `aktous_discard` median | 0.004055124998558313 s |
 | naive median | 0.004148957999859704 s |
 | discarded (twice) | 61590 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

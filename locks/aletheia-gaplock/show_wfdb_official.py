@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used PhysioNet wfdb on an onset tape, and I refused an empty header."""
+"""Show: PhysioNet wfdb on an onset tape (an empty header)."""
 from __future__ import annotations
 
 import json

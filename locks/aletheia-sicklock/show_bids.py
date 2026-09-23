@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a BIDS-EEG events tape, and I refused an empty sick set."""
+"""Show: a BIDS-EEG events tape (an empty sick set)."""
 from __future__ import annotations
 
 import json

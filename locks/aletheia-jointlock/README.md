@@ -3,10 +3,6 @@
 Two-link inverse kinematics. Unreachable targets are refusal. They are
 not rest-pose zero.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `ik.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same two-link reach. Their empty `norm` is 0.0. This
+NumPy on the same two-link reach. Their empty `norm` is 0.0. This
 kernel refuses an unreachable pose. See `SHOW.md`.
 
 ## Evidence
@@ -40,8 +36,6 @@ Pinned `python3.12 ik_bench.py`. Numbers are copied from `results/IK_EVIDENCE.js
 | `two_link_ik` median | 0.027457041000161553 s |
 | law-of-cosines median | 0.020422458997927606 s |
 | poses (twice) | 20000 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

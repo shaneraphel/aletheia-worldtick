@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a MANO-shaped joint tape, and I refused an empty pose."""
+"""Show: a MANO-shaped joint tape (an empty pose)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

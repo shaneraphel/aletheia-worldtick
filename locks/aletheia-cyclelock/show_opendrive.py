@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used an OpenDRIVE loop, and I refused an empty map."""
+"""Show: an OpenDRIVE loop (an empty map)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

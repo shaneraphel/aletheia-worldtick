@@ -3,10 +3,6 @@
 Forest-cut occupancy on a world-model height field. An empty forest is
 absence. It is not step 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `cuttre.py`.
 
 ## Problems
 
@@ -23,7 +19,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on the same 3×3 forest. Their empty `norm` is 0.0.
+NumPy on the same 3×3 forest. Their empty `norm` is 0.0.
 `cut_off_trees([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 cuttre_bench.py`. Numbers are copied from `results/CUTTRE_EVI
 | `cut_off_trees` median | 6.750000466126949e-06 s |
 | repeat median | 6.583002686966211e-06 s |
 | steps (twice) | 6 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

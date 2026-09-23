@@ -554,7 +554,7 @@ with GNSS (global navigation satellite system).
 
 ## Agent Skills
 
-* [geoai-skills](https://github.com/muend/geoai-skills) - Vendor-neutral Agent Skills (SKILL.md) that make an AI coding agent check coordinate reference systems, spatial validation, comparability and uncertainty before a result becomes a claim. Works with Claude Code, Codex, Cursor and GitHub Copilot; ships a paired evaluation against a skills-disabled control arm, including the quality gate it fails.
+* [geoai-skills](https://github.com/muend/geoai-skills) - Vendor-neutral Agent Skills (SKILL.md) that make an AI coding agent check coordinate reference systems, spatial validation, comparability and uncertainty before a result becomes a claim. Ships a paired evaluation against a skills-disabled control arm, including the quality gate it fails.
 
 ## C
 

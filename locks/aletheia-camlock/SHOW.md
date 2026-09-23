@@ -1,7 +1,6 @@
-# Show: I used NetworkX, and I refused the empty camera tree
+# Show: NetworkX (the empty camera tree)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
+Compared with [networkx/networkx](https://github.com/networkx/networkx) on a
 one-node kinematic tree: the same 1 camera, plus a refusal when the tree
 is missing.
 

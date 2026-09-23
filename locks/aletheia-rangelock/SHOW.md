@@ -1,7 +1,6 @@
-# Show: I used sortedcontainers, and I refused the empty point tape
+# Show: sortedcontainers (the empty point tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [grantjenks/python-sortedcontainers](https://github.com/grantjenks/python-sortedcontainers)
+Compared with [grantjenks/python-sortedcontainers](https://github.com/grantjenks/python-sortedcontainers)
 on three lane contacts: the same box count 2, plus a refusal when the point
 tape is empty.
 

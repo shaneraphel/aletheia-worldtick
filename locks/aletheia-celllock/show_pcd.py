@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.12
-"""Show: I used a PCD tape, and I refused an empty scan."""
+"""Show: a PCD tape (an empty scan)."""
 from __future__ import annotations
 import json, platform, sys
 from pathlib import Path

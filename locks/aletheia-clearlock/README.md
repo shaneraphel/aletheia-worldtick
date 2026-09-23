@@ -3,10 +3,6 @@
 Signed-distance occupancy on an autonomous-driving clearance field. Empty
 steps are absence. They are not touching 0.
 
-Aletheia is a compiled language model: the weights are produced in one pass by
-exact integer arithmetic. `n_parameters = 0`. `gradient_descent_steps = 0`.
-The transformer is the execution container. This repository is the playable
-artifact of that sitting. Aletheia wrote `sdfocc.py`.
 
 ## Problems
 
@@ -24,7 +20,7 @@ python3.12 show_numpy.py
 
 ## Show
 
-I used NumPy on a disk at the origin. Their empty `norm` is 0.0.
+NumPy on a disk at the origin. Their empty `norm` is 0.0.
 `signed_distance_occupancy([])` raises. See `SHOW.md`.
 
 ## Evidence
@@ -41,8 +37,6 @@ Pinned `python3.12 sdfocc_bench.py`. Numbers are copied from `results/SDFOCC_EVI
 | `signed_distance_occupancy` median | 0.00021345900313463062 s |
 | naive median | 0.00021312500030035153 s |
 | occupancy (twice) | 4096 |
-| n_parameters | 0 |
-| gradient_descent_steps | 0 |
 
 ## License
 

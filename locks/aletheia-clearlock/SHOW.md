@@ -1,7 +1,6 @@
-# Show: I used NumPy, and I refused the empty clearance tape
+# Show: NumPy (the empty clearance tape)
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [numpy/numpy](https://github.com/numpy/numpy) on a disk at the
+Compared with [numpy/numpy](https://github.com/numpy/numpy) on a disk at the
 origin: clearance 0 on the rim, plus a refusal when the occupancy tape is
 empty.
 
