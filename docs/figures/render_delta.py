@@ -81,37 +81,37 @@ def main() -> None:
         "hand-product.png",
         "hand-delta.png",
         "DEXTEROUS HAND  ·  灵巧手",
-        "空的抓取代价",
-        "有内容的 2×2 抓取，分配代价仍是 2",
-        "MuJoCo 3.13.0\n空的 <worldbody/>\n→ accepted\n\nmunkres 1.1.4  compute([[]])\n→ []",
-        "没有数字的 MJCF\nread_mjcf_cost\n→ raise\n\nhungar_cost([])\n→ raise",
+        "手指还没碰到任何东西",
+        "表里真有数字时，分配代价仍是 2",
+        "MuJoCo 会加载一个空的手部模型\n→ 当成加载成功\n\nmunkres 拿到一张空的分配表\n→ 返回一个空列表",
+        "同一张空表\n→ 停下来报错\n\n不把“没碰到”写成代价 0",
     )
     compose(
         "bci-product.png",
         "bci-delta.png",
         "BRAIN-COMPUTER INTERFACE  ·  脑机接口",
-        "空的脑电磁带",
-        "仓库里的磁带仍是 8 个采样，标记 go / end",
-        "MNE-Python 1.9.0\n空的 RawArray\n→ n_times = 0，标注长度 0\n\nNumPy 2.4.6  mean([])\n→ nan",
-        "空的 trial_type，空的 GDF\n→ raise\n\nnyquist([])\n→ raise",
+        "这段脑电其实没录上",
+        "录上的那一段仍是 8 个点，标记仍是 go / end",
+        "MNE 遇到一段空录音\n→ 时长记成 0，标记个数记成 0\n\nNumPy 对空的采样求平均\n→ 得到 nan",
+        "同一段空录音\n→ 停下来报错\n\n不把“没录上”写成电压 0",
     )
     compose(
         "robot-product.png",
         "robot-delta.png",
         "MOBILE ROBOT  ·  移动机器人",
-        "一步，不是闭包",
-        "1×3 地图：一步到 2，闭包到 3。256 节点：24，然后 214",
-        "NetworkX 3.6.1\n空的 DiGraph\n→ nodes = []\n\n同一条链上的 descendants\n→ 一次调用到达 3",
-        "边还在，事实是空的\ndatalog_fixpoint\n→ raise\n\nworld_tick → 2\n闭包 → 3",
+        "地图这一步只亮了两格",
+        "再往前走，第三格才会亮。大地图上是 24，然后 214",
+        "NetworkX 拿到一张空地图\n→ 地点个数是 0\n\n路上有三格时，它一次就算到尽头\n→ 直接得到 3",
+        "路上还有格子，但这一步什么都没看见\n→ 停下来报错\n\n看得到的时候：走一步是 2\n走到头是 3",
     )
     compose(
         "vehicle-product.png",
         "vehicle-delta.png",
         "VEHICLE  ·  车",
-        "空的雷达，空的观测",
-        "两个雷达点仍占据东北子节点 1。三条观测仍占据 3",
-        "NumPy 2.4.6  linalg.norm([])\n→ 0.0\n\nFilterPy 1.4.5  update(None)\n→ accepted，x0 = 0.0",
-        "octpart_ne([])\n→ raise\n\nkalman_filter([])\n→ raise",
+        "雷达这一帧是空的",
+        "真有回波时，两个点仍算作 1。三次观测仍算作 3",
+        "NumPy 对一帧空雷达求长度\n→ 得到 0.0\n\nFilterPy 收到一次空更新\n→ 照单接受，位置留在 0.0",
+        "同一帧空雷达、同一次空观测\n→ 停下来报错\n\n不把“没扫到”写成四周是空的",
     )
 
 

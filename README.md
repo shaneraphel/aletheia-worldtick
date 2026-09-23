@@ -2,192 +2,242 @@
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-Fact reachability for one discrete tick of a world. An empty fact tape is absence.
+## 这是什么
 
-世界的一步可达性。空的事实磁带是缺席。
+机器人、车、灵巧手和脑机接口，都会把“刚才看到了什么”记下来。这份记录可能是一张格子地图，一段脑电，一帧雷达，或者一张“哪根手指去碰哪个点”的表。
 
-Autonomy software reads the world from a map, a bag, or a graph. When that tape is empty — a dropout, a blank grid, a log with no messages — a reader that returns zero tells the downstream planner the world is clear. Worldtick raises. The kernels on this path are exact integer programs. This path has no trained weights and no gradient steps.
+记录有时是空的。传感器掉线了。日志里一条消息都没有。手指还没碰到任何东西。脑电帽戴着，这一段却没录上。
 
-自主系统从地图、数据包或图里读世界。磁带是空的时候（传感器掉线、空白栅格、没有消息的日志），一个返回 0 的读取器会让下游规划器以为世界是空旷的。Worldtick 在这里抛出异常。这条路径上的内核是精确整数程序，没有训练出来的权重，也没有梯度步。
+常用的开源库遇到这种空记录，常常给一个能继续算下去的答案：0，0.0，空列表，或者一个叫 nan 的“不是数”。后面的程序就接着走，好像世界是空的、是安全的、代价是零。
 
-## Where the upstream result changes / 上游的返回值在哪里分开
+Worldtick 在这里停下来，告诉调用者：这份记录是缺的，不要把它当成 0。记录里真有内容时，算出来的数保持原样。我们没有去改那些开源库自己的仓库。做法是拿同一份输入，并排调用一次：他们返回 0 或空列表，我们报错。
 
-These repositories are not forked. On one tape their function returns an empty list, `0`, `0.0`, or `nan`. The kernel here raises, and the occupied tape keeps its old number.
+下面四张图，每张都是这件事。左边是产品长什么样，右边是同一次运行里记下的结果。数字抄自仓库里的 JSON，可以按文末的命令再跑一遍。
 
-这些上游仓库没有被分叉。同一条磁带上，他们的函数返回空列表、`0`、`0.0` 或 `nan`。这里的内核抛出异常，有内容的磁带仍是原来的数。
+## What this is
 
-### Dexterous hand / 灵巧手
+A robot, a car, a dexterous hand, and a brain-computer interface all keep a record of what they just saw. That record might be a grid map, an EEG clip, one lidar frame, or a table that says which finger should touch which point.
 
-![灵巧手。MuJoCo 接受空模型，munkres 对空代价返回空列表，这里抛出异常，2×2 抓取代价仍是 2](docs/figures/hand-delta.png)
+Sometimes the record is empty. The sensor dropped. The log has no messages. The fingers have not touched anything. The cap is on, and this clip was never recorded.
 
-[MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) loads an empty `<worldbody/>`. [munkres 1.1.4](https://github.com/bmc/munkres) `compute([[]])` returns `[]` ([their note](https://github.com/bmc/munkres/issues/54)). `read_mjcf_cost` on a cost-free MJCF raises. `hungar_cost([])` raises. The checked-in 2×2 grasp stays cost **2**. Two fingers: [NumPy 2.4.6](https://github.com/numpy/numpy) `norm([])` is `0.0`, and `minimum_distance("")` raises, while `CAKE` stays distance **3**.
+Widely used open-source libraries often answer that empty record with something a program can keep using: 0, 0.0, an empty list, or nan. The next program continues, as if the world were clear, safe, and free.
 
-[MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) 会载入空的 `<worldbody/>`。[munkres 1.1.4](https://github.com/bmc/munkres) 对 `compute([[]])` 返回 `[]`（[他们的记录](https://github.com/bmc/munkres/issues/54)）。没有代价数字的 MJCF，`read_mjcf_cost` 抛出异常。`hungar_cost([])` 抛出异常。仓库里的 2×2 抓取代价仍是 **2**。两指：[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `norm([])` 是 `0.0`，`minimum_distance("")` 抛出异常，而 `CAKE` 的距离仍是 **3**。
+Worldtick stops and says the record is missing. When the record really has contents, the number stays the number it was. We do not edit those upstream repositories. We call their function and ours on the same input. Theirs returns 0 or an empty list. Ours reports an error.
 
-Kernel / 内核：[`locks/aletheia-handlock`](locks/aletheia-handlock) · [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock)
+Each picture below is that comparison. The left side is the product. The right side is the result written down in the same run. The numbers are copied from JSON files in this repo, and the commands at the end recompute them.
 
-### Brain-computer interface / 脑机接口
+## 灵巧手
 
-![脑机接口。MNE 的空 RawArray 是 n_times 0，NumPy 空均值是 nan，这里抛出异常，8 个采样和 go/end 仍在](docs/figures/bci-delta.png)
+![手指还没碰到任何东西。MuJoCo 把空模型当成加载成功，munkres 返回空列表。这里停下来报错。表里有数字时，代价仍是 2。](docs/figures/hand-delta.png)
 
-[MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) builds an empty `RawArray` with `n_times = 0` and an empty annotation list of length 0. [NumPy 2.4.6](https://github.com/numpy/numpy) `mean([])` is `nan`. An empty trial type, an empty GDF, and `nyquist([])` raise here. The checked-in tape still has **8** samples and markers `go` / `end`. A rate of 0 stays a stored sample. [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) reports membership `False` on a filter with no keys. `bloom_maybe([], 16, 2, 2)` raises.
+一只五指的手要去抓两个点。软件要回答：哪根手指去哪个点，总代价最小。
 
-[MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) 的空 `RawArray` 是 `n_times = 0`，空标注列表长度是 0。[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `mean([])` 是 `nan`。空的 trial type、空的 GDF，以及 `nyquist([])`，在这里抛出异常。仓库里的磁带仍是 **8** 个采样，标记仍是 `go` / `end`。速率 0 仍是一条存着的采样。[pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) 对没有键的过滤器给出成员关系 `False`。`bloom_maybe([], 16, 2, 2)` 抛出异常。
+[MuJoCo](https://github.com/google-deepmind/mujoco) 是做机器人仿真的。我们给 3.13.0 一个没有身体的空模型，它加载成功。[munkres](https://github.com/bmc/munkres) 1.1.4 是做这种分配的。我们给它一张里面什么都没有的表，它返回一个空列表。他们自己在 [issue 54](https://github.com/bmc/munkres/issues/54) 里讨论过这种空表。空列表很容易被后面的程序读成“分配做完了，没有代价”。
 
-Kernel / 内核：[`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock)
+同一张空表，我们的程序停下来报错。表里真有四个数时，最小代价仍是 **2**。
 
-### Mobile robot / 移动机器人
+还有一个两根手指的例子。手指要在字母 `CAKE` 上找最短的间隔，答案是 **3**。字母是空的时候，[NumPy](https://github.com/numpy/numpy) 2.4.6 把向量长度算成 `0.0`。我们停下来，不把“没有字母”写成距离 0。
 
-![移动机器人。NetworkX 的空图没有节点，同一条链一次到达 3。这里空事实抛出异常，一步到 2，闭包到 3](docs/figures/robot-delta.png)
+代码在 [`locks/aletheia-handlock`](locks/aletheia-handlock) 和 [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock)。
 
-[NetworkX 3.6.1](https://github.com/networkx/networkx) on an empty `DiGraph` has no nodes, and `descendants` on the 3-node chain reaches 3. `datalog_fixpoint(3, [], edges)` raises while those edges are still present. On the checked-in 1×3 occupancy map, `world_tick` reaches **2** and the closure reaches **3**. On the pinned 256-node world the same split is **24** then **214**.
+A five-finger hand is reaching for two points. The software has to say which finger goes to which point so the total cost is smallest.
 
-[NetworkX 3.6.1](https://github.com/networkx/networkx) 的空 `DiGraph` 没有节点，3 节点链上的 `descendants` 到达 3。边还在的时候，`datalog_fixpoint(3, [], edges)` 抛出异常。仓库里的 1×3 占据图，`world_tick` 到达 **2**，闭包到达 **3**。固定的 256 节点世界上，这两个数是 **24** 和 **214**。
+[MuJoCo](https://github.com/google-deepmind/mujoco) simulates robots. Version 3.13.0 loads a model that has no body and treats that load as a success. [munkres](https://github.com/bmc/munkres) 1.1.4 assigns fingers to points. Given a table with nothing in it, it returns an empty list. Their [issue 54](https://github.com/bmc/munkres/issues/54) is about that empty table. An empty list is easy for the next program to read as “the assignment is done, and it cost nothing.”
 
-Kernel / 内核：[`occgrid.py`](occgrid.py) · [`tick.py`](tick.py) · [`datalog.py`](datalog.py)
+On that same empty table, our program stops and reports an error. When the table really holds four numbers, the smallest cost is still **2**.
 
-### Vehicle / 车
+A second example uses two fingers on the letters `CAKE`. The shortest gap is **3**. When the letters are missing, [NumPy](https://github.com/numpy/numpy) 2.4.6 reports a length of `0.0`. We stop, and we do not write that missing word down as distance 0.
 
-![车。NumPy 对空向量给出 0.0，FilterPy 接受 update(None)。空雷达和空观测在这里抛出异常](docs/figures/vehicle-delta.png)
+The code is in [`locks/aletheia-handlock`](locks/aletheia-handlock) and [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock).
 
-[NumPy 2.4.6](https://github.com/numpy/numpy) `linalg.norm([])` is `0.0`. [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) `update(None)` is accepted and leaves `x0 = 0.0`. `octpart_ne([], 1, 1, 1)` raises, and two lidar points still occupy the north-east child (**1**). `kalman_filter([])` raises, and three real observations still occupy **3**. An empty road graph in [NetworkX](https://github.com/networkx/networkx) has no nodes. `shortest_path_visit([])` raises.
+## 脑机接口
 
-[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `linalg.norm([])` 是 `0.0`。[FilterPy 1.4.5](https://github.com/rlabbe/filterpy) 的 `update(None)` 被接受，`x0` 留在 `0.0`。`octpart_ne([], 1, 1, 1)` 抛出异常，两个雷达点仍占据东北子节点（**1**）。`kalman_filter([])` 抛出异常，三条真实观测仍占据 **3**。[NetworkX](https://github.com/networkx/networkx) 的空路网没有节点。`shortest_path_visit([])` 抛出异常。
+![这段脑电其实没录上。MNE 把空录音的时长记成 0，NumPy 得到 nan。这里停下来报错。录上的一段仍是 8 个点，标记仍是 go / end。](docs/figures/bci-delta.png)
 
-Kernel / 内核：[`locks/aletheia-voxelock`](locks/aletheia-voxelock) · [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock) · [`locks/aletheia-tourlock`](locks/aletheia-tourlock)
+头上戴着电极帽，屏幕上应该有一条脑电。研究者还要知道这一段是“开始”（go）还是“结束”（end）。
 
-## Highlights / 高光
+[MNE-Python](https://github.com/mne-tools/mne-python) 1.9.0 是读脑电文件的常用库。一段空录音在它那里的时长是 0，标记个数也是 0。时长 0 看起来像“录了一段，里面是静音”。[NumPy](https://github.com/numpy/numpy) 2.4.6 对一个空数组求平均，得到 nan。nan 会顺着后面的统计继续传。
 
-1. **Absence raises.** An empty fact list, a negative world width, a blank occupancy grid, an MCAP log with zero messages, a rosbag2 folder with zero messages, and an empty reward table all raise.
+同一段空录音，我们停下来报错。真正录上的那一段仍是 **8** 个采样点，标记仍是 `go` 和 `end`。一个存进去的 0（直流、没有波动）仍是一个真实采样，不会被当成“这段没录”。
 
-   **空则报错。** 空事实表、负的世界宽度、空白占据栅格、零消息的 MCAP、零消息的 rosbag2、空奖励表，都会抛出异常。
+过滤器也一样。[pybloom-live](https://github.com/joseph-fox/python-bloomfilter) 4.0.0 对一个没有任何键的过滤器说“不是成员”。这和“查过了，确实不在”长得一样。我们遇到空的键列表会停下来。
 
-2. **One tick is a different number from the closure.** On the checked-in 1×3 occupancy map, one tick reaches **2** cells and the closure reaches **3**. On the pinned 256-node world (seed `20260919`, 8 facts, 512 edges), one tick reaches **24** nodes and the closure reaches **214**. Walking 256 ticks meets the closure.
+代码在 [`locks/aletheia-spikelock`](locks/aletheia-spikelock) 和 [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock)。文件格式包括 EDF、BIDS-EEG、XDF、BrainVision、WFDB、GDF。
 
-   **一步和闭包是两个数。** 仓库里的 1×3 占据图，一步到达 **2** 格，闭包到达 **3** 格。固定的 256 节点世界（种子 `20260919`，8 条事实，512 条边）一步到达 **24** 个节点，闭包到达 **214**。走满 256 步之后与闭包相同。
+The cap is on, and the screen should show an EEG trace. A researcher also needs to know whether this clip is a start (`go`) or an end (`end`).
 
-3. **The planned action can disagree with the greedy row.** On a 2-state reward table, the current row picks action **0** and policy iteration picks action **1**. On the pinned 256×8 table, the greedy row picks **2** and iteration picks **5**, on two walks.
+[MNE-Python](https://github.com/mne-tools/mne-python) 1.9.0 is the usual library for reading those files. An empty recording has duration 0 there, and the marker count is 0. Duration 0 looks like “we recorded a clip, and it was silence.” [NumPy](https://github.com/numpy/numpy) 2.4.6 averages an empty array and returns nan. That nan keeps flowing into the next statistic.
 
-   **规划动作可以和贪心行不一致。** 两状态奖励表上，当前行选择动作 **0**，策略迭代选择动作 **1**。固定的 256×8 表上，贪心行选择 **2**，迭代选择 **5**，走两遍相同。
+On that same empty recording, we stop and report an error. The clip that really was recorded is still **8** samples, and the markers are still `go` and `end`. A stored 0, a flat DC sample, stays a real sample. It is not treated as “this clip was never recorded.”
 
-4. **The same rule on logs stacks already write.** ROS map_server YAML + PGM, Foxglove MCAP, ROS 2 rosbag2 (sqlite3), and a NetworkX 3.6.1 run on the same 3-node world. NetworkX reports an empty node set. This kernel raises while the edges are still present.
+The same split shows up in a filter. [pybloom-live](https://github.com/joseph-fox/python-bloomfilter) 4.0.0 says “not a member” for a filter that has no keys. That looks like a real lookup that came back no. An empty key list makes us stop.
 
-   **同一条规则落在现成日志上。** ROS map_server 的 YAML + PGM、Foxglove MCAP、ROS 2 rosbag2（sqlite3），以及同一张 3 节点图上的 NetworkX 3.6.1。NetworkX 给出空节点集。边还在的时候，这个内核抛出异常。
+The code is in [`locks/aletheia-spikelock`](locks/aletheia-spikelock) and [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock). The file formats include EDF, BIDS-EEG, XDF, BrainVision, WFDB, and GDF.
 
-5. **A reviewer can recompute the claim.** `make check` reruns the identities. GitHub Actions runs that check on every push. The counts below are copied from `results/`.
+## 移动机器人
 
-   **审阅者可以重算这些结论。** `make check` 会重跑这些恒等式。每次推送都会跑 GitHub Actions。下面的数字抄自 `results/`。
+![地图这一步只亮了两格。NetworkX 把空地图的地点个数记成 0，有路时一次就算到 3。这里在什么都没看见时停下来。看得到的时候，走一步是 2，走到头是 3。](docs/figures/robot-delta.png)
 
-6. **The format index is in this repo.** 66 lock kernels and 100 binds cover tapes those stacks write — occupancy, MCAP, NIfTI, BIDS-EEG, OpenDRIVE, and the rest. The index is [`ATLAS.md`](ATLAS.md).
+地上有三格。机器人这一步只“看见”了第一格，所以亮两格：它站着的地方，和正前方那一格。第三格要再走一步才到。图上绿色是这一步已经到的，橙色框是还没到的。
 
-   **格式索引就在这个仓库里。** 66 个 lock 内核和 100 个 bind 覆盖这些系统已经在写的磁带，包括占据栅格、MCAP、NIfTI、BIDS-EEG、OpenDRIVE。索引见 [`ATLAS.md`](ATLAS.md)。
+[NetworkX](https://github.com/networkx/networkx) 3.6.1 拿到一张完全空的图，地点个数是 0。路上有三格时，它一次就把能到的地方都算完，直接得到 3。0 会让后面的导航以为“没有地点，地板是空的”。一次得到 3，又把“还要再走一步”抹掉了。
 
-```mermaid
-flowchart TD
-  tape[Map, MCAP, rosbag2, or fact list]
-  tape --> occupied{Any occupied fact?}
-  occupied -->|no| refuse[Raise: absence]
-  occupied -->|yes| tick[One tick]
-  tick --> close[Closure]
-  reward[Reward table] --> plan[Action at state 0]
-```
+我们把这两件事分开。路上还有格子、这一步却什么都没看见时，程序停下来。看得到第一格时，走一步是 **2**，走到头是 **3**。
 
-## Related open source / 相关开源项目
+一张更大的固定地图也是这样。256 个地点，8 个已经看见的起点，512 条单向的路，种子 `20260919`。走一步，到达 **24** 个地点。一直走到不能再走，到达 **214** 个地点。再跑一遍，还是 214。把步数放到 256，也是 214。
 
-These are the projects the kernels read, write, or run side by side. The URL is the upstream project.
+代码在 [`tick.py`](tick.py)、[`datalog.py`](datalog.py)、[`occgrid.py`](occgrid.py)。地图文件是仓库里的 `resources/synthetic/world.yaml`。
 
-这些是内核在读、在写、或并排运行的上游项目。
+There are three tiles. On this step the robot has only “seen” the first one, so two tiles light up: where it stands, and the tile directly ahead. The third tile waits for another step. Green is reached on this step. The orange outline is not reached yet.
 
-| Project 项目 | URL | Where it meets this repo 在本仓库中的位置 |
+[NetworkX](https://github.com/networkx/networkx) 3.6.1, given a completely empty graph, reports 0 places. Given the three-tile path, it finishes every reachable place in one call and returns 3. A 0 tells the navigator “there are no places, the floor is clear.” A single 3 erases the fact that the last tile is still one step away.
+
+We keep those apart. If the path is still there and this step saw nothing, the program stops. If the first tile was seen, one step reaches **2** and walking to the end reaches **3**.
+
+A larger fixed map does the same thing. 256 places, 8 places already seen, 512 one-way roads, seed `20260919`. One step reaches **24** places. Walking until nothing new can be reached gets **214**. A second walk is 214 again. Allowing 256 steps is also 214.
+
+The code is in [`tick.py`](tick.py), [`datalog.py`](datalog.py), and [`occgrid.py`](occgrid.py). The map file is `resources/synthetic/world.yaml`.
+
+## 车
+
+![雷达这一帧是空的。NumPy 把空雷达的长度算成 0.0，FilterPy 接受一次空更新并把位置留在 0.0。这里停下来报错。真有回波时，两个点仍算作 1，三次观测仍算作 3。](docs/figures/vehicle-delta.png)
+
+车顶的雷达转一圈，应该得到一些回波点。图上实线是真有回波的方向，虚线是这一帧什么都没回来。
+
+[NumPy](https://github.com/numpy/numpy) 2.4.6 对一帧一个点都没有的雷达求长度，得到 `0.0`。长度 0 看起来像“扫过了，周围是空的”。[FilterPy](https://github.com/rlabbe/filterpy) 1.4.5 做位置更新。我们交给它一次空更新，它接受了，估计位置留在 `0.0`。位置 0 看起来像“车在原点”，而不是“这一次没有观测”。
+
+同一帧空雷达、同一次空观测，我们停下来。两个真实的雷达点仍算作 **1**。三次真实观测仍算作 **3**。
+
+路网也一样。NetworkX 对一张没有节点的路图报告地点个数是 0。一条还没给出站点的游览路线，我们停下来。
+
+代码在 [`locks/aletheia-voxelock`](locks/aletheia-voxelock)、[`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock)、[`locks/aletheia-tourlock`](locks/aletheia-tourlock)。
+
+The roof lidar spins and should return some points. Solid rays in the picture are real returns. Dashed rays are a frame where nothing came back.
+
+[NumPy](https://github.com/numpy/numpy) 2.4.6 measures the length of a lidar frame with no points and returns `0.0`. A length of 0 looks like “we scanned, and the surroundings are empty.” [FilterPy](https://github.com/rlabbe/filterpy) 1.4.5 updates a position. Given an empty update, it accepts it, and the estimated position stays at `0.0`. A position of 0 looks like “the car is at the origin,” which is different from “this update had no observation.”
+
+On that same empty frame and that same empty update, we stop. Two real lidar points still count as **1**. Three real observations still count as **3**.
+
+A road map does the same thing. NetworkX reports 0 places for a road graph with no nodes. A tour that has not named its stops makes us stop.
+
+The code is in [`locks/aletheia-voxelock`](locks/aletheia-voxelock), [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock), and [`locks/aletheia-tourlock`](locks/aletheia-tourlock).
+
+## 规划时只看眼前，和看下一步，可以选出不同的动作
+
+有一张奖励表。每一行是一个状态，每一列是一个动作，格子里是立刻能拿到的分数。
+
+只看第 0 行里最大的那一格，叫贪心。它不管这个动作会把你带到哪个更差的状态。我们另外做了一次整数上的策略迭代：动作会把状态推进到下一格，下一格的分数打九折后再加回来。
+
+一张两行的小表上，贪心选动作 **0**，因为它眼前的分数是 10。看下一步之后，选动作 **1**，因为动作 0 会走进一个分数是 −100 的状态。
+
+一张更大的表有 256 个状态、8 个动作，种子同样是 `20260919`。贪心选 **2**。迭代选 **5**。再算一遍，还是 5。奖励表本身是空的时候，我们停下来，不写出动作 0。
+
+There is a reward table. Each row is a state, each column is an action, and the cell is the score you get immediately.
+
+Looking only at the biggest cell in row 0 is the greedy choice. It does not ask which worse state that action leads to. We also run policy iteration in integers: an action moves you to the next state, and that next state's score is added back after a 10% discount.
+
+On a two-row table, greedy picks action **0** because the immediate score is 10. After looking ahead, the choice is action **1**, because action 0 steps into a state scored −100.
+
+A larger table has 256 states and 8 actions, with the same seed `20260919`. Greedy picks **2**. Iteration picks **5**. A second run is 5 again. When the reward table itself is empty, we stop, and we do not write down action 0.
+
+## 这些文件格式，空文件也按同一条规则处理
+
+机器人栈已经在写这些文件。[ROS 的 map_server](https://wiki.ros.org/map_server) 用 YAML 加一张 PGM 图。[Foxglove 的 MCAP](https://github.com/foxglove/mcap) 是一条日志。[ROS 2 的 rosbag2](https://github.com/ros2/rosbag2) 是一个带 sqlite 数据库的文件夹。空白的格子图、零条消息的 MCAP、零条消息的 bag，我们都停下来。NetworkX 在那张三节点的图上，空图的节点列表是空的；边还在、这一步却没有起点时，我们停下来。
+
+Robot stacks already write these files. [ROS map_server](https://wiki.ros.org/map_server) uses YAML plus a PGM image. [Foxglove MCAP](https://github.com/foxglove/mcap) is a log. [ROS 2 rosbag2](https://github.com/ros2/rosbag2) is a folder with a sqlite database. A blank grid, an MCAP with zero messages, and a bag with zero messages all make us stop. On the three-node picture, NetworkX's empty graph has an empty node list. When the edges are still there and this step has no starting place, we stop.
+
+## 这些数是怎么来的
+
+地图那一组来自 `results/TICK_EVIDENCE.json` 和 `results/DATALOG_EVIDENCE.json`。同一张地图用两种走法各算一次，走到头的人数应该一样，也和一次普通的广度优先搜索一样。
+
+The map numbers come from `results/TICK_EVIDENCE.json` and `results/DATALOG_EVIDENCE.json`. Two walks to the end of the same map should match, and they should match an ordinary breadth-first search.
+
+| 你看到的 | 意思 | 数 |
 |---|---|---|
-| NetworkX | https://github.com/networkx/networkx | Same 3-node world in `show_networkx.py`. 同一张 3 节点图。 |
-| Foxglove MCAP | https://github.com/foxglove/mcap | Occupancy samples in `mcapocc.py`. 占据采样。 |
-| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | Bag folder in `bagocc.py`. 数据包目录。 |
-| rosbags | https://gitlab.com/ternaris/rosbags | Reader used by `show_rosbags.py`. 读取器。 |
-| ROS map_server | https://wiki.ros.org/map_server | YAML + PGM occupancy map. 占据图。 |
-| nav_msgs/OccupancyGrid | https://docs.ros.org/en/humble/p/nav_msgs/interfaces/msg/OccupancyGrid.html | Cell values ingested by `occgrid.py`. 栅格数值。 |
-| ROS 2 | https://github.com/ros2/ros2 | The stack those bags and maps come from. 这些包和地图所属的系统。 |
-| Soufflé | https://github.com/souffle-lang/souffle | Systems Datalog. `datalog.py` is a positive-fact reachability fixpoint on one pinned world. 系统化 Datalog。本仓库的 `datalog.py` 是固定世界上的正事实可达闭包。 |
-| NumPy | https://github.com/numpy/numpy | Side-by-side runs inside `locks/`. `locks/` 里的并排运行。 |
-| MNE-Python | https://github.com/mne-tools/mne-python | EDF, GDF, and BIDS-EEG tapes in the lock kernels. 脑电磁带。 |
-| BIDS | https://github.com/bids-standard/bids-specification | BIDS-EEG sidecars. 脑电旁车文件。 |
-| NiBabel | https://github.com/nipy/nibabel | NIfTI volumes named in the atlas. 图谱中的 NIfTI。 |
-| ASAM OpenDRIVE | https://github.com/asam-oss/asamOpenDRIVE | Junction maps in the lock kernels. 路口地图。 |
-| MuJoCo | https://github.com/google-deepmind/mujoco | MJCF bodies in the lock kernels. MJCF 刚体。 |
-| Open3D | https://github.com/isl-org/Open3D | Point clouds in the lock kernels. 点云。 |
-| nuScenes devkit | https://github.com/nutonomy/nuscenes-devkit | Sample tables in the lock kernels. 样本表。 |
-| pyahocorasick | https://github.com/WojciechMula/pyahocorasick | Suffix-link comparison in stemlock. 后缀链接对照。 |
-| python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | Bloom membership comparison in bloomlock. Bloom 成员对照。 |
+| 种子 | 随机地图用的固定种子，换一台机器也是这张图 | 20260919 |
+| 地点 / 起点 / 路 | 256 个地点，8 个已经看见的起点，512 条单向路 | 256 / 8 / 512 |
+| 走一步 | 只沿路走一格，新到达的地点个数 | 24 |
+| 走到头，两遍 | 一直走到没有新地点，连做两遍 | 214 和 214 |
+| 步数放到 256 | 步数够走到头 | 214 |
+| 广度优先搜索 | 同一种“走到头”，用另一段代码算 | 214 |
 
-## Run / 运行
+奖励表那一组来自 `results/POLICY_EVIDENCE.json` 和 `results/SHOW_POLICY.json`。
+
+The reward-table numbers come from `results/POLICY_EVIDENCE.json` and `results/SHOW_POLICY.json`.
+
+| 你看到的 | 意思 | 数 |
+|---|---|---|
+| 两行小表 | 只看眼前 / 看下一步 | 动作 0 / 动作 1 |
+| 256×8 的表 | 只看眼前 | 动作 2 |
+| 同一张表再算一遍 | 看下一步，两遍 | 动作 5 和 5 |
+
+时间也记在那两个 JSON 里。这张 256 个地点的地图上，走到头的中位时间大约 0.00031 秒，广度优先搜索大约 0.00013 秒。256×8 的奖励表上，看下一步的中位时间大约 0.0060 秒，只看眼前大约 0.000010 秒。这里比的是答案是否相同，不是谁更快。
+
+The timings are in those same JSON files. On the 256-place map, walking to the end takes about 0.00031 seconds at the median, and breadth-first search about 0.00013 seconds. On the 256×8 reward table, looking ahead takes about 0.0060 seconds at the median, and looking only at the current row about 0.000010 seconds. The comparison is whether the answers agree, not which call is faster.
+
+## 相关的开源项目
+
+下表是我们并排调用过、或直接读取其文件的上游项目。链接指向他们自己的仓库。
+
+The table is the upstream projects we call side by side, or whose files we read. Each link goes to their repository.
+
+| 项目 | 地址 | 它是做什么的，我们拿它比了什么 |
+|---|---|---|
+| NetworkX | https://github.com/networkx/networkx | 图算法库。空图的地点个数是 0；三格的路它一次走到头。 |
+| Foxglove MCAP | https://github.com/foxglove/mcap | 机器人日志格式。零条消息的日志，我们停下来。 |
+| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | ROS 2 的数据包。零条消息的包，我们停下来。 |
+| rosbags | https://gitlab.com/ternaris/rosbags | 用 Python 读 rosbag2 的库。`show_rosbags.py` 用的就是它。 |
+| ROS map_server | https://wiki.ros.org/map_server | 用地图图片做导航的那一套。我们读它的 YAML 和 PGM。 |
+| OccupancyGrid | https://docs.ros.org/en/humble/p/nav_msgs/interfaces/msg/OccupancyGrid.html | ROS 里“这一格有没有东西”的消息。空白格子图会让我们停下来。 |
+| ROS 2 | https://github.com/ros2/ros2 | 上面这些包和地图所在的机器人系统。 |
+| Soufflé | https://github.com/souffle-lang/souffle | 把“沿规则一直推到不能再推”做成系统的 Datalog 编译器。我们这份仓库里的走到头，是同一类推法，用在一张固定的地图上。 |
+| NumPy | https://github.com/numpy/numpy | 数值库。空数组的平均值是 nan，空向量的长度是 0.0。 |
+| MNE-Python | https://github.com/mne-tools/mne-python | 读脑电的库。空录音的时长是 0。 |
+| BIDS | https://github.com/bids-standard/bids-specification | 脑电实验的文件约定。只有表头、没有事件的那份表，我们停下来。 |
+| NiBabel | https://github.com/nipy/nibabel | 读医学影像 NIfTI。名字出现在格式索引里。 |
+| OpenDRIVE | https://github.com/asam-oss/asamOpenDRIVE | 路和路口的地图格式。空的路口图，我们停下来。 |
+| MuJoCo | https://github.com/google-deepmind/mujoco | 机器人仿真。空的手部模型会被加载成功。 |
+| Open3D | https://github.com/isl-org/Open3D | 点云库。和雷达那一帧放在一起看。 |
+| nuScenes | https://github.com/nutonomy/nuscenes-devkit | 自动驾驶数据集的读取工具。空样本会让我们停下来。 |
+| pyahocorasick | https://github.com/WojciechMula/pyahocorasick | 字符串匹配。空文本和我们的后缀链接放在一起看。 |
+| python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | Bloom 过滤器。没有键的过滤器会回答“不是成员”。 |
+
+## 自己跑一遍
+
+精度检查只用 Python 标准库。要看和 NetworkX、MCAP、rosbags 的并排结果，先装 `requirements-show.txt` 里钉住的版本。
+
+The precision check uses the Python standard library only. To rerun the side-by-side calls against NetworkX, MCAP, and rosbags, install the versions pinned in `requirements-show.txt`.
 
 ```bash
 make check
 python3.12 show_tick.py
 python3.12 show_policy.py
 python3.12 show_networkx.py
-python3.12 tick_bench.py
-python3.12 datalog_bench.py
-python3.12 policy_bench.py
 ```
 
-Show dependencies (NetworkX, MCAP, rosbags) are pinned in `requirements-show.txt`. The precision check uses the standard library only.
+`make check` 会重算上面那些该相等的数。每次推送到 GitHub 也会跑同样的检查。某一条对不上，命令会以非零状态退出。
 
-演示依赖（NetworkX、MCAP、rosbags）钉在 `requirements-show.txt`。精度检查只用标准库。
+`make check` recomputes the numbers that are supposed to match. The same check runs on every push to GitHub. If one of them moves, the command exits with a non-zero status.
 
-## Pinned replay / 固定回放
+## 仓库里还有什么
 
-Copied from `results/TICK_EVIDENCE.json` and `results/DATALOG_EVIDENCE.json`.
-
-数字抄自 `results/TICK_EVIDENCE.json` 与 `results/DATALOG_EVIDENCE.json`。
-
-| field 字段 | value 值 |
+| 路径 | 它做什么 |
 |---|---|
-| python | CPython 3.12.8 |
-| platform 平台 | macOS-26.2-arm64 |
-| seed 种子 | 20260919 |
-| world 世界 | 256 nodes, 8 facts, 512 edges |
-| one tick 一步 | 24 |
-| closure, twice 闭包，两遍 | 214 |
-| closure after 256 ticks 走满 256 步 | 214 |
+| `tick.py` | 只走一步。 |
+| `datalog.py` | 走到不能再走。 |
+| `policy.py` | 看下一步再选动作。空的奖励表会停下来。 |
+| `occgrid.py` | 读 ROS 的格子地图，连成上下左右相邻的图。 |
+| `mcapocc.py` | 读 MCAP 日志里的占据采样。 |
+| `bagocc.py` | 读 rosbag2 文件夹。 |
+| `tests/test_precision.py` | 上面这些该相等的数。 |
+| `results/` | 已经跑出来的 JSON。 |
+| `locks/` | 66 个小程序。每个认一种现成文件：脑电、雷达、手部模型、路口图，诸如此类。 |
+| `binds/` | 100 本小登记册。一条记录没有名字时，不往同一个未命名的列表里追加。 |
+| [`ATLAS.md`](ATLAS.md) | 上面两部分的目录。 |
 
-Copied from `results/POLICY_EVIDENCE.json` and `results/SHOW_POLICY.json`.
+`docs-awesome/` 里是 10 份公开的资源清单，`tools/` 里是 6 个小工具。这些计算不靠一份训练出来的权重，也没有梯度步。
 
-数字抄自 `results/POLICY_EVIDENCE.json` 与 `results/SHOW_POLICY.json`。
-
-| field 字段 | value 值 |
-|---|---|
-| 2-state table, greedy / iterated 两状态，贪心 / 迭代 | 0 / 1 |
-| 256 states × 8 actions, greedy 贪心 | 2 |
-| 256 states × 8 actions, iterated, twice 迭代，两遍 | 5 |
-| `policy_iteration` median 中位数 | 0.00597583397757262 s |
-| row-0 greedy median 第 0 行贪心中位数 | 9.832961950451136e-06 s |
-
-The Datalog closure on this world matches a BFS reach count of 214. Median times from `results/DATALOG_EVIDENCE.json`: fixpoint 0.0003089579986408353 s, BFS 0.0001294169924221933 s.
-
-这张世界上的 Datalog 闭包与 BFS 可达数同为 214。中位时间见 `results/DATALOG_EVIDENCE.json`：闭包 0.0003089579986408353 秒，BFS 0.0001294169924221933 秒。
-
-## What is in the box / 目录
-
-| path 路径 | role 作用 |
-|---|---|
-| `tick.py` | one tick, and reachability after a horizon. 一步，以及给定步数后的可达。 |
-| `datalog.py` | closure of the same facts. 同一批事实的闭包。 |
-| `policy.py` | integer policy iteration; an empty table raises. 整数策略迭代；空表抛出异常。 |
-| `occgrid.py` | ROS occupancy YAML + PGM, then a 4-connected graph. 占据图，再连成四邻接图。 |
-| `mcapocc.py` | Foxglove MCAP occupancy samples. MCAP 占据采样。 |
-| `bagocc.py` | ROS 2 rosbag2 folder. rosbag2 目录。 |
-| `tests/test_precision.py` | the identities above. 上面的恒等式。 |
-| `results/` | pinned JSON from the runs. 运行结果。 |
-| `locks/` | 66 format kernels. 66 个格式内核。 |
-| `binds/` | 100 binds. 100 个 bind。 |
-| `ATLAS.md` | the index. 索引。 |
-
-## Atlas / 索引
-
-66 lock kernels, 100 binds, 10 resource lists, and 6 tools live under `locks/`, `binds/`, `docs-awesome/`, and `tools/`. The index is [`ATLAS.md`](ATLAS.md).
-
-66 个 lock 内核、100 个 bind、10 份资源清单和 6 个工具在 `locks/`、`binds/`、`docs-awesome/` 和 `tools/`。索引是 [`ATLAS.md`](ATLAS.md)。
+`docs-awesome/` holds 10 public resource lists, and `tools/` holds 6 small tools. These calculations do not depend on a trained weight file, and they take no gradient steps.
 
 ## License / 许可
 
