@@ -10,6 +10,52 @@ Autonomy software reads the world from a map, a bag, or a graph. When that tape 
 
 自主系统从地图、数据包或图里读世界。磁带是空的时候（传感器掉线、空白栅格、没有消息的日志），一个返回 0 的读取器会让下游规划器以为世界是空旷的。Worldtick 在这里抛出异常。这条路径上的内核是精确整数程序，没有训练出来的权重，也没有梯度步。
 
+## Where the upstream result changes / 上游的返回值在哪里分开
+
+These repositories are not forked. On one tape their function returns an empty list, `0`, `0.0`, or `nan`. The kernel here raises, and the occupied tape keeps its old number.
+
+这些上游仓库没有被分叉。同一条磁带上，他们的函数返回空列表、`0`、`0.0` 或 `nan`。这里的内核抛出异常，有内容的磁带仍是原来的数。
+
+### Dexterous hand / 灵巧手
+
+![灵巧手。MuJoCo 接受空模型，munkres 对空代价返回空列表，这里抛出异常，2×2 抓取代价仍是 2](docs/figures/hand-delta.png)
+
+[MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) loads an empty `<worldbody/>`. [munkres 1.1.4](https://github.com/bmc/munkres) `compute([[]])` returns `[]` ([their note](https://github.com/bmc/munkres/issues/54)). `read_mjcf_cost` on a cost-free MJCF raises. `hungar_cost([])` raises. The checked-in 2×2 grasp stays cost **2**. Two fingers: [NumPy 2.4.6](https://github.com/numpy/numpy) `norm([])` is `0.0`, and `minimum_distance("")` raises, while `CAKE` stays distance **3**.
+
+[MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) 会载入空的 `<worldbody/>`。[munkres 1.1.4](https://github.com/bmc/munkres) 对 `compute([[]])` 返回 `[]`（[他们的记录](https://github.com/bmc/munkres/issues/54)）。没有代价数字的 MJCF，`read_mjcf_cost` 抛出异常。`hungar_cost([])` 抛出异常。仓库里的 2×2 抓取代价仍是 **2**。两指：[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `norm([])` 是 `0.0`，`minimum_distance("")` 抛出异常，而 `CAKE` 的距离仍是 **3**。
+
+Kernel / 内核：[`locks/aletheia-handlock`](locks/aletheia-handlock) · [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock)
+
+### Brain-computer interface / 脑机接口
+
+![脑机接口。MNE 的空 RawArray 是 n_times 0，NumPy 空均值是 nan，这里抛出异常，8 个采样和 go/end 仍在](docs/figures/bci-delta.png)
+
+[MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) builds an empty `RawArray` with `n_times = 0` and an empty annotation list of length 0. [NumPy 2.4.6](https://github.com/numpy/numpy) `mean([])` is `nan`. An empty trial type, an empty GDF, and `nyquist([])` raise here. The checked-in tape still has **8** samples and markers `go` / `end`. A rate of 0 stays a stored sample. [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) reports membership `False` on a filter with no keys. `bloom_maybe([], 16, 2, 2)` raises.
+
+[MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) 的空 `RawArray` 是 `n_times = 0`，空标注列表长度是 0。[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `mean([])` 是 `nan`。空的 trial type、空的 GDF，以及 `nyquist([])`，在这里抛出异常。仓库里的磁带仍是 **8** 个采样，标记仍是 `go` / `end`。速率 0 仍是一条存着的采样。[pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) 对没有键的过滤器给出成员关系 `False`。`bloom_maybe([], 16, 2, 2)` 抛出异常。
+
+Kernel / 内核：[`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock)
+
+### Mobile robot / 移动机器人
+
+![移动机器人。NetworkX 的空图没有节点，同一条链一次到达 3。这里空事实抛出异常，一步到 2，闭包到 3](docs/figures/robot-delta.png)
+
+[NetworkX 3.6.1](https://github.com/networkx/networkx) on an empty `DiGraph` has no nodes, and `descendants` on the 3-node chain reaches 3. `datalog_fixpoint(3, [], edges)` raises while those edges are still present. On the checked-in 1×3 occupancy map, `world_tick` reaches **2** and the closure reaches **3**. On the pinned 256-node world the same split is **24** then **214**.
+
+[NetworkX 3.6.1](https://github.com/networkx/networkx) 的空 `DiGraph` 没有节点，3 节点链上的 `descendants` 到达 3。边还在的时候，`datalog_fixpoint(3, [], edges)` 抛出异常。仓库里的 1×3 占据图，`world_tick` 到达 **2**，闭包到达 **3**。固定的 256 节点世界上，这两个数是 **24** 和 **214**。
+
+Kernel / 内核：[`occgrid.py`](occgrid.py) · [`tick.py`](tick.py) · [`datalog.py`](datalog.py)
+
+### Vehicle / 车
+
+![车。NumPy 对空向量给出 0.0，FilterPy 接受 update(None)。空雷达和空观测在这里抛出异常](docs/figures/vehicle-delta.png)
+
+[NumPy 2.4.6](https://github.com/numpy/numpy) `linalg.norm([])` is `0.0`. [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) `update(None)` is accepted and leaves `x0 = 0.0`. `octpart_ne([], 1, 1, 1)` raises, and two lidar points still occupy the north-east child (**1**). `kalman_filter([])` raises, and three real observations still occupy **3**. An empty road graph in [NetworkX](https://github.com/networkx/networkx) has no nodes. `shortest_path_visit([])` raises.
+
+[NumPy 2.4.6](https://github.com/numpy/numpy) 的 `linalg.norm([])` 是 `0.0`。[FilterPy 1.4.5](https://github.com/rlabbe/filterpy) 的 `update(None)` 被接受，`x0` 留在 `0.0`。`octpart_ne([], 1, 1, 1)` 抛出异常，两个雷达点仍占据东北子节点（**1**）。`kalman_filter([])` 抛出异常，三条真实观测仍占据 **3**。[NetworkX](https://github.com/networkx/networkx) 的空路网没有节点。`shortest_path_visit([])` 抛出异常。
+
+Kernel / 内核：[`locks/aletheia-voxelock`](locks/aletheia-voxelock) · [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock) · [`locks/aletheia-tourlock`](locks/aletheia-tourlock)
+
 ## Highlights / 高光
 
 1. **Absence raises.** An empty fact list, a negative world width, a blank occupancy grid, an MCAP log with zero messages, a rosbag2 folder with zero messages, and an empty reward table all raise.
