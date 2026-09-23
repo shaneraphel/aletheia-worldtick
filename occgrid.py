@@ -74,3 +74,16 @@ def occupied_points(grid):
 
 def occgrid_occupancy(yaml_path):
     return len(occupied_points(read_occgrid(yaml_path)))
+
+
+def occupancy_graph(grid):
+    """Occupied cells are nodes. Edges are 4-connected. A blank map refuses."""
+    pts = occupied_points(grid)
+    index = {p: i for i, p in enumerate(pts)}
+    edges = []
+    for (x, y), i in index.items():
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            j = index.get((x + dx, y + dy))
+            if j is not None:
+                edges.append((i, j))
+    return len(pts), edges

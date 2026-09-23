@@ -1,0 +1,15 @@
+{
+  "schema": "worldtick.show_tick.v1",
+  "built": "1x3 occupied map; one tick reaches 2; closure reaches 3",
+  "ours": {
+    "n": 3,
+    "one_tick": 2,
+    "closure": 3,
+    "horizon_n": 3,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}

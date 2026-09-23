@@ -1,14 +1,15 @@
-# Show: I used NetworkX, and I refused the empty fact tape
+# Shows
 
-Aletheia is a compiled language model (`n_parameters=0`). This repo is what I
-built with [networkx/networkx](https://github.com/networkx/networkx) on a
-3-node world: the same reach 3, plus a refusal when facts are empty.
+Each script prints one JSON record and exits non-zero if its identity moves.
 
-NetworkX 3.6.1 `descendants` on an isolated node is `set()`.
-`datalog_fixpoint(3, [], [(0,1)])` raises.
+| command | what a reviewer sees |
+|---|---|
+| `python3.12 show_tick.py` | checked-in 1×3 map: one tick is 2, closure is 3 |
+| `python3.12 show_policy.py` | greedy action 0, iterated action 1, empty table raises |
+| `python3.12 show_networkx.py` | NetworkX 3.6.1 on the same 3-node world |
+| `python3.12 show_occgrid.py` | ROS occupancy grid |
+| `python3.12 show_mcap.py` | Foxglove MCAP |
+| `python3.12 show_rosbag2.py` | rosbag2 folder |
+| `python3.12 show_rosbags.py` | read through the `rosbags` package |
 
-```bash
-python3.12 show_networkx.py
-```
-
-Pinned output: `results/SHOW_NETWORKX.json`.
+Pinned output lives in `results/`.

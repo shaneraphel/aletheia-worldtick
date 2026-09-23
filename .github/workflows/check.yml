@@ -1,0 +1,23 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  precision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: precision
+        run: python worldtick.py --verify-precision
+      - name: unit
+        run: python -m unittest discover -s tests -v
+      - name: shows
+        run: |
+          python show_tick.py
+          python show_policy.py
+          python tick_bench.py

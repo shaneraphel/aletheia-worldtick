@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.12
-"""Reproducible policy-occupancy bench. Prints JSON. Seed and N are pinned."""
-
+"""Reproducible policy-iteration bench. Prints JSON. Seed and shape are pinned."""
 from __future__ import annotations
 
 import json
@@ -10,7 +9,7 @@ import statistics
 import sys
 import time
 
-from policy import policy_iteration
+from policy import policy_iteration, row0_greedy
 
 SEED = 20260919
 N_STATES = 256
@@ -19,47 +18,45 @@ N_TRIALS = 7
 WARMUP = 1
 
 
-def rewards(n_states: int, n_actions: int, seed: int) -> list[list[int]]:
+def table(n: int, a: int, seed: int) -> list[list[int]]:
     rng = random.Random(seed)
-    return [[rng.randrange(0, 64) for _ in range(n_actions)] for _ in range(n_states)]
-
-
-def greedy0(table: list[list[int]]) -> int:
-    row = table[0]
-    return max(range(len(row)), key=lambda a: row[a])
+    return [[rng.randrange(-5, 21) for _ in range(a)] for _ in range(n)]
 
 
 def main() -> int:
-    table = rewards(N_STATES, N_ACTIONS, SEED)
-    pol_times: list[float] = []
-    g0_times: list[float] = []
+    reward = table(N_STATES, N_ACTIONS, SEED)
+    pi_times: list[float] = []
+    greedy_times: list[float] = []
     first: int | None = None
     second: int | None = None
+    greedy = row0_greedy(reward)
     for trial in range(WARMUP + N_TRIALS):
         t0 = time.perf_counter()
-        acc = policy_iteration(table)
-        pt = time.perf_counter() - t0
+        action = policy_iteration(reward)
+        dt = time.perf_counter() - t0
         t1 = time.perf_counter()
-        g0 = greedy0(table)
-        gt = time.perf_counter() - t1
-        if acc != g0:
-            raise SystemExit("policy_iteration and row-0 greedy disagree")
+        g = row0_greedy(reward)
+        bt = time.perf_counter() - t1
+        if g != greedy:
+            raise SystemExit("greedy action moved")
         if trial < WARMUP:
             continue
-        pol_times.append(pt)
-        g0_times.append(gt)
+        pi_times.append(dt)
+        greedy_times.append(bt)
         if first is None:
-            first = acc
+            first = action
         else:
-            second = acc
+            second = action
     if policy_iteration([[1, 3], [0, 2]]) != 1:
         raise SystemExit("policy identity failed")
+    if first == greedy:
+        raise SystemExit("pinned policy matches the greedy row")
     try:
         policy_iteration([])
     except ValueError:
         pass
     else:
-        raise SystemExit("empty rewards accepted")
+        raise SystemExit("empty reward accepted")
     record = {
         "schema": "worldtick.policy_bench.v1",
         "seed": SEED,
@@ -67,15 +64,16 @@ def main() -> int:
         "n_actions": N_ACTIONS,
         "n_trials": N_TRIALS,
         "warmup": WARMUP,
-        "n_paired": len(pol_times),
-        "policy_seconds_median": statistics.median(pol_times),
-        "greedy0_seconds_median": statistics.median(g0_times),
-        "policy_seconds": pol_times,
-        "greedy0_seconds": g0_times,
+        "n_paired": len(pi_times),
+        "policy_seconds_median": statistics.median(pi_times),
+        "greedy_seconds_median": statistics.median(greedy_times),
+        "policy_seconds": pi_times,
+        "greedy_seconds": greedy_times,
         "action_first": first,
         "action_second": second,
         "action_identical": first is not None and first == second,
-        "action_equals_greedy0": True,
+        "greedy_action": greedy,
+        "policy_differs_from_greedy": first is not None and first != greedy,
         "python": sys.version.split()[0],
         "platform": platform.platform(),
         "implementation": platform.python_implementation(),

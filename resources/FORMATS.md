@@ -1,7 +1,10 @@
-# What a world-model map resource is
+# What a world-tick resource is
 
-This kernel **ingests** a ROS OccupancyGrid (`resources/synthetic/world.yaml`).
-Empty facts refuse.
+One tick moves occupied facts across one edge. The closure is a later number.
+On `resources/synthetic/world.yaml` those numbers are 2 and 3.
+
+This kernel ingests a ROS OccupancyGrid (`resources/synthetic/world.yaml`).
+A blank map refuses. Unknown and free cells are not facts.
 
 ```bash
 python3.12 show_occgrid.py

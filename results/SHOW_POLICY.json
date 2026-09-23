@@ -1,0 +1,13 @@
+{
+  "schema": "worldtick.show_policy.v1",
+  "built": "2-state ring; greedy action 0; iterated action 1; empty table refuses",
+  "ours": {
+    "greedy": 0,
+    "policy": 1,
+    "empty": "raised"
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "n_parameters": 0,
+  "gradient_descent_steps": 0
+}
