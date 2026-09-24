@@ -76,6 +76,26 @@ def compose(photo_name: str, out_name: str, kicker: str, title: str, kept: str, 
     canvas.save(HERE / out_name, quality=92)
 
 
+def story() -> None:
+    W, H = 1680, 720
+    canvas = Image.new("RGB", (W, H), BG)
+    draw = ImageDraw.Draw(canvas)
+    draw.text((36, 28), "ONE SPLIT  ·  同一种分裂", font=font(18), fill=MUTED)
+    draw.text((36, 58), "补全得到较大的数。一步是更小的数。空记录报错。", font=font(32), fill=TEXT)
+    cols = [
+        ("世界模型", "补上没看见的格子\n→ 可达 3\n和一张全看见的地图相同", "只走已经看见的一步\n→ 2\n中间那格是洞\n→ 报错"),
+        ("脑机接口", "掉线补成 8 个 0\n→ 类别 0\n和静息相同", "录上的 8 个点\n→ 类别 1，标记 go\n空包\n→ 报错"),
+        ("下一步动作", "只补全眼前这一行\n→ 动作 0", "按世界走一步\n→ 动作 1\n空的奖励表\n→ 报错"),
+    ]
+    for i, (name, big, small) in enumerate(cols):
+        x = 36 + i * 548
+        draw.rounded_rectangle((x, 130, x + 520, 680), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
+        draw.text((x + 24, 150), name, font=font(28), fill=TEXT)
+        panel(draw, (x + 20, 210, x + 500, 420), AMBER_BG, AMBER, "补全", big)
+        panel(draw, (x + 20, 440, x + 500, 660), GREEN_BG, GREEN, "一步", small)
+    canvas.save(HERE / "story.png", quality=92)
+
+
 def main() -> None:
     compose(
         "hand-product.png",
@@ -113,6 +133,7 @@ def main() -> None:
         "NumPy 对一帧空雷达求长度\n→ 得到 0.0\n\nFilterPy 收到一次空更新\n→ 照单接受，位置留在 0.0",
         "空雷达、空观测\n→ 报错\n\n两个点 → 1\n三次观测 → 3",
     )
+    story()
 
 
 if __name__ == "__main__":

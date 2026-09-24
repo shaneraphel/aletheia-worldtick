@@ -2,9 +2,29 @@
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-同一份输入上的结果。空记录报错。有内容的记录给出下面的数。
+补全把没看见的地方写成一个能继续用的数。一步只移动已经看见的事实。三个领域得到同一对结果。
 
-Same input, the result. An empty record reports an error. A record with contents gives the number below.
+Completion writes a usable number into what was not seen. One tick moves only a fact that was seen. Three fields give the same pair of results.
+
+![补全：世界模型可达 3，脑电类别 0，动作 0。一步：可达 2，类别 1，动作 1。洞、空包、空表报错。](docs/figures/story.png)
+
+| | 补全 | 一步 | 空记录 |
+|---|---|---|---|
+| 世界模型，三格，中间是洞 | 可达 **3**，和一张全看见的地图相同 | 可达 **2** | 报错 |
+| 脑电，8 个点 | 掉线补 0 之后类别 **0**，和静息相同 | 录上的点类别 **1**（go） | 报错 |
+| 奖励表的下一动作 | 只看眼前这一行，动作 **0** | 走一步世界，动作 **1** | 报错 |
+
+大地图上同一对结果是走一步 **24**、走到头 **214**。256×8 的奖励表上，眼前这一行是动作 **2**，走一步是动作 **5**。
+
+On the large map the same pair is one tick **24** and the end of the walk **214**. On the 256×8 reward table the visible row is action **2** and one tick of the world is action **5**.
+
+Completion writes a usable number into a place that was not seen. One tick moves only a fact that was already seen. The three fields above give that pair.
+
+| | completion | one tick | empty record |
+|---|---|---|---|
+| world model, three cells, a hole in the middle | reach **3**, the same integer as a fully seen map | reach **2** | error |
+| EEG, 8 samples | a dropped packet filled with zeros is class **0**, the same integer as rest | the recorded samples are class **1** (go) | error |
+| next action on a reward table | the visible row alone is action **0** | one tick of the world is action **1** | error |
 
 ## 灵巧手 / Dexterous hand
 

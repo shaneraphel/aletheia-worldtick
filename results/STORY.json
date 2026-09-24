@@ -1,0 +1,21 @@
+{
+  "schema": "worldtick.story.v1",
+  "world_model": {
+    "completed_reach": 3,
+    "seen_closure": 3,
+    "seen_tick": 2,
+    "hole": "raised"
+  },
+  "bci": {
+    "go": 1,
+    "rest": 0,
+    "zerofill": 0,
+    "dropout": "raised"
+  },
+  "action": {
+    "row": 0,
+    "tick": 1
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

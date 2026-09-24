@@ -5,7 +5,9 @@ import json
 import unittest
 from pathlib import Path
 
+from complete import completed_reach, measured_closure, measured_tick
 from datalog import datalog_fixpoint
+from decode import GO, REST, neural_class, zero_fill
 from datalog_bench import N_EDGES, N_FACTS, N_NODES, SEED, world
 from occgrid import occupancy_graph, occupied_points, read_occgrid, write_occgrid
 from policy import policy_iteration, row0_greedy
@@ -57,6 +59,20 @@ class PrecisionTest(unittest.TestCase):
         n, edges = occupancy_graph(grid)
         self.assertEqual(world_tick(n, [0], edges), 2)
         self.assertEqual(datalog_fixpoint(n, [0], edges), 3)
+
+    def test_completion_matches_seen_map_and_tick_is_smaller(self) -> None:
+        hole = [1, None, 0]
+        seen = [1, 0, 0]
+        self.assertEqual(completed_reach(hole), 3)
+        self.assertEqual(measured_closure(seen), 3)
+        self.assertEqual(measured_tick(seen), 2)
+        with self.assertRaises(ValueError):
+            measured_tick(hole)
+        self.assertEqual(neural_class(GO), 1)
+        self.assertEqual(neural_class(REST), 0)
+        self.assertEqual(neural_class(zero_fill(8)), 0)
+        with self.assertRaises(ValueError):
+            neural_class([])
 
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
