@@ -75,6 +75,21 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 
 数在 `results/HIDDEN.json`。`python3.12 hidden.py` 重算。
 
+## 一次决策 / One decision
+
+同一批路，只看下一格。真值：下一格真是空地才走。补全：填完是空地就走。一步：量到是空地才走，否则停。
+
+![补全撞上 552，一步撞上 0，一步多停 2353，补全多停 0。](docs/figures/decide.png)
+
+| | 撞上没看见的障碍 crashes | 在空路上多停 extra stops |
+|---|---|---|
+| 补全 completion | **552** | **0** |
+| 一步 one tick | **0** | **2,353** |
+
+数在 `results/DECIDE.json`。`python3.12 decide.py` 重算。
+
+One decision on the next cell. Truth goes iff the true next cell is free. Completion goes iff the filled cell is free. One tick goes iff the cell was measured free. Counts are in `results/DECIDE.json`. `python3.12 decide.py` recomputes them.
+
 ## 洞越多，走进去的次数越多
 
 每一点是 10,000 条 32 格的路。障碍率 0.20 不变。丢失率从 0.00 到 0.50。
