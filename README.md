@@ -185,6 +185,21 @@ Completion writes a usable number into a place that was not seen. One tick moves
 
 [`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock)
 
+一万个随机 go 包，每包 8 个点。丢掉后 k 个点并补零。被读成静息的个数：
+
+![丢 0 到 8 个点，被读成静息 0、0、1、9、43、161、642、2494、10000。](docs/figures/bcisweep.png)
+
+| 丢掉 | 读成静息 |
+|---|---|
+| 0 | **0** |
+| 4 | **43** |
+| 7 | **2,494** |
+| 8 | **10,000** |
+
+数在 `results/BCISWEEP.json`。`python3.12 bcisweep.py` 重算。
+
+Ten thousand random go packets of 8 samples. Drop the last k samples and fill zeros. Packets read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10000. Counts are in `results/BCISWEEP.json`. `python3.12 bcisweep.py` recomputes them.
+
 ## 移动机器人 / Mobile robot
 
 ![三格地图：空图地点数 0；有路时 NetworkX 一次得到 3。空的一步报错。走一步 2，走到头 3。大地图 24，然后 214。](docs/figures/robot-delta.png)

@@ -25,5 +25,6 @@ jobs:
           python sweep.py
           python horizon.py
           python foresight.py
+          python bcisweep.py
           python show_policy.py
           python tick_bench.py

@@ -1,0 +1,56 @@
+{
+  "schema": "worldtick.bcisweep.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "width": 8,
+  "points": [
+    {
+      "dropped": 0,
+      "n": 10000,
+      "read_as_rest": 0
+    },
+    {
+      "dropped": 1,
+      "n": 10000,
+      "read_as_rest": 0
+    },
+    {
+      "dropped": 2,
+      "n": 10000,
+      "read_as_rest": 1
+    },
+    {
+      "dropped": 3,
+      "n": 10000,
+      "read_as_rest": 9
+    },
+    {
+      "dropped": 4,
+      "n": 10000,
+      "read_as_rest": 43
+    },
+    {
+      "dropped": 5,
+      "n": 10000,
+      "read_as_rest": 161
+    },
+    {
+      "dropped": 6,
+      "n": 10000,
+      "read_as_rest": 642
+    },
+    {
+      "dropped": 7,
+      "n": 10000,
+      "read_as_rest": 2494
+    },
+    {
+      "dropped": 8,
+      "n": 10000,
+      "read_as_rest": 10000
+    }
+  ],
+  "empty_packet": "raised",
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
