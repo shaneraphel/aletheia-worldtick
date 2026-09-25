@@ -1,0 +1,11 @@
+{
+  "schema": "worldtick.audit.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "roads_with_masked_cells": 10000,
+  "filled_maps_with_mask_markers": 0,
+  "filled_maps_matching_truth": 1436,
+  "roads_with_occluded_obstacle": 8564,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

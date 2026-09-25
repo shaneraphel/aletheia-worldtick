@@ -5,6 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
+from audit import run as audit_run
 from complete import completed_reach, measured_closure, measured_tick
 from datalog import datalog_fixpoint
 from decode import GO, REST, neural_class, zero_fill
@@ -73,6 +74,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(neural_class(zero_fill(8)), 0)
         with self.assertRaises(ValueError):
             neural_class([])
+
+    def test_imputation_erases_the_mask(self) -> None:
+        rec = audit_run(n=200, seed=7)
+        self.assertEqual(rec["filled_maps_with_mask_markers"], 0)
+        self.assertEqual(
+            rec["filled_maps_matching_truth"] + rec["roads_with_occluded_obstacle"],
+            rec["n"],
+        )
 
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):

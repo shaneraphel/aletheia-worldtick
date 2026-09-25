@@ -1,117 +1,115 @@
-# Worldtick · 世界一步
+# Worldtick: imputation under partial observability
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-## 问题
+Partially observed input, a fail-closed validator, and the measured cost of filling in the blanks.
 
-2026 年的世界模型、脑电模型和动作模型，都在把没看见的地方补成一张完整的图，再用这张图做决定。V-JEPA 2.1 预测被遮住的视频块。Cosmos 和 VAE 把画面补到像素上看起来像。LaBraM 预测被遮住的脑电，缺的通道用插值补上。世界动作模型先画出下一步的画面，再从画面里选动作。
-
-Nilaksh 等人在 [CVPR 2026 的工作](https://arxiv.org/abs/2605.06388)里写明：像素补得像，规划不一定对。Zhang 等人在 [2026 年的测试时规划](https://arxiv.org/abs/2609.24745)里写明：生成一个像样的未来，比从这些未来里选出该执行的动作更容易。
-
-这里把这一个问题放进三个领域，用同一对整数来回答。补全得到较大的数，并且这个数可以和“真的看见了”相同。一步只使用已经看见的事实，得到较小的数。空记录报错。
+部分可观测输入、fail-closed 校验，以及补齐缺失后的实测代价。
 
 ## Problem
 
-In 2026, world models, EEG models, and action models fill in what was not seen, then decide from the filled picture. V-JEPA 2.1 predicts masked video patches. Cosmos and VAEs complete the frame until the pixels look right. LaBraM predicts masked EEG, and missing channels are interpolated. World action models draw the next frame, then pick an action from that drawing.
+In 2026, world models, neural decoding models, and action models share one inference step: impute the unobserved part of the input, then decide from the completed picture. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) predicts masked video patches. [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and VAE decoders reconstruct frames to high pixel fidelity. [LaBraM](https://arxiv.org/abs/2405.18765) predicts masked EEG segments, and missing channels are spatially interpolated ([InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html)). World action models render the next observation, then select an action from the rendering.
 
-Nilaksh et al., in a [CVPR 2026 workshop paper](https://arxiv.org/abs/2605.06388), state that a picture can look right while the plan is not. Zhang et al., on [test-time planning](https://arxiv.org/abs/2609.24745), state that producing a plausible future is easier than choosing the action that future supports.
+Two 2026 studies state the open question. Nilaksh et al. ([CVPR 2026 workshop](https://arxiv.org/abs/2605.06388)) show pixel fidelity does not imply planning performance: reconstruction latents win on image metrics while semantic latents win on policy behavior. Zhang et al. ([test-time planning, 2026](https://arxiv.org/abs/2609.24745)) show generating plausible futures is easier than selecting the action those futures support (oracle selection 68.9% → 79.2%; tested selectors recover little).
 
-The same question is asked here in three fields, and answered with one pair of integers. Completion returns the larger number, and that number can match a world that really was seen. One tick uses only a fact that was seen, and returns the smaller number. An empty record is an error.
+This repository asks that question in three small, fully reproducible settings — occupancy reachability, EEG classification, and tabular action selection — and answers with one pair of integers. Optimistic imputation returns the larger number, which can equal the fully observed value. A single measured transition returns the smaller number. Empty input is fail-closed (raises; never 0).
 
-![补全：世界模型可达 3，脑电类别 0，动作 0。一步：可达 2，类别 1，动作 1。洞、空包、空表报错。](docs/figures/story.png)
+2026 年的世界模型、神经解码模型和动作模型，共用同一个推理步骤：补齐输入中没观测到的部分，再基于补全后的图像做决策。V-JEPA 2.1 预测被遮住的视频块。Cosmos 和 VAE 把画面重建到像素级逼真。LaBraM 预测被遮住的脑电，缺失通道做空间插值。世界动作模型先渲染下一步观测，再从渲染结果里选动作。
 
-| | 补全 | 一步 | 空记录 |
+两篇 2026 年的工作点出了开放问题。Nilaksh 等人（CVPR 2026 workshop）证明像素保真不等于规划性能：重建类隐变量赢图像指标，语义类隐变量赢策略行为。Zhang 等人（2026 测试时规划）证明生成像样的未来，比从这些未来里选出该执行的动作更容易（oracle 选择 68.9% → 79.2%，实测选择器几乎收不回这个差距）。
+
+本仓库在三个小而完全可复现的设定里问同一个问题——占据可达、脑电分类、表格型动作选择，用同一对整数回答。乐观补全给出较大的数，可以和全观测值相同。单步实测转移给出较小的数。空输入 fail-closed（抛异常，永不返回 0）。
+
+![Imputation: world-model reach 3, EEG class 0, action 0. One measured step: 2, class 1, action 1. Empty input raises.](docs/figures/story.png)
+
+| Setting | Optimistic imputation | One measured step | Empty input |
 |---|---|---|---|
-| 世界模型，三格，中间是洞 | 可达 **3**，和一张全看见的地图相同 | 可达 **2** | 报错 |
-| 脑电，8 个点 | 掉线补 0 之后类别 **0**，和静息相同 | 录上的点类别 **1**（go） | 报错 |
-| 奖励表的下一动作 | 只看眼前这一行，动作 **0** | 走一步世界，动作 **1** | 报错 |
+| World model, 3 cells, middle masked | reach **3**, equals the fully observed map | reach **2** | raises |
+| EEG, 8 samples | dropout zero-filled → class **0**, equals rest | recorded samples → class **1** (go) | raises |
+| Reward table, next action | myopic row → action **0** | one-step lookahead → action **1** | raises |
 
-大地图上同一对结果是走一步 **24**、走到头 **214**。256×8 的奖励表上，眼前这一行是动作 **2**，走一步是动作 **5**。
-
-On the large map the same pair is one tick **24** and the end of the walk **214**. On the 256×8 reward table the visible row is action **2** and one tick of the world is action **5**.
-
-## 一万次 / 10,000 trials
-
-种子 `20260919`，每条链 8 格，共 10,000 次。补全把洞写成 0。一步只从已经看见的格子出发。
-
-Seed `20260919`. Each chain has 8 cells. 10,000 trials. Completion writes the hole as 0. One tick starts only from a cell that was seen.
-
-![一万次：世界模型补全 8 与一步 2，脑电补零与静息同为 0，眼前动作 0 与走一步动作 1，全部 10000/10000。](docs/figures/campaign.png)
-
-| | 补全 | 一步 | 次数 |
+| 设定 | 乐观补全 | 单步实测 | 空输入 |
 |---|---|---|---|
-| 世界模型 | 可达 **8**，和补全后的整张图相同 | **2** | **10,000 / 10,000** |
-| 脑电 | 掉线补 0 的类别是 **0**，和静息相同 | 录上的类别是 **1** | **10,000 / 10,000** |
-| 下一动作 | 眼前这一行是动作 **0** | 走一步是动作 **1** | **10,000 / 10,000** |
+| 世界模型，3 格，中间被遮 | 可达 **3**，等于全观测地图 | 可达 **2** | 抛异常 |
+| 脑电，8 采样 | 丢失补零 → 类别 **0**，等于静息 | 实录采样 → 类别 **1**（go） | 抛异常 |
+| 奖励表，下一步动作 | 只看当前行 → 动作 **0** | 前视一步 → 动作 **1** | 抛异常 |
 
-数在 `results/CAMPAIGN.json`。`python3.12 campaign.py` 重算。
+On the pinned large map the same pair is one step **24** versus fixed point **214**. On the pinned 256×8 reward table the myopic row is action **2** and one-step lookahead is action **5**.
 
-The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes them.
+大地图上同一对数是单步 **24**、不动点 **214**。256×8 奖励表上，当前行动作 **2**，前视一步动作 **5**。
 
-2026 年这三篇工作的运算，就是上面的“补全”：
+## Controlled comparison, 10,000 trials
 
-| 论文 | 他们的运算 | 这一万次里的结果 |
+Seed `20260919`. Chains of 8 cells. Imputation writes masked cells as free. The measured step starts only from observed cells.
+
+种子 `20260919`。8 格链。补全把被遮格写成空闲。实测步只从已观测格出发。
+
+![10,000 trials: world-model imputation 8 vs step 2; EEG zeros match rest; myopic action 0 vs lookahead 1; all 10000/10000.](docs/figures/campaign.png)
+
+| | Imputation | Measured step | Rate |
+|---|---|---|---|
+| World model | reach **8**, equals the completed map | **2** | **10,000 / 10,000** |
+| EEG | zero-filled dropout → class **0**, equals rest | recorded → class **1** | **10,000 / 10,000** |
+| Next action | myopic row → action **0** | lookahead → action **1** | **10,000 / 10,000** |
+
+Counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes them.
+
+| 2026 work | Their imputation step | Result here |
 |---|---|---|
-| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482)（2026） | 被遮住的视频块也要预测出来 | 补上的格子可达 8；看见的一步是 2 |
-| [Reconstruction or Semantics?](https://arxiv.org/abs/2605.06388)（CVPR 2026 workshop） | Cosmos / VAE 把画面补全；像素像，规划不一定对 | 补全后的可达数和一张全看见的地图相同 |
-| [LaBraM](https://arxiv.org/abs/2405.18765) 与 [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) | 遮住的脑电块要预测；缺的通道被插值补上 | 补 0 的类别和静息相同，都是 0 |
-| [Beyond Visual Quality](https://arxiv.org/abs/2609.24745)（2026） | 先生成未来画面，再从画面里选动作 | 眼前这一行选出的动作，和走一步选出的动作，10,000 次都不同 |
+| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) | masked video patches are predicted | imputed cells reach 8; the measured step is 2 |
+| [Reconstruction or Semantics?](https://arxiv.org/abs/2605.06388) | Cosmos / VAE complete frames; pixels match, plans may not | imputed reach equals the fully observed map |
+| [LaBraM](https://arxiv.org/abs/2405.18765) + [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) | masked EEG predicted; missing channels interpolated | zero-filled class equals rest, both 0 |
+| [Beyond Visual Quality](https://arxiv.org/abs/2609.24745) | render futures first, then select an action | myopic vs lookahead actions differ in 10,000 / 10,000 |
 
-上表是这一万次的结果。比对的是这些论文共用的一步：把没看见的地方写成一个数。
+## Closed-loop cost of optimistic imputation
 
-## 补全之后会走进去的障碍
+True corridors with obstacles. The sensor masks 30% of cells. Optimistic imputation writes each masked cell as free and walks. The measured step stops at the first masked cell. 32 cells, 10,000 corridors, seed `20260919`.
 
-真的路上有障碍。传感器丢掉 30% 的格子。补全把丢掉的格子写成空地，然后往前走。一步停在第一个没看见的格子。
+真实走廊带障碍。传感器遮掉 30% 格子。乐观补全把被遮格写成空闲再走。实测步停在第一个被遮格。32 格，10,000 条走廊，种子 `20260919`。
 
-32 格，10,000 条路，种子 `20260919`。
+![8,564 corridors hide an occluded obstacle. Imputation enters 2,995 times. The measured step enters 0 times.](docs/figures/hidden.png)
 
-![8564 条路藏着没看见的障碍。补全走进 2995 次。一步走进 0 次。](docs/figures/hidden.png)
-
-| | 结果 |
+| | Result |
 |---|---|
-| 藏着没看见的障碍 | **8,564 / 10,000** |
-| 补全走进那处障碍 | **2,995** |
-| 一步走进那处障碍 | **0** |
+| Corridors with an occluded obstacle | **8,564 / 10,000** |
+| Imputation enters it | **2,995** |
+| Measured step enters it | **0** |
 
-数在 `results/HIDDEN.json`。`python3.12 hidden.py` 重算。
+Counts are in `results/HIDDEN.json`. `python3.12 hidden.py` recomputes them.
 
-## 一次决策 / One decision
+## One decision
 
-同一批路，只看下一格。真值：下一格真是空地才走。补全：填完是空地就走。一步：量到是空地才走，否则停。
+Same corridors, next cell only. Ground truth goes iff the true next cell is free. Imputation goes iff the filled cell is free. The measured step goes iff the cell was observed free.
 
-![补全撞上 552，一步撞上 0，一步多停 2353，补全多停 0。](docs/figures/decide.png)
+![Imputation crashes 552, measured step crashes 0, measured step stops extra 2,353 times, imputation 0.](docs/figures/decide.png)
 
-| | 撞上没看见的障碍 crashes | 在空路上多停 extra stops |
+| | Collisions | Conservative stops on free road |
 |---|---|---|
-| 补全 completion | **552** | **0** |
-| 一步 one tick | **0** | **2,353** |
+| Imputation | **552** | **0** |
+| Measured step | **0** | **2,353** |
 
-数在 `results/DECIDE.json`。`python3.12 decide.py` 重算。
+Counts are in `results/DECIDE.json`. `python3.12 decide.py` recomputes them.
 
-One decision on the next cell. Truth goes iff the true next cell is free. Completion goes iff the filled cell is free. One tick goes iff the cell was measured free. Counts are in `results/DECIDE.json`. `python3.12 decide.py` recomputes them.
+## Optimistic vs pessimistic fill
 
-## 洞写成什么 / Fill choice
+The same 10,000 corridors. Optimistic: masked cells are free. Pessimistic: masked cells are walls. The fill policy, not the planner, determines the collision count.
 
-同一万条路。乐观：洞写成空地，往前走。保守：洞写成墙，停下。写法本身决定撞不撞。
+![Optimistic crashes 2,995, pessimistic 0; optimistic reaches the end 12 times, pessimistic 0.](docs/figures/fillchoice.png)
 
-![乐观撞上 2995，保守撞上 0，乐观走通 12，保守走通 0。](docs/figures/fillchoice.png)
-
-| | 撞上 crashes | 停下 stops | 走通 reached |
+| | Collisions | Stops | Reached the end |
 |---|---|---|---|
-| 乐观 optimistic | **2,995** | **6,993** | **12** |
-| 保守 pessimistic | **0** | **10,000** | **0** |
+| Optimistic | **2,995** | **6,993** | **12** |
+| Pessimistic | **0** | **10,000** | **0** |
 
-数在 `results/FILLCHOICE.json`。`python3.12 fillchoice.py` 重算。
+Counts are in `results/FILLCHOICE.json`. `python3.12 fillchoice.py` recomputes them.
 
-The same 10,000 roads. Optimistic writes each hole free and walks. Pessimistic writes each hole a wall and stops. The fill itself decides the crash. Counts are in `results/FILLCHOICE.json`. `python3.12 fillchoice.py` recomputes them.
+## Dropout sweep
 
-## 洞越多，走进去的次数越多
+10,000 corridors of 32 cells per point. Obstacle rate fixed at 0.20. Mask rate from 0.00 to 0.50.
 
-每一点是 10,000 条 32 格的路。障碍率 0.20 不变。丢失率从 0.00 到 0.50。
+![Dropout 0.00–0.50, imputation enters 0 to 5,084 times, measured step stays 0.](docs/figures/sweep.png)
 
-![丢失率 0.00 到 0.50，补全走进去 0 到 5084 次，一步始终 0 次。](docs/figures/sweep.png)
-
-| 丢失率 | 补全走进去 | 一步走进去 |
+| Mask rate | Imputation enters | Measured step enters |
 |---|---|---|
 | 0.00 | **0** | **0** |
 | 0.05 | **503** | **0** |
@@ -121,169 +119,86 @@ The same 10,000 roads. Optimistic writes each hole free and walks. Pessimistic w
 | 0.40 | **3,970** | **0** |
 | 0.50 | **5,084** | **0** |
 
-数在 `results/SWEEP.json`。`python3.12 sweep.py` 重算 70,000 条路。
+Counts are in `results/SWEEP.json`. `python3.12 sweep.py` recomputes 70,000 corridors.
 
-Each point is 10,000 roads of 32 cells. Obstacle rate stays 0.20. Dropout runs 0.00 to 0.50. Completion walks in more often as the hole rate rises. One tick stays 0. Counts are in `results/SWEEP.json`. `python3.12 sweep.py` recomputes 70,000 roads.
+## Horizon to the fixed point
 
-## 走多少步收敛 / Horizon
+The pinned 256-node world (256 nodes, 8 observed, 512 edges, seed `20260919`). Horizon from 0 to 256. Imputation answers 214 in one call.
 
-同一张 256 节点图。步数从 0 放到 256。补全一次回答 214。
+![Horizon 0–256, reach 8, 24, 50, 92, 138, 205, 212, converging to 214 at 12 steps.](docs/figures/horizon.png)
 
-![步数 0 到 256，可达数 8、24、50、92、138、205、212，到 12 步收敛到 214。](docs/figures/horizon.png)
+| Horizon | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 12 |
+|---|---|---|---|---|---|---|---|---|
+| Reach | **8** | **24** | **50** | **92** | **138** | **205** | **212** | **214** |
 
-| 步数 horizon | 可达 reach |
-|---|---|
-| 0 | **8** |
-| 1 | **24** |
-| 2 | **50** |
-| 3 | **92** |
-| 4 | **138** |
-| 6 | **205** |
-| 8 | **212** |
-| 12 | **214** |
+Converges at 12 steps, flat afterwards. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
 
-12 步收敛，之后不动。数在 `results/HORIZON.json`。`python3.12 horizon.py` 重算。
+## Foresight threshold, with proof
 
-One tick reaches 24. Twelve ticks reach the closure 214. Completion answers 214 in one call. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
+Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.
 
-## 远见从哪里翻转答案 / Foresight
+![Discount 0–0.95: action 0 below 0.09, action 1 above. Red line at 9/101. All 1,000 random traps flip.](docs/figures/foresight.png)
 
-陷阱表 `[[10,1],[-100,-100]]`：动作 0 眼前多 9 分，但走进 −100。折扣过 **9/101**，答案从动作 **0** 翻到动作 **1**。策略评估解 `(I−dP)V = r`，精确有理数，所以阈值是 sharp 的。
-
-![折扣 0 到 0.95，0.05 之前是动作 0，0.10 之后是动作 1。红线是 9/101。一千张随机陷阱表全部翻转。](docs/figures/foresight.png)
-
-| 折扣 discount | 动作 action |
-|---|---|
-| 0.00–0.08 | **0** |
-| 0.09–0.95 | **1** |
-| 随机陷阱表 1,000 张，折扣 0 对 0.9 | **1,000** 张翻转 |
-
-数在 `results/FORESIGHT.json`。`python3.12 foresight.py` 重算。
-
-The trap pays 10 now for action 0 and steps into −100. Past discount **9/101** the answer flips from action **0** to action **1**. Policy evaluation solves `(I−dP)V = r` in exact rationals, so the threshold is sharp. Counts are in `results/FORESIGHT.json`. `python3.12 foresight.py` recomputes them.
-
-The true road has obstacles. The sensor drops 30% of the cells. Completion writes each drop as free space and walks on. One tick stops at the first unseen cell.
-
-32 cells, 10,000 roads, seed `20260919`.
-
-| | result |
-|---|---|
-| roads with an unseen obstacle | **8,564 / 10,000** |
-| completion walks into that obstacle | **2,995** |
-| one tick walks into that obstacle | **0** |
-
-The counts are in `results/HIDDEN.json`. `python3.12 hidden.py` recomputes them.
-
-The table is the result of these 10,000 trials. The comparison is the step those papers share: writing a number into a place that was not seen.
-
-Completion writes a usable number into a place that was not seen. One tick moves only a fact that was already seen. The three fields above give that pair.
-
-| | completion | one tick | empty record |
+| Discount | 0.00–0.08 | 0.09–0.95 | 1,000 random traps, d=0 vs 0.9 |
 |---|---|---|---|
-| world model, three cells, a hole in the middle | reach **3**, the same integer as a fully seen map | reach **2** | error |
-| EEG, 8 samples | a dropped packet filled with zeros is class **0**, the same integer as rest | the recorded samples are class **1** (go) | error |
-| next action on a reward table | the visible row alone is action **0** | one tick of the world is action **1** | error |
+| Action | **0** | **1** | **1,000** flip |
 
-## 灵巧手 / Dexterous hand
+Counts are in `results/FORESIGHT.json`. `python3.12 foresight.py` recomputes them.
 
-![空的手：MuJoCo 加载成功，munkres 返回空列表，这里报错。有数字的 2×2 表，代价 2。](docs/figures/hand-delta.png)
+## EEG dose–response
 
-| 输入 | 结果 |
+Ten thousand random go packets of 8 samples. Drop the last k samples, zero-fill. Packets classified as rest:
+
+![Dropped 0–8 samples, read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10000.](docs/figures/bcisweep.png)
+
+| Dropped | 0 | 4 | 7 | 8 |
+|---|---|---|---|---|
+| Read as rest | **0** | **43** | **2,494** | **10,000** |
+
+Counts are in `results/BCISWEEP.json`. `python3.12 bcisweep.py` recomputes them.
+
+## Audit: imputation deletes the mask
+
+On the same 10,000 corridors: imputed maps carry zero mask markers by construction, so a downstream checker that looks for missing-data markers catches none of the 8,564 wrong maps. Only **1,436** imputed maps match the true corridor cell for cell.
+
+![Roads with masked cells 10,000; filled maps with markers 0; filled maps matching truth 1,436; occluded-obstacle roads 8,564.](docs/figures/audit.png)
+
+| | Count |
 |---|---|
-| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) 空模型 | 加载成功 |
-| [munkres 1.1.4](https://github.com/bmc/munkres) 空表 `compute([[]])` | 空列表 `[]`（[issue 54](https://github.com/bmc/munkres/issues/54)） |
-| 同一张空表 | 报错 |
-| 2×2 抓取表 | 代价 **2** |
-| 两指，字母 `CAKE` | 距离 **3** |
-| [NumPy 2.4.6](https://github.com/numpy/numpy) 空向量长度 | `0.0` |
+| Roads with masked cells | **10,000** |
+| Filled maps still carrying a marker | **0** |
+| Filled maps matching the true road | **1,436** |
+| Roads with an occluded obstacle | **8,564** |
 
-[`locks/aletheia-handlock`](locks/aletheia-handlock) · [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock)
+Counts are in `results/AUDIT.json`. `python3.12 audit.py` recomputes them.
 
-## 脑机接口 / Brain-computer interface
+## Upstream side-by-side behavior
 
-![空录音：MNE 时长 0、标记 0，NumPy 平均值为 nan，这里报错。录上的一段是 8 个点，标记 go / end。](docs/figures/bci-delta.png)
+Each row calls the upstream project and this repository on the same input. Empty input is fail-closed here.
 
-| 输入 | 结果 |
-|---|---|
-| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) 空录音 | 时长 0，标记个数 0 |
-| [NumPy 2.4.6](https://github.com/numpy/numpy) 空采样的平均 | `nan` |
-| 同一段空录音，空的标记表 | 报错 |
-| 录上的一段 | **8** 个点，标记 `go` / `end` |
-| 存进去的平坦采样（速率 0） | 仍是一条采样 |
-| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) 没有键的过滤器 | “不是成员” |
-| 空的键列表 | 报错 |
+| Project | Upstream result | This repository |
+|---|---|---|
+| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco), empty model | loads successfully | refuses a cost-free MJCF |
+| [munkres 1.1.4](https://github.com/bmc/munkres), empty table `compute([[]])` | returns `[]` ([issue 54](https://github.com/bmc/munkres/issues/54)) | raises; the 2×2 assignment stays cost **2** |
+| [NumPy 2.4.6](https://github.com/numpy/numpy), empty vector norm | `0.0` | raises; `CAKE` stays distance **3** |
+| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python), empty recording | duration 0, 0 annotations | raises; the recorded clip stays **8** samples, markers `go` / `end` |
+| [NumPy 2.4.6](https://github.com/numpy/numpy), empty mean | `nan` | raises |
+| [NetworkX 3.6.1](https://github.com/networkx/networkx), empty graph | 0 nodes | raises while edges remain; 1 step reaches **2**, fixed point **3** |
+| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy), empty update | accepted, state stays `0.0` | raises; 2 lidar points count **1**, 3 observations count **3** |
+| [Foxglove MCAP](https://github.com/foxglove/mcap), zero messages | empty log | raises |
+| [ROS 2 rosbag2](https://github.com/ros2/rosbag2), zero messages | empty bag | raises |
+| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter), keyless filter | reports non-membership | raises on an empty key list |
 
-[`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock)
+![Dexterous hand.](docs/figures/hand-delta.png)
+![Brain–computer interface.](docs/figures/bci-delta.png)
+![Mobile robot.](docs/figures/robot-delta.png)
+![Vehicle.](docs/figures/vehicle-delta.png)
 
-一万个随机 go 包，每包 8 个点。丢掉后 k 个点并补零。被读成静息的个数：
+Kernels: [`locks/aletheia-handlock`](locks/aletheia-handlock) · [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock) · [`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock) · [`locks/aletheia-voxelock`](locks/aletheia-voxelock) · [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock) · [`locks/aletheia-tourlock`](locks/aletheia-tourlock)
 
-![丢 0 到 8 个点，被读成静息 0、0、1、9、43、161、642、2494、10000。](docs/figures/bcisweep.png)
+## Reproduce
 
-| 丢掉 | 读成静息 |
-|---|---|
-| 0 | **0** |
-| 4 | **43** |
-| 7 | **2,494** |
-| 8 | **10,000** |
-
-数在 `results/BCISWEEP.json`。`python3.12 bcisweep.py` 重算。
-
-Ten thousand random go packets of 8 samples. Drop the last k samples and fill zeros. Packets read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10000. Counts are in `results/BCISWEEP.json`. `python3.12 bcisweep.py` recomputes them.
-
-## 移动机器人 / Mobile robot
-
-![三格地图：空图地点数 0；有路时 NetworkX 一次得到 3。空的一步报错。走一步 2，走到头 3。大地图 24，然后 214。](docs/figures/robot-delta.png)
-
-| 输入 | 结果 |
-|---|---|
-| [NetworkX 3.6.1](https://github.com/networkx/networkx) 空图 | 地点个数 0 |
-| 同一条三格的路 | 一次得到 **3** |
-| 路还在，这一步是空的 | 报错 |
-| 1×3 地图，走一步 | **2** |
-| 1×3 地图，走到头 | **3** |
-| 256 个地点，8 个起点，512 条路，种子 `20260919`，走一步 | **24** |
-| 同一张图，走到头，两遍 | **214** 和 **214** |
-| 步数放到 256 | **214** |
-| 广度优先搜索，走到头 | **214** |
-
-[`tick.py`](tick.py) · [`datalog.py`](datalog.py) · [`occgrid.py`](occgrid.py)
-
-## 车 / Vehicle
-
-![空雷达：NumPy 长度 0.0，FilterPy 位置留在 0.0，这里报错。两个点算作 1，三次观测算作 3。](docs/figures/vehicle-delta.png)
-
-| 输入 | 结果 |
-|---|---|
-| [NumPy 2.4.6](https://github.com/numpy/numpy) 空雷达的长度 | `0.0` |
-| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) 空更新 | 接受，位置 `0.0` |
-| 同一帧空雷达，同一次空观测 | 报错 |
-| 两个雷达点 | **1** |
-| 三次观测 | **3** |
-| [NetworkX](https://github.com/networkx/networkx) 没有节点的路图 | 地点个数 0 |
-| 没有站点的路线 | 报错 |
-
-[`locks/aletheia-voxelock`](locks/aletheia-voxelock) · [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock) · [`locks/aletheia-tourlock`](locks/aletheia-tourlock)
-
-## 奖励表 / Reward table
-
-| 输入 | 结果 |
-|---|---|
-| 两行表，只看第 0 行最大的格子 | 动作 **0** |
-| 同一张表，把下一步的分数打九折加回来 | 动作 **1** |
-| 256 个状态 × 8 个动作，种子 `20260919`，只看第 0 行 | 动作 **2** |
-| 同一张表，看下一步，两遍 | 动作 **5** 和 **5** |
-| 空的奖励表 | 报错 |
-
-## 日志 / Logs
-
-| 输入 | 结果 |
-|---|---|
-| [map_server](https://wiki.ros.org/map_server) 空白格子图 | 报错 |
-| [MCAP](https://github.com/foxglove/mcap) 零条消息 | 报错 |
-| [rosbag2](https://github.com/ros2/rosbag2) 零条消息 | 报错 |
-| NetworkX 三节点图，边还在、起点是空的 | 报错 |
-
-## 运行 / Run
+The precision check uses the Python standard library only. Side-by-side callers need the versions pinned in `requirements-show.txt`.
 
 ```bash
 make check
@@ -292,47 +207,49 @@ python3.12 show_policy.py
 python3.12 show_networkx.py
 ```
 
-数在 `results/`。`make check` 重算该相等的几项。每次推送同样重算。
+Counts live in `results/`. `make check` recomputes every pinned number. Every push recomputes them in CI.
 
-Numbers are in `results/`. `make check` recomputes the ones that match. Every push recomputes them.
+## Upstream projects
 
-## 上游 / Upstream
-
-| 项目 | 地址 | 结果 |
+| Project | URL | Role in this repo |
 |---|---|---|
-| NetworkX | https://github.com/networkx/networkx | 空图地点数 0；三格的路一次得到 3 |
-| Foxglove MCAP | https://github.com/foxglove/mcap | 零条消息：报错 |
-| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | 零条消息：报错 |
-| rosbags | https://gitlab.com/ternaris/rosbags | `show_rosbags.py` 的读取结果 |
-| ROS map_server | https://wiki.ros.org/map_server | 空白格子图：报错 |
-| OccupancyGrid | https://docs.ros.org/en/humble/p/nav_msgs/interfaces/msg/OccupancyGrid.html | 空白格子图：报错 |
-| ROS 2 | https://github.com/ros2/ros2 | 上面的包和地图 |
-| Soufflé | https://github.com/souffle-lang/souffle | 走到头这一类推法；这张固定地图的结果是 214 |
-| NumPy | https://github.com/numpy/numpy | 空平均 `nan`；空长度 `0.0` |
-| MNE-Python | https://github.com/mne-tools/mne-python | 空录音时长 0，标记个数 0 |
-| BIDS | https://github.com/bids-standard/bids-specification | 只有表头的事件表：报错 |
-| NiBabel | https://github.com/nipy/nibabel | NIfTI，见 [`ATLAS.md`](ATLAS.md) |
-| OpenDRIVE | https://github.com/asam-oss/asamOpenDRIVE | 空路口图：报错 |
-| MuJoCo | https://github.com/google-deepmind/mujoco | 空模型：加载成功 |
-| Open3D | https://github.com/isl-org/Open3D | 与雷达点一起的结果：1 |
-| nuScenes | https://github.com/nutonomy/nuscenes-devkit | 空样本：报错 |
-| pyahocorasick | https://github.com/WojciechMula/pyahocorasick | 空文本上的对照 |
-| python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | 没有键：不是成员。空键列表：报错 |
+| NetworkX | https://github.com/networkx/networkx | graph baseline in `show_networkx.py` |
+| Foxglove MCAP | https://github.com/foxglove/mcap | occupancy samples in `mcapocc.py` |
+| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | bag folders in `bagocc.py` |
+| rosbags | https://gitlab.com/ternaris/rosbags | reader in `show_rosbags.py` |
+| ROS map_server | https://wiki.ros.org/map_server | YAML + PGM occupancy maps |
+| OccupancyGrid | https://docs.ros.org/en/humble/p/nav_msgs/interfaces/msg/OccupancyGrid.html | cell values in `occgrid.py` |
+| ROS 2 | https://github.com/ros2/ros2 | stack those bags and maps come from |
+| Soufflé | https://github.com/souffle-lang/souffle | Datalog fixed-point reference; closure here is 214 |
+| NumPy | https://github.com/numpy/numpy | side-by-side calls in `locks/` |
+| MNE-Python | https://github.com/mne-tools/mne-python | EDF / GDF / BIDS-EEG traces |
+| BIDS | https://github.com/bids-standard/bids-specification | BIDS-EEG sidecars |
+| NiBabel | https://github.com/nipy/nibabel | NIfTI volumes in [`ATLAS.md`](ATLAS.md) |
+| OpenDRIVE | https://github.com/asam-oss/asamOpenDRIVE | junction maps in the lock kernels |
+| MuJoCo | https://github.com/google-deepmind/mujoco | MJCF bodies in the lock kernels |
+| Open3D | https://github.com/isl-org/Open3D | point clouds in the lock kernels |
+| nuScenes | https://github.com/nutonomy/nuscenes-devkit | sample tables in the lock kernels |
+| pyahocorasick | https://github.com/WojciechMula/pyahocorasick | suffix-link comparison in stemlock |
+| python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | membership comparison in bloomlock |
 
-## 文件 / Files
+## Files
 
-| 路径 | 结果所在 |
+| Path | Contents |
 |---|---|
-| `tick.py` | 走一步：2，以及 24 |
-| `datalog.py` | 走到头：3，以及 214 |
-| `policy.py` | 动作 0 / 1，以及 2 / 5 |
-| `occgrid.py` | 1×3 格子图 |
-| `mcapocc.py` | MCAP |
-| `bagocc.py` | rosbag2 |
-| `locks/` | 66 个格式上的结果 |
-| `binds/` | 100 条带名字的记录 |
-| [`ATLAS.md`](ATLAS.md) | 目录 |
+| `tick.py` | single-step transition: 2, and 24 |
+| `datalog.py` | fixed-point reachable set: 3, and 214 |
+| `policy.py` | integer policy iteration; empty table raises |
+| `complete.py` · `decode.py` | imputation operators for maps and EEG |
+| `campaign.py` · `hidden.py` · `sweep.py` | 10k–70k corridor experiments |
+| `horizon.py` · `foresight.py` | convergence curve; 9/101 threshold with proof |
+| `bcisweep.py` · `decide.py` · `fillchoice.py` · `audit.py` | dose–response; decision costs; fill policy; mask audit |
+| `occgrid.py` · `mcapocc.py` · `bagocc.py` | ROS grid, MCAP, rosbag2 readers |
+| `tests/test_precision.py` | 8 pinned identities |
+| `results/` | pinned JSON from every run |
+| `locks/` | 66 format kernels |
+| `binds/` | 100 named-record binds |
+| [`ATLAS.md`](ATLAS.md) | index of the above |
 
-## License / 许可
+## License
 
 MIT
