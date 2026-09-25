@@ -37,6 +37,7 @@ evidence:
 	$(PYTHON) tradeoff.py
 	$(PYTHON) stats.py
 	$(PYTHON) grid2d.py
+	$(PYTHON) plandepth.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

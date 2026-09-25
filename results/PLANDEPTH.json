@@ -1,0 +1,66 @@
+{
+  "schema": "worldtick.plandepth.v1",
+  "seed": 20260919,
+  "n": 1000,
+  "discount": "9/10",
+  "trap_curve": [
+    {
+      "depth": 0,
+      "action": 0
+    },
+    {
+      "depth": 1,
+      "action": 1
+    },
+    {
+      "depth": 2,
+      "action": 1
+    },
+    {
+      "depth": 3,
+      "action": 1
+    },
+    {
+      "depth": 4,
+      "action": 1
+    },
+    {
+      "depth": 5,
+      "action": 1
+    }
+  ],
+  "points": [
+    {
+      "depth": 0,
+      "flipped_vs_myopic": 0,
+      "match_infinite": 0
+    },
+    {
+      "depth": 1,
+      "flipped_vs_myopic": 1000,
+      "match_infinite": 1000
+    },
+    {
+      "depth": 2,
+      "flipped_vs_myopic": 1000,
+      "match_infinite": 1000
+    },
+    {
+      "depth": 3,
+      "flipped_vs_myopic": 1000,
+      "match_infinite": 1000
+    },
+    {
+      "depth": 4,
+      "flipped_vs_myopic": 1000,
+      "match_infinite": 1000
+    },
+    {
+      "depth": 5,
+      "flipped_vs_myopic": 1000,
+      "match_infinite": 1000
+    }
+  ],
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

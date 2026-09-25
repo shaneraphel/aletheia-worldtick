@@ -126,6 +126,14 @@ class PrecisionTest(unittest.TestCase):
             rec["n"],
         )
 
+    def test_depth_one_matches_infinite_horizon(self) -> None:
+        from plandepth import finite_action, run as plandepth_run
+
+        self.assertEqual([finite_action([[10, 1], [-100, -100]], d) for d in range(3)], [0, 1, 1])
+        rec = plandepth_run(n=50, seed=5)
+        for p in rec["points"][1:]:
+            self.assertEqual(p["match_infinite"], rec["n"])
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])

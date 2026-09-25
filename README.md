@@ -189,6 +189,19 @@ One crash costs how many waits? Exact fractions of pinned counts, no new randomn
 
 If a collision costs more than that many waits, the measured step (one step) and the closed loop (full walk) are cheaper. Numbers are in `results/TRADEOFF.json`. `python3.12 tradeoff.py` recomputes them.
 
+## Planning depth
+
+Finite-horizon dynamic programming in exact rationals at discount 9/10, depths 0–5, on 1,000 random one-step trap tables. Depth 0 is myopic.
+
+![Depth 0: 0 flipped. Depths 1–5: all 1,000 flipped and matching the infinite horizon.](docs/figures/plandepth.png)
+
+| Depth | 0 | 1 | 2–5 |
+|---|---|---|---|
+| Flipped vs myopic | **0** | **1,000** | **1,000** |
+| Matching infinite horizon | **0** | **1,000** | **1,000** |
+
+On one-step traps a single lookahead step equals infinite-horizon planning everywhere. Fixed trap by depth: **0-1-1-1-1-1**. Numbers are in `results/PLANDEPTH.json`. `python3.12 plandepth.py` recomputes them.
+
 ## Two dimensions
 
 16×16 occupancy grids, 15% obstacles, 25% masked cells, 2,000 trials. BFS shortest path from corner to corner on the filled grid versus on observed-free cells only.

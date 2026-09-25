@@ -72,10 +72,13 @@ def main() -> int:
     grid = load("GRID2D.json")
     check((grid["optimistic"]["crash"], grid["optimistic"]["reached"], grid["optimistic"]["stopped"]) == (1439, 500, 61), "grid optimistic 1439/500/61")
     check((grid["pessimistic"]["crash"], grid["pessimistic"]["reached"], grid["pessimistic"]["stopped"]) == (0, 419, 1581), "grid pessimistic 0/419/1581")
+    plan = load("PLANDEPTH.json")
+    check([c["action"] for c in plan["trap_curve"]] == [0, 1, 1, 1, 1, 1], "trap depth curve 0-1-1-1-1-1")
+    check(all(p["flipped_vs_myopic"] == 1000 and p["match_infinite"] == 1000 for p in plan["points"][1:]), "depth 1 matches infinite everywhere")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {29} number checks passed")
+    print(f"all {31} number checks passed")
     return 0
 
 
