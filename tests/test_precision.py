@@ -107,6 +107,15 @@ class PrecisionTest(unittest.TestCase):
             Fraction(20975, 2995),
         )
 
+    def test_wilson_intervals_bracket_estimates(self) -> None:
+        from stats import run as stats_run
+
+        rec = stats_run()["rates"]
+        for key, r in rec.items():
+            self.assertLess(r["lo"], r["p"])
+            self.assertLess(r["p"], r["hi"])
+        self.assertLess(rec["one-step collision"]["hi"] - rec["one-step collision"]["lo"], 0.02)
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])

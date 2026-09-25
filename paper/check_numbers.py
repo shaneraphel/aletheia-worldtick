@@ -66,10 +66,13 @@ def main() -> int:
     trade = load("TRADEOFF.json")
     check(trade["one_step"]["breakeven_exact"] == "2353/552", "breakeven one step 2353/552")
     check(trade["full_walk"]["breakeven_exact"] == "20975/2995", "breakeven full walk 20975/2995")
+    stats = load("STATS.json")["rates"]
+    check((round(stats["one-step collision"]["lo"], 4), round(stats["one-step collision"]["hi"], 4)) == (0.0509, 0.0598), "wilson collision interval")
+    check((round(stats["occluded road"]["lo"], 4), round(stats["occluded road"]["hi"], 4)) == (0.8494, 0.8631), "wilson occluded interval")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {25} number checks passed")
+    print(f"all {27} number checks passed")
     return 0
 
 

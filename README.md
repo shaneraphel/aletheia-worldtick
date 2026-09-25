@@ -189,6 +189,23 @@ One crash costs how many waits? Exact fractions of pinned counts, no new randomn
 
 If a collision costs more than that many waits, the measured step (one step) and the closed loop (full walk) are cheaper. Numbers are in `results/TRADEOFF.json`. `python3.12 tradeoff.py` recomputes them.
 
+## Uncertainty
+
+Wilson 95% intervals, closed-form from the pinned counts above. No new randomness.
+
+![One-step collision 0.0552 [0.0509, 0.0598]; occluded road 0.8564 [0.8494, 0.8631]; optimistic entry 0.2995 [0.2906, 0.3086].](docs/figures/stats.png)
+
+| Rate | Estimate | 95% interval |
+|---|---|---|
+| Occluded road | **0.8564** | **[0.8494, 0.8631]** |
+| Optimistic entry | **0.2995** | **[0.2906, 0.3086]** |
+| One-step collision | **0.0552** | **[0.0509, 0.0598]** |
+| Exact map match | **0.1436** | **[0.1369, 0.1506]** |
+| Closed-loop traversal | **0.0009** | **[0.0005, 0.0017]** |
+| Optimistic traversal | **0.0012** | **[0.0007, 0.0021]** |
+
+Numbers are in `results/STATS.json`. `python3.12 stats.py` recomputes them.
+
 ## Foresight threshold, with proof
 
 Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.

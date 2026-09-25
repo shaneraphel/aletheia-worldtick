@@ -35,6 +35,7 @@ evidence:
 	$(PYTHON) robust.py
 	$(PYTHON) closedloop.py
 	$(PYTHON) tradeoff.py
+	$(PYTHON) stats.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

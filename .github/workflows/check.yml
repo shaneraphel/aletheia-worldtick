@@ -33,6 +33,7 @@ jobs:
           python robust.py
           python closedloop.py
           python tradeoff.py
+          python stats.py
           python show_policy.py
           python tick_bench.py
       - name: paper
