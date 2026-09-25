@@ -54,6 +54,7 @@ evidence:
 	$(PYTHON) framecheck.py
 	$(PYTHON) clock.py
 	$(PYTHON) near.py
+	$(PYTHON) reel.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

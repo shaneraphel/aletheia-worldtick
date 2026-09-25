@@ -115,10 +115,12 @@ def main() -> int:
     check((clk["drop_frame"], clk["drop_rate"], clk["frame_moves"], clk["rate_moves"], clk["heard_after_end"]) == (0, 0, 3665, 10933, 6414), "one clock: picture 3665, heard after end 6414")
     near = load("NEAR.json")["serial"]
     check((near["only_fill"], near["shorter"], near["both"]) == (2301, 560, 1192), "filled walk reaches 2301 people the seen walk cannot")
+    reel = load("REEL.json")["serial"]
+    check((reel["pixel_changes"], reel["rate_only"], reel["drop_pixel"]) == (3665, 8377, 0), "sound changes without a new frame 8377")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377"]:
         check(token in text, f"paper cites {token}")
-    print("all 67 number checks passed")
+    print("all 69 number checks passed")
     return 0
 
 

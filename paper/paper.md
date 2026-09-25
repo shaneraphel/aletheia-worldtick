@@ -102,6 +102,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **Nearby is not seen ground.** From the last cell the camera saw to be free, walk to a person at (4, 4) or (8, 8). On seen ground the walk enters only cells observed free. On the filled map a missing cell counts as free. Across these maps the filled walk reaches a person the seen walk cannot reach 2301 times. When both walks arrive, the filled walk is strictly shorter 560 times, out of 1192 arrivals by both. The people do not move, and the hand is not sent to them. The shorter number is what the filled picture would call nearby. Ten cores agree.
 
+**Sound without a new frame.** The frame is the seen map and the hand cell. It does not contain the rate. On the same clocks, the pixels change 3665 times, which is exactly the number of picture steps. The rate changes while the picture stays 8377 times. A dropped window changes the pixels 0 times. The sound is allowed to follow a complete window. The picture is not required to redraw when it does. Ten cores agree.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

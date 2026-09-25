@@ -51,6 +51,7 @@ jobs:
           python framecheck.py
           python clock.py
           python near.py
+          python reel.py
           python show_policy.py
           python tick_bench.py
       - name: paper

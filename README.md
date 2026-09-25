@@ -141,6 +141,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![The filled walk reaches 2,301 people the seen walk cannot. When both arrive, the fill is shorter 560 times.](docs/figures/near.png)
 
+**The sound is not the picture.** The frame is the map the camera saw, plus the cell the hand stands on. The left-right rate is not drawn into those pixels. On the same 2,000 maps and the same sixteen windows, the pixels change **3,665** times. That is the same number as the picture steps. The rate changes while the picture stays **8,377** times. A dropped window changes the pixels **0** times. You can hear a different speed and still be looking at the same frame. One core and ten cores agree.
+
+**声音不是画面。** 帧是摄像机看见的地图，加上手站着的那一格。左右声的速度不画进这些像素。同一批 2,000 张地图、同样的十六个窗口，像素改变 **3,665** 次，和画面向前的次数相同。速度变了、画面没变，有 **8,377** 次。丢掉的窗口让像素改变的次数是 **0**。你可以听见另一个速度，眼前仍是同一帧。一个核和十个核一致。
+
+![The pixels change 3,665 times. The sound changes while the picture stays 8,377 times.](docs/figures/reel.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -368,6 +374,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `framecheck.py` | a second drawing of the held frame matches; the filled frame does not |
 | `clock.py` | a dropped window moves neither the rate nor the frame |
 | `near.py` | distance to a person on seen ground, and on the filled map |
+| `reel.py` | the rate may change while every pixel stays |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

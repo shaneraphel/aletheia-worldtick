@@ -279,6 +279,13 @@ class PrecisionTest(unittest.TestCase):
         self.assertNotIn((1, 0), dist)
         self.assertIn((0, 1), dist)
 
+    def test_sound_can_change_while_the_picture_stays(self) -> None:
+        from reel import run as reel_run
+
+        rec = reel_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["drop_pixel"], 0)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid
