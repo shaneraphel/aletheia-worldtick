@@ -1,0 +1,60 @@
+{
+  "schema": "worldtick.sweep.v1",
+  "seed": 20260919,
+  "n_per_point": 10000,
+  "width": 32,
+  "obstacle": 0.2,
+  "points": [
+    {
+      "drop": 0.0,
+      "n": 10000,
+      "hidden_obstacle": 0,
+      "completion_hits": 0,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.05,
+      "n": 10000,
+      "hidden_obstacle": 2662,
+      "completion_hits": 503,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.1,
+      "n": 10000,
+      "hidden_obstacle": 4557,
+      "completion_hits": 934,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.2,
+      "n": 10000,
+      "hidden_obstacle": 7263,
+      "completion_hits": 2002,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.3,
+      "n": 10000,
+      "hidden_obstacle": 8560,
+      "completion_hits": 2914,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.4,
+      "n": 10000,
+      "hidden_obstacle": 9218,
+      "completion_hits": 3970,
+      "tick_hits": 0
+    },
+    {
+      "drop": 0.5,
+      "n": 10000,
+      "hidden_obstacle": 9645,
+      "completion_hits": 5084,
+      "tick_hits": 0
+    }
+  ],
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

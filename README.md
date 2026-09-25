@@ -75,6 +75,26 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 
 数在 `results/HIDDEN.json`。`python3.12 hidden.py` 重算。
 
+## 洞越多，走进去的次数越多
+
+每一点是 10,000 条 32 格的路。障碍率 0.20 不变。丢失率从 0.00 到 0.50。
+
+![丢失率 0.00 到 0.50，补全走进去 0 到 5084 次，一步始终 0 次。](docs/figures/sweep.png)
+
+| 丢失率 | 补全走进去 | 一步走进去 |
+|---|---|---|
+| 0.00 | **0** | **0** |
+| 0.05 | **503** | **0** |
+| 0.10 | **934** | **0** |
+| 0.20 | **2,002** | **0** |
+| 0.30 | **2,914** | **0** |
+| 0.40 | **3,970** | **0** |
+| 0.50 | **5,084** | **0** |
+
+数在 `results/SWEEP.json`。`python3.12 sweep.py` 重算 70,000 条路。
+
+Each point is 10,000 roads of 32 cells. Obstacle rate stays 0.20. Dropout runs 0.00 to 0.50. Completion walks in more often as the hole rate rises. One tick stays 0. Counts are in `results/SWEEP.json`. `python3.12 sweep.py` recomputes 70,000 roads.
+
 The true road has obstacles. The sensor drops 30% of the cells. Completion writes each drop as free space and walks on. One tick stops at the first unseen cell.
 
 32 cells, 10,000 roads, seed `20260919`.

@@ -22,5 +22,6 @@ jobs:
           python show_story.py
           python campaign.py
           python hidden.py
+          python sweep.py
           python show_policy.py
           python tick_bench.py
