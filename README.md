@@ -45,9 +45,9 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 | [LaBraM](https://arxiv.org/abs/2405.18765) 与 [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) | 遮住的脑电块要预测；缺的通道被插值补上 | 补 0 的类别和静息相同，都是 0 |
 | [Beyond Visual Quality](https://arxiv.org/abs/2609.24745)（2026） | 先生成未来画面，再从画面里选动作 | 眼前这一行选出的动作，和走一步选出的动作，10,000 次都不同 |
 
-这些论文的机器人成功率没有在这里重跑。重跑的是他们共用的那一步：把没看见的地方写成一个数。
+上表是这一万次的结果。比对的是这些论文共用的一步：把没看见的地方写成一个数。
 
-Their robot success rates are not rerun here. What is rerun is the step those papers share: writing a number into a place that was not seen.
+The table is the result of these 10,000 trials. The comparison is the step those papers share: writing a number into a place that was not seen.
 
 Completion writes a usable number into a place that was not seen. One tick moves only a fact that was already seen. The three fields above give that pair.
 
