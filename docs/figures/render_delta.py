@@ -96,6 +96,30 @@ def story() -> None:
     canvas.save(HERE / "story.png", quality=92)
 
 
+def campaign_figure() -> None:
+    W, H = 1680, 640
+    canvas = Image.new("RGB", (W, H), BG)
+    draw = ImageDraw.Draw(canvas)
+    draw.text((36, 28), "10,000 TRIALS  ·  SEED 20260919", font=font(18), fill=MUTED)
+    draw.text((36, 58), "一万次里，补全和一步没有一次相同。", font=font(32), fill=TEXT)
+    rows = [
+        ("世界模型", "补全可达 8", "10,000 / 10,000", "一步可达 2", "10,000 / 10,000", "洞", "10,000 次报错"),
+        ("脑机接口", "补 0 = 静息 0", "10,000 / 10,000", "录上的类 1", "10,000 / 10,000", "空包", "10,000 次报错"),
+        ("下一步动作", "眼前这一行 = 0", "10,000 / 10,000", "走一步 = 1", "10,000 / 10,000", "两数不同", "10,000 / 10,000"),
+    ]
+    for i, (name, a, an, b, bn, c, cn) in enumerate(rows):
+        y = 130 + i * 160
+        draw.rounded_rectangle((36, y, 1644, y + 144), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
+        draw.text((56, y + 48), name, font=font(26), fill=TEXT)
+        draw.text((280, y + 28), a, font=font(22), fill=AMBER)
+        draw.text((280, y + 72), an, font=font(28), fill=TEXT)
+        draw.text((760, y + 28), b, font=font(22), fill=GREEN)
+        draw.text((760, y + 72), bn, font=font(28), fill=TEXT)
+        draw.text((1180, y + 28), c, font=font(22), fill=MUTED)
+        draw.text((1180, y + 72), cn, font=font(28), fill=TEXT)
+    canvas.save(HERE / "campaign.png", quality=92)
+
+
 def main() -> None:
     compose(
         "hand-product.png",
@@ -134,6 +158,7 @@ def main() -> None:
         "空雷达、空观测\n→ 报错\n\n两个点 → 1\n三次观测 → 3",
     )
     story()
+    campaign_figure()
 
 
 if __name__ == "__main__":

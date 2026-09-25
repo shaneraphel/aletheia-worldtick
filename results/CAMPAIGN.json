@@ -1,0 +1,23 @@
+{
+  "schema": "worldtick.campaign.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "width": 8,
+  "world_model": {
+    "completed_equals_8": 10000,
+    "tick_equals_2": 10000,
+    "hole_raised": 10000
+  },
+  "bci": {
+    "go_is_1": 10000,
+    "zerofill_equals_rest": 10000,
+    "dropout_raised": 10000
+  },
+  "action": {
+    "row_is_0": 10000,
+    "tick_is_1": 10000,
+    "differ": 10000
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

@@ -18,6 +18,37 @@ Completion writes a usable number into what was not seen. One tick moves only a 
 
 On the large map the same pair is one tick **24** and the end of the walk **214**. On the 256×8 reward table the visible row is action **2** and one tick of the world is action **5**.
 
+## 一万次 / 10,000 trials
+
+种子 `20260919`，每条链 8 格，共 10,000 次。补全把洞写成 0。一步只从已经看见的格子出发。
+
+Seed `20260919`. Each chain has 8 cells. 10,000 trials. Completion writes the hole as 0. One tick starts only from a cell that was seen.
+
+![一万次：世界模型补全 8 与一步 2，脑电补零与静息同为 0，眼前动作 0 与走一步动作 1，全部 10000/10000。](docs/figures/campaign.png)
+
+| | 补全 | 一步 | 次数 |
+|---|---|---|---|
+| 世界模型 | 可达 **8**，和补全后的整张图相同 | **2** | **10,000 / 10,000** |
+| 脑电 | 掉线补 0 的类别是 **0**，和静息相同 | 录上的类别是 **1** | **10,000 / 10,000** |
+| 下一动作 | 眼前这一行是动作 **0** | 走一步是动作 **1** | **10,000 / 10,000** |
+
+数在 `results/CAMPAIGN.json`。`python3.12 campaign.py` 重算。
+
+The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes them.
+
+2026 年这三篇工作的运算，就是上面的“补全”：
+
+| 论文 | 他们的运算 | 这一万次里的结果 |
+|---|---|---|
+| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482)（2026） | 被遮住的视频块也要预测出来 | 补上的格子可达 8；看见的一步是 2 |
+| [Reconstruction or Semantics?](https://arxiv.org/abs/2605.06388)（CVPR 2026 workshop） | Cosmos / VAE 把画面补全；像素像，规划不一定对 | 补全后的可达数和一张全看见的地图相同 |
+| [LaBraM](https://arxiv.org/abs/2405.18765) 与 [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) | 遮住的脑电块要预测；缺的通道被插值补上 | 补 0 的类别和静息相同，都是 0 |
+| [Beyond Visual Quality](https://arxiv.org/abs/2609.24745)（2026） | 先生成未来画面，再从画面里选动作 | 眼前这一行选出的动作，和走一步选出的动作，10,000 次都不同 |
+
+这些论文的机器人成功率没有在这里重跑。重跑的是他们共用的那一步：把没看见的地方写成一个数。
+
+Their robot success rates are not rerun here. What is rerun is the step those papers share: writing a number into a place that was not seen.
+
 Completion writes a usable number into a place that was not seen. One tick moves only a fact that was already seen. The three fields above give that pair.
 
 | | completion | one tick | empty record |

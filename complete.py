@@ -9,7 +9,10 @@ from datalog import datalog_fixpoint
 from tick import world_tick
 
 HOLE = None
-CHAIN = [(0, 1), (1, 2)]
+
+
+def _chain(n: int) -> list[tuple[int, int]]:
+    return [(i, i + 1) for i in range(n - 1)]
 
 
 def fill_as_free(cells: list[int | None]) -> list[int]:
@@ -27,7 +30,7 @@ def _facts(cells: list[int]) -> list[int]:
 
 def completed_reach(cells: list[int | None]) -> int:
     filled = fill_as_free(cells)
-    return datalog_fixpoint(len(filled), _facts(filled), CHAIN[: len(filled) - 1])
+    return datalog_fixpoint(len(filled), _facts(filled), _chain(len(filled)))
 
 
 def measured_tick(cells: list[int | None]) -> int:
@@ -36,11 +39,11 @@ def measured_tick(cells: list[int | None]) -> int:
     if not cells:
         raise ValueError("empty world")
     seen = [int(c) for c in cells]
-    return world_tick(len(seen), _facts(seen), CHAIN[: len(seen) - 1])
+    return world_tick(len(seen), _facts(seen), _chain(len(seen)))
 
 
 def measured_closure(cells: list[int | None]) -> int:
     if any(c is HOLE for c in cells):
         raise ValueError("unobserved cell")
     seen = [int(c) for c in cells]
-    return datalog_fixpoint(len(seen), _facts(seen), CHAIN[: len(seen) - 1])
+    return datalog_fixpoint(len(seen), _facts(seen), _chain(len(seen)))
