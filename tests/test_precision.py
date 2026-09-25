@@ -134,6 +134,26 @@ class PrecisionTest(unittest.TestCase):
         for p in rec["points"][1:]:
             self.assertEqual(p["match_infinite"], rec["n"])
 
+    def test_nested_plans_keep_the_shorter_score_on_the_optimistic_path(self) -> None:
+        from partition import audit, cell, run as partition_run
+
+        rec = partition_run(n=40, seed=9)
+        self.assertEqual(rec["inclusion_holds"], rec["n"])
+        self.assertEqual(rec["visual_equals_optimistic"], rec["n"])
+        self.assertEqual(rec["crash_cell_was_masked"], rec["n"])
+        self.assertEqual(
+            rec["cells"]["only_pessimistic"] + rec["cells"]["both"],
+            rec["both_paths_exist"],
+        )
+        self.assertEqual(
+            rec["gap_strictly_shorter"] + rec["gap_equal_length"],
+            rec["cells"]["only_pessimistic"],
+        )
+        self.assertEqual(rec["only_optimistic_uses_a_masked_free_cell"], rec["cells"]["only_optimistic"])
+        # The four labels are exhaustive on one grid as well as on the batch.
+        true, seen = __import__("grid2d").make_grid(__import__("random").Random(2))
+        self.assertIn(cell(audit(true, seen)), ("both", "only_optimistic", "only_pessimistic", "neither"))
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

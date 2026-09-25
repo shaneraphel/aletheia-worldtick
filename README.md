@@ -219,7 +219,7 @@ Counts are in `results/GRID2D.json`. `python3.12 grid2d.py` recomputes them.
 
 ## Selection, not generation
 
-Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter imagined path. The oracle takes a path that does not cross a true obstacle. Yuan et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
+Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter plan, and on a tie it takes the optimistic one. The oracle takes a path that does not cross a true obstacle. Yuan et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
 
 ![Visual selector reaches 500 and crashes 1,439. Oracle reaches 797. Gap 297.](docs/figures/selector.png)
 
@@ -229,7 +229,24 @@ Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector tak
 | Collision oracle | **797** | **1,142** | **61** |
 | Gap | **297** | | |
 
-The shorter imagined path is the optimistic path. The extra 297 successes are already in the candidate set; the visual score does not pick them. Counts are in `results/SELECTOR.json`. `python3.12 selector.py` recomputes them.
+The length score returns the optimistic plan on all 2,000 trials. On 129 of the 297 missed goals that plan is strictly shorter. On the other 168 the two plans have the same length, and the tie goes to the optimistic plan. Counts are in `results/SELECTOR.json`. `python3.12 selector.py` recomputes them.
+
+## Why the shorter plan is the filled one
+
+Pessimistic search may step only on cells that were observed free. Optimistic search may also step on masked cells. Every pessimistic path is therefore still feasible after the fill, and no longer than the optimistic shortest path. The inclusion holds on **2,000 / 2,000** grids. Every cell where the optimistic path crashes was masked.
+
+悲观搜索只能踩已观测为空的格子。乐观搜索还可以踩被遮住的格子。所以每条悲观路径在补全之后仍然可行，而且不会比乐观最短路更短。2,000 张图上包含关系全部成立。乐观路径撞上的格子，全都是被遮住的。
+
+![Both reach 122. Only optimistic 378. Only pessimistic 297. Neither 1,203. Of the 297, 129 are strictly shorter and 168 are ties.](docs/figures/partition.png)
+
+| Cell | Count | What it is |
+|---|---|---|
+| Both reach | **122** | either plan arrives |
+| Only optimistic | **378** | a masked cell was truly free; pessimism stops |
+| Only pessimistic | **297** | the oracle gap; **129** strictly shorter, **168** equal length |
+| Neither | **1,203** | |
+
+The 378 only-optimistic arrivals each use a masked cell that was free. That is the set of goals a wall-fill refuses. The 168 ties are not a shorter path; they are the tie break. Counts are in `results/PARTITION.json`. `python3.12 partition.py` recomputes them.
 
 ## Uncertainty
 
@@ -349,11 +366,9 @@ Counts live in `results/`. `make check` recomputes every pinned number. Every pu
 
 ## Paper
 
-The results above are aggregated in [`paper/paper.md`](paper/paper.md) with proofs (foresight threshold 9/101, mask erasure, monotone convergence, pessimistic safety). Every cited number is machine-checked: `python3.12 paper/check_numbers.py`.
+Proofs and the pinned counts are in [`paper/paper.md`](paper/paper.md): the discount threshold 9/101, mask erasure, monotone reach, pessimistic safety, the wait/crash breakeven, and the nested-plan inclusion. Every cited number is checked by `python3.12 paper/check_numbers.py`.
 
-The same measurements are set in the CVPR 2026 author-kit format, eight pages, Times, two columns: [`paper/cvpr/main.pdf`](paper/cvpr/main.pdf). Rebuild with `tectonic main.tex` inside `paper/cvpr`.
-
-同一组测量写成 CVPR 2026 作者工具包的八页双栏稿：[`paper/cvpr/main.pdf`](paper/cvpr/main.pdf)。在 `paper/cvpr` 里用 `tectonic main.tex` 重编。
+证明和钉死的计数在 [`paper/paper.md`](paper/paper.md)：折扣阈值 9/101、掩码被抹掉、可达单调收敛、悲观填充的安全性、等待与碰撞的盈亏点，以及路径包含。`python3.12 paper/check_numbers.py` 核对每一个被引用的数。
 
 ## Files
 
@@ -369,7 +384,7 @@ The same measurements are set in the CVPR 2026 author-kit format, eight pages, T
 | `occgrid.py` · `mcapocc.py` · `bagocc.py` | ROS grid, MCAP, rosbag2 readers |
 | `tests/test_precision.py` | pinned identities |
 | `paper/paper.md` | technical report; numbers checked on every build |
-| `paper/cvpr/main.pdf` | eight-page CVPR 2026 manuscript |
+| `partition.py` | nested plans: inclusion, 129 shorter, 168 ties |
 | `results/` | pinned JSON from every run |
 | `locks/` | 66 format kernels |
 | `binds/` | 100 named-record binds |

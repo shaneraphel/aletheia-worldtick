@@ -37,6 +37,7 @@ jobs:
           python grid2d.py
           python plandepth.py
           python selector.py
+          python partition.py
           python show_policy.py
           python tick_bench.py
       - name: paper

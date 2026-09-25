@@ -1,0 +1,21 @@
+{
+  "schema": "worldtick.partition.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "cells": {
+    "both": 122,
+    "only_optimistic": 378,
+    "only_pessimistic": 297,
+    "neither": 1203
+  },
+  "inclusion_holds": 2000,
+  "crash_cell_was_masked": 2000,
+  "visual_equals_optimistic": 2000,
+  "both_paths_exist": 419,
+  "optimistic_strictly_shorter": 185,
+  "only_optimistic_uses_a_masked_free_cell": 378,
+  "gap_strictly_shorter": 129,
+  "gap_equal_length": 168,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

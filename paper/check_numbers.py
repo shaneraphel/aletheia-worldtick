@@ -77,10 +77,13 @@ def main() -> int:
     check(all(p["flipped_vs_myopic"] == 1000 and p["match_infinite"] == 1000 for p in plan["points"][1:]), "depth 1 matches infinite everywhere")
     sel = load("SELECTOR.json")
     check((sel["visual"]["reached"], sel["visual"]["crash"], sel["oracle"]["reached"], sel["gap_reached"]) == (500, 1439, 797, 297), "selector 500/1439/797/297")
+    part = load("PARTITION.json")
+    check((part["cells"]["both"], part["cells"]["only_optimistic"], part["cells"]["only_pessimistic"], part["cells"]["neither"]) == (122, 378, 297, 1203), "partition 122/378/297/1203")
+    check((part["gap_strictly_shorter"], part["gap_equal_length"], part["inclusion_holds"], part["visual_equals_optimistic"]) == (129, 168, 2000, 2000), "gap 129 strict + 168 ties")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {32} number checks passed")
+    print("all 34 number checks passed")
     return 0
 
 

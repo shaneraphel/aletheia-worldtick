@@ -4,7 +4,7 @@ Two candidate plans per trial: optimistic (masked cells are free) and
 pessimistic (masked cells are walls). The visual selector picks the
 shorter imagined path, the score a pixel-complete map exposes. The
 oracle picks a path that does not cross a true obstacle. Seed 20260919.
-This is the selection gap in Zhang et al. (arXiv:2609.24745), measured
+This is the selection gap in Yuan et al. (arXiv:2609.24745), measured
 here as exact counts rather than as a robot success rate.
 """
 from __future__ import annotations
