@@ -145,6 +145,22 @@ Median milliseconds per call on this machine (7 timed trials × 50 repeats; timi
 
 One completion call answers 214 in ~0.09 ms here; the 12-step walk costs a small multiple of that. Numbers are in `results/COST.json`. `python3.12 cost.py` recomputes them.
 
+## Robustness across seeds
+
+Dropout 0.30, 2,000 corridors per seed, five seeds. Completion-side counts move with the seed. Tick-side columns are 0 on all five seeds.
+
+![Five seeds: sweep completion hits 560–641, decision crashes 105–143, tick columns all 0.](docs/figures/robust.png)
+
+| Seed | Sweep completion hits | Sweep tick hits | Decision crashes | Decision tick crashes |
+|---|---|---|---|---|
+| 20260919 | **605** | **0** | **120** | **0** |
+| 20260920 | **641** | **0** | **143** | **0** |
+| 20260921 | **580** | **0** | **127** | **0** |
+| 20260922 | **606** | **0** | **126** | **0** |
+| 20260923 | **560** | **0** | **105** | **0** |
+
+Counts are in `results/ROBUST.json`. `python3.12 robust.py` recomputes 20,000 corridors.
+
 ## Foresight threshold, with proof
 
 Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.

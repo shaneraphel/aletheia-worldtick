@@ -30,5 +30,6 @@ jobs:
           python fillchoice.py
           python audit.py
           python cost.py
+          python robust.py
           python show_policy.py
           python tick_bench.py

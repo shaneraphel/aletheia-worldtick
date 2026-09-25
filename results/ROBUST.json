@@ -1,0 +1,44 @@
+{
+  "schema": "worldtick.robust.v1",
+  "n_per_seed": 2000,
+  "drop": 0.3,
+  "rows": [
+    {
+      "seed": 20260919,
+      "sweep_completion_hits": 605,
+      "sweep_tick_hits": 0,
+      "decide_completion_crashes": 120,
+      "decide_tick_crashes": 0
+    },
+    {
+      "seed": 20260920,
+      "sweep_completion_hits": 641,
+      "sweep_tick_hits": 0,
+      "decide_completion_crashes": 143,
+      "decide_tick_crashes": 0
+    },
+    {
+      "seed": 20260921,
+      "sweep_completion_hits": 580,
+      "sweep_tick_hits": 0,
+      "decide_completion_crashes": 127,
+      "decide_tick_crashes": 0
+    },
+    {
+      "seed": 20260922,
+      "sweep_completion_hits": 606,
+      "sweep_tick_hits": 0,
+      "decide_completion_crashes": 126,
+      "decide_tick_crashes": 0
+    },
+    {
+      "seed": 20260923,
+      "sweep_completion_hits": 560,
+      "sweep_tick_hits": 0,
+      "decide_completion_crashes": 105,
+      "decide_tick_crashes": 0
+    }
+  ],
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
