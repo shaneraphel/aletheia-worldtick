@@ -102,6 +102,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![The drawn part has 0 obstacles. The undrawn tail contains 2,474.](docs/figures/room.png)
 
+**What the coach may say.** A complete window with a positive sum is an attempt: the left-right rate may become 6 a second. If the next cell was not seen, the picture does not take that step. The person can hear that the attempt arrived. The hand stays. On 2,000 maps, each with one window, this pair happens **630** times. The window was dropped on **572** maps, and then both the sound and the picture hold. A movement with the next cell actually seen happens **22** times. Only then may the picture advance. The other **776** complete windows are not movements. One core and ten cores agree. A fill would have drawn those 630 unseen steps as finished grasps. The coach does not. This is not a mood and not a diagnosis. The window was complete, and the cell was not seen. Both of those were observed.
+
+**教练可以说的。** 一个完整窗口、采样之和为正，是一次尝试：左右声可以变成每秒 6 下。如果下一格没被看见，画面不走这一步。人可以听见这次尝试到了。手留在原地。2,000 张地图各配一个窗口，这种配对出现 **630** 次。窗口被丢掉的有 **572** 张，那时声音和画面都保持。动作而且下一格确实看见了的，有 **22** 次。只有这时画面可以前进。其余 **776** 个完整窗口不是动作。一个核和十个核一致。补全会把那 630 步没看见的格子画成已经抓完。教练不这么画。这不是心情，也不是诊断。窗口是完整的，格子没有被看见。这两件事都是观测到的。
+
+![630 attempts were heard while the next cell was unseen. The picture does not draw those steps.](docs/figures/attempt.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -323,6 +329,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `media.py` | empty WAV, empty image, empty cloud, beside a held session |
 | `pace.py` | left-right rate: 2 or 6 when the window is complete, unchanged when it is not |
 | `room.py` | the picture stops at the last cell the camera saw |
+| `attempt.py` | a heard movement does not enter a cell the camera did not see |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

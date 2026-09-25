@@ -1,0 +1,24 @@
+{
+  "schema": "worldtick.attempt.v1",
+  "seed": 20260919,
+  "window_seed": 20260920,
+  "n": 2000,
+  "workers": 10,
+  "serial": {
+    "hold": 572,
+    "attempt_unseen": 630,
+    "attempt_seen": 22,
+    "rest": 776,
+    "maps": 2000
+  },
+  "parallel": {
+    "hold": 572,
+    "attempt_unseen": 630,
+    "attempt_seen": 22,
+    "rest": 776,
+    "maps": 2000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

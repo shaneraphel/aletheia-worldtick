@@ -107,6 +107,7 @@
   <div class="row">
     <button id="b-step" type="button">完整窗口，向前一格 · Complete window, one cell</button>
     <button id="b-holdpic" type="button">丢掉窗口，画面保持 · Drop the window, hold the picture</button>
+    <button id="b-tried" type="button">我动了，下一格没看见 · I moved; the next cell was not seen</button>
     <button id="b-fillpic" type="button">补全后再画 · Draw the filled path</button>
   </div>
   <p class="out" id="room-out">手在起点。 The hand is at the start.</p>
@@ -321,6 +322,13 @@ document.getElementById("b-step").onclick = () => {
 document.getElementById("b-holdpic").onclick = () => {
   drawRoom(false);
   roomSay("窗口丢掉了。画面停在这一帧，手没有移动。 Window dropped. The picture holds. The hand did not move.");
+};
+document.getElementById("b-tried").onclick = () => {
+  paceHz = 6;
+  if (paceTimer) schedule();
+  ensureAudio();
+  drawRoom(false);
+  roomSay("动作被听到了，速度可以是每秒 6 下。下一格没看见，手留在原地。 The attempt was heard, so the rate may be 6 a second. The next cell was not seen, so the hand stays.");
 };
 document.getElementById("b-fillpic").onclick = () => {
   const next = handAt + 1;

@@ -90,6 +90,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **The picture stops at the camera.** The hand is drawn only on cells that were observed free. On the same 2,000 maps the drawn part is 6657 cells and contains 0 obstacles. The filled path continues for another 53456 cells, of which 2474 are real obstacles. On 1938 maps the filled picture would have drawn past the last cell the camera saw. Ten cores and one core agree. The other people in the room are not on this path. They stand still. The picture does not turn them into a route, and it does not walk the hand through a cell the camera did not see.
 
+**An attempt is not a step.** A complete window with a positive sum may set the rate to 6. If the next cell was not seen, the picture stays. On 2,000 maps paired with 2,000 windows (map seed 20260919, window seed 20260920), that pair happens 630 times. The window was dropped on 572 maps, and then both the rate and the picture hold. A movement with a seen next cell happens 22 times: only then may the picture step. The remaining 776 complete windows are not movements. Ten cores agree. A fill would have drawn the 630 unseen steps as grasps. The coach does not. This is not an emotion. Both facts were observed.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

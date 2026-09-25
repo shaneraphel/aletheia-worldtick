@@ -48,6 +48,7 @@ evidence:
 	$(PYTHON) media.py
 	$(PYTHON) pace.py
 	$(PYTHON) room.py
+	$(PYTHON) attempt.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

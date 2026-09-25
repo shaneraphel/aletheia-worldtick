@@ -226,6 +226,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertTrue(rec["equal"])
         self.assertEqual(rec["serial"]["admitted_hits"], 0)
 
+    def test_an_attempt_does_not_enter_an_unseen_cell(self) -> None:
+        from attempt import classify
+        from grid2d import H, W
+
+        true = [[0] * W for _ in range(H)]
+        seen = [[0] * W for _ in range(H)]
+        true[0][1] = 1
+        seen[0][1] = None
+        samples = [1, 0, 2, 0, 1, 0, 3, 0]
+        self.assertEqual(classify(true, seen, samples, False), "attempt_unseen")
+        self.assertEqual(classify(true, seen, samples, True), "hold")
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid
