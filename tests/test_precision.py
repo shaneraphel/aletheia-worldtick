@@ -116,6 +116,16 @@ class PrecisionTest(unittest.TestCase):
             self.assertLess(r["p"], r["hi"])
         self.assertLess(rec["one-step collision"]["hi"] - rec["one-step collision"]["lo"], 0.02)
 
+    def test_pessimistic_path_never_crashes_2d(self) -> None:
+        from grid2d import run as grid2d_run
+
+        rec = grid2d_run(n=50, seed=11)
+        self.assertEqual(rec["pessimistic"]["crash"], 0)
+        self.assertEqual(
+            rec["optimistic"]["crash"] + rec["optimistic"]["stopped"] + rec["optimistic"]["reached"],
+            rec["n"],
+        )
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])

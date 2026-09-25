@@ -34,6 +34,7 @@ jobs:
           python closedloop.py
           python tradeoff.py
           python stats.py
+          python grid2d.py
           python show_policy.py
           python tick_bench.py
       - name: paper

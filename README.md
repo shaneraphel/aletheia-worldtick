@@ -189,6 +189,21 @@ One crash costs how many waits? Exact fractions of pinned counts, no new randomn
 
 If a collision costs more than that many waits, the measured step (one step) and the closed loop (full walk) are cheaper. Numbers are in `results/TRADEOFF.json`. `python3.12 tradeoff.py` recomputes them.
 
+## Two dimensions
+
+16×16 occupancy grids, 15% obstacles, 25% masked cells, 2,000 trials. BFS shortest path from corner to corner on the filled grid versus on observed-free cells only.
+
+![First trial: the red optimistic path crosses a masked obstacle.](docs/figures/grid2d-map.png)
+
+![Optimistic crashes 1,439, pessimistic 0; optimistic reached 500, pessimistic 419.](docs/figures/grid2d.png)
+
+| | Crashes | Stopped | Reached | Mean length |
+|---|---|---|---|---|
+| Optimistic | **1,439** | **61** | **500** | **30.0** |
+| Pessimistic | **0** | **1,581** | **419** | **31.9** |
+
+Counts are in `results/GRID2D.json`. `python3.12 grid2d.py` recomputes them.
+
 ## Uncertainty
 
 Wilson 95% intervals, closed-form from the pinned counts above. No new randomness.

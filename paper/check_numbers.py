@@ -69,10 +69,13 @@ def main() -> int:
     stats = load("STATS.json")["rates"]
     check((round(stats["one-step collision"]["lo"], 4), round(stats["one-step collision"]["hi"], 4)) == (0.0509, 0.0598), "wilson collision interval")
     check((round(stats["occluded road"]["lo"], 4), round(stats["occluded road"]["hi"], 4)) == (0.8494, 0.8631), "wilson occluded interval")
+    grid = load("GRID2D.json")
+    check((grid["optimistic"]["crash"], grid["optimistic"]["reached"], grid["optimistic"]["stopped"]) == (1439, 500, 61), "grid optimistic 1439/500/61")
+    check((grid["pessimistic"]["crash"], grid["pessimistic"]["reached"], grid["pessimistic"]["stopped"]) == (0, 419, 1581), "grid pessimistic 0/419/1581")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {27} number checks passed")
+    print(f"all {29} number checks passed")
     return 0
 
 

@@ -36,6 +36,7 @@ evidence:
 	$(PYTHON) closedloop.py
 	$(PYTHON) tradeoff.py
 	$(PYTHON) stats.py
+	$(PYTHON) grid2d.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

@@ -60,6 +60,8 @@ Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) sh
 
 **4.13 Uncertainty.** Wilson 95% intervals from the pinned counts: one-step collision 0.0552 [0.0509, 0.0598]; occluded road 0.8564 [0.8494, 0.8631]; optimistic entry 0.2995 [0.2906, 0.3086].
 
+**4.14 Two dimensions.** BFS shortest paths on 2,000 16×16 grids (15% obstacles, 25% masked): optimistic crashes 1,439, stopped 61, reached 500 at mean length 30.0; pessimistic crashes 0, stopped 1,581, reached 419 at mean length 31.9.
+
 ## 5. Upstream behavior
 
 The same empty input against upstream projects: MuJoCo 3.13.0 loads an empty model; munkres 1.1.4 returns [] for compute([[]]); NumPy reports norm 0.0 and mean nan; MNE-Python reports duration 0; NetworkX reports 0 nodes; FilterPy accepts the empty update at state 0.0; MCAP/rosbag2 yield empty logs. This repository is fail-closed on each of these inputs while keeping the occupied-input values (2×2 assignment cost 2; CAKE distance 3; 8 EEG samples with go/end; 2 lidar points count 1; 3 observations count 3).

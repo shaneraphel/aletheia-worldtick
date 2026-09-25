@@ -1,0 +1,23 @@
+{
+  "schema": "worldtick.grid2d.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "width": 16,
+  "height": 16,
+  "obstacle": 0.15,
+  "drop": 0.25,
+  "optimistic": {
+    "crash": 1439,
+    "stopped": 61,
+    "reached": 500
+  },
+  "pessimistic": {
+    "crash": 0,
+    "stopped": 1581,
+    "reached": 419
+  },
+  "optimistic_mean_length": 30.004,
+  "pessimistic_mean_length": 31.86157517899761,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
