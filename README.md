@@ -120,6 +120,30 @@ Not in this MVP: a trained video model, a headset SDK, a robot success rate, or 
 
 这次 MVP 里没有：训练好的视频模型、头戴设备 SDK、机器人成功率，也没有“我们重跑了 68.9% 和 79.2%”这种说法。那两个百分比属于 Yuan 等人。MVP 把同一类差距做成一个可以重算的整数。
 
+## The page a person can open
+
+The thing to hand someone is a static page: [`site/index.html`](site/index.html). It runs the three decisions in the browser. The map, the EEG window, and the reward row each show the filled answer next to the measured answer. Nothing on that page is trained.
+
+一个人可以打开的东西是一个静态页面：[`site/index.html`](site/index.html)。三个决策在浏览器里算完。地图、脑电窗口、奖励表，各自把补全后的答案和实测答案摆在一起。这个页面上没有训练。
+
+A team that raises a round to build a video world model is building the generator. This page is the check in front of that generator. The check is a file because every shipped decision is an integer with a proof. The generator is a different program, with data, training, and a robot evaluation that this MVP does not pretend to replace.
+
+拿一轮融资去做视频世界模型的团队，做的是生成器。这个页面是放在生成器前面的检查。检查可以是一个文件，因为交出去的每个决策都是一个有证明的整数。生成器是另一件事，需要数据、训练和机器人评估。这个 MVP 不假装替代那件事。
+
+One question is not that check. On the same 2,000 grids, the filled plan crashes 1,439 times. Blocking the first crash cell, then planning again, lets 614 paths arrive and leaves 786 crashing on a later masked cell. The page shows a five-cell corridor with the same shape: fill crashes, one question crashes again, the measured step never enters the unseen cell.
+
+一次追问不是这个检查。同样的 2,000 张图上，补全方案撞了 1,439 次。封住第一次撞上的格子再规划，614 条路能到，786 条在后面另一个被遮格子上再撞。页面上有一条五格走廊，形状相同：补全会撞，问过一次还会撞，实测步不进入没看见的格子。
+
+![After one question: 614 reach, 786 crash again, 39 stop.](docs/figures/decisive.png)
+
+The page deploys as a GitHub Pages site from this repository. It does not ask for an account.
+
+We do not post it on another project's issue tracker. Those issues are for defects in that project. A comment whose real content is a product announcement gets removed, and it should. When one of those libraries has an empty-input defect we can fix with a test, the contribution is a pull request. Traffic for this boundary is the page and this README.
+
+页面用本仓库的 GitHub Pages 发布，不需要账号。
+
+我们不把它发到别的项目的 issue 里。那些 issue 是为了那个项目自己的缺陷。一条实际内容是产品公告的评论会被删掉，也应该被删掉。某个库在空输入上确有缺陷、而且我们能用测试修好时，贡献的形式是一个 pull request。这个边界的流量来自这个页面和这份 README。
+
 ```bash
 make check
 python3.12 show_story.py
@@ -154,6 +178,8 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `complete.py` · `decode.py` · `policy.py` | the three fills: map, EEG, reward row |
 | `partition.py` | nested plans, and the tie rule |
 | `signfill.py` | zero-fill on non-negative codes versus signed voltages |
+| `decisive.py` | one question after the first crash |
+| `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
 

@@ -39,6 +39,7 @@ jobs:
           python selector.py
           python partition.py
           python signfill.py
+          python decisive.py
           python show_policy.py
           python tick_bench.py
       - name: paper

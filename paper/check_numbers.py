@@ -84,10 +84,13 @@ def main() -> int:
     sign = load("SIGNFILL.json")
     check([p["false_go"] for p in sign["nonnegative"]] == [0] * 9, "nonnegative false go is identically 0")
     check((sign["signed"][4]["false_rest"], sign["signed"][4]["false_go"]) == (1280, 1141), "signed drop-4 1280 rest / 1141 go")
+    one = load("DECISIVE.json")
+    check((one["crashes"], one["asked_cell_was_masked"]) == (1439, 1439), "first crash cell was masked")
+    check((one["after_one_question"]["reached"], one["after_one_question"]["crash"], one["after_one_question"]["stopped"]) == (614, 786, 39), "one question 614/786/39")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614"]:
         check(token in text, f"paper cites {token}")
-    print("all 37 number checks passed")
+    print("all 39 number checks passed")
     return 0
 
 

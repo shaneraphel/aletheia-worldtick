@@ -165,6 +165,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(neural_class(hidden), 0)
         self.assertEqual(flips(hidden, 1), (0, 1))
 
+    def test_one_question_does_not_cover_the_crashes(self) -> None:
+        from decisive import run as decisive_run
+
+        rec = decisive_run(n=40, seed=4)
+        after = rec["after_one_question"]
+        self.assertEqual(rec["asked_cell_was_masked"], rec["crashes"])
+        self.assertEqual(sum(after.values()), rec["crashes"])
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

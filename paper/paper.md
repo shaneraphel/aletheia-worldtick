@@ -64,6 +64,14 @@ This split was forced by asking whether the 168 ties were a harmless convention.
 
 The dose curve that only falls toward rest was produced by a generator that draws samples from `{0, 1, 2, 3}`. On that generator a false go is impossible, and the witness is identically zero at every suffix length. The same write on samples from `{-2, -1, 0, 1, 2}` produces both errors. Dropping the last 4 of 8 samples: 1280 packets that were a movement are read as rest, and 1141 packets that were rest are read as a movement. A product that zero-fills a dropout is not choosing the conservative error. The direction of the error is the sign of what it deleted. The old sweep could not show the second direction, because its generator had no negative samples.
 
+**Theorem 9 (one answer does not finish the repair).** Suppose the optimistic path crashes, and let `c` be the first obstacle on that path. Then `c` was masked. Blocking `c` and planning again on the same filled map does not restore safety. The remaining masked cells are still written free, so the new path can crash on a later one.
+
+*Proof.* An optimistic path enters a true obstacle only where the observation was missing; an observed obstacle is blocked before the search. So `c` is masked. Blocking `c` removes one feasible cell. It does not change the fill of any other masked cell. A path that uses one of those cells, if that cell is an obstacle, crashes. ∎
+
+The closed loop is the operator that matches the proof: observe again before the next step, rather than asking once and trusting the rest of the fill. On the 2,000 grids the optimistic plan crashes 1,439 times, and the first crash cell is masked all 1,439 times. After blocking that cell, 614 paths reach, 786 crash on a later cell, and 39 have no path. One question repairs fewer crashes than it leaves behind.
+
+This was forced by asking whether the closed loop was wasteful. If the first collision were the only collision, one question would be the product and the thousands of waits would be the wrong design. They are not. The fill of the cells we did not ask about is still a decision.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.
@@ -88,8 +96,9 @@ These counts are the checks that the statements survived contact with a pinned d
 - Theorem 6. On 2,000 grids the inclusion holds 2,000 times and the length score matches the optimistic plan 2,000 times. Both reach 122. Only optimistic 378. Only pessimistic 297. Neither 1,203. Of the 297, 129 are strictly shorter and 168 have equal length.
 - Theorem 7. Equal-length optimistic-only successes: 0. Strict shortenings that still reach: 56. Those 56 plus the 129 shorter gap trials are the 185 strict shortenings.
 - Theorem 8. Non-negative false go, every suffix: 0. Signed packets, last 4 samples zeroed: false rest 1280, false go 1141.
+- Theorem 9. Optimistic crashes on 2,000 grids: 1,439, and the first crash cell was masked in all 1,439. After blocking that one cell: 614 reach, 786 crash again, 39 stop.
 - The fill, separated from the planner, on 10,000 chains: completed reach 8, measured step 2, on all 10,000. Optimistic entries into an occluded obstacle: 2,995. Measured entries: 0. Entries against mask rate 0.00–0.50: 0, 503, 934, 2002, 2914, 3970, 5,084, with the measured step at 0 throughout. EEG suffix dropout read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10,000.
 
 ## 6. What the theory does not say
 
-It does not say that a learned world model has the same gap on a robot benchmark. It does not say that a sum is LaBraM's tokenizer. It does not say that a tie should be broken toward the filled plan in a product. Theorem 6 says that if the product breaks ties that way, the score has already chosen the fill. Theorem 7 says that breaking them the other way keeps the 168 and loses none of the 378, and still misses the 129. Theorem 8 says that a zero-fill which only hides movement is an artifact of non-negative samples.
+It does not say that a learned world model has the same gap on a robot benchmark. It does not say that a sum is LaBraM's tokenizer. It does not say that a tie should be broken toward the filled plan in a product. Theorem 6 says that if the product breaks ties that way, the score has already chosen the fill. Theorem 7 says that breaking them the other way keeps the 168 and loses none of the 378, and still misses the 129. Theorem 8 says that a zero-fill which only hides movement is an artifact of non-negative samples. Theorem 9 says that asking about the first crash and then trusting the rest of the fill leaves 786 crashes in place.

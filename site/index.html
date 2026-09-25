@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worldtick — the filled answer is already a decision</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0e1116; color: #e6edf3; font: 18px/1.55 "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "PingFang SC", serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 48px 24px 80px; }
+  h1 { font-size: 34px; line-height: 1.25; font-weight: 600; margin: 0 0 8px; }
+  h2 { font-size: 22px; margin: 36px 0 8px; }
+  .en { color: #8b949e; font-family: "Iowan Old Style", Palatino, serif; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+  button { background: #161b22; color: #e6edf3; border: 1px solid #30363d; border-radius: 8px; padding: 8px 14px; font: 16px/1.3 "PingFang SC", sans-serif; cursor: pointer; }
+  button.on { border-color: #79c0ff; color: #79c0ff; }
+  .cells { display: flex; gap: 8px; margin: 12px 0 4px; }
+  .cell { width: 72px; height: 72px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font: 13px/1.2 "PingFang SC", sans-serif; text-align: center; }
+  .free { background: #1f6f4a; }
+  .mask { background: #6e7681; }
+  .wall { background: #21262d; border: 1px solid #8b949e; }
+  .crash { background: #da3633; }
+  .out { font: 20px/1.4 "PingFang SC", sans-serif; min-height: 3.2em; }
+  .num { font-variant-numeric: tabular-nums; }
+  a { color: #79c0ff; }
+</style>
+</head>
+<body>
+<main>
+  <h1>补上的答案，已经是一个决策。</h1>
+  <p class="en">The filled answer is already a decision.</p>
+  <p>世界模型交回一幅没有洞的下一帧，脑电解码把丢包写成零，规划器把没测到的格子当成空地。下一模块分不出这是测到的，还是写上去的。</p>
+  <p class="en">A world model returns a next frame with no holes. A neural decoder writes a dropped packet as zeros. A planner treats an unseen cell as free. The next module cannot tell a measurement from a write.</p>
+
+  <h2>一条走廊 · A corridor</h2>
+  <p>五个格子。灰色是没观测到的。点下面三个按钮，看同一次观测交回什么。</p>
+  <p class="en">Five cells. Gray was not observed. The three buttons are three writes on that same observation.</p>
+  <div class="cells" id="corridor"></div>
+  <div class="row">
+    <button id="b-fill" class="on" type="button">补成空地再走 · Fill, then walk</button>
+    <button id="b-ask" type="button">只追问第一次撞上的格子 · Ask once</button>
+    <button id="b-measure" type="button">没看见就不进 · Do not enter unseen</button>
+  </div>
+  <p class="out" id="corridor-out"></p>
+
+  <h2>一段脑电 · An EEG window</h2>
+  <p>类别是采样之和是否为正。补零等于减去被删掉的和。</p>
+  <p class="en">The class is whether the sum is positive. Zero-fill subtracts the sum that was erased.</p>
+  <div class="row">
+    <button id="b-go" class="on" type="button">实录 · Recorded</button>
+    <button id="b-zero" type="button">非负丢包补零 · Zero-fill a non-negative dropout</button>
+    <button id="b-sign" type="button">有符号，删掉负数 · Erase a negative sample</button>
+  </div>
+  <p class="out num" id="eeg-out"></p>
+
+  <h2>下一步动作 · The next action</h2>
+  <p>陷阱表 [[10, 1], [−100, −100]]。只看当前行选 0。解 (I − dP)V = r，折扣一过 9/101，选 1。</p>
+  <p class="en">Trap [[10, 1], [−100, −100]]. The visible row selects 0. Solving (I − dP)V = r, the action flips to 1 once the discount passes 9/101.</p>
+  <div class="row">
+    <button id="b-row" class="on" type="button">只看当前行 · Visible row</button>
+    <button id="b-look" type="button">一次回溯 · One backup</button>
+  </div>
+  <p class="out num" id="act-out"></p>
+
+  <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
+  <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
+  <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
+  <p>在同样的 2,000 张图上，补全后的路径撞了 1,439 次。封住第一次撞上的那一格再规划，614 条能到，786 条在后面的格子上再撞，39 条无路。所以一次追问修不完。页面上的走廊就是这个形状。</p>
+  <p class="en">On the same 2,000 grids the filled path crashes 1,439 times. Blocking the first crash cell and planning again: 614 arrive, 786 crash on a later cell, 39 have no path. One question does not finish the repair. The corridor above has that shape.</p>
+  <p>证明和与每篇参考文献的方法对照在仓库的 <a href="https://github.com/shaneraphel/aletheia-worldtick/blob/main/paper/paper.md">paper/paper.md</a>。这个页面不需要账号。</p>
+  <p class="en">The proofs, and the comparison with each cited method, are in <a href="https://github.com/shaneraphel/aletheia-worldtick/blob/main/paper/paper.md">paper/paper.md</a>. This page does not ask for an account.</p>
+</main>
+<script>
+const TRUE = [0, 1, 0, 1, 0];
+const SEEN = [0, null, 0, null, 0];
+
+function paint(mode) {
+  const box = document.getElementById("corridor");
+  box.replaceChildren();
+  const crashAt = mode === "fill" ? 1 : mode === "ask" ? 3 : -1;
+  TRUE.forEach((t, i) => {
+    const d = document.createElement("div");
+    d.className = "cell";
+    let kind = "free";
+    let label = "已观测为空\nobserved free";
+    if (SEEN[i] === null && i !== crashAt) { kind = "mask"; label = "没观测到\nunseen"; }
+    if (i === crashAt) { kind = "crash"; label = "在这里撞上\ncrash"; }
+    if (mode === "measure" && i > 0) { kind = "mask"; label = i === 1 ? "停在这里\nstop" : "不进入\nnot entered"; }
+    if (i === 0) { kind = "free"; label = "起点\nstart"; }
+    if (i === 4 && mode === "measure") { kind = "mask"; label = "不进入\nnot entered"; }
+    d.classList.add(kind);
+    d.textContent = label;
+    box.appendChild(d);
+  });
+  const out = document.getElementById("corridor-out");
+  if (mode === "fill") out.textContent = "补成空地：走进第一个没看见的障碍。到达数不是 5，是一次碰撞。 Fill, then walk: the path enters the first unseen obstacle. The result is a crash, not a traversal.";
+  if (mode === "ask") out.textContent = "只封住第一次撞上的格子：路径从旁边绕过，在下一个没看见的障碍上再撞。 One question: the path goes around that cell and crashes on the next unseen obstacle.";
+  if (mode === "measure") out.textContent = "没看见就不进：停在第一个灰色格子前。不碰撞。 Do not enter an unseen cell: stop before the first gray cell. No crash.";
+}
+
+function eeg(mode) {
+  const recorded = [1, 0, 2, 0, 1, 0, 3, 0];
+  const cls = (xs) => xs.reduce((a, b) => a + b, 0) > 0 ? 1 : 0;
+  let samples, name;
+  if (mode === "go") { samples = recorded; name = "实录 recorded"; }
+  if (mode === "zero") { samples = recorded.map(() => 0); name = "八个零 eight zeros"; }
+  if (mode === "sign") {
+    const full = [1, 0, 0, 0, 0, 0, 0, -2];
+    const filled = [1, 0, 0, 0, 0, 0, 0, 0];
+    document.getElementById("eeg-out").textContent =
+      "原窗口和为 −1，类别 0（静息）。删掉最后的 −2 再补零，和变成 1，类别 1（动作）。补零把静息读成了动作。 Original sum −1, class 0 (rest). Erase the −2 and write zero: sum 1, class 1 (a movement). Zero-fill read rest as a movement.";
+    return;
+  }
+  const c = cls(samples);
+  document.getElementById("eeg-out").textContent =
+    name + " · 和 " + samples.reduce((a, b) => a + b, 0) + " · 类别 " + c + (c ? "（动作 go）" : "（静息 rest）");
+}
+
+function act(mode) {
+  const el = document.getElementById("act-out");
+  if (mode === "row") el.textContent = "当前行 [10, 1]，较大的是 10，动作 0。 Visible row [10, 1]. The larger entry is 10. Action 0.";
+  else el.textContent = "一次回溯之后，动作 0 走进 −100。折扣超过 9/101 时动作改为 1。在 9/10 上，动作是 1。 After one backup, action 0 steps into −100. Past discount 9/101 the action is 1. At 9/10, the action is 1.";
+}
+
+function select(group, id, fn, mode) {
+  document.querySelectorAll(group).forEach((b) => b.classList.remove("on"));
+  document.getElementById(id).classList.add("on");
+  fn(mode);
+}
+
+document.getElementById("b-fill").onclick = () => select("#b-fill, #b-ask, #b-measure", "b-fill", paint, "fill");
+document.getElementById("b-ask").onclick = () => select("#b-fill, #b-ask, #b-measure", "b-ask", paint, "ask");
+document.getElementById("b-measure").onclick = () => select("#b-fill, #b-ask, #b-measure", "b-measure", paint, "measure");
+document.getElementById("b-go").onclick = () => select("#b-go, #b-zero, #b-sign", "b-go", eeg, "go");
+document.getElementById("b-zero").onclick = () => select("#b-go, #b-zero, #b-sign", "b-zero", eeg, "zero");
+document.getElementById("b-sign").onclick = () => select("#b-go, #b-zero, #b-sign", "b-sign", eeg, "sign");
+document.getElementById("b-row").onclick = () => select("#b-row, #b-look", "b-row", act, "row");
+document.getElementById("b-look").onclick = () => select("#b-row, #b-look", "b-look", act, "look");
+
+paint("fill");
+eeg("go");
+act("row");
+
+const recorded = [1, 0, 2, 0, 1, 0, 3, 0];
+if (recorded.reduce((a, b) => a + b, 0) <= 0) throw new Error("recorded packet should be a go");
+if ([1, 0, 0, 0, 0, 0, 0, -2].reduce((a, b) => a + b, 0) >= 0) throw new Error("signed packet should be rest");
+if ([1, 0, 0, 0, 0, 0, 0, 0].reduce((a, b) => a + b, 0) <= 0) throw new Error("erasing the negative should become a go");
+</script>
+</body>
+</html>

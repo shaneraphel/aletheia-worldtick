@@ -41,6 +41,7 @@ evidence:
 	$(PYTHON) selector.py
 	$(PYTHON) partition.py
 	$(PYTHON) signfill.py
+	$(PYTHON) decisive.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

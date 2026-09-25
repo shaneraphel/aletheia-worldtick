@@ -1,0 +1,14 @@
+{
+  "schema": "worldtick.decisive.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "crashes": 1439,
+  "asked_cell_was_masked": 1439,
+  "after_one_question": {
+    "reached": 614,
+    "crash": 786,
+    "stopped": 39
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
