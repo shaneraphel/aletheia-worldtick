@@ -1,0 +1,17 @@
+{
+  "schema": "worldtick.fillchoice.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "optimistic": {
+    "crash": 2995,
+    "stop": 6993,
+    "reached": 12
+  },
+  "pessimistic": {
+    "crash": 0,
+    "stop": 10000,
+    "reached": 0
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

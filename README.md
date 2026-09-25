@@ -90,6 +90,21 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 
 One decision on the next cell. Truth goes iff the true next cell is free. Completion goes iff the filled cell is free. One tick goes iff the cell was measured free. Counts are in `results/DECIDE.json`. `python3.12 decide.py` recomputes them.
 
+## 洞写成什么 / Fill choice
+
+同一万条路。乐观：洞写成空地，往前走。保守：洞写成墙，停下。写法本身决定撞不撞。
+
+![乐观撞上 2995，保守撞上 0，乐观走通 12，保守走通 0。](docs/figures/fillchoice.png)
+
+| | 撞上 crashes | 停下 stops | 走通 reached |
+|---|---|---|---|
+| 乐观 optimistic | **2,995** | **6,993** | **12** |
+| 保守 pessimistic | **0** | **10,000** | **0** |
+
+数在 `results/FILLCHOICE.json`。`python3.12 fillchoice.py` 重算。
+
+The same 10,000 roads. Optimistic writes each hole free and walks. Pessimistic writes each hole a wall and stops. The fill itself decides the crash. Counts are in `results/FILLCHOICE.json`. `python3.12 fillchoice.py` recomputes them.
+
 ## 洞越多，走进去的次数越多
 
 每一点是 10,000 条 32 格的路。障碍率 0.20 不变。丢失率从 0.00 到 0.50。
