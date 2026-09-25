@@ -133,6 +133,18 @@ The pinned 256-node world (256 nodes, 8 observed, 512 edges, seed `20260919`). H
 
 Converges at 12 steps, flat afterwards. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
 
+## Price of the walk
+
+Median milliseconds per call on this machine (7 timed trials × 50 repeats; timings reported, reach pinned). Cost grows with the horizon and flattens exactly where reach flattens.
+
+![Reach and cumulative milliseconds per horizon: both flatten at 12 steps.](docs/figures/cost.png)
+
+| Horizon | 0 | 1 | 2 | 4 | 8 | 12 | 32 |
+|---|---|---|---|---|---|---|---|
+| Reach | **8** | **24** | **50** | **138** | **212** | **214** | **214** |
+
+One completion call answers 214 in ~0.09 ms here; the 12-step walk costs a small multiple of that. Numbers are in `results/COST.json`. `python3.12 cost.py` recomputes them.
+
 ## Foresight threshold, with proof
 
 Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.

@@ -29,5 +29,6 @@ jobs:
           python decide.py
           python fillchoice.py
           python audit.py
+          python cost.py
           python show_policy.py
           python tick_bench.py

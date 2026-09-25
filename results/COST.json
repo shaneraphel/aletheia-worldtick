@@ -1,0 +1,54 @@
+{
+  "schema": "worldtick.cost.v1",
+  "seed": 20260919,
+  "n_nodes": 256,
+  "n_facts": 8,
+  "n_edges": 512,
+  "n_trials": 7,
+  "warmup": 1,
+  "points": [
+    {
+      "horizon": 0,
+      "reach": 8,
+      "ms_median": 0.0018300395458936691
+    },
+    {
+      "horizon": 1,
+      "reach": 24,
+      "ms_median": 0.013513403246179223
+    },
+    {
+      "horizon": 2,
+      "reach": 50,
+      "ms_median": 0.02532007754780352
+    },
+    {
+      "horizon": 4,
+      "reach": 138,
+      "ms_median": 0.055031662341207266
+    },
+    {
+      "horizon": 8,
+      "reach": 212,
+      "ms_median": 0.11334663955494761
+    },
+    {
+      "horizon": 12,
+      "reach": 214,
+      "ms_median": 0.15924418228678405
+    },
+    {
+      "horizon": 16,
+      "reach": 214,
+      "ms_median": 0.16407673829235137
+    },
+    {
+      "horizon": 32,
+      "reach": 214,
+      "ms_median": 0.16356161679141223
+    }
+  ],
+  "completion_ms_median": 0.09307919652201235,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
