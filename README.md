@@ -176,6 +176,19 @@ Re-observe the next cell before every step; wait on a masked look instead of fil
 
 Counts are in `results/CLOSEDLOOP.json`. `python3.12 closedloop.py` recomputes them.
 
+## Breakeven
+
+One crash costs how many waits? Exact fractions of pinned counts, no new randomness.
+
+![One crash = 4.3 waits (one step), = 7.0 waits (full walk).](docs/figures/tradeoff.png)
+
+| Setting | Crashes | Waits | One crash equals |
+|---|---|---|---|
+| One step | **552** | **2,353** | **2353/552 ≈ 4.3** waits |
+| Full walk | **2,995** | **20,975** | **20975/2995 ≈ 7.0** waits |
+
+If a collision costs more than that many waits, the measured step (one step) and the closed loop (full walk) are cheaper. Numbers are in `results/TRADEOFF.json`. `python3.12 tradeoff.py` recomputes them.
+
 ## Foresight threshold, with proof
 
 Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.

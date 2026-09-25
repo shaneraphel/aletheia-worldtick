@@ -94,6 +94,19 @@ class PrecisionTest(unittest.TestCase):
             rec["n"],
         )
 
+    def test_breakeven_is_exact(self) -> None:
+        from fractions import Fraction
+
+        from tradeoff import run as tradeoff_run
+
+        rec = tradeoff_run()
+        self.assertEqual(rec["one_step"]["breakeven_exact"], "2353/552")
+        self.assertEqual(rec["full_walk"]["breakeven_exact"], "20975/2995")
+        self.assertEqual(
+            Fraction(rec["full_walk"]["waits"], rec["full_walk"]["crashes"]),
+            Fraction(20975, 2995),
+        )
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])

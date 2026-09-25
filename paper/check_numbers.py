@@ -63,10 +63,13 @@ def main() -> int:
     check(all(r["sweep_tick_hits"] == 0 and r["decide_tick_crashes"] == 0 for r in robust["rows"]), "robust tick zeros")
     check((closed["outcomes"]["crash"], closed["outcomes"]["reached"], closed["outcomes"]["correct_stop"]) == (0, 9, 9991), "closed loop 0/9/9991")
     check(closed["waits_total"] == 20975, "closed-loop waits 20975")
+    trade = load("TRADEOFF.json")
+    check(trade["one_step"]["breakeven_exact"] == "2353/552", "breakeven one step 2353/552")
+    check(trade["full_walk"]["breakeven_exact"] == "20975/2995", "breakeven full walk 20975/2995")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {23} number checks passed")
+    print(f"all {25} number checks passed")
     return 0
 
 

@@ -30,6 +30,8 @@ Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) sh
 
 **Proposition 4 (pessimistic safety).** Writing masked cells as walls never enters an occluded obstacle: every entered cell was observed free. Measured: 0 collisions in 10,000 corridors, at the price of 10,000 early stops and 0 full traversals.
 
+**Theorem 5 (breakeven).** Let C be crashes under optimistic imputation and W waits under the measured policy on the same corridor distribution. The measured policy is cheaper iff one crash costs more than W/C waits. Measured: 2353/552 ≈ 4.26 waits (one step), 20975/2995 ≈ 7.00 waits (full walk). *Proof.* Expected-cost comparison is linear in the crash price; equality holds at W/C. ∎
+
 ## 4. Experiments
 
 **4.1 Controlled split (10,000 trials).** Imputation vs measured step disagree everywhere: reach 8 vs 2; EEG class 0 vs 1; action 0 vs 1 — each 10,000/10,000.
@@ -53,6 +55,8 @@ Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) sh
 **4.10 Robustness.** Five seeds × 2,000 corridors: sweep entries 605, 641, 580, 606, 560; decision collisions 120, 143, 127, 126, 105; every measured-side column 0.
 
 **4.11 Closed loop.** Re-observing the next cell before every step on 10,000 roads: 0 crashes against open-loop optimistic 2,995; 9 full traversals; 9,991 correct stops at the first observed obstacle; 20,975 waits on masked looks.
+
+**4.12 Breakeven.** Exact fractions of pinned counts: one crash equals 2353/552 ≈ 4.3 waits (one step) and 20975/2995 ≈ 7.0 waits (full walk).
 
 ## 5. Upstream behavior
 

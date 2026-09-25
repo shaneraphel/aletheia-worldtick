@@ -1,0 +1,421 @@
+{
+  "schema": "worldtick.tradeoff.v1",
+  "one_step": {
+    "crashes": 552,
+    "waits": 2353,
+    "breakeven_exact": "2353/552",
+    "breakeven_value": 4.26268115942029,
+    "curve": [
+      {
+        "crash_cost_in_waits": "1/10",
+        "open": 55.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "3/5",
+        "open": 331.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "11/10",
+        "open": 607.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "8/5",
+        "open": 883.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "21/10",
+        "open": 1159.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "13/5",
+        "open": 1435.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "31/10",
+        "open": 1711.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "18/5",
+        "open": 1987.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "41/10",
+        "open": 2263.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "23/5",
+        "open": 2539.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "51/10",
+        "open": 2815.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "28/5",
+        "open": 3091.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "61/10",
+        "open": 3367.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "33/5",
+        "open": 3643.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "71/10",
+        "open": 3919.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "38/5",
+        "open": 4195.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "81/10",
+        "open": 4471.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "43/5",
+        "open": 4747.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "91/10",
+        "open": 5023.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "48/5",
+        "open": 5299.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "101/10",
+        "open": 5575.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "53/5",
+        "open": 5851.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "111/10",
+        "open": 6127.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "58/5",
+        "open": 6403.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "121/10",
+        "open": 6679.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "63/5",
+        "open": 6955.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "131/10",
+        "open": 7231.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "68/5",
+        "open": 7507.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "141/10",
+        "open": 7783.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "73/5",
+        "open": 8059.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "151/10",
+        "open": 8335.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "78/5",
+        "open": 8611.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "161/10",
+        "open": 8887.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "83/5",
+        "open": 9163.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "171/10",
+        "open": 9439.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "88/5",
+        "open": 9715.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "181/10",
+        "open": 9991.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "93/5",
+        "open": 10267.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "191/10",
+        "open": 10543.2,
+        "measured": 2353.0
+      },
+      {
+        "crash_cost_in_waits": "98/5",
+        "open": 10819.2,
+        "measured": 2353.0
+      }
+    ]
+  },
+  "full_walk": {
+    "crashes": 2995,
+    "waits": 20975,
+    "breakeven_exact": "20975/2995",
+    "breakeven_value": 7.003338898163606,
+    "curve": [
+      {
+        "crash_cost_in_waits": "1/10",
+        "open": 299.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "3/5",
+        "open": 1797.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "11/10",
+        "open": 3294.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "8/5",
+        "open": 4792.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "21/10",
+        "open": 6289.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "13/5",
+        "open": 7787.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "31/10",
+        "open": 9284.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "18/5",
+        "open": 10782.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "41/10",
+        "open": 12279.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "23/5",
+        "open": 13777.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "51/10",
+        "open": 15274.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "28/5",
+        "open": 16772.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "61/10",
+        "open": 18269.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "33/5",
+        "open": 19767.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "71/10",
+        "open": 21264.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "38/5",
+        "open": 22762.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "81/10",
+        "open": 24259.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "43/5",
+        "open": 25757.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "91/10",
+        "open": 27254.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "48/5",
+        "open": 28752.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "101/10",
+        "open": 30249.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "53/5",
+        "open": 31747.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "111/10",
+        "open": 33244.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "58/5",
+        "open": 34742.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "121/10",
+        "open": 36239.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "63/5",
+        "open": 37737.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "131/10",
+        "open": 39234.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "68/5",
+        "open": 40732.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "141/10",
+        "open": 42229.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "73/5",
+        "open": 43727.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "151/10",
+        "open": 45224.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "78/5",
+        "open": 46722.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "161/10",
+        "open": 48219.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "83/5",
+        "open": 49717.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "171/10",
+        "open": 51214.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "88/5",
+        "open": 52712.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "181/10",
+        "open": 54209.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "93/5",
+        "open": 55707.0,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "191/10",
+        "open": 57204.5,
+        "measured": 20975.0
+      },
+      {
+        "crash_cost_in_waits": "98/5",
+        "open": 58702.0,
+        "measured": 20975.0
+      }
+    ]
+  },
+  "python": "3.12.8",
+  "platform": "darwin"
+}

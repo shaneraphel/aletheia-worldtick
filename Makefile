@@ -34,6 +34,7 @@ evidence:
 	$(PYTHON) cost.py
 	$(PYTHON) robust.py
 	$(PYTHON) closedloop.py
+	$(PYTHON) tradeoff.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py
