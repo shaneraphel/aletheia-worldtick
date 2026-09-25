@@ -51,6 +51,7 @@ evidence:
 	$(PYTHON) attempt.py
 	$(PYTHON) ledger.py
 	$(PYTHON) company.py
+	$(PYTHON) framecheck.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

@@ -255,6 +255,14 @@ class PrecisionTest(unittest.TestCase):
         row = one_map(true, seen)
         self.assertGreaterEqual(row["hidden"], 1)
 
+    def test_a_held_frame_repaints_the_same_pixels(self) -> None:
+        from framecheck import paint
+        from grid2d import make_grid
+        import random
+
+        true, seen = make_grid(random.Random(1))
+        self.assertEqual(paint(true, seen, False), paint(true, seen, False))
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

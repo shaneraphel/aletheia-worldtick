@@ -96,6 +96,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **Who is in the room.** Two people stand on the same cells of every map, (4, 4) and (8, 8). They do not move, and the hand is not sent to them. A person is drawn only when that cell was seen. Across 4,000 person-cells, 3003 were seen and 997 were not, so those 997 are absent from the picture. The filled path walks through an unseen person 19 times. The path that stays on seen cells walks through a seen person 2 times. The extra crossings exist because a missing cell was written free. Ten cores agree with one.
 
+**The next frame.** Paint only the cells that were seen, and put the hand on the last of those that were free. Paint that frame a second time, with no new observation: on all 2,000 maps the pixels match, so the repaint count is 0. Paint the missing cells as well: the frame differs on all 2,000 maps, and 127697 unseen cells receive a color. The picture changed because the fill wrote into cells the camera did not see. One core and ten cores agree.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

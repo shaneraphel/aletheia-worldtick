@@ -48,6 +48,7 @@ jobs:
           python attempt.py
           python ledger.py
           python company.py
+          python framecheck.py
           python show_policy.py
           python tick_bench.py
       - name: paper

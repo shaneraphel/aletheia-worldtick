@@ -109,10 +109,12 @@ def main() -> int:
     check(led["class_on_drop"] == 0 and led["unseen_cell"] == 0 and led["classes_stored"] == 1428 and led["refused_steps"] == 630, "ledger stores 1428 classes and no drop class")
     comp = load("COMPANY.json")["serial"]
     check((comp["hidden"], comp["shown"], comp["filled_through_hidden"], comp["drawn_through"]) == (997, 3003, 19, 2), "unseen people 997, filled path through them 19")
+    frame = load("FRAME.json")["serial"]
+    check(frame["held_repaint"] == 0 and frame["differ"] == 2000 and frame["invented_cells"] == 127697, "held frame stable, fill colors 127697 unseen cells")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697"]:
         check(token in text, f"paper cites {token}")
-    print("all 60 number checks passed")
+    print("all 62 number checks passed")
     return 0
 
 

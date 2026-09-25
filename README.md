@@ -120,6 +120,15 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![3,003 people seen. 997 not drawn. The filled path walks through an unseen person 19 times.](docs/figures/company.png)
 
+**The next frame.** The picture is a frame of pixels. Paint a cell only if it was seen, and put the hand on the last seen free cell. Paint that frame again, with no new observation: on all 2,000 maps the pixels match. The count of frames that changed on a repaint is **0**. Paint the missing cells too: the frame differs on all **2,000** maps, and **127,697** unseen cells receive a color. The picture moved because the fill wrote into cells the camera did not see. One core and ten cores get the same pixels. An example of the two frames is below: the left one holds, the right one fills.
+
+**下一帧。** 画面是一帧像素。一格只有被看见才上色，手放在最后一格看见的空地上。没有新的观测，把这一帧再画一次：2,000 张地图的像素都相同。再画时像素发生变化的次数是 **0**。把没看见的格子也涂上：帧在全部 **2,000** 张地图上都不一样，**127,697** 个没看见的格子得到了颜色。画面动了，是因为补全写进了摄像机没看见的格子。一个核和十个核得到同样的像素。下面左边是保持的那一帧，右边是补全的那一帧。
+
+![The held frame and the filled frame differ. A second drawing of the held frame does not.](docs/figures/frames.png)
+
+![Held frame: only seen cells.](docs/figures/frame-held.png)
+![Filled frame: unseen cells are painted too.](docs/figures/frame-filled.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -344,6 +353,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `attempt.py` | a heard movement does not enter a cell the camera did not see |
 | `ledger.py` | a dropped window stores no class; the hand cell was seen |
 | `company.py` | a person is drawn only if their cell was seen |
+| `framecheck.py` | a second drawing of the held frame matches; the filled frame does not |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

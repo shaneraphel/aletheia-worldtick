@@ -1,0 +1,21 @@
+{
+  "schema": "worldtick.frame.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "workers": 10,
+  "serial": {
+    "maps": 2000,
+    "differ": 2000,
+    "invented_cells": 127697,
+    "held_repaint": 0
+  },
+  "parallel": {
+    "maps": 2000,
+    "differ": 2000,
+    "invented_cells": 127697,
+    "held_repaint": 0
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
