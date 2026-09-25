@@ -10,13 +10,13 @@ Partially observed input, a fail-closed validator, and the measured cost of fill
 
 In 2026, world models, neural decoding models, and action models share one inference step: impute the unobserved part of the input, then decide from the completed picture. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) predicts masked video patches. [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and VAE decoders reconstruct frames to high pixel fidelity. [LaBraM](https://arxiv.org/abs/2405.18765) predicts masked EEG segments, and missing channels are spatially interpolated ([InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html)). World action models render the next observation, then select an action from the rendering.
 
-Two 2026 studies state the open question. Nilaksh et al. ([CVPR 2026 workshop](https://arxiv.org/abs/2605.06388)) show pixel fidelity does not imply planning performance: reconstruction latents win on image metrics while semantic latents win on policy behavior. Zhang et al. ([test-time planning, 2026](https://arxiv.org/abs/2609.24745)) show generating plausible futures is easier than selecting the action those futures support (oracle selection 68.9% → 79.2%; tested selectors recover little).
+Two 2026 studies state the open question. Nilaksh et al. ([CVPR 2026 workshop](https://arxiv.org/abs/2605.06388)) show pixel fidelity does not imply planning performance: reconstruction latents win on image metrics while semantic latents win on policy behavior. Yuan et al. ([test-time planning, 2026](https://arxiv.org/abs/2609.24745)) show generating plausible futures is easier than selecting the action those futures support (oracle selection 68.9% → 79.2%; tested selectors recover little).
 
 This repository asks that question in three small, fully reproducible settings — occupancy reachability, EEG classification, and tabular action selection — and answers with one pair of integers. Optimistic imputation returns the larger number, which can equal the fully observed value. A single measured transition returns the smaller number. Empty input is fail-closed (raises; never 0).
 
 2026 年的世界模型、神经解码模型和动作模型，共用同一个推理步骤：补齐输入中没观测到的部分，再基于补全后的图像做决策。V-JEPA 2.1 预测被遮住的视频块。Cosmos 和 VAE 把画面重建到像素级逼真。LaBraM 预测被遮住的脑电，缺失通道做空间插值。世界动作模型先渲染下一步观测，再从渲染结果里选动作。
 
-两篇 2026 年的工作点出了开放问题。Nilaksh 等人（CVPR 2026 workshop）证明像素保真不等于规划性能：重建类隐变量赢图像指标，语义类隐变量赢策略行为。Zhang 等人（2026 测试时规划）证明生成像样的未来，比从这些未来里选出该执行的动作更容易（oracle 选择 68.9% → 79.2%，实测选择器几乎收不回这个差距）。
+两篇 2026 年的工作点出了开放问题。Nilaksh 等人（CVPR 2026 workshop）证明像素保真不等于规划性能：重建类隐变量赢图像指标，语义类隐变量赢策略行为。Yuan 等人（2026 测试时规划）证明生成像样的未来，比从这些未来里选出该执行的动作更容易（oracle 选择 68.9% → 79.2%，实测选择器几乎收不回这个差距）。
 
 本仓库在三个小而完全可复现的设定里问同一个问题——占据可达、脑电分类、表格型动作选择，用同一对整数回答。乐观补全给出较大的数，可以和全观测值相同。单步实测转移给出较小的数。空输入 fail-closed（抛异常，永不返回 0）。
 
@@ -219,7 +219,7 @@ Counts are in `results/GRID2D.json`. `python3.12 grid2d.py` recomputes them.
 
 ## Selection, not generation
 
-Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter imagined path. The oracle takes a path that does not cross a true obstacle. Zhang et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
+Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter imagined path. The oracle takes a path that does not cross a true obstacle. Yuan et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
 
 ![Visual selector reaches 500 and crashes 1,439. Oracle reaches 797. Gap 297.](docs/figures/selector.png)
 
@@ -351,6 +351,10 @@ Counts live in `results/`. `make check` recomputes every pinned number. Every pu
 
 The results above are aggregated in [`paper/paper.md`](paper/paper.md) with proofs (foresight threshold 9/101, mask erasure, monotone convergence, pessimistic safety). Every cited number is machine-checked: `python3.12 paper/check_numbers.py`.
 
+The same measurements are set in the CVPR 2026 author-kit format, eight pages, Times, two columns: [`paper/cvpr/main.pdf`](paper/cvpr/main.pdf). Rebuild with `tectonic main.tex` inside `paper/cvpr`.
+
+同一组测量写成 CVPR 2026 作者工具包的八页双栏稿：[`paper/cvpr/main.pdf`](paper/cvpr/main.pdf)。在 `paper/cvpr` 里用 `tectonic main.tex` 重编。
+
 ## Files
 
 | Path | Contents |
@@ -363,7 +367,9 @@ The results above are aggregated in [`paper/paper.md`](paper/paper.md) with proo
 | `horizon.py` · `foresight.py` | convergence curve; 9/101 threshold with proof |
 | `bcisweep.py` · `decide.py` · `fillchoice.py` · `audit.py` | dose–response; decision costs; fill policy; mask audit |
 | `occgrid.py` · `mcapocc.py` · `bagocc.py` | ROS grid, MCAP, rosbag2 readers |
-| `tests/test_precision.py` | 8 pinned identities |
+| `tests/test_precision.py` | pinned identities |
+| `paper/paper.md` | technical report; numbers checked on every build |
+| `paper/cvpr/main.pdf` | eight-page CVPR 2026 manuscript |
 | `results/` | pinned JSON from every run |
 | `locks/` | 66 format kernels |
 | `binds/` | 100 named-record binds |

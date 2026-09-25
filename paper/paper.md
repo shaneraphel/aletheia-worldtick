@@ -10,7 +10,7 @@ World models, neural decoders, and action models share one inference step: imput
 
 In 2026, world models, EEG foundation models, and world action models fill in what was not seen, then decide from the filled picture. V-JEPA 2.1 predicts masked video patches. Cosmos and VAE decoders reconstruct frames to high pixel fidelity. LaBraM predicts masked EEG segments; missing channels are spatially interpolated. World action models render the next observation, then select an action from the rendering.
 
-Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) show pixel fidelity does not imply planning performance. Zhang et al. (test-time planning, 2026) show generating plausible futures is easier than selecting the action those futures support, with oracle selection at 79.2% against 68.9% uniform and tested selectors recovering little. What has been missing is a minimal setting where both sides of that gap are exact integers. This report builds it.
+Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) show pixel fidelity does not imply planning performance. Yuan et al. (test-time planning, 2026) show generating plausible futures is easier than selecting the action those futures support, with oracle selection at 79.2% against 68.9% uniform and tested selectors recovering little. What has been missing is a minimal setting where both sides of that gap are exact integers. This report builds it.
 
 ## 2. Three settings
 
@@ -64,7 +64,7 @@ Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) sh
 
 **4.15 Planning depth.** Exact finite-horizon dynamic programming at discount 9/10 on 1,000 random one-step traps: depth 0 flips 0; depths 1–5 flip 1,000/1,000 and match the infinite horizon everywhere. Fixed trap by depth: 0-1-1-1-1-1.
 
-**4.16 Selection.** On the same 2,000 grids, the shorter imagined path reaches 500 and crashes 1,439. A collision oracle, choosing among the same two plans, reaches 797. The gap is 297. The published robot rates in Zhang et al. are not re-run; the selection gap is.
+**4.16 Selection.** On the same 2,000 grids, the shorter imagined path reaches 500 and crashes 1,439. A collision oracle, choosing among the same two plans, reaches 797. The gap is 297. The published robot rates in Yuan et al. are not re-run; the selection gap is.
 
 ## 5. Upstream behavior
 
