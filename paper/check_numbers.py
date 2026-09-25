@@ -75,10 +75,12 @@ def main() -> int:
     plan = load("PLANDEPTH.json")
     check([c["action"] for c in plan["trap_curve"]] == [0, 1, 1, 1, 1, 1], "trap depth curve 0-1-1-1-1-1")
     check(all(p["flipped_vs_myopic"] == 1000 and p["match_infinite"] == 1000 for p in plan["points"][1:]), "depth 1 matches infinite everywhere")
+    sel = load("SELECTOR.json")
+    check((sel["visual"]["reached"], sel["visual"]["crash"], sel["oracle"]["reached"], sel["gap_reached"]) == (500, 1439, 797, 297), "selector 500/1439/797/297")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {31} number checks passed")
+    print(f"all {32} number checks passed")
     return 0
 
 

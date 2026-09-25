@@ -38,6 +38,7 @@ evidence:
 	$(PYTHON) stats.py
 	$(PYTHON) grid2d.py
 	$(PYTHON) plandepth.py
+	$(PYTHON) selector.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

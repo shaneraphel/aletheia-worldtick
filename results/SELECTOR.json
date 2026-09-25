@@ -1,0 +1,18 @@
+{
+  "schema": "worldtick.selector.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "visual": {
+    "reached": 500,
+    "crash": 1439,
+    "stopped": 61
+  },
+  "oracle": {
+    "reached": 797,
+    "crash": 1142,
+    "stopped": 61
+  },
+  "gap_reached": 297,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

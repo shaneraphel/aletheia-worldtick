@@ -217,6 +217,20 @@ On one-step traps a single lookahead step equals infinite-horizon planning every
 
 Counts are in `results/GRID2D.json`. `python3.12 grid2d.py` recomputes them.
 
+## Selection, not generation
+
+Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter imagined path. The oracle takes a path that does not cross a true obstacle. Zhang et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
+
+![Visual selector reaches 500 and crashes 1,439. Oracle reaches 797. Gap 297.](docs/figures/selector.png)
+
+| | Reached | Crashes | Stopped |
+|---|---|---|---|
+| Visual selector | **500** | **1,439** | **61** |
+| Collision oracle | **797** | **1,142** | **61** |
+| Gap | **297** | | |
+
+The shorter imagined path is the optimistic path. The extra 297 successes are already in the candidate set; the visual score does not pick them. Counts are in `results/SELECTOR.json`. `python3.12 selector.py` recomputes them.
+
 ## Uncertainty
 
 Wilson 95% intervals, closed-form from the pinned counts above. No new randomness.

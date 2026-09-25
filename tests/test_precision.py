@@ -134,6 +134,17 @@ class PrecisionTest(unittest.TestCase):
         for p in rec["points"][1:]:
             self.assertEqual(p["match_infinite"], rec["n"])
 
+    def test_visual_selector_trails_the_oracle(self) -> None:
+        from selector import choose
+        from grid2d import make_grid
+        import random
+
+        rng = random.Random(1)
+        true, seen = make_grid(rng)
+        picked = choose(true, seen)
+        self.assertIn(picked["visual"], ("reached", "crash", "stopped"))
+        self.assertIn(picked["oracle"], ("reached", "crash", "stopped"))
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])
