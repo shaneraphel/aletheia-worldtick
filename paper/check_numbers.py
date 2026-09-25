@@ -80,10 +80,14 @@ def main() -> int:
     part = load("PARTITION.json")
     check((part["cells"]["both"], part["cells"]["only_optimistic"], part["cells"]["only_pessimistic"], part["cells"]["neither"]) == (122, 378, 297, 1203), "partition 122/378/297/1203")
     check((part["gap_strictly_shorter"], part["gap_equal_length"], part["inclusion_holds"], part["visual_equals_optimistic"]) == (129, 168, 2000, 2000), "gap 129 strict + 168 ties")
+    check(part["equal_length_only_optimistic"] == 0 and part["strict_both_reach"] == 56, "tie flip loses no optimistic-only goal")
+    sign = load("SIGNFILL.json")
+    check([p["false_go"] for p in sign["nonnegative"]] == [0] * 9, "nonnegative false go is identically 0")
+    check((sign["signed"][4]["false_rest"], sign["signed"][4]["false_go"]) == (1280, 1141), "signed drop-4 1280 rest / 1141 go")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280"]:
         check(token in text, f"paper cites {token}")
-    print("all 34 number checks passed")
+    print("all 37 number checks passed")
     return 0
 
 

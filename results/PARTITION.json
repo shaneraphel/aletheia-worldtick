@@ -16,6 +16,8 @@
   "only_optimistic_uses_a_masked_free_cell": 378,
   "gap_strictly_shorter": 129,
   "gap_equal_length": 168,
+  "equal_length_only_optimistic": 0,
+  "strict_both_reach": 56,
   "python": "3.12.8",
   "platform": "macOS-26.2-arm64-arm-64bit"
 }

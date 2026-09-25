@@ -87,6 +87,8 @@ def run(n: int = N, seed: int = SEED) -> dict:
     only_opt_uses_free_mask = 0
     gap_shorter = 0
     gap_tie = 0
+    equal_only_opt = 0
+    strict_both = 0
     for _ in range(n):
         true, seen = make_grid(rng)
         rec = audit(true, seen)
@@ -98,9 +100,14 @@ def run(n: int = N, seed: int = SEED) -> dict:
         both_exist += int(rec["both_exist"])
         if cell(rec) == "only_optimistic" and rec["uses_mask"]:
             only_opt_uses_free_mask += 1
-        if cell(rec) == "only_pessimistic":
+        label = cell(rec)
+        if label == "only_pessimistic":
             gap_shorter += int(rec["strictly_shorter"])
             gap_tie += int(rec["equal_length"])
+        if rec["equal_length"] and label == "only_optimistic":
+            equal_only_opt += 1
+        if rec["strictly_shorter"] and label == "both":
+            strict_both += 1
     return {
         "schema": "worldtick.partition.v1",
         "seed": seed,
@@ -114,6 +121,8 @@ def run(n: int = N, seed: int = SEED) -> dict:
         "only_optimistic_uses_a_masked_free_cell": only_opt_uses_free_mask,
         "gap_strictly_shorter": gap_shorter,
         "gap_equal_length": gap_tie,
+        "equal_length_only_optimistic": equal_only_opt,
+        "strict_both_reach": strict_both,
         "python": sys.version.split()[0],
         "platform": platform.platform(),
     }
@@ -158,8 +167,9 @@ def figure(rec: dict, path: Path) -> None:
     )
     draw.text(
         (36, 800),
-        f"gap {cells['only_pessimistic']:,} = strictly shorter {rec['gap_strictly_shorter']:,} + equal length {rec['gap_equal_length']:,}    "
-        f"差距里 {rec['gap_equal_length']:,} 次两条路一样长，平局仍选了乐观方案",
+        f"gap {cells['only_pessimistic']:,} = shorter {rec['gap_strictly_shorter']:,} + ties {rec['gap_equal_length']:,}    "
+        f"平局改判给已观测路径，收回 {rec['gap_equal_length']:,}，不丢只靠补全能到的目标    "
+        f"strict and still safe {rec['strict_both_reach']:,}",
         font=small,
         fill=(139, 148, 158),
     )
@@ -180,6 +190,12 @@ def identities(rec: dict) -> None:
     # The four cells reconstruct the published grid and selector rows.
     if cells["only_pessimistic"] + cells["both"] + cells["only_optimistic"] + cells["neither"] != n:
         raise SystemExit("cells do not cover")
+    # Equal length requires both paths. A pessimistic path reaches, so a tie
+    # cannot be an optimistic-only success.
+    if rec["equal_length_only_optimistic"] != 0:
+        raise SystemExit("a tie was an optimistic-only success")
+    if rec["strict_both_reach"] + rec["gap_strictly_shorter"] != rec["optimistic_strictly_shorter"]:
+        raise SystemExit("strict shortenings are not both-reach plus gap")
 
 
 def main() -> int:
@@ -195,6 +211,8 @@ def main() -> int:
         raise SystemExit("pessimistic paths did not number 419")
     if rec["optimistic_strictly_shorter"] != 185:
         raise SystemExit("strict shortenings moved")
+    if rec["strict_both_reach"] != 56:
+        raise SystemExit("safe strict shortenings moved")
     figure(rec, ROOT / "docs" / "figures" / "partition.png")
     out = ROOT / "results" / "PARTITION.json"
     out.write_text(json.dumps(rec, indent=2) + "\n")

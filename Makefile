@@ -40,6 +40,7 @@ evidence:
 	$(PYTHON) plandepth.py
 	$(PYTHON) selector.py
 	$(PYTHON) partition.py
+	$(PYTHON) signfill.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

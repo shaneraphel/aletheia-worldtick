@@ -153,6 +153,17 @@ class PrecisionTest(unittest.TestCase):
         # The four labels are exhaustive on one grid as well as on the batch.
         true, seen = __import__("grid2d").make_grid(__import__("random").Random(2))
         self.assertIn(cell(audit(true, seen)), ("both", "only_optimistic", "only_pessimistic", "neither"))
+        self.assertEqual(rec["equal_length_only_optimistic"], 0)
+
+    def test_zero_fill_direction_follows_the_erased_sign(self) -> None:
+        from decode import neural_class
+        from signfill import flips
+
+        false_rest, false_go = flips([1, 1, 1, 1, 1, 1, 1, 1], 3)
+        self.assertEqual((false_rest, false_go), (0, 0))
+        hidden = [1, 0, 0, 0, 0, 0, 0, -2]
+        self.assertEqual(neural_class(hidden), 0)
+        self.assertEqual(flips(hidden, 1), (0, 1))
 
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose

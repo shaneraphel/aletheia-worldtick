@@ -38,6 +38,7 @@ jobs:
           python plandepth.py
           python selector.py
           python partition.py
+          python signfill.py
           python show_policy.py
           python tick_bench.py
       - name: paper

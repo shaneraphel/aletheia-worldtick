@@ -71,7 +71,7 @@ Four statements. The proofs are in [`paper/paper.md`](paper/paper.md).
 
 **After the fill, a missing-data check sees nothing.** The completed object lives in the fully observed domain, so a checker that looks for a mask marker has recall 0. Empty input raises instead of returning 0. That is the entire product difference with the libraries in the table above.
 
-四条陈述。证明在 [`paper/paper.md`](paper/paper.md)。
+证明在 [`paper/paper.md`](paper/paper.md)。
 
 补全做决定，规划器不做决定。同一套最短路，在补全后的地图上跑一次，在真正观测到的格子上再跑一次，得到两个整数。不需要换生成器，这两个整数就会分开。世界模型可达 3 对实测一步 2，脑电类别 0 对实录类别 1，只看当前行的动作 0 对前视动作 1，是三个产品里的同一件事。
 
@@ -79,11 +79,21 @@ Four statements. The proofs are in [`paper/paper.md`](paper/paper.md).
 
 前视把动作翻过来的折扣是一个分数。陷阱表 `[[10, 1], [-100, -100]]` 上，动作 0 眼前收益更高，下一步走进 −100。用精确有理数解 `(I − dP)V = r`，翻转点是 `9/101`。把折扣值放大成整数再迭代，会翻得太早，因为迭代保不住公分母。在这一族问题上，一次真正的回溯已经等于无限视界。深度 0 是原始的那一行。把那一行也算成一次回溯，翻转会晚报一步。
 
+**A tie is not indifference.** When the two paths have the same length, the observed-free path exists, so it arrives. Switching the tie from the filled plan to that path recovers every tied miss and gives up none of the goals that only the filled plan can reach, because those goals have no second path. The misses that remain are the paths that became shorter by crossing a masked cell. Most of those shorter paths still crash. Length is not a safety certificate.
+
+**Zero is not “nothing happened.”** On a non-negative code, writing zeros can only turn a movement into rest. On a signed voltage, erasing a negative sample can turn rest into a movement. A decoder that zero-fills a dropout is not choosing the conservative error. The direction of the error is the sign of the samples it deleted. LaBraM-style interpolation has the same shape: the filled window is a decision, and the missingness is gone.
+
+平局不是“两条路都行”。两条路一样长时，已观测为空的那条路存在，所以它能到达。把平局从补全方案改判给这条路，能收回每一次平局造成的错过，而且不会丢掉只有补全方案能到达的目标，因为那些目标根本没有第二条路。剩下的错过，是靠踩被遮格子才变短的路。这些更短的路里，多数仍然会撞。更短不是安全证明。
+
+零不是“什么都没发生”。信号非负时，补零只能把动作读成静息。电压有正负时，删掉一段负数可以把静息读成动作。把丢包补成零的解码器并没有选择更保守的错误。错误的方向等于被删采样的符号。LaBraM 那种插值是同一形状：补完的窗口已经是一个决策，缺失本身消失了。
+
 补全之后，缺失检查什么也看不见。补完的对象落在全观测的值域里，寻找掩码标记的检查召回率是 0。空输入会拒绝，而不是返回 0。这就是和上面那些库的全部产品差别。
 
 ![One split, three products. Filled input returns the larger integer. One measured step returns the smaller integer. Empty input raises.](docs/figures/story.png)
 
-![Both plans reach on 122 grids. Only the filled plan reaches on 378. Only the safe plan reaches on 297, of which 129 are strictly shorter and 168 are ties. Neither reaches on 1,203.](docs/figures/partition.png)
+![Both plans reach on 122 grids. Only the filled plan reaches on 378. Only the safe plan reaches on 297. A tie, switched to the observed-free path, recovers the tied misses and none of the 378.](docs/figures/partition.png)
+
+![Non-negative codes: false go is zero. Signed voltages, last four samples zeroed: false rest and false go both occur.](docs/figures/signfill.png)
 
 ## What the MVP hands over
 
@@ -93,7 +103,7 @@ The delivery is one call with three outcomes. It sits in front of a planner the 
 
 | Call | What it does | What it refuses to do |
 |---|---|---|
-| `measure` | Uses only entries that were observed. On a map it does not enter a masked cell. On an EEG window it keeps the recorded samples. On a reward table it returns the lookahead action. | It does not invent a value for a hole. |
+| `measure` | Uses only entries that were observed. On a tie between a filled path and an observed-free path, it keeps the observed-free path. On a signed EEG window it does not write zeros over a dropout. | It does not invent a value for a hole, and it does not break a tie toward the filled plan. |
 | `impute` | The audit twin. Same planner after the hole has been written free, written zero, or replaced by the visible row. | It is not the shipped decision. It exists so a demo can show the disagreement. |
 | refuse | The result on empty input. | No zero, no empty list, no NaN. |
 
@@ -142,7 +152,8 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `tick.py` | one observed step |
 | `datalog.py` | the fixed point a fill would return |
 | `complete.py` · `decode.py` · `policy.py` | the three fills: map, EEG, reward row |
-| `partition.py` | the inclusion check: shorter path versus tie |
+| `partition.py` | nested plans, and the tie rule |
+| `signfill.py` | zero-fill on non-negative codes versus signed voltages |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
 
