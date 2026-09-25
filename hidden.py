@@ -83,24 +83,27 @@ def figure(rec: dict, path: Path) -> None:
     from PIL import Image, ImageDraw, ImageFont
 
     font_path = "/Library/Fonts/Arial Unicode.ttf"
-    image = Image.new("RGB", (1680, 520), (14, 17, 22))
+    image = Image.new("RGB", (1680, 560), (14, 17, 22))
     draw = ImageDraw.Draw(image)
-    title = ImageFont.truetype(font_path, 32)
-    body = ImageFont.truetype(font_path, 26)
-    small = ImageFont.truetype(font_path, 20)
-    draw.text((36, 28), "HIDDEN OBSTACLE  ·  补全之后的路", font=small, fill=(139, 148, 158))
-    draw.text((36, 64), "洞被写成空地之后，会走进没看见的障碍。一步停在看见的边界。", font=title, fill=(230, 237, 243))
+    title = ImageFont.truetype(font_path, 28)
+    body = ImageFont.truetype(font_path, 24)
+    small = ImageFont.truetype(font_path, 18)
+    number = ImageFont.truetype(font_path, 36)
+    draw.text((36, 24), "A completed road  ·  补全之后的路", font=small, fill=(139, 148, 158))
+    draw.text((36, 56), "洞被写成空地之后，会走进没看见的障碍。一步停在看见的边界。", font=title, fill=(230, 237, 243))
+    draw.text((36, 96), "After a hole is written free, the walk enters an unseen obstacle. One tick stops at the last seen cell.", font=small, fill=(139, 148, 158))
     cards = [
-        ("藏着障碍的路", f"{rec['roads_with_a_hidden_obstacle']:,} / {rec['n']:,}"),
-        ("补全走了进去", f"{rec['completion_enters_hidden_obstacle']:,}"),
-        ("一步走进去", f"{rec['tick_enters_hidden_obstacle']:,}"),
+        ("藏着障碍的路", "Roads with an unseen obstacle", f"{rec['roads_with_a_hidden_obstacle']:,} / {rec['n']:,}"),
+        ("补全走了进去", "Completion walks in", f"{rec['completion_enters_hidden_obstacle']:,}"),
+        ("一步走进去", "One tick walks in", f"{rec['tick_enters_hidden_obstacle']:,}"),
     ]
     colors = [(210, 153, 34), (248, 81, 73), (63, 185, 80)]
-    for i, ((name, value), color) in enumerate(zip(cards, colors)):
+    for i, ((name, en, value), color) in enumerate(zip(cards, colors)):
         x = 36 + i * 540
-        draw.rounded_rectangle((x, 160, x + 500, 440), radius=16, fill=(22, 27, 34), outline=color, width=2)
+        draw.rounded_rectangle((x, 160, x + 500, 500), radius=16, fill=(22, 27, 34), outline=color, width=2)
         draw.text((x + 28, 200), name, font=body, fill=color)
-        draw.text((x + 28, 280), value, font=title, fill=(230, 237, 243))
+        draw.text((x + 28, 240), en, font=small, fill=color)
+        draw.text((x + 28, 320), value, font=number, fill=(230, 237, 243))
     image.save(path, quality=92)
 
 

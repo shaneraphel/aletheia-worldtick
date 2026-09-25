@@ -77,46 +77,49 @@ def compose(photo_name: str, out_name: str, kicker: str, title: str, kept: str, 
 
 
 def story() -> None:
-    W, H = 1680, 720
+    W, H = 1680, 860
     canvas = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(canvas)
-    draw.text((36, 28), "ONE SPLIT  ·  同一种分裂", font=font(18), fill=MUTED)
-    draw.text((36, 58), "补全得到较大的数。一步是更小的数。空记录报错。", font=font(32), fill=TEXT)
+    draw.text((36, 24), "The same split  ·  同一种分裂", font=font(18), fill=MUTED)
+    draw.text((36, 52), "补全是较大的数。一步是较小的数。空记录报错。", font=font(28), fill=TEXT)
+    draw.text((36, 90), "Completion is the larger number. One tick is the smaller one. An empty record is an error.", font=font(20), fill=MUTED)
     cols = [
-        ("世界模型", "补上没看见的格子\n→ 可达 3\n和一张全看见的地图相同", "只走已经看见的一步\n→ 2\n中间那格是洞\n→ 报错"),
-        ("脑机接口", "掉线补成 8 个 0\n→ 类别 0\n和静息相同", "录上的 8 个点\n→ 类别 1，标记 go\n空包\n→ 报错"),
-        ("下一步动作", "只补全眼前这一行\n→ 动作 0", "按世界走一步\n→ 动作 1\n空的奖励表\n→ 报错"),
+        ("世界模型  World model", "补上没看见的格子\nFill the unseen cell\n→ 可达 reach 3\n与全看见的地图相同\nSame as a fully seen map", "只走看见的一步\nOne tick of what was seen\n→ 2\n中间是洞 The middle is a hole\n→ 报错 error"),
+        ("脑机接口  Brain–computer", "掉线补成 8 个 0\nFill a dropout with zeros\n→ 类别 class 0\n与静息相同\nSame as rest", "录上的 8 个点\nEight recorded samples\n→ 类别 class 1, go\n空包 Empty packet\n→ 报错 error"),
+        ("下一动作  Next action", "只看眼前这一行\nThe visible row alone\n→ 动作 action 0", "按世界走一步\nOne tick of the world\n→ 动作 action 1\n空表 Empty table\n→ 报错 error"),
     ]
     for i, (name, big, small) in enumerate(cols):
         x = 36 + i * 548
-        draw.rounded_rectangle((x, 130, x + 520, 680), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
-        draw.text((x + 24, 150), name, font=font(28), fill=TEXT)
-        panel(draw, (x + 20, 210, x + 500, 420), AMBER_BG, AMBER, "补全", big)
-        panel(draw, (x + 20, 440, x + 500, 660), GREEN_BG, GREEN, "一步", small)
+        draw.rounded_rectangle((x, 140, x + 520, 830), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
+        draw.text((x + 20, 156), name, font=font(22), fill=TEXT)
+        panel(draw, (x + 16, 200, x + 504, 490), AMBER_BG, AMBER, "补全  Completion", big)
+        panel(draw, (x + 16, 510, x + 504, 810), GREEN_BG, GREEN, "一步  One tick", small)
     canvas.save(HERE / "story.png", quality=92)
 
 
 def campaign_figure() -> None:
-    W, H = 1680, 640
+    W, H = 1680, 780
     canvas = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(canvas)
-    draw.text((36, 28), "10,000 TRIALS  ·  SEED 20260919", font=font(18), fill=MUTED)
-    draw.text((36, 58), "一万次里，补全和一步没有一次相同。", font=font(32), fill=TEXT)
+    draw.text((36, 24), "10,000 trials  ·  seed 20260919  ·  一万次，种子 20260919", font=font(18), fill=MUTED)
+    draw.text((36, 52), "一万次里，补全和一步没有一次相同。", font=font(28), fill=TEXT)
+    draw.text((36, 90), "In all 10,000 trials, completion and one tick disagree.", font=font(20), fill=MUTED)
     rows = [
-        ("世界模型", "补全可达 8", "10,000 / 10,000", "一步可达 2", "10,000 / 10,000", "洞", "10,000 次报错"),
-        ("脑机接口", "补 0 = 静息 0", "10,000 / 10,000", "录上的类 1", "10,000 / 10,000", "空包", "10,000 次报错"),
-        ("下一步动作", "眼前这一行 = 0", "10,000 / 10,000", "走一步 = 1", "10,000 / 10,000", "两数不同", "10,000 / 10,000"),
+        ("世界模型", "World model", "补全可达 8", "Completion reaches 8", "10,000 / 10,000", "一步可达 2", "One tick reaches 2", "10,000 / 10,000"),
+        ("脑机接口", "EEG", "补 0 = 静息 0", "Zeros match rest", "10,000 / 10,000", "录上的类 1", "Recorded class 1", "10,000 / 10,000"),
+        ("下一动作", "Next action", "眼前这一行 = 0", "Visible row = 0", "10,000 / 10,000", "走一步 = 1", "One tick = 1", "10,000 / 10,000"),
     ]
-    for i, (name, a, an, b, bn, c, cn) in enumerate(rows):
-        y = 130 + i * 160
-        draw.rounded_rectangle((36, y, 1644, y + 144), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
-        draw.text((56, y + 48), name, font=font(26), fill=TEXT)
-        draw.text((280, y + 28), a, font=font(22), fill=AMBER)
-        draw.text((280, y + 72), an, font=font(28), fill=TEXT)
-        draw.text((760, y + 28), b, font=font(22), fill=GREEN)
-        draw.text((760, y + 72), bn, font=font(28), fill=TEXT)
-        draw.text((1180, y + 28), c, font=font(22), fill=MUTED)
-        draw.text((1180, y + 72), cn, font=font(28), fill=TEXT)
+    for i, (name, en, a, ae, an, b, be, bn) in enumerate(rows):
+        y = 140 + i * 200
+        draw.rounded_rectangle((36, y, 1644, y + 180), radius=16, fill=CARD, outline=(48, 54, 61), width=2)
+        draw.text((56, y + 36), name, font=font(26), fill=TEXT)
+        draw.text((56, y + 78), en, font=font(18), fill=MUTED)
+        draw.text((340, y + 28), a, font=font(22), fill=AMBER)
+        draw.text((340, y + 64), ae, font=font(18), fill=AMBER)
+        draw.text((340, y + 110), an, font=font(28), fill=TEXT)
+        draw.text((980, y + 28), b, font=font(22), fill=GREEN)
+        draw.text((980, y + 64), be, font=font(18), fill=GREEN)
+        draw.text((980, y + 110), bn, font=font(28), fill=TEXT)
     canvas.save(HERE / "campaign.png", quality=92)
 
 
@@ -125,37 +128,37 @@ def main() -> None:
         "hand-product.png",
         "hand-delta.png",
         "DEXTEROUS HAND  ·  灵巧手",
-        "手指还没碰到任何东西",
-        "表里真有数字时，分配代价仍是 2",
-        "MuJoCo 会加载一个空的手部模型\n→ 当成加载成功\n\nmunkres 拿到一张空的分配表\n→ 返回一个空列表",
-        "空的分配表\n→ 报错\n\n2×2 有数字的表\n→ 代价 2",
+        "手指还没碰到任何东西  Nothing has been touched",
+        "有数字时代价仍是 2  With numbers the cost stays 2",
+        "MuJoCo 空模型加载成功\nEmpty model loads\n→ accepted\n\nmunkres 空表\nEmpty table\n→ []",
+        "空表  Empty table\n→ 报错 error\n\n2×2\n→ 代价 cost 2",
     )
     compose(
         "bci-product.png",
         "bci-delta.png",
         "BRAIN-COMPUTER INTERFACE  ·  脑机接口",
-        "这段脑电其实没录上",
-        "录上的那一段仍是 8 个点，标记仍是 go / end",
-        "MNE 遇到一段空录音\n→ 时长记成 0，标记个数记成 0\n\nNumPy 对空的采样求平均\n→ 得到 nan",
-        "空录音\n→ 报错\n\n录上的一段\n→ 8 个点，标记 go / end",
+        "这段脑电没录上  This clip was not recorded",
+        "录上的一段仍是 8 个点  The recorded clip is still 8 samples",
+        "MNE 空录音  Empty recording\n→ 时长 duration 0\n\nNumPy 空平均  Empty mean\n→ nan",
+        "空录音  Empty recording\n→ 报错 error\n\n录上的一段  Recorded\n→ 8 点，go / end",
     )
     compose(
         "robot-product.png",
         "robot-delta.png",
         "MOBILE ROBOT  ·  移动机器人",
-        "地图这一步只亮了两格",
-        "再往前走，第三格才会亮。大地图上是 24，然后 214",
-        "NetworkX 拿到一张空地图\n→ 地点个数是 0\n\n路上有三格时，它一次就算到尽头\n→ 直接得到 3",
-        "这一步是空的\n→ 报错\n\n走一步 → 2\n走到头 → 3",
+        "这一步只亮两格  This step lights two cells",
+        "第三格还在后面  The third cell is still ahead. Large map: 24, then 214",
+        "NetworkX 空地图  Empty map\n→ 地点 places 0\n\n三格一次走到头\nThree cells, one call\n→ 3",
+        "这一步是空的  Empty step\n→ 报错 error\n\n走一步 One tick → 2\n走到头 To the end → 3",
     )
     compose(
         "vehicle-product.png",
         "vehicle-delta.png",
         "VEHICLE  ·  车",
-        "雷达这一帧是空的",
-        "真有回波时，两个点仍算作 1。三次观测仍算作 3",
-        "NumPy 对一帧空雷达求长度\n→ 得到 0.0\n\nFilterPy 收到一次空更新\n→ 照单接受，位置留在 0.0",
-        "空雷达、空观测\n→ 报错\n\n两个点 → 1\n三次观测 → 3",
+        "雷达这一帧是空的  This lidar frame is empty",
+        "真有回波：两点算作 1，三次观测算作 3",
+        "NumPy 空雷达  Empty lidar\n→ 长度 length 0.0\n\nFilterPy 空更新  Empty update\n→ 位置 position 0.0",
+        "空雷达  Empty lidar\n→ 报错 error\n\n两个点 Two points → 1\n三次观测 Three updates → 3",
     )
     story()
     campaign_figure()

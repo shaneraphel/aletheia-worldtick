@@ -2,9 +2,21 @@
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-补全把没看见的地方写成一个能继续用的数。一步只移动已经看见的事实。三个领域得到同一对结果。
+## 问题
 
-Completion writes a usable number into what was not seen. One tick moves only a fact that was seen. Three fields give the same pair of results.
+2026 年的世界模型、脑电模型和动作模型，都在把没看见的地方补成一张完整的图，再用这张图做决定。V-JEPA 2.1 预测被遮住的视频块。Cosmos 和 VAE 把画面补到像素上看起来像。LaBraM 预测被遮住的脑电，缺的通道用插值补上。世界动作模型先画出下一步的画面，再从画面里选动作。
+
+Nilaksh 等人在 [CVPR 2026 的工作](https://arxiv.org/abs/2605.06388)里写明：像素补得像，规划不一定对。Zhang 等人在 [2026 年的测试时规划](https://arxiv.org/abs/2609.24745)里写明：生成一个像样的未来，比从这些未来里选出该执行的动作更容易。
+
+这里把这一个问题放进三个领域，用同一对整数来回答。补全得到较大的数，并且这个数可以和“真的看见了”相同。一步只使用已经看见的事实，得到较小的数。空记录报错。
+
+## Problem
+
+In 2026, world models, EEG models, and action models fill in what was not seen, then decide from the filled picture. V-JEPA 2.1 predicts masked video patches. Cosmos and VAEs complete the frame until the pixels look right. LaBraM predicts masked EEG, and missing channels are interpolated. World action models draw the next frame, then pick an action from that drawing.
+
+Nilaksh et al., in a [CVPR 2026 workshop paper](https://arxiv.org/abs/2605.06388), state that a picture can look right while the plan is not. Zhang et al., on [test-time planning](https://arxiv.org/abs/2609.24745), state that producing a plausible future is easier than choosing the action that future supports.
+
+The same question is asked here in three fields, and answered with one pair of integers. Completion returns the larger number, and that number can match a world that really was seen. One tick uses only a fact that was seen, and returns the smaller number. An empty record is an error.
 
 ![补全：世界模型可达 3，脑电类别 0，动作 0。一步：可达 2，类别 1，动作 1。洞、空包、空表报错。](docs/figures/story.png)
 
