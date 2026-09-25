@@ -1,0 +1,15 @@
+{
+  "schema": "worldtick.session.v1",
+  "seed": 20260919,
+  "drop": 4,
+  "n_eeg": 10000,
+  "n_hand": 2000,
+  "audio_retunes_from_zerofill": 2421,
+  "audio_holds": 10000,
+  "picture": {
+    "rendered_crash": 1439,
+    "coach_crash": 0
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

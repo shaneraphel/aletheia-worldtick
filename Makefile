@@ -43,6 +43,7 @@ evidence:
 	$(PYTHON) signfill.py
 	$(PYTHON) decisive.py
 	$(PYTHON) askdepth.py
+	$(PYTHON) session.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

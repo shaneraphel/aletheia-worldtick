@@ -90,10 +90,13 @@ def main() -> int:
     depth = load("ASKDEPTH.json")
     check(depth["questions_total"] == 2814 and depth["trials_needing_more_than_one_question"] == 786, "question depth 2814 / 786")
     check(depth["histogram"]["9"] == 1 and depth["ends"]["reached"] == 1854, "one grid needs 9 questions")
+    sess = load("SESSION.json")
+    check(sess["audio_retunes_from_zerofill"] == 2421 and sess["audio_holds"] == 10000, "session holds every dropped window")
+    check(sess["picture"]["rendered_crash"] == 1439 and sess["picture"]["coach_crash"] == 0, "coach draws no completed crash")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421"]:
         check(token in text, f"paper cites {token}")
-    print("all 41 number checks passed")
+    print("all 43 number checks passed")
     return 0
 
 

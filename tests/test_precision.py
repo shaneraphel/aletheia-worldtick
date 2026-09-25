@@ -184,6 +184,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertGreaterEqual(asked, 0)
         self.assertLess(asked, 64)
 
+    def test_a_dropped_window_holds_the_scene(self) -> None:
+        from session import coach_audio, naive_audio
+
+        hidden = [1, 0, 0, 0, 0, 0, 0, -2]
+        self.assertEqual(naive_audio(hidden, 1), "movement")
+        self.assertEqual(coach_audio(hidden, 1), "hold")
+        self.assertEqual(coach_audio(hidden, 0), "rest")
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

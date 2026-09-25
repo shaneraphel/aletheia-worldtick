@@ -51,6 +51,9 @@ We do not post the page on another project's issue tracker. Those issues are for
 | Fixed point | The set of everything reachable if the walk is allowed to finish. One step is a smaller set. Returning the fixed point in one call reports the finished walk as the present. |
 | One question | Blocking the first cell where the filled path crashes, then planning again. It does not repair the other unseen cells. |
 | Closed loop | Observing again before every step, instead of trusting the rest of the fill. |
+| Scene hold | The music and the picture stay as they are, because the brain window was incomplete. A class computed after filling that window is not allowed to change them. |
+| Bilateral sound | Alternating left-right sound, the sensory part of an EMDR session. This repository does not claim a treatment effect. The rule is when that sound may change. |
+| Grasp picture | The 3D picture of a dexterous hand in the scene. It may not show a finished grasp through a cell the camera did not see. |
 
 | 词 | 意思 |
 |---|---|
@@ -67,6 +70,27 @@ We do not post the page on another project's issue tracker. Those issues are for
 | 不动点 | 如果把路走完，所有能到达的位置。一步比它小。一次调用就返回不动点，是把走完的路当成了现在。 |
 | 一次追问 | 封住补全路径第一次撞上的格子，再规划一次。它不修理其余没看见的格子。 |
 | 闭环 | 每走一步之前再观测一次，而不是相信补全剩下的部分。 |
+| 画面保持 | 音乐和画面维持原样，因为脑电窗口不完整。用补全后的类别去改它们，是不允许的。 |
+| 双侧声音 | 左右交替的声音，是 EMDR 里的感觉部分。本仓库不声称治疗效果。规则只规定这段声音什么时候可以变。 |
+| 抓取画面 | 灵巧手在场景里的三维画面。它不能把摄像机没看见的格子画成一次已经完成的抓取。 |
+
+## Two people, one picture
+
+The page is aimed at two groups, and both are injured by the same write.
+
+**Someone adapting to a dexterous hand.** The world model is there to show the hand in the scene, in real time, so the person can see a reach before the hand has finished it. The failure is a picture of a grasp that passes through a cell the camera did not see. The person then practices a motion the world does not contain. On 2,000 maps the filled picture does this 1,439 times. The coach draws that completed grasp 0 times.
+
+**Someone staying with a bilateral sound.** EMDR pairs recall with a left-right sound. The practical difficulty is that the sound is hard to stay with, so the game is an open place where that sound can continue, and where other people are present at low demand. A world model can also be asked to change the sound and the picture when a brain window looks frightened. If that window was incomplete and then filled with zeros, the change is not a reading of fright. On 10,000 signed windows with the last 4 samples dropped, a zero-fill would retune 2,421 of them: 1,280 movements read as rest, and 1,141 rests read as movement. The session holds all 10,000. It does not claim that holding treats anyone.
+
+The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
+
+一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
+
+一个人留在一段双侧声音里。EMDR 把回忆和左右交替的声音放在一起。实际的困难是这段声音很难听下去，所以游戏是一个开放的地方，声音可以在那里继续，别人也可以在场，但不要求高消耗的社交。世界模型还可能被要求：脑电窗口看起来像惊恐时，就改声音和画面。如果那个窗口不完整，又被补成了零，这次改动就不是对惊恐的读取。10,000 个有符号窗口丢掉最后 4 个采样，补零会改掉其中 2,421 个：1,280 个动作被读成静息，1,141 个静息被读成动作。会话对这 10,000 个窗口全部保持。它不声称保持本身在治疗谁。
+
+世界模型是那幅画面。非侵入窗口是一次部分观测。手上的摄像机也是一次部分观测。补上其中任何一个，再让画面动起来，就是本仓库在地图、脑电和奖励表上已经拒绝的同一个决策。
+
+![An incomplete window would retune 2,421 sounds. The session holds all 10,000. A filled grasp crosses an obstacle 1,439 times. The coach draws that 0 times.](docs/figures/session.png)
 
 ## Where shipped products get stuck
 
@@ -248,6 +272,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `signfill.py` | zero-fill on non-negative codes versus signed voltages |
 | `decisive.py` | one question after the first crash |
 | `askdepth.py` | how many questions until the path is clear |
+| `session.py` | hold the sound on a dropped window; do not draw a grasp through an unseen cell |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

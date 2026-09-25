@@ -78,6 +78,12 @@ This was forced by asking whether the closed loop was wasteful. If the first col
 
 On the 2,000 grids the process never hits the cap. 561 grids need no question. 653 need exactly one. 786 need more than one. The histogram of questions is 561, 653, 422, 217, 90, 41, 13, 2, then one grid at 9, and none at 8. The questions total 2814. Asking until the path is clear ends at 1854 arrivals and 146 stops. The 786 is not a thin tail. It is the majority of the grids that crash.
 
+**Theorem 11 (a scene change on a filled window is a class error).** Let a window be incomplete when a suffix was not observed. Zero-filling that suffix and then changing the sound or the picture according to the filled class changes the scene if and only if the filled class differs from the class of the recorded samples. Holding the scene whenever the suffix is missing makes that count zero.
+
+*Proof.* The filled class differs from the recorded class exactly on a false rest or a false go, which is Theorem 8. A hold does not consult the filled class. ∎
+
+On 10,000 signed windows with the last 4 samples dropped, the filled class would retune 2421 windows: 1280 false rests and 1141 false gos. The hold count is 10,000. On the 2,000 hand maps, rendering the filled grasp crosses an obstacle 1,439 times. Refusing to draw that completion crosses it 0 times. Neither number is a clinical effect. Both are the same write, applied once to a brain window and once to a camera.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.
@@ -104,6 +110,7 @@ These counts are the checks that the statements survived contact with a pinned d
 - Theorem 8. Non-negative false go, every suffix: 0. Signed packets, last 4 samples zeroed: false rest 1280, false go 1141.
 - Theorem 9. Optimistic crashes on 2,000 grids: 1,439, and the first crash cell was masked in all 1,439. After blocking that one cell: 614 reach, 786 crash again, 39 stop.
 - Theorem 10. Questions until the path is clear, over 2,000 grids: 561, 653, 422, 217, 90, 41, 13, 2, and one grid at 9. More than one question: 786. Questions total: 2814. The process ends at 1854 arrivals and 146 stops.
+- Theorem 11. Signed windows, last 4 samples zero-filled: the scene would retune on 2421 of 10,000, and the hold retunes 0. Filled grasp pictures cross an obstacle 1,439 times on 2,000 maps. The coach draws that completion 0 times.
 - The fill, separated from the planner, on 10,000 chains: completed reach 8, measured step 2, on all 10,000. Optimistic entries into an occluded obstacle: 2,995. Measured entries: 0. Entries against mask rate 0.00–0.50: 0, 503, 934, 2002, 2914, 3970, 5,084, with the measured step at 0 throughout. EEG suffix dropout read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10,000.
 
 ## 6. What the theory does not say

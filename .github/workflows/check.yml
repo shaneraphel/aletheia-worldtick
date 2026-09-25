@@ -41,6 +41,7 @@ jobs:
           python signfill.py
           python decisive.py
           python askdepth.py
+          python session.py
           python show_policy.py
           python tick_bench.py
       - name: paper
