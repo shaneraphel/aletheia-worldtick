@@ -42,6 +42,7 @@ evidence:
 	$(PYTHON) partition.py
 	$(PYTHON) signfill.py
 	$(PYTHON) decisive.py
+	$(PYTHON) askdepth.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

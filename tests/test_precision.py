@@ -173,6 +173,17 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(rec["asked_cell_was_masked"], rec["crashes"])
         self.assertEqual(sum(after.values()), rec["crashes"])
 
+    def test_asking_until_clear_terminates(self) -> None:
+        from askdepth import ask_until_clear
+        from grid2d import make_grid
+        import random
+
+        true, seen = make_grid(random.Random(4))
+        asked, status = ask_until_clear(true, seen)
+        self.assertIn(status, ("reached", "stopped"))
+        self.assertGreaterEqual(asked, 0)
+        self.assertLess(asked, 64)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

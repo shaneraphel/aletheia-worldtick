@@ -6,6 +6,68 @@ A boundary in front of a world model, a neural decoder, or a planner. Cells that
 
 放在世界模型、神经解码器或规划器前面的一道边界。没观测到的格子保持没观测到。空输入被拒绝，不会变成 0。
 
+可以打开的页面：[shaneraphel.github.io/aletheia-worldtick](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+## How to read this
+
+Read in this order. The page is the product. This file is the reason the product is shaped that way. The proofs are a separate note.
+
+1. Open the page and press the three buttons on the corridor, then the EEG window, then the reward row. Do this before reading any count.
+2. If a word is unfamiliar, use the list below. The same word means the same thing in the page, in this file, and in the note.
+3. Read where shipped products get stuck, then where common libraries still return a number. That is the problem the page is for.
+4. Read why a check in front of the model is enough. The counts there are witnesses of those statements, not a separate result.
+5. The proofs, and the comparison with each cited method, are in [`paper/paper.md`](paper/paper.md).
+
+按这个顺序读。页面是产品。这份文件说明产品为什么是这个形状。证明在另一份笔记里。
+
+1. 先打开页面，按走廊上的三个按钮，再看脑电窗口，再看奖励表。在看任何计数之前做完这一步。
+2. 有不认识的词，用下面的名单。同一个词在页面、这份文件和笔记里是同一个意思。
+3. 再读业界产品卡在哪里，以及常用的库为什么仍会交回一个数。那就是这个页面要处理的问题。
+4. 再读为什么模型前面的一道检查就够。那里的计数是这些陈述的见证，不是另一项结果。
+5. 证明，以及和每篇参考文献的方法对照，在 [`paper/paper.md`](paper/paper.md)。
+
+A team funded to ship a video world model spends the work on data, training, and a robot test. That is the generator. This repository ships the check in front of the generator. The two do not share a schedule, because they are not the same product. The check is a page and a library call. It does not train anything, and it does not claim the generator's robot score.
+
+拿融资去做视频世界模型的团队，时间花在数据、训练和机器人测试上。那是生成器。本仓库交付的是生成器前面的检查。两件事不是同一张时间表，因为它们不是同一个产品。检查是一个页面和一次库调用。它不训练，也不声称自己有生成器的机器人分数。
+
+We do not post the page on another project's issue tracker. Those issues are for defects in that project. A comment that is really a product announcement gets removed, and it should. When a library has an empty-input defect we can fix with a test, the contribution is a pull request.
+
+我们不把页面发到别的项目的 issue 里。那些 issue 是为了那个项目自己的缺陷。一条实际内容是产品公告的评论会被删掉，也应该被删掉。某个库在空输入上确有缺陷、而且我们能用测试修好时，贡献的形式是一个 pull request。
+
+## Words
+
+| Word | Meaning |
+|---|---|
+| Partial observation | Some entries of the input were not measured. They are not the same thing as a measured zero. |
+| Fill, imputation | Writing a usable value into an entry that was not measured, then treating the result as if it had been measured. |
+| Optimistic fill | The written value is “free” on a map, or zero on a signal. The hole disappears. |
+| Pessimistic fill | The written value is “blocked.” The planner may not enter a cell it did not see. |
+| Measured step | A transition that uses only entries that were actually observed. An unseen cell is not entered. |
+| Mask | The mark that an entry was not observed. A fill deletes this mark. After the fill, a checker that looks for the mark finds nothing. |
+| Empty input | An input with nothing in it. Here it is refused. It is not returned as zero, as an empty list, or as not-a-number. |
+| Tie | Two plans with the same length. On a tie, the shipped decision keeps the plan that uses only observed free cells. |
+| Oracle | A score that knows which plan hits a real obstacle. It is a reference, not a sensor the product has at deployment. |
+| Discount `9/101` | The point at which one backup changes the action on the trap table. Below it, the visible row wins. Above it, the backup wins. |
+| Fixed point | The set of everything reachable if the walk is allowed to finish. One step is a smaller set. Returning the fixed point in one call reports the finished walk as the present. |
+| One question | Blocking the first cell where the filled path crashes, then planning again. It does not repair the other unseen cells. |
+| Closed loop | Observing again before every step, instead of trusting the rest of the fill. |
+
+| 词 | 意思 |
+|---|---|
+| 部分观测 | 输入里有些项没有测到。它们不是“测到了零”。 |
+| 补全 | 给没测到的项写上一个能用的值，然后把结果当成测到的。 |
+| 乐观补全 | 在地图上写成空地，在信号上写成零。洞消失了。 |
+| 悲观补全 | 写成挡住。规划器不能进入没看见的格子。 |
+| 实测步 | 只用真正观测到的项做一次转移。没看见的格子不进入。 |
+| 掩码 | “这一项没观测到”的标记。补全会删掉这个标记。补完之后，寻找这个标记的检查什么也找不到。 |
+| 空输入 | 里面什么都没有的输入。这里直接拒绝。不返回零，不返回空列表，也不返回非数。 |
+| 平局 | 两条路一样长。平局时，交出去的决策留下只走已观测空地的那条。 |
+| 先知 | 知道哪条路会撞上真障碍的分数。它是参照，不是产品在部署时拥有的传感器。 |
+| 折扣 `9/101` | 在陷阱表上，一次回溯改变动作的那个点。低于它，当前行赢。高于它，回溯赢。 |
+| 不动点 | 如果把路走完，所有能到达的位置。一步比它小。一次调用就返回不动点，是把走完的路当成了现在。 |
+| 一次追问 | 封住补全路径第一次撞上的格子，再规划一次。它不修理其余没看见的格子。 |
+| 闭环 | 每走一步之前再观测一次，而不是相信补全剩下的部分。 |
+
 ## Where shipped products get stuck
 
 Three products share one stuck step. The model or the map is asked to return a complete scene, and the next module treats that scene as measured.
@@ -136,6 +198,12 @@ One question is not that check. On the same 2,000 grids, the filled plan crashes
 
 ![After one question: 614 reach, 786 crash again, 39 stop.](docs/figures/decisive.png)
 
+Asking until the path is clear does not stop at one. Of 2,000 grids, 561 need no question, 653 are done in one, and 786 need more than one. The questions total 2,814. One grid needs 9. The 786 is the majority of the grids that crash, not a thin tail.
+
+一直问到路能走通或者无路可走，并不会停在一次。2,000 张图里，561 张不用问，653 张问一次就结束，786 张要问多于一次。追问合计 2,814 次。有一张图要问 9 次。这 786 张是会撞的图里的多数，不是一条细尾巴。
+
+![Questions until the path is clear. Most crashing grids need more than one.](docs/figures/askdepth.png)
+
 The page deploys as a GitHub Pages site from this repository. It does not ask for an account.
 
 We do not post it on another project's issue tracker. Those issues are for defects in that project. A comment whose real content is a product announcement gets removed, and it should. When one of those libraries has an empty-input defect we can fix with a test, the contribution is a pull request. Traffic for this boundary is the page and this README.
@@ -179,6 +247,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `partition.py` | nested plans, and the tie rule |
 | `signfill.py` | zero-fill on non-negative codes versus signed voltages |
 | `decisive.py` | one question after the first crash |
+| `askdepth.py` | how many questions until the path is clear |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

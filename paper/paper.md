@@ -72,6 +72,12 @@ The closed loop is the operator that matches the proof: observe again before the
 
 This was forced by asking whether the closed loop was wasteful. If the first collision were the only collision, one question would be the product and the thousands of waits would be the wrong design. They are not. The fill of the cells we did not ask about is still a decision.
 
+**Theorem 10 (the filled plan can hide more than one obstacle).** Repeat the step in Theorem 9: while the path crashes, block its first obstacle and plan again. Each question blocks a cell that was not blocked before, and the grid is finite, so the process ends at a path that arrives or at no path. It does not end at one question.
+
+*Proof of termination.* An observed obstacle is blocked from the start. A newly blocked cell is a masked obstacle, hence not yet in the blocked set. The set grows by one cell each question and cannot grow past the number of cells. ∎
+
+On the 2,000 grids the process never hits the cap. 561 grids need no question. 653 need exactly one. 786 need more than one. The histogram of questions is 561, 653, 422, 217, 90, 41, 13, 2, then one grid at 9, and none at 8. The questions total 2814. Asking until the path is clear ends at 1854 arrivals and 146 stops. The 786 is not a thin tail. It is the majority of the grids that crash.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.
@@ -97,6 +103,7 @@ These counts are the checks that the statements survived contact with a pinned d
 - Theorem 7. Equal-length optimistic-only successes: 0. Strict shortenings that still reach: 56. Those 56 plus the 129 shorter gap trials are the 185 strict shortenings.
 - Theorem 8. Non-negative false go, every suffix: 0. Signed packets, last 4 samples zeroed: false rest 1280, false go 1141.
 - Theorem 9. Optimistic crashes on 2,000 grids: 1,439, and the first crash cell was masked in all 1,439. After blocking that one cell: 614 reach, 786 crash again, 39 stop.
+- Theorem 10. Questions until the path is clear, over 2,000 grids: 561, 653, 422, 217, 90, 41, 13, 2, and one grid at 9. More than one question: 786. Questions total: 2814. The process ends at 1854 arrivals and 146 stops.
 - The fill, separated from the planner, on 10,000 chains: completed reach 8, measured step 2, on all 10,000. Optimistic entries into an occluded obstacle: 2,995. Measured entries: 0. Entries against mask rate 0.00–0.50: 0, 503, 934, 2002, 2914, 3970, 5,084, with the measured step at 0 throughout. EEG suffix dropout read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10,000.
 
 ## 6. What the theory does not say

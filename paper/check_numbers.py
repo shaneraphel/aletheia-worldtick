@@ -87,10 +87,13 @@ def main() -> int:
     one = load("DECISIVE.json")
     check((one["crashes"], one["asked_cell_was_masked"]) == (1439, 1439), "first crash cell was masked")
     check((one["after_one_question"]["reached"], one["after_one_question"]["crash"], one["after_one_question"]["stopped"]) == (614, 786, 39), "one question 614/786/39")
+    depth = load("ASKDEPTH.json")
+    check(depth["questions_total"] == 2814 and depth["trials_needing_more_than_one_question"] == 786, "question depth 2814 / 786")
+    check(depth["histogram"]["9"] == 1 and depth["ends"]["reached"] == 1854, "one grid needs 9 questions")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854"]:
         check(token in text, f"paper cites {token}")
-    print("all 39 number checks passed")
+    print("all 41 number checks passed")
     return 0
 
 

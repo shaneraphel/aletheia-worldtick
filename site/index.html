@@ -32,6 +32,30 @@
   <p>世界模型交回一幅没有洞的下一帧，脑电解码把丢包写成零，规划器把没测到的格子当成空地。下一模块分不出这是测到的，还是写上去的。</p>
   <p class="en">A world model returns a next frame with no holes. A neural decoder writes a dropped packet as zeros. A planner treats an unseen cell as free. The next module cannot tell a measurement from a write.</p>
 
+  <h2>怎么读 · How to read this page</h2>
+  <p>先按按钮，再看名词。数字是按钮背后的陈述的见证，不是另一篇文章。</p>
+  <ol>
+    <li>走廊上的三个按钮：补成空地、只追问一次、没看见就不进。</li>
+    <li>脑电窗口：实录、非负补零、删掉一个负数。</li>
+    <li>奖励表：只看当前行，和一次回溯。</li>
+    <li>不认识的词，看下面的名词。证明在仓库的笔记里，不在这个页面上。</li>
+  </ol>
+  <p class="en">Press the buttons first. The numbers later are witnesses of what the buttons do, not a second article. The corridor, then the EEG window, then the reward row. Unfamiliar words are in the list below. The proofs live in the note, not on this page.</p>
+
+  <h2>名词 · Words</h2>
+  <p><strong>补全。</strong>给没测到的地方写上一个能用的值，再把它当成测到的。乐观补全写成空地或零。悲观补全写成挡住。</p>
+  <p class="en"><strong>Fill.</strong> Write a usable value where nothing was measured, then treat it as measured. An optimistic fill writes “free” or zero. A pessimistic fill writes “blocked.”</p>
+  <p><strong>实测步。</strong>只用观测到的项。没看见的格子不进入。</p>
+  <p class="en"><strong>Measured step.</strong> Use only what was observed. An unseen cell is not entered.</p>
+  <p><strong>掩码。</strong>“这里没测到”的标记。补全会把它删掉，所以事后的缺失检查什么也找不到。</p>
+  <p class="en"><strong>Mask.</strong> The mark that a cell was not observed. A fill deletes it, so a later missing-data check finds nothing.</p>
+  <p><strong>平局。</strong>两条路一样长。交出去的决策留下只走已观测空地的那条。</p>
+  <p class="en"><strong>Tie.</strong> Two paths of equal length. The shipped decision keeps the one that uses only observed free cells.</p>
+  <p><strong>一次追问。</strong>封住第一次撞上的格子再规划。其余没看见的格子仍被写成空地，所以可能再撞。</p>
+  <p class="en"><strong>One question.</strong> Block the first crash and plan again. The other unseen cells stay filled free, so the path can crash again.</p>
+  <p><strong>空输入。</strong>里面什么都没有。这里直接拒绝，不返回零。</p>
+  <p class="en"><strong>Empty input.</strong> An input with nothing in it. It is refused. It is not returned as zero.</p>
+
   <h2>一条走廊 · A corridor</h2>
   <p>五个格子。灰色是没观测到的。点下面三个按钮，看同一次观测交回什么。</p>
   <p class="en">Five cells. Gray was not observed. The three buttons are three writes on that same observation.</p>
@@ -67,6 +91,8 @@
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
   <p>在同样的 2,000 张图上，补全后的路径撞了 1,439 次。封住第一次撞上的那一格再规划，614 条能到，786 条在后面的格子上再撞，39 条无路。所以一次追问修不完。页面上的走廊就是这个形状。</p>
   <p class="en">On the same 2,000 grids the filled path crashes 1,439 times. Blocking the first crash cell and planning again: 614 arrive, 786 crash on a later cell, 39 have no path. One question does not finish the repair. The corridor above has that shape.</p>
+  <p>继续追问，直到不再撞或者无路可走：561 张图一次都不用问，653 张问一次就结束，786 张要问多于一次。追问合计 2,814 次。有一张图要问 9 次。一次追问不是典型情况。会撞的图里，多数需要连续问下去。</p>
+  <p class="en">Keep asking until the path arrives or no path remains: 561 grids need no question, 653 are finished by one, and 786 need more than one. The questions total 2,814. One grid needs 9. One question is not the typical case. Most grids that crash need the questions to continue.</p>
   <p>证明和与每篇参考文献的方法对照在仓库的 <a href="https://github.com/shaneraphel/aletheia-worldtick/blob/main/paper/paper.md">paper/paper.md</a>。这个页面不需要账号。</p>
   <p class="en">The proofs, and the comparison with each cited method, are in <a href="https://github.com/shaneraphel/aletheia-worldtick/blob/main/paper/paper.md">paper/paper.md</a>. This page does not ask for an account.</p>
 </main>

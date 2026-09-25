@@ -1,0 +1,28 @@
+{
+  "schema": "worldtick.askdepth.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "cap": 64,
+  "histogram": {
+    "0": 561,
+    "1": 653,
+    "2": 422,
+    "3": 217,
+    "4": 90,
+    "5": 41,
+    "6": 13,
+    "7": 2,
+    "9": 1
+  },
+  "ends": {
+    "reached": 1854,
+    "stopped": 146,
+    "stuck": 0,
+    "cap": 0
+  },
+  "trials_that_crash_at_least_once": 1439,
+  "trials_needing_more_than_one_question": 786,
+  "questions_total": 2814,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
