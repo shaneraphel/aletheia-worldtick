@@ -263,6 +263,14 @@ class PrecisionTest(unittest.TestCase):
         true, seen = make_grid(random.Random(1))
         self.assertEqual(paint(true, seen, False), paint(true, seen, False))
 
+    def test_a_dropped_window_moves_neither_clock(self) -> None:
+        from clock import run as clock_run
+
+        rec = clock_run(n=8, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["drop_frame"], 0)
+        self.assertEqual(rec["serial"]["drop_rate"], 0)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

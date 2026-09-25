@@ -1,0 +1,28 @@
+{
+  "schema": "worldtick.clock.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "windows": 16,
+  "rest_hz": 2,
+  "movement_hz": 6,
+  "workers": 10,
+  "serial": {
+    "frame_moves": 3665,
+    "rate_moves": 10933,
+    "drop_frame": 0,
+    "drop_rate": 0,
+    "heard_after_end": 6414,
+    "maps": 2000
+  },
+  "parallel": {
+    "frame_moves": 3665,
+    "rate_moves": 10933,
+    "drop_frame": 0,
+    "drop_rate": 0,
+    "heard_after_end": 6414,
+    "maps": 2000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

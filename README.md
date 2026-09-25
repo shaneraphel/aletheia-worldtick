@@ -129,6 +129,12 @@ The page is aimed at two groups, and both are injured by the same write.
 ![Held frame: only seen cells.](docs/figures/frame-held.png)
 ![Filled frame: unseen cells are painted too.](docs/figures/frame-filled.png)
 
+**One clock.** Sixteen windows arrive on each map. If the window is dropped, the rate does not change and the frame does not change. Both of those counts, over 2,000 maps, are **0**. The picture steps **3,665** times, and only when the window is a movement and a seen cell is still in front of the hand. The rate may follow a complete window after that, and it changes **10,933** times. Once the seen cells are used up, a movement is still heard **6,414** times, and the picture does not step. The sound continues. The camera has nothing new to draw. One core and ten cores agree.
+
+**一个时钟。** 每张地图上来十六个窗口。窗口丢掉时，速度不变，帧也不变。2,000 张地图上，这两件事的次数都是 **0**。画面向前 **3,665** 次，而且只在窗口是一次动作、手前面还有看见的格子时。速度在看见的格子用完之后仍可以跟着完整窗口走，这样的改变有 **10,933** 次。路走完以后，动作仍被听到 **6,414** 次，画面不再向前。声音还在。摄像机没有新的东西可画。一个核和十个核一致。
+
+![A dropped window moves neither clock. After the seen path ends, the sound is still heard 6,414 times.](docs/figures/clock.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -354,6 +360,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `ledger.py` | a dropped window stores no class; the hand cell was seen |
 | `company.py` | a person is drawn only if their cell was seen |
 | `framecheck.py` | a second drawing of the held frame matches; the filled frame does not |
+| `clock.py` | a dropped window moves neither the rate nor the frame |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

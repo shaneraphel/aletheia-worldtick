@@ -98,6 +98,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **The next frame.** Paint only the cells that were seen, and put the hand on the last of those that were free. Paint that frame a second time, with no new observation: on all 2,000 maps the pixels match, so the repaint count is 0. Paint the missing cells as well: the frame differs on all 2,000 maps, and 127697 unseen cells receive a color. The picture changed because the fill wrote into cells the camera did not see. One core and ten cores agree.
 
+**One clock.** Sixteen windows arrive on each of the 2,000 maps. A dropped window changes neither the rate nor the frame: both of those counts are 0. The picture steps 3665 times, only when the window is a movement and a seen cell remains. The rate, which may follow a complete window even after that, changes 10933 times. After the seen cells are used up, a movement is still heard 6414 times and the picture does not step. The sound outlasts the camera. Ten cores agree.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

@@ -52,6 +52,7 @@ evidence:
 	$(PYTHON) ledger.py
 	$(PYTHON) company.py
 	$(PYTHON) framecheck.py
+	$(PYTHON) clock.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

@@ -49,6 +49,7 @@ jobs:
           python ledger.py
           python company.py
           python framecheck.py
+          python clock.py
           python show_policy.py
           python tick_bench.py
       - name: paper
