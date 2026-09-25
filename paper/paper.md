@@ -1,88 +1,79 @@
-# Imputation Decides: What Filling In the Blanks Costs under Partial Observability
+# Imputation Decides
 
-Worldtick technical report v1. All numbers are recomputed by `make evidence` and machine-checked by `paper/check_numbers.py` against `results/`.
+The theory in this note is about one write. An unobserved entry is replaced by a usable value, and an ordinary algorithm is then run on the completed object. The claim is that this write, not the algorithm, decides the failure. The integers below are witnesses. They are recomputed by `make evidence` and checked by `paper/check_numbers.py`.
 
-## Abstract
+## 1. How the statements were found
 
-World models, neural decoders, and action models share one inference step: impute the unobserved part of the input, then decide from the completed picture. We ask what that step costs in three minimal, fully reproducible settings — occupancy reachability, EEG classification, and tabular action selection. The findings: (1) optimistic imputation returns values identical to fully observed ones (reach 3 vs a measured step of 2; zero-filled dropout classified rest, same as true rest; myopic action 0 vs one-step-lookahead action 1); (2) on 10,000 corridors with 30% masked cells, 8,564 hide an obstacle and optimistic walking enters it 2,995 times while a measured step enters 0; (3) the same corridors decided one step at a time give 552 imputation collisions vs 0, at the price of 2,353 conservative stops; (4) pessimistic imputation (masked cells are walls) never collides and never reaches the end (0/10,000); (5) collision counts grow monotonically with the mask rate (0 to 5,084 over dropout 0.00–0.50, 70,000 corridors); (6) reach converges to its fixed point in 12 steps (8 → 24 → 50 → 92 → 138 → 205 → 212 → 214); (7) on a trap table the optimal action flips at discount exactly 9/101, proved in closed form and confirmed on 1,000 random traps (1,000/1,000 flip); (8) EEG suffix dropout reads as rest monotonically (0 → 10,000 over 0–8 dropped samples); (9) imputation deletes the mask, so a downstream missing-data checker catches 0 of 8,564 wrong maps; (10) five seeds reproduce the pattern (completion counts move, measured-side zeros never do). re-observing before every step brings collisions to 0, with 9 full traversals, 9,991 correct stops, and 20,975 waits. The fill policy, not the planner, carries the risk.
+The statements were not written down and then illustrated. Three calculations refused a simpler story, and each refusal became a theorem.
 
-## 1. Problem
+**One operator, three products.** Reachability, EEG classification, and tabular action choice do not share a model. Completing the unobserved part and running the ordinary algorithm returned, in each product, the integer a fully observed input would have returned. A transition that used only an observed entry returned a different integer. The common object is the write. That is the operator split in Section 2. On the unit chain the completed reach is 3 and one measured step is 2. On the pinned world one step is 24 and the fixed point is 214.
 
-In 2026, world models, EEG foundation models, and world action models fill in what was not seen, then decide from the filled picture. V-JEPA 2.1 predicts masked video patches. Cosmos and VAE decoders reconstruct frames to high pixel fidelity. LaBraM predicts masked EEG segments; missing channels are spatially interpolated. World action models render the next observation, then select an action from the rendering.
+**A scaled backup is the wrong equation.** The discount at which lookahead should leave a trap was first estimated by iterating a Bellman update on scaled integers. The action flipped too early. The update does not keep a common denominator, so its argmax is not the argmax of the true value. Replacing it by Gaussian elimination of `(I − dP)V = r` over the rationals produces `V₀ = (10 − 100d) / (1 − d²)`. Comparing a one-step deviation with that value produces the threshold `9/101`. The same algebra shows why discount 1 is excluded: the transition of the trap is a permutation, so `I − P` is singular. On the hundredths grid the action stays 0 through 0.08 and is 1 from 0.09. A depth count that treats the raw reward row as a backup reports this flip one step late. Depth 0 is the row. Depth 1 is already the infinite-horizon action on one-step traps, on all 1,000 random traps in the witness.
 
-Two 2026 studies frame the open question. Nilaksh et al. (CVPR 2026 workshop) show pixel fidelity does not imply planning performance. Yuan et al. (test-time planning, 2026) show generating plausible futures is easier than selecting the action those futures support, with oracle selection at 79.2% against 68.9% uniform and tested selectors recovering little. What has been missing is a minimal setting where both sides of that gap are exact integers. This report builds it.
+**“The shorter path” was too coarse.** The selection gap looked like a preference for shorter paths. Feasible-set inclusion says more, and then the gap itself split. Every cell a pessimistic planner may enter was observed free, so it is free after an optimistic fill. The pessimistic path is feasible for the optimistic planner and cannot be strictly shorter. A length score that breaks ties toward the optimistic plan therefore returns that plan on every trial where it exists. The trials in which only the pessimistic plan reaches are exactly the oracle gap. Splitting those trials by length showed that equal length is the larger part: 129 strictly shorter, 168 equal. A sentence that said only “the shorter path crashes” would have mis-counted the ties.
 
-## 2. Three settings
+A fourth fact arrived with the first. After the write, the object is in the fully observed domain. A checker that looks for a mask marker has nothing to find. Its recall is 0 on maps that are still wrong.
 
-**Reachability.** A chain of cells, some observed, some masked. `world_tick` moves observed facts across one edge. `datalog_fixpoint` closes to the fixed-point reachable set. Optimistic imputation writes masked cells as free first. On 3 cells with the middle masked: imputation reaches 3, the measured step reaches 2. On the pinned world (256 nodes, 8 observed, 512 edges, seed 20260919): one step reaches 24, the fixed point is 214.
+## 2. Operators
 
-**EEG classification.** Eight samples; class is go (1) iff the sum is positive, else rest (0). The recorded trace sums positive (class 1, markers go/end). A dropped packet, zero-filled, sums to 0 (class 0), identical to true rest. Empty input raises.
+An observation is a grid, a sample vector, or a reward table, with some entries missing.
 
-**Action selection.** Trap table [[10,1],[-100,-100]] on a 2-state ring: action 0 pays more now and steps into −100; action 1 pays 1 and stays. The myopic row picks 0; one-step lookahead picks 1. On the pinned 256×8 table the myopic row picks 2 and lookahead picks 5, twice. Empty tables raise.
+**Optimistic imputation.** Missing map cells are written free. A dropped EEG suffix is written as zeros. The next action is the maximum of the visible reward row. An ordinary algorithm then runs: a fixed-point reachable set, a sum classifier, or one Bellman backup.
+
+**Measured step.** Only observed entries are used. Occupied facts move across one edge. Masked grid cells are blocked. An empty EEG vector raises. The action is the optimum of one backup, not of the raw row.
+
+**Pessimistic fill.** Missing cells are written as obstacles. Every cell the resulting path enters was observed free.
+
+Empty input raises for each operator that would otherwise return a zero, an empty list, or a not-a-number.
 
 ## 3. Theorems
 
-**Theorem 1 (foresight threshold).** On the trap table, the optimal state-0 action flips from 0 to 1 exactly at discount d = 9/101. *Proof.* Under "always action 0", V₀ = (10−100d)/(1−d²). Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. ∎ Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp: discounts 0.00–0.08 give 0, 0.09–0.95 give 1.
+**Theorem 1 (foresight threshold).** On the reward table `[[10, 1], [-100, -100]]`, with the ring transition `(s + a + 1) mod 2`, the optimal action at state 0 flips from 0 to 1 at discount `d = 9/101`.
 
-**Theorem 2 (mask erasure).** Optimistic imputation outputs maps with zero mask markers by construction, so any downstream checker that tests for missing-data markers has recall 0 on imputed maps. Measured: 0 markers across 10,000 filled maps, of which 8,564 mismatch the true corridor.
+*Proof.* Under the stationary policy that always takes action 0, `V₀ = 10 + d V₁` and `V₁ = −100 + d V₀`, so `V₀ = (10 − 100d) / (1 − d²)` for `d ∈ [0, 1)`. A one-step deviation to action 1 in state 0 collects 1 and returns to state 0, so its action value against this continuation is `1 + d V₀`. The deviation is profitable if and only if `1 > V₀(1 − d)`. Substituting the closed form and using `1 − d² = (1 − d)(1 + d)` gives `1 > (10 − 100d) / (1 + d)`, hence `1 + d > 10 − 100d`, hence `101d > 9`. At `d = 9/101` the two action values are equal. The implementation breaks ties toward the lower action index, so the reported flip is the first grid point strictly above the threshold. ∎
 
-**Theorem 3 (monotone convergence).** Single steps from the observed set form a nondecreasing reach sequence bounded by the fixed point, hence convergent; on the pinned world it meets the fixed point at 12 steps (8, 24, 50, 92, 138, 205, 212, 214) and stays flat.
+**Theorem 2 (mask erasure).** Optimistic imputation emits no mask marker. Any checker that tests for a missing-data flag has recall 0 on imputed maps.
 
-**Proposition 4 (pessimistic safety).** Writing masked cells as walls never enters an occluded obstacle: every entered cell was observed free. Measured: 0 collisions in 10,000 corridors, at the price of 10,000 early stops and 0 full traversals.
+*Proof.* The fill replaces each missing entry by a free bit or by a zero. The output domain is the fully observed domain. ∎
 
-**Theorem 5 (breakeven).** Let C be crashes under optimistic imputation and W waits under the measured policy on the same corridor distribution. The measured policy is cheaper iff one crash costs more than W/C waits. Measured: 2353/552 ≈ 4.26 waits (one step), 20975/2995 ≈ 7.00 waits (full walk). *Proof.* Expected-cost comparison is linear in the crash price; equality holds at W/C. ∎
+**Theorem 3 (monotone convergence).** The set of nodes reachable in at most `h` steps from a fixed observed set, using observed edges, is nondecreasing in `h` and bounded by the least fixed point of completion, hence convergent.
 
-## 4. Experiments
+**Proposition 4 (pessimistic safety).** A path that treats missing cells as blocked never enters an occluded obstacle, because every entered cell was observed free.
 
-**4.1 Controlled split (10,000 trials).** Imputation vs measured step disagree everywhere: reach 8 vs 2; EEG class 0 vs 1; action 0 vs 1 — each 10,000/10,000.
+**Theorem 5 (breakeven).** Let `C` be the number of crashes under optimistic imputation and `W` the number of waits under the measured policy on the same corridors. The measured policy has lower total cost if and only if one crash costs more than `W/C` waits.
 
-**4.2 Closed-loop cost.** 32-cell corridors, 30% masked, 10,000 trials: 8,564 hide an obstacle; optimistic walking enters 2,995 times; the measured step enters 0.
+*Proof.* Both costs are linear in the crash price. Equality holds at `W/C`. ∎
 
-**4.3 One decision.** Next-cell decisions on the same corridors: imputation collides 552 times; the measured step collides 0, with 2,353 conservative stops on free road against imputation's 0.
+**Theorem 6 (nested plans).** Let a cell be optimistic-feasible when it is not an observed obstacle, and pessimistic-feasible when it was observed free. The pessimistic feasible set is a subset of the optimistic one. Whenever both shortest paths exist, the optimistic path is no longer. A length score that breaks ties toward the optimistic path returns that path on every trial.
 
-**4.4 Fill policy.** Optimistic: 2,995 collisions, 6,993 stops, 12 full traversals. Pessimistic: 0 collisions, 10,000 stops, 0 traversals.
+*Proof.* A pessimistic step refuses every masked cell and every observed obstacle. An optimistic step, after masked cells are written free, refuses only observed obstacles. Every pessimistic path is therefore optimistic-feasible, and a shortest optimistic path cannot be strictly longer. If the pessimistic path exists, the optimistic path exists. The tie rule then selects it. If only the optimistic path exists, the score selects it because it is the only path. ∎
 
-**4.5 Dropout sweep.** 70,000 corridors over mask rates 0.00–0.50: imputation entries 0, 503, 934, 2002, 2914, 3970, 5084; measured step 0 throughout.
+Corollary. The trials where only the pessimistic plan reaches are the trials where the optimistic plan exists, does not reach, and is shorter or tied. Those trials are the oracle gap. The trials where only the optimistic plan reaches each use at least one masked cell, and that cell is truly free, because the path does not crash. Those trials are the goals a wall-fill refuses.
 
-**4.6 Horizon.** Reach over horizons 0–256: 8, 24, 50, 92, 138, 205, 212, 214 at 12 steps, flat after. Per-call milliseconds grow with the horizon and flatten at the same point; on the reference machine one completion call takes ~0.09 ms.
+## 4. Comparison with cited methods
 
-**4.7 Foresight.** Discount grid 0.00–0.95 flips at 0.10 (theorem: 9/101 ≈ 0.089); 1,000 random trap tables flip 1,000/1,000 between d=0 and d=0.9.
+The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.
 
-**4.8 EEG dose–response.** Dropping the last k of 8 samples: rest classifications 0, 0, 1, 9, 43, 161, 642, 2494, 10000.
+| Work | Their method | This note | What is not claimed |
+|---|---|---|---|
+| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482), [V-JEPA 2](https://arxiv.org/abs/2506.09985) | Predict held-out video tokens from visible context, then plan in that representation. | Do not write the missing token. One transition uses only an observed fact. The completed reach and the measured reach are different integers. | No video tokens are predicted, and no planning score on their benchmark is reported. |
+| [Nilaksh, Jha, Zholus, Chandar](https://arxiv.org/abs/2605.06388) | Train latent world models and rank them once by image metrics and once by policy return. The rankings disagree. | Delete the generator. The same shortest-path routine runs on a filled map and on observed cells. The rankings still disagree: the filled integer matches the fully observed world, and the measured integer does not. | No latent is trained. Pixel fidelity is not re-measured. |
+| [Yuan et al.](https://arxiv.org/abs/2609.24745) | Sample futures from a world action model. An oracle that sees realized outcomes lifts success from 68.9% to 79.2%. Selectors that score visual quality, physical consistency, or task progress recover little of that gap. | Two deterministic plans, not sampled futures. The visual score is path length on the filled map, with ties broken toward that plan. Theorem 6 says this score must return the filled plan. The witness gap is 297 reached trials, of which 129 are strictly shorter and 168 are equal length. | 68.9% and 79.2% are not re-run. |
+| [Zhang, Ito, Hoshino, Ikehata, Sato](https://arxiv.org/abs/2609.02159) | Rank sampled rollouts by flow surprisal and by action-path effort, then check the chosen future against the observation that actually arrives. | There is no generator to rank. The future is one bit per masked cell. Writing that bit free or writing it blocked changes whether the path crashes. Re-observing before the step is the closed loop. | No generative surprisal is computed. |
+| [LaBraM](https://arxiv.org/abs/2405.18765), InterpolatedLaBraM | Predict quantized codes of masked EEG patches. A spatial interpolation layer presents a different montage as the canonical one. | Zero-fill is the trivial form of that presentation. A filled dropout is class 0, identical to rest. The recorded window is class 1. Empty input raises. | Their tokenizer is not run. The classifier here is a sum. |
 
-**4.9 Audit.** 10,000 corridors with masked cells; 0 filled maps carry markers; 1,436 match truth cell for cell; 8,564 hide an obstacle.
+## 5. Witnesses
 
-**4.10 Robustness.** Five seeds × 2,000 corridors: sweep entries 605, 641, 580, 606, 560; decision collisions 120, 143, 127, 126, 105; every measured-side column 0.
+These counts are the checks that the statements survived contact with a pinned distribution. Seed 20260919 unless a range is named.
 
-**4.11 Closed loop.** Re-observing the next cell before every step on 10,000 roads: 0 crashes against open-loop optimistic 2,995; 9 full traversals; 9,991 correct stops at the first observed obstacle; 20,975 waits on masked looks.
+- Theorem 1. Discounts 0.00–0.08 select action 0. Discounts 0.09–0.95 select action 1. All 1,000 random traps flip between discount 0 and discount 0.9. The fixed trap by depth is 0, then 1.
+- Theorem 2. On 10,000 corridors, filled maps still carrying a marker: 0. Filled maps matching the true corridor: 1,436. Corridors with an occluded obstacle: 8,564.
+- Theorem 3. Reach by horizon: 8, 24, 50, 92, 138, 205, 212, 214. The fixed point 214 is met at 12 steps.
+- Proposition 4. Pessimistic collisions: 0 on 10,000 corridors, and 0 on 2,000 grids.
+- Theorem 5. One-step waits over crashes: 2,353 / 552. Full-walk waits over crashes: 20,975 / 2,995.
+- Theorem 6. On 2,000 grids the inclusion holds 2,000 times and the length score matches the optimistic plan 2,000 times. Both reach 122. Only optimistic 378. Only pessimistic 297. Neither 1,203. Of the 297, 129 are strictly shorter and 168 have equal length.
+- The fill, separated from the planner, on 10,000 chains: completed reach 8, measured step 2, on all 10,000. Optimistic entries into an occluded obstacle: 2,995. Measured entries: 0. Entries against mask rate 0.00–0.50: 0, 503, 934, 2002, 2914, 3970, 5,084, with the measured step at 0 throughout. EEG suffix dropout read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10,000.
 
-**4.12 Breakeven.** Exact fractions of pinned counts: one crash equals 2353/552 ≈ 4.3 waits (one step) and 20975/2995 ≈ 7.0 waits (full walk).
+## 6. What the theory does not say
 
-**4.13 Uncertainty.** Wilson 95% intervals from the pinned counts: one-step collision 0.0552 [0.0509, 0.0598]; occluded road 0.8564 [0.8494, 0.8631]; optimistic entry 0.2995 [0.2906, 0.3086].
-
-**4.14 Two dimensions.** BFS shortest paths on 2,000 16×16 grids (15% obstacles, 25% masked): optimistic crashes 1,439, stopped 61, reached 500 at mean length 30.0; pessimistic crashes 0, stopped 1,581, reached 419 at mean length 31.9.
-
-**4.15 Planning depth.** Exact finite-horizon dynamic programming at discount 9/10 on 1,000 random one-step traps: depth 0 flips 0; depths 1–5 flip 1,000/1,000 and match the infinite horizon everywhere. Fixed trap by depth: 0-1-1-1-1-1.
-
-**4.16 Selection.** On the same 2,000 grids, the shorter imagined path reaches 500 and crashes 1,439. A collision oracle, choosing among the same two plans, reaches 797. The gap is 297. The published robot rates in Yuan et al. are not re-run; the selection gap is.
-
-**Theorem 6 (nested plans).** On an occupancy grid, pessimistic search enters only cells observed free, and optimistic search enters those cells plus every masked cell. The pessimistic feasible set is a subset of the optimistic one, so whenever both shortest paths exist the optimistic path is no longer. A length score that breaks ties toward the optimistic path therefore returns that path on every trial. Measured on 2,000 grids, seed 20260919: the inclusion holds 2,000/2,000, the length score matches the optimistic outcome 2,000/2,000, and every crash cell was masked. The four cells are both reach 122, only optimistic 378, only pessimistic 297, neither 1,203. The 297 are the oracle gap. Of those 297, the optimistic path is strictly shorter on 129 and equal in length on 168. The 168 are a tie break, not a shorter path. The 378 only-optimistic arrivals each use a masked cell that was truly free: that is the set of goals pessimism refuses.
-
-**4.17 Nested plans.** Same grids as 4.14. both_paths_exist 419, which equals the pessimistic reached count, because a pessimistic path never crashes. optimistic_strictly_shorter 185 across all trials where both paths exist. gap_strictly_shorter 129, gap_equal_length 168.
-
-## 5. Upstream behavior
-
-The same empty input against upstream projects: MuJoCo 3.13.0 loads an empty model; munkres 1.1.4 returns [] for compute([[]]); NumPy reports norm 0.0 and mean nan; MNE-Python reports duration 0; NetworkX reports 0 nodes; FilterPy accepts the empty update at state 0.0; MCAP/rosbag2 yield empty logs. This repository is fail-closed on each of these inputs while keeping the occupied-input values (2×2 assignment cost 2; CAKE distance 3; 8 EEG samples with go/end; 2 lidar points count 1; 3 observations count 3).
-
-## 6. Limitations
-
-Corridors are one-dimensional; traps are 2-state; the EEG classifier is a sum threshold. Timings are machine-specific and reported, never pinned. Robot success rates from the cited papers are not re-run; what is re-run is the shared imputation step. The claim is deliberately narrow: where the unobserved is filled optimistically, the fill decides the failure mode.
-
-## References
-
-- V-JEPA 2.1 (2026). https://arxiv.org/abs/2603.14482
-- Nilaksh et al., Reconstruction or Semantics? CVPR 2026 workshop. https://arxiv.org/abs/2605.06388
-- LaBraM (2024). https://arxiv.org/abs/2405.18765 ; InterpolatedLaBraM. https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html
-- Beyond Visual Quality: test-time planning with world action models (2026). https://arxiv.org/abs/2609.24745
-- World Action Planner (2026). https://arxiv.org/html/2607.27599v1
-- World-Coherent Decoding (2026). https://arxiv.org/abs/2609.02159
+It does not say that a learned world model has the same gap on a robot benchmark. It does not say that a sum is LaBraM's tokenizer. It does not say that a tie should be broken toward the filled plan in a product. Theorem 6 says that if the product breaks ties that way, the score has already chosen the fill. A product that broke ties toward the observed-free path would keep the 168 and would still miss the 129.

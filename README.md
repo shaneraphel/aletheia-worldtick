@@ -1,394 +1,150 @@
-# Worldtick: imputation under partial observability
+# Worldtick
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-Partially observed input, a fail-closed validator, and the measured cost of filling in the blanks.
+A boundary in front of a world model, a neural decoder, or a planner. Cells that were not observed stay unobserved. Empty input is refused, and does not come back as zero.
 
-部分可观测输入、fail-closed 校验，以及补齐缺失后的实测代价。
+放在世界模型、神经解码器或规划器前面的一道边界。没观测到的格子保持没观测到。空输入被拒绝，不会变成 0。
 
-## Problem
+## Where shipped products get stuck
 
-In 2026, world models, neural decoding models, and action models share one inference step: impute the unobserved part of the input, then decide from the completed picture. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) predicts masked video patches. [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and VAE decoders reconstruct frames to high pixel fidelity. [LaBraM](https://arxiv.org/abs/2405.18765) predicts masked EEG segments, and missing channels are spatially interpolated ([InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html)). World action models render the next observation, then select an action from the rendering.
+Three products share one stuck step. The model or the map is asked to return a complete scene, and the next module treats that scene as measured.
 
-Two 2026 studies state the open question. Nilaksh et al. ([CVPR 2026 workshop](https://arxiv.org/abs/2605.06388)) show pixel fidelity does not imply planning performance: reconstruction latents win on image metrics while semantic latents win on policy behavior. Yuan et al. ([test-time planning, 2026](https://arxiv.org/abs/2609.24745)) show generating plausible futures is easier than selecting the action those futures support (oracle selection 68.9% → 79.2%; tested selectors recover little).
+**World models.** [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) are used as “imagine the next frame, then act.” The frame that leaves the model has no holes. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) showed that a latent can win on pixels and lose on the plan. [Yuan et al.](https://arxiv.org/abs/2609.24745) showed that an oracle, which sees the real outcome of each imagined future, lifts success from 68.9% to 79.2%, while selectors that score the picture recover little of that gap. The product difficulty is not drawing the future. It is that the drawn future no longer says which part was guessed. [Zhang et al.](https://arxiv.org/abs/2609.02159) make the same point from the other side: which future you keep changes the action.
 
-This repository asks that question in three small, fully reproducible settings — occupancy reachability, EEG classification, and tabular action selection — and answers with one pair of integers. Optimistic imputation returns the larger number, which can equal the fully observed value. A single measured transition returns the smaller number. Empty input is fail-closed (raises; never 0).
+**Brain–computer interfaces.** [LaBraM](https://arxiv.org/abs/2405.18765) predicts masked EEG, and [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) exists so a checkpoint always sees its training montage. A dropped packet written as zeros is classified as rest, the same class as a person who did not move. A clinical product then treats “the packet did not arrive” as “the user is at rest.”
 
-2026 年的世界模型、神经解码模型和动作模型，共用同一个推理步骤：补齐输入中没观测到的部分，再基于补全后的图像做决策。V-JEPA 2.1 预测被遮住的视频块。Cosmos 和 VAE 把画面重建到像素级逼真。LaBraM 预测被遮住的脑电，缺失通道做空间插值。世界动作模型先渲染下一步观测，再从渲染结果里选动作。
+**Robots and vehicles.** An occupancy map, a lidar filter, or a log player is expected to return a scene even when the sensor returned nothing. The planner then drives through a cell the sensor did not measure, because that cell now looks free.
 
-两篇 2026 年的工作点出了开放问题。Nilaksh 等人（CVPR 2026 workshop）证明像素保真不等于规划性能：重建类隐变量赢图像指标，语义类隐变量赢策略行为。Yuan 等人（2026 测试时规划）证明生成像样的未来，比从这些未来里选出该执行的动作更容易（oracle 选择 68.9% → 79.2%，实测选择器几乎收不回这个差距）。
+三个产品卡在同一步。模型或地图被要求交回一幅完整场景，下一模块把这幅场景当成测到的。
 
-本仓库在三个小而完全可复现的设定里问同一个问题——占据可达、脑电分类、表格型动作选择，用同一对整数回答。乐观补全给出较大的数，可以和全观测值相同。单步实测转移给出较小的数。空输入 fail-closed（抛异常，永不返回 0）。
+世界模型这边，Cosmos 和 V-JEPA 2.1 的用法是“先想象下一帧，再行动”。交出去的画面没有洞。Nilaksh 等人说明，隐变量可以在像素上赢、在规划上输。Yuan 等人说明，能看到每个想象未来真实结果的先知，把成功率从 68.9% 抬到 79.2%，只给画面打分的选择器收不回这个差距。难点不是把未来画出来，而是画完之后看不出哪一块是猜的。Zhang 等人从另一侧说了同一件事：留下哪一个未来，动作就变了。
 
-![Imputation: world-model reach 3, EEG class 0, action 0. One measured step: 2, class 1, action 1. Empty input raises.](docs/figures/story.png)
+脑机接口这边，LaBraM 预测被遮住的脑电，InterpolatedLaBraM 保证检查点始终看到训练时的电极布局。丢失的数据包写成零，会被判成静息，和人没动是同一个类别。临床产品于是把“包没到”做成“用户在休息”。
 
-| Setting | Optimistic imputation | One measured step | Empty input |
-|---|---|---|---|
-| World model, 3 cells, middle masked | reach **3**, equals the fully observed map | reach **2** | raises |
-| EEG, 8 samples | dropout zero-filled → class **0**, equals rest | recorded samples → class **1** (go) | raises |
-| Reward table, next action | myopic row → action **0** | one-step lookahead → action **1** | raises |
+机器人和车辆这边，占据栅格、激光滤波、日志回放都被期望在传感器没返回时仍交出一幅场景。规划器随后开过一个传感器没测到的格子，因为那个格子现在看起来是空的。
 
-| 设定 | 乐观补全 | 单步实测 | 空输入 |
-|---|---|---|---|
-| 世界模型，3 格，中间被遮 | 可达 **3**，等于全观测地图 | 可达 **2** | 抛异常 |
-| 脑电，8 采样 | 丢失补零 → 类别 **0**，等于静息 | 实录采样 → 类别 **1**（go） | 抛异常 |
-| 奖励表，下一步动作 | 只看当前行 → 动作 **0** | 前视一步 → 动作 **1** | 抛异常 |
-
-On the pinned large map the same pair is one step **24** versus fixed point **214**. On the pinned 256×8 reward table the myopic row is action **2** and one-step lookahead is action **5**.
-
-大地图上同一对数是单步 **24**、不动点 **214**。256×8 奖励表上，当前行动作 **2**，前视一步动作 **5**。
-
-## Controlled comparison, 10,000 trials
-
-Seed `20260919`. Chains of 8 cells. Imputation writes masked cells as free. The measured step starts only from observed cells.
-
-种子 `20260919`。8 格链。补全把被遮格写成空闲。实测步只从已观测格出发。
-
-![10,000 trials: world-model imputation 8 vs step 2; EEG zeros match rest; myopic action 0 vs lookahead 1; all 10000/10000.](docs/figures/campaign.png)
-
-| | Imputation | Measured step | Rate |
-|---|---|---|---|
-| World model | reach **8**, equals the completed map | **2** | **10,000 / 10,000** |
-| EEG | zero-filled dropout → class **0**, equals rest | recorded → class **1** | **10,000 / 10,000** |
-| Next action | myopic row → action **0** | lookahead → action **1** | **10,000 / 10,000** |
-
-Counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes them.
-
-| 2026 work | Their imputation step | Result here |
-|---|---|---|
-| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) | masked video patches are predicted | imputed cells reach 8; the measured step is 2 |
-| [Reconstruction or Semantics?](https://arxiv.org/abs/2605.06388) | Cosmos / VAE complete frames; pixels match, plans may not | imputed reach equals the fully observed map |
-| [LaBraM](https://arxiv.org/abs/2405.18765) + [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) | masked EEG predicted; missing channels interpolated | zero-filled class equals rest, both 0 |
-| [Beyond Visual Quality](https://arxiv.org/abs/2609.24745) | render futures first, then select an action | myopic vs lookahead actions differ in 10,000 / 10,000 |
-
-## Closed-loop cost of optimistic imputation
-
-True corridors with obstacles. The sensor masks 30% of cells. Optimistic imputation writes each masked cell as free and walks. The measured step stops at the first masked cell. 32 cells, 10,000 corridors, seed `20260919`.
-
-真实走廊带障碍。传感器遮掉 30% 格子。乐观补全把被遮格写成空闲再走。实测步停在第一个被遮格。32 格，10,000 条走廊，种子 `20260919`。
-
-![8,564 corridors hide an occluded obstacle. Imputation enters 2,995 times. The measured step enters 0 times.](docs/figures/hidden.png)
-
-| | Result |
-|---|---|
-| Corridors with an occluded obstacle | **8,564 / 10,000** |
-| Imputation enters it | **2,995** |
-| Measured step enters it | **0** |
-
-Counts are in `results/HIDDEN.json`. `python3.12 hidden.py` recomputes them.
-
-## One decision
-
-Same corridors, next cell only. Ground truth goes iff the true next cell is free. Imputation goes iff the filled cell is free. The measured step goes iff the cell was observed free.
-
-![Imputation crashes 552, measured step crashes 0, measured step stops extra 2,353 times, imputation 0.](docs/figures/decide.png)
-
-| | Collisions | Conservative stops on free road |
-|---|---|---|
-| Imputation | **552** | **0** |
-| Measured step | **0** | **2,353** |
-
-Counts are in `results/DECIDE.json`. `python3.12 decide.py` recomputes them.
-
-## Optimistic vs pessimistic fill
-
-The same 10,000 corridors. Optimistic: masked cells are free. Pessimistic: masked cells are walls. The fill policy, not the planner, determines the collision count.
-
-![Optimistic crashes 2,995, pessimistic 0; optimistic reaches the end 12 times, pessimistic 0.](docs/figures/fillchoice.png)
-
-| | Collisions | Stops | Reached the end |
-|---|---|---|---|
-| Optimistic | **2,995** | **6,993** | **12** |
-| Pessimistic | **0** | **10,000** | **0** |
-
-Counts are in `results/FILLCHOICE.json`. `python3.12 fillchoice.py` recomputes them.
-
-## Dropout sweep
-
-10,000 corridors of 32 cells per point. Obstacle rate fixed at 0.20. Mask rate from 0.00 to 0.50.
-
-![Dropout 0.00–0.50, imputation enters 0 to 5,084 times, measured step stays 0.](docs/figures/sweep.png)
-
-| Mask rate | Imputation enters | Measured step enters |
-|---|---|---|
-| 0.00 | **0** | **0** |
-| 0.05 | **503** | **0** |
-| 0.10 | **934** | **0** |
-| 0.20 | **2,002** | **0** |
-| 0.30 | **2,914** | **0** |
-| 0.40 | **3,970** | **0** |
-| 0.50 | **5,084** | **0** |
-
-Counts are in `results/SWEEP.json`. `python3.12 sweep.py` recomputes 70,000 corridors.
-
-## Horizon to the fixed point
-
-The pinned 256-node world (256 nodes, 8 observed, 512 edges, seed `20260919`). Horizon from 0 to 256. Imputation answers 214 in one call.
-
-![Horizon 0–256, reach 8, 24, 50, 92, 138, 205, 212, converging to 214 at 12 steps.](docs/figures/horizon.png)
-
-| Horizon | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 12 |
-|---|---|---|---|---|---|---|---|---|
-| Reach | **8** | **24** | **50** | **92** | **138** | **205** | **212** | **214** |
-
-Converges at 12 steps, flat afterwards. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
-
-## Price of the walk
-
-Median milliseconds per call on this machine (7 timed trials × 50 repeats; timings reported, reach pinned). Cost grows with the horizon and flattens exactly where reach flattens.
-
-![Reach and cumulative milliseconds per horizon: both flatten at 12 steps.](docs/figures/cost.png)
-
-| Horizon | 0 | 1 | 2 | 4 | 8 | 12 | 32 |
-|---|---|---|---|---|---|---|---|
-| Reach | **8** | **24** | **50** | **138** | **212** | **214** | **214** |
-
-One completion call answers 214 in ~0.09 ms here; the 12-step walk costs a small multiple of that. Numbers are in `results/COST.json`. `python3.12 cost.py` recomputes them.
-
-## Robustness across seeds
-
-Dropout 0.30, 2,000 corridors per seed, five seeds. Completion-side counts move with the seed. Tick-side columns are 0 on all five seeds.
-
-![Five seeds: sweep completion hits 560–641, decision crashes 105–143, tick columns all 0.](docs/figures/robust.png)
-
-| Seed | Sweep completion hits | Sweep tick hits | Decision crashes | Decision tick crashes |
-|---|---|---|---|---|
-| 20260919 | **605** | **0** | **120** | **0** |
-| 20260920 | **641** | **0** | **143** | **0** |
-| 20260921 | **580** | **0** | **127** | **0** |
-| 20260922 | **606** | **0** | **126** | **0** |
-| 20260923 | **560** | **0** | **105** | **0** |
-
-Counts are in `results/ROBUST.json`. `python3.12 robust.py` recomputes 20,000 corridors.
-
-## Closed loop
-
-Re-observe the next cell before every step; wait on a masked look instead of filling it. 10,000 roads, seed `20260919`.
-
-![Closed loop: 0 crashes, 9 reached, 9,991 correct stops, 20,975 waits. Open-loop optimistic crashes 2,995.](docs/figures/closedloop.png)
-
-| | Closed loop | Open-loop optimistic |
-|---|---|---|
-| Crashes | **0** | **2,995** |
-| Reached the end | **9** | **12** |
-| Correct stops | **9,991** | — |
-| Waits | **20,975** | — |
-
-Counts are in `results/CLOSEDLOOP.json`. `python3.12 closedloop.py` recomputes them.
-
-## Breakeven
-
-One crash costs how many waits? Exact fractions of pinned counts, no new randomness.
-
-![One crash = 4.3 waits (one step), = 7.0 waits (full walk).](docs/figures/tradeoff.png)
-
-| Setting | Crashes | Waits | One crash equals |
-|---|---|---|---|
-| One step | **552** | **2,353** | **2353/552 ≈ 4.3** waits |
-| Full walk | **2,995** | **20,975** | **20975/2995 ≈ 7.0** waits |
-
-If a collision costs more than that many waits, the measured step (one step) and the closed loop (full walk) are cheaper. Numbers are in `results/TRADEOFF.json`. `python3.12 tradeoff.py` recomputes them.
-
-## Planning depth
-
-Finite-horizon dynamic programming in exact rationals at discount 9/10, depths 0–5, on 1,000 random one-step trap tables. Depth 0 is myopic.
-
-![Depth 0: 0 flipped. Depths 1–5: all 1,000 flipped and matching the infinite horizon.](docs/figures/plandepth.png)
-
-| Depth | 0 | 1 | 2–5 |
-|---|---|---|---|
-| Flipped vs myopic | **0** | **1,000** | **1,000** |
-| Matching infinite horizon | **0** | **1,000** | **1,000** |
-
-On one-step traps a single lookahead step equals infinite-horizon planning everywhere. Fixed trap by depth: **0-1-1-1-1-1**. Numbers are in `results/PLANDEPTH.json`. `python3.12 plandepth.py` recomputes them.
-
-## Two dimensions
-
-16×16 occupancy grids, 15% obstacles, 25% masked cells, 2,000 trials. BFS shortest path from corner to corner on the filled grid versus on observed-free cells only.
-
-![First trial: the red optimistic path crosses a masked obstacle.](docs/figures/grid2d-map.png)
-
-![Optimistic crashes 1,439, pessimistic 0; optimistic reached 500, pessimistic 419.](docs/figures/grid2d.png)
-
-| | Crashes | Stopped | Reached | Mean length |
-|---|---|---|---|---|
-| Optimistic | **1,439** | **61** | **500** | **30.0** |
-| Pessimistic | **0** | **1,581** | **419** | **31.9** |
-
-Counts are in `results/GRID2D.json`. `python3.12 grid2d.py` recomputes them.
-
-## Selection, not generation
-
-Same 2,000 grids. Two plans: optimistic and pessimistic. The visual selector takes the shorter plan, and on a tie it takes the optimistic one. The oracle takes a path that does not cross a true obstacle. Yuan et al. ([arXiv:2609.24745](https://arxiv.org/abs/2609.24745)) report this gap as robot success (68.9% uniform, 79.2% oracle). Here it is an exact count.
-
-![Visual selector reaches 500 and crashes 1,439. Oracle reaches 797. Gap 297.](docs/figures/selector.png)
-
-| | Reached | Crashes | Stopped |
-|---|---|---|---|
-| Visual selector | **500** | **1,439** | **61** |
-| Collision oracle | **797** | **1,142** | **61** |
-| Gap | **297** | | |
-
-The length score returns the optimistic plan on all 2,000 trials. On 129 of the 297 missed goals that plan is strictly shorter. On the other 168 the two plans have the same length, and the tie goes to the optimistic plan. Counts are in `results/SELECTOR.json`. `python3.12 selector.py` recomputes them.
-
-## Why the shorter plan is the filled one
-
-Pessimistic search may step only on cells that were observed free. Optimistic search may also step on masked cells. Every pessimistic path is therefore still feasible after the fill, and no longer than the optimistic shortest path. The inclusion holds on **2,000 / 2,000** grids. Every cell where the optimistic path crashes was masked.
-
-悲观搜索只能踩已观测为空的格子。乐观搜索还可以踩被遮住的格子。所以每条悲观路径在补全之后仍然可行，而且不会比乐观最短路更短。2,000 张图上包含关系全部成立。乐观路径撞上的格子，全都是被遮住的。
-
-![Both reach 122. Only optimistic 378. Only pessimistic 297. Neither 1,203. Of the 297, 129 are strictly shorter and 168 are ties.](docs/figures/partition.png)
-
-| Cell | Count | What it is |
-|---|---|---|
-| Both reach | **122** | either plan arrives |
-| Only optimistic | **378** | a masked cell was truly free; pessimism stops |
-| Only pessimistic | **297** | the oracle gap; **129** strictly shorter, **168** equal length |
-| Neither | **1,203** | |
-
-The 378 only-optimistic arrivals each use a masked cell that was free. That is the set of goals a wall-fill refuses. The 168 ties are not a shorter path; they are the tie break. Counts are in `results/PARTITION.json`. `python3.12 partition.py` recomputes them.
-
-## Uncertainty
-
-Wilson 95% intervals, closed-form from the pinned counts above. No new randomness.
-
-![One-step collision 0.0552 [0.0509, 0.0598]; occluded road 0.8564 [0.8494, 0.8631]; optimistic entry 0.2995 [0.2906, 0.3086].](docs/figures/stats.png)
-
-| Rate | Estimate | 95% interval |
-|---|---|---|
-| Occluded road | **0.8564** | **[0.8494, 0.8631]** |
-| Optimistic entry | **0.2995** | **[0.2906, 0.3086]** |
-| One-step collision | **0.0552** | **[0.0509, 0.0598]** |
-| Exact map match | **0.1436** | **[0.1369, 0.1506]** |
-| Closed-loop traversal | **0.0009** | **[0.0005, 0.0017]** |
-| Optimistic traversal | **0.0012** | **[0.0007, 0.0021]** |
-
-Numbers are in `results/STATS.json`. `python3.12 stats.py` recomputes them.
-
-## Foresight threshold, with proof
-
-Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.
-
-![Discount 0–0.95: action 0 below 0.09, action 1 above. Red line at 9/101. All 1,000 random traps flip.](docs/figures/foresight.png)
-
-| Discount | 0.00–0.08 | 0.09–0.95 | 1,000 random traps, d=0 vs 0.9 |
-|---|---|---|---|
-| Action | **0** | **1** | **1,000** flip |
-
-Counts are in `results/FORESIGHT.json`. `python3.12 foresight.py` recomputes them.
-
-## EEG dose–response
-
-Ten thousand random go packets of 8 samples. Drop the last k samples, zero-fill. Packets classified as rest:
-
-![Dropped 0–8 samples, read as rest: 0, 0, 1, 9, 43, 161, 642, 2494, 10000.](docs/figures/bcisweep.png)
-
-| Dropped | 0 | 4 | 7 | 8 |
-|---|---|---|---|---|
-| Read as rest | **0** | **43** | **2,494** | **10,000** |
-
-Counts are in `results/BCISWEEP.json`. `python3.12 bcisweep.py` recomputes them.
-
-## Audit: imputation deletes the mask
-
-On the same 10,000 corridors: imputed maps carry zero mask markers by construction, so a downstream checker that looks for missing-data markers catches none of the 8,564 wrong maps. Only **1,436** imputed maps match the true corridor cell for cell.
-
-![Roads with masked cells 10,000; filled maps with markers 0; filled maps matching truth 1,436; occluded-obstacle roads 8,564.](docs/figures/audit.png)
-
-| | Count |
-|---|---|
-| Roads with masked cells | **10,000** |
-| Filled maps still carrying a marker | **0** |
-| Filled maps matching the true road | **1,436** |
-| Roads with an occluded obstacle | **8,564** |
-
-Counts are in `results/AUDIT.json`. `python3.12 audit.py` recomputes them.
-
-## Upstream side-by-side behavior
-
-Each row calls the upstream project and this repository on the same input. Empty input is fail-closed here.
-
-| Project | Upstream result | This repository |
-|---|---|---|
-| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco), empty model | loads successfully | refuses a cost-free MJCF |
-| [munkres 1.1.4](https://github.com/bmc/munkres), empty table `compute([[]])` | returns `[]` ([issue 54](https://github.com/bmc/munkres/issues/54)) | raises; the 2×2 assignment stays cost **2** |
-| [NumPy 2.4.6](https://github.com/numpy/numpy), empty vector norm | `0.0` | raises; `CAKE` stays distance **3** |
-| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python), empty recording | duration 0, 0 annotations | raises; the recorded clip stays **8** samples, markers `go` / `end` |
-| [NumPy 2.4.6](https://github.com/numpy/numpy), empty mean | `nan` | raises |
-| [NetworkX 3.6.1](https://github.com/networkx/networkx), empty graph | 0 nodes | raises while edges remain; 1 step reaches **2**, fixed point **3** |
-| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy), empty update | accepted, state stays `0.0` | raises; 2 lidar points count **1**, 3 observations count **3** |
-| [Foxglove MCAP](https://github.com/foxglove/mcap), zero messages | empty log | raises |
-| [ROS 2 rosbag2](https://github.com/ros2/rosbag2), zero messages | empty bag | raises |
-| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter), keyless filter | reports non-membership | raises on an empty key list |
-
-![Dexterous hand.](docs/figures/hand-delta.png)
+![The same split on a hand, a neural decoder, a mobile robot, and a vehicle.](docs/figures/hand-delta.png)
 ![Brain–computer interface.](docs/figures/bci-delta.png)
 ![Mobile robot.](docs/figures/robot-delta.png)
 ![Vehicle.](docs/figures/vehicle-delta.png)
 
-Kernels: [`locks/aletheia-handlock`](locks/aletheia-handlock) · [`locks/aletheia-fingerlock`](locks/aletheia-fingerlock) · [`locks/aletheia-spikelock`](locks/aletheia-spikelock) · [`locks/aletheia-bloomlock`](locks/aletheia-bloomlock) · [`locks/aletheia-voxelock`](locks/aletheia-voxelock) · [`locks/aletheia-kalmanlock`](locks/aletheia-kalmanlock) · [`locks/aletheia-tourlock`](locks/aletheia-tourlock)
+## Where widely used open source still gives a number
 
-## Reproduce
+These libraries are the ones a robotics or biosignal stack actually calls. On the input they were built for, they are right. On empty input they return a value the next function will accept. That value is then a decision.
 
-The precision check uses the Python standard library only. Side-by-side callers need the versions pinned in `requirements-show.txt`.
+这些库是机器人栈和生物信号栈真的会调用的。在它们被设计来接受的输入上，它们是对的。在空输入上，它们返回一个下一函数愿意接受的值。这个值随后就成了决策。
+
+| Project | What empty input returns | Why that is a product problem |
+|---|---|---|
+| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) | an empty model loads | a scene with no bodies is still a scene |
+| [munkres 1.1.4](https://github.com/bmc/munkres) | `[]` on `compute([[]])` ([issue 54](https://github.com/bmc/munkres/issues/54)) | “no assignment problem” looks like “assignment finished” |
+| [NumPy 2.4.6](https://github.com/numpy/numpy) | norm `0.0`, mean `NaN` | a missing vector looks like a zero vector, or like a number that propagates quietly |
+| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) | duration 0, zero annotations | a missing recording looks like a silent recording |
+| [NetworkX 3.6.1](https://github.com/networkx/networkx) | an empty graph has 0 nodes | “no map was loaded” looks like “the map is empty, so you are done” |
+| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) | an empty update is accepted and the state stays `0.0` | “no lidar return” looks like “the state is zero” |
+| [Foxglove MCAP](https://github.com/foxglove/mcap) | a log with zero messages | playback continues on silence |
+| [ROS 2 rosbag2](https://github.com/ros2/rosbag2) | a bag with zero messages | same, for the bag a robot records |
+| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) | a keyless filter reports non-membership | “no key was given” looks like “the key is absent” |
+
+The shortcoming is the same in each row. Absence is stored as a number. The next module cannot tell “nothing was measured” from “the measurement was zero.”
+
+每一行的不足是一样的。缺失被存成一个数。下一模块分不出“什么都没测到”和“测到的是零”。
+
+On the same empty inputs this repository raises. On the occupied input the value is unchanged: a 2×2 assignment stays cost 2, the string `CAKE` stays distance 3, a recorded EEG clip stays 8 samples with markers `go` and `end`, one lidar pair counts as 1, three observations count as 3, and a three-cell chain reaches 2 in one step and 3 at the fixed point.
+
+同样的空输入，这里直接拒绝。有内容的输入数值不变：2×2 指派代价仍是 2，`CAKE` 的距离仍是 3，一段实录脑电仍是 8 个采样、标记为 `go` 和 `end`，一对激光计数为 1，三次观测计数为 3，三格链走一步到达 2、走到不动点是 3。
+
+## Why a boundary in front of the model is enough
+
+We do not ship a new world model. The planner, the decoder, and the map library stay. The write that fills the hole is replaced by a function whose failure mode is proved, not trained.
+
+我们不交付一个新的世界模型。规划器、解码器、地图库都留着。被换掉的是那个把洞填上的写入。它的失败方式是证明出来的，不是训练出来的。
+
+Four statements. The proofs are in [`paper/paper.md`](paper/paper.md).
+
+**The fill decides, the planner does not.** Run one shortest-path routine on a completed map and on the cells that were actually observed. The two calls return different integers. No change of generator is required for them to separate. A world-model reach of 3 against a measured step of 2, an EEG class of 0 against a recorded class of 1, and a myopic action of 0 against a lookahead action of 1 are the same fact in three products.
+
+**Nested plans.** A pessimistic plan may enter only cells that were observed free. An optimistic plan may also enter masked cells. Every pessimistic path is therefore still legal after the fill, and it cannot be strictly shorter than the optimistic path. A score that prefers the shorter path, and on a tie prefers the optimistic one, returns the filled plan on every trial. On 2,000 grids the inclusion held on all 2,000. The oracle reaches 297 goals that this score misses. Of those 297, the filled path is strictly shorter on 129, and the two paths have equal length on 168. The 168 are the tie rule, not a shorter path. The 378 goals that only the filled plan reaches each step through a masked cell that was truly free: that is the set of goals a wall-fill refuses.
+
+**The discount at which lookahead flips is a fraction.** On the trap table `[[10, 1], [-100, -100]]`, action 0 pays more now and steps into −100. Solving `(I − dP)V = r` in exact rationals gives the flip at `9/101`. Iterating a scaled integer backup flips too early, because the backup does not keep a common denominator. One real backup already matches the infinite horizon on this family. Depth 0 is the raw row. Treating that row as a backup reports the flip one step late.
+
+**After the fill, a missing-data check sees nothing.** The completed object lives in the fully observed domain, so a checker that looks for a mask marker has recall 0. Empty input raises instead of returning 0. That is the entire product difference with the libraries in the table above.
+
+四条陈述。证明在 [`paper/paper.md`](paper/paper.md)。
+
+补全做决定，规划器不做决定。同一套最短路，在补全后的地图上跑一次，在真正观测到的格子上再跑一次，得到两个整数。不需要换生成器，这两个整数就会分开。世界模型可达 3 对实测一步 2，脑电类别 0 对实录类别 1，只看当前行的动作 0 对前视动作 1，是三个产品里的同一件事。
+
+路径是嵌套的。悲观方案只能进入已观测为空的格子。乐观方案还可以进入被遮住的格子。所以每条悲观路径在补全之后仍然合法，而且不会严格短于乐观路径。偏好更短路径、平局时偏好乐观方案的分数，每次都返回补全后的方案。2,000 张图上包含关系全部成立。先知能到达、这个分数到不了的目标有 297 个。其中 129 次补全路径严格更短，168 次两条路一样长。168 是平局规则，不是更短。只有补全方案能到达的 378 个目标，每一条都踩过一个被遮住、实际上是空的格子。那是把遮挡当成墙时拒绝掉的目标。
+
+前视把动作翻过来的折扣是一个分数。陷阱表 `[[10, 1], [-100, -100]]` 上，动作 0 眼前收益更高，下一步走进 −100。用精确有理数解 `(I − dP)V = r`，翻转点是 `9/101`。把折扣值放大成整数再迭代，会翻得太早，因为迭代保不住公分母。在这一族问题上，一次真正的回溯已经等于无限视界。深度 0 是原始的那一行。把那一行也算成一次回溯，翻转会晚报一步。
+
+补全之后，缺失检查什么也看不见。补完的对象落在全观测的值域里，寻找掩码标记的检查召回率是 0。空输入会拒绝，而不是返回 0。这就是和上面那些库的全部产品差别。
+
+![One split, three products. Filled input returns the larger integer. One measured step returns the smaller integer. Empty input raises.](docs/figures/story.png)
+
+![Both plans reach on 122 grids. Only the filled plan reaches on 378. Only the safe plan reaches on 297, of which 129 are strictly shorter and 168 are ties. Neither reaches on 1,203.](docs/figures/partition.png)
+
+## What the MVP hands over
+
+The delivery is one call with three outcomes. It sits in front of a planner the product already runs.
+
+交付是一次调用、三种结果。它坐在产品已经在跑的规划器前面。
+
+| Call | What it does | What it refuses to do |
+|---|---|---|
+| `measure` | Uses only entries that were observed. On a map it does not enter a masked cell. On an EEG window it keeps the recorded samples. On a reward table it returns the lookahead action. | It does not invent a value for a hole. |
+| `impute` | The audit twin. Same planner after the hole has been written free, written zero, or replaced by the visible row. | It is not the shipped decision. It exists so a demo can show the disagreement. |
+| refuse | The result on empty input. | No zero, no empty list, no NaN. |
+
+What a caller sees on the pinned demo:
+
+| Input | Shipped decision | What a fill would have returned |
+|---|---|---|
+| Three cells, middle unseen | reach **2** | reach **3**, the fully observed map |
+| Eight EEG samples, packet dropped and written as zeros | class **1** on the recorded samples | class **0**, identical to rest |
+| Reward table, next action | lookahead action **1** | myopic action **0** |
+| Empty input | raises | a usable number, in the libraries above |
+
+Not in this MVP: a trained video model, a headset SDK, a robot success rate, or a claim that 68.9% and 79.2% were re-run. Those percentages belong to Yuan et al. The MVP shows the same kind of gap as an integer a reviewer can recompute.
+
+这次 MVP 里没有：训练好的视频模型、头戴设备 SDK、机器人成功率，也没有“我们重跑了 68.9% 和 79.2%”这种说法。那两个百分比属于 Yuan 等人。MVP 把同一类差距做成一个可以重算的整数。
 
 ```bash
 make check
-python3.12 show_tick.py
+python3.12 show_story.py
 python3.12 show_policy.py
-python3.12 show_networkx.py
 ```
 
-Counts live in `results/`. `make check` recomputes every pinned number. Every push recomputes them in CI.
+`make check` recomputes the pinned identities. The proofs and the method-by-method comparison with the papers above are in [`paper/paper.md`](paper/paper.md). Counts live in `results/`. Side-by-side callers need the versions in `requirements-show.txt`.
 
-## Upstream projects
+## Projects this boundary is meant to sit in front of
 
-| Project | URL | Role in this repo |
+| Project | URL | Where the boundary attaches |
 |---|---|---|
-| NetworkX | https://github.com/networkx/networkx | graph baseline in `show_networkx.py` |
-| Foxglove MCAP | https://github.com/foxglove/mcap | occupancy samples in `mcapocc.py` |
-| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | bag folders in `bagocc.py` |
-| rosbags | https://gitlab.com/ternaris/rosbags | reader in `show_rosbags.py` |
-| ROS map_server | https://wiki.ros.org/map_server | YAML + PGM occupancy maps |
-| OccupancyGrid | https://docs.ros.org/en/humble/p/nav_msgs/interfaces/msg/OccupancyGrid.html | cell values in `occgrid.py` |
-| ROS 2 | https://github.com/ros2/ros2 | stack those bags and maps come from |
-| Soufflé | https://github.com/souffle-lang/souffle | Datalog fixed-point reference; closure here is 214 |
-| NumPy | https://github.com/numpy/numpy | side-by-side calls in `locks/` |
-| MNE-Python | https://github.com/mne-tools/mne-python | EDF / GDF / BIDS-EEG traces |
-| BIDS | https://github.com/bids-standard/bids-specification | BIDS-EEG sidecars |
-| NiBabel | https://github.com/nipy/nibabel | NIfTI volumes in [`ATLAS.md`](ATLAS.md) |
-| OpenDRIVE | https://github.com/asam-oss/asamOpenDRIVE | junction maps in the lock kernels |
-| MuJoCo | https://github.com/google-deepmind/mujoco | MJCF bodies in the lock kernels |
-| Open3D | https://github.com/isl-org/Open3D | point clouds in the lock kernels |
-| nuScenes | https://github.com/nutonomy/nuscenes-devkit | sample tables in the lock kernels |
-| pyahocorasick | https://github.com/WojciechMula/pyahocorasick | suffix-link comparison in stemlock |
-| python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | membership comparison in bloomlock |
+| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) | masked video tokens | do not treat a predicted patch as a measured cell |
+| [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) | predicted frames | same, for a rendered future |
+| [LaBraM](https://arxiv.org/abs/2405.18765) | masked EEG | do not classify a zero-filled dropout as rest |
+| NetworkX | https://github.com/networkx/networkx | one observed step versus the fixed point |
+| MNE-Python | https://github.com/mne-tools/mne-python | a recording with no samples raises |
+| MuJoCo | https://github.com/google-deepmind/mujoco | an empty model raises |
+| Foxglove MCAP | https://github.com/foxglove/mcap | a log with no messages raises |
+| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | a bag with no messages raises |
+| ROS map_server | https://wiki.ros.org/map_server | unknown cells stay unknown |
+| FilterPy | https://github.com/rlabbe/filterpy | an empty update raises |
 
-## Paper
-
-Proofs and the pinned counts are in [`paper/paper.md`](paper/paper.md): the discount threshold 9/101, mask erasure, monotone reach, pessimistic safety, the wait/crash breakeven, and the nested-plan inclusion. Every cited number is checked by `python3.12 paper/check_numbers.py`.
-
-证明和钉死的计数在 [`paper/paper.md`](paper/paper.md)：折扣阈值 9/101、掩码被抹掉、可达单调收敛、悲观填充的安全性、等待与碰撞的盈亏点，以及路径包含。`python3.12 paper/check_numbers.py` 核对每一个被引用的数。
+The kernels that implement those refusals on the occupied formats are under `locks/`. The index is [`ATLAS.md`](ATLAS.md).
 
 ## Files
 
-| Path | Contents |
+| Path | What the MVP calls |
 |---|---|
-| `tick.py` | single-step transition: 2, and 24 |
-| `datalog.py` | fixed-point reachable set: 3, and 214 |
-| `policy.py` | integer policy iteration; empty table raises |
-| `complete.py` · `decode.py` | imputation operators for maps and EEG |
-| `campaign.py` · `hidden.py` · `sweep.py` | 10k–70k corridor experiments |
-| `horizon.py` · `foresight.py` | convergence curve; 9/101 threshold with proof |
-| `bcisweep.py` · `decide.py` · `fillchoice.py` · `audit.py` | dose–response; decision costs; fill policy; mask audit |
-| `occgrid.py` · `mcapocc.py` · `bagocc.py` | ROS grid, MCAP, rosbag2 readers |
-| `tests/test_precision.py` | pinned identities |
-| `paper/paper.md` | technical report; numbers checked on every build |
-| `partition.py` | nested plans: inclusion, 129 shorter, 168 ties |
-| `results/` | pinned JSON from every run |
-| `locks/` | 66 format kernels |
-| `binds/` | 100 named-record binds |
-| [`ATLAS.md`](ATLAS.md) | index of the above |
+| `tick.py` | one observed step |
+| `datalog.py` | the fixed point a fill would return |
+| `complete.py` · `decode.py` · `policy.py` | the three fills: map, EEG, reward row |
+| `partition.py` | the inclusion check: shorter path versus tie |
+| `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
+| `tests/test_precision.py` | the identities the MVP is not allowed to move |
 
 ## License
 
