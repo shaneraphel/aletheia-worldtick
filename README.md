@@ -260,6 +260,10 @@ Counts live in `results/`. `make check` recomputes every pinned number. Every pu
 | pyahocorasick | https://github.com/WojciechMula/pyahocorasick | suffix-link comparison in stemlock |
 | python-bloomfilter | https://github.com/joseph-fox/python-bloomfilter | membership comparison in bloomlock |
 
+## Paper
+
+The results above are aggregated in [`paper/paper.md`](paper/paper.md) with proofs (foresight threshold 9/101, mask erasure, monotone convergence, pessimistic safety). Every cited number is machine-checked: `python3.12 paper/check_numbers.py`.
+
 ## Files
 
 | Path | Contents |

@@ -33,3 +33,5 @@ jobs:
           python robust.py
           python show_policy.py
           python tick_bench.py
+      - name: paper
+        run: python paper/check_numbers.py

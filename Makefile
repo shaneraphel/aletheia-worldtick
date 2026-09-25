@@ -1,6 +1,6 @@
 PYTHON ?= python3.12
 
-.PHONY: check show bench evidence
+.PHONY: check show bench evidence paper
 
 check:
 	$(PYTHON) worldtick.py --verify-precision
@@ -33,3 +33,6 @@ evidence:
 	$(PYTHON) audit.py
 	$(PYTHON) cost.py
 	$(PYTHON) robust.py
+
+paper:
+	$(PYTHON) paper/check_numbers.py
