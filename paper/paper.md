@@ -84,6 +84,8 @@ On the 2,000 grids the process never hits the cap. 561 grids need no question. 6
 
 On 10,000 signed windows with the last 4 samples dropped, the filled class would retune 2421 windows: 1280 false rests and 1141 false gos. The hold count is 10,000. On the 2,000 hand maps, rendering the filled grasp crosses an obstacle 1,439 times. Refusing to draw that completion crosses it 0 times. Neither number is a clinical effect. Both are the same write, applied once to a brain window and once to a camera.
 
+The same refusal applies to the file the picture and the sound are stored in. Python's `wave` module writes a legal file with 0 frames. SciPy 1.17.1 and soundfile 0.14.0 read that emptiness back as a length-0 array at 8,000 Hz. Pillow 11.3.0 constructs a 0×0 RGB image. OpenCV 5.0.0 counts 0 nonzero pixels in an empty image. Open3D 0.20.0 returns a cloud with 0 points and a mesh with 0 vertices. An 8-sample tone is class 1 and is 8 frames. Empty samples raise. Splitting the 2,000 hand maps across 10 cores does not change the crash count: serial and parallel are both 1,439.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

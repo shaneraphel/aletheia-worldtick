@@ -54,6 +54,8 @@ We do not post the page on another project's issue tracker. Those issues are for
 | Scene hold | The music and the picture stay as they are, because the brain window was incomplete. A class computed after filling that window is not allowed to change them. |
 | Bilateral sound | Alternating left-right sound, the sensory part of an EMDR session. This repository does not claim a treatment effect. The rule is when that sound may change. |
 | Grasp picture | The 3D picture of a dexterous hand in the scene. It may not show a finished grasp through a cell the camera did not see. |
+| Silent file | A sound file with zero frames. Players open it. The session does not treat it as rest. |
+| Empty cloud | A point cloud or mesh with nothing in it. Geometry libraries return it. The session does not treat it as a finished hand. |
 
 | 词 | 意思 |
 |---|---|
@@ -73,6 +75,8 @@ We do not post the page on another project's issue tracker. Those issues are for
 | 画面保持 | 音乐和画面维持原样，因为脑电窗口不完整。用补全后的类别去改它们，是不允许的。 |
 | 双侧声音 | 左右交替的声音，是 EMDR 里的感觉部分。本仓库不声称治疗效果。规则只规定这段声音什么时候可以变。 |
 | 抓取画面 | 灵巧手在场景里的三维画面。它不能把摄像机没看见的格子画成一次已经完成的抓取。 |
+| 无声文件 | 帧数为 0 的声音文件。播放器会打开它。会话不把它当成静息。 |
+| 空点云 | 里面没有点的点云或网格。几何库会把它交回来。会话不把它当成一只已经成形的手。 |
 
 ## Two people, one picture
 
@@ -132,10 +136,24 @@ These libraries are the ones a robotics or biosignal stack actually calls. On th
 | [Foxglove MCAP](https://github.com/foxglove/mcap) | a log with zero messages | playback continues on silence |
 | [ROS 2 rosbag2](https://github.com/ros2/rosbag2) | a bag with zero messages | same, for the bag a robot records |
 | [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) | a keyless filter reports non-membership | “no key was given” looks like “the key is absent” |
+| Python `wave` | a file with **0** frames is a legal sound | silence with a sample rate is still a sound the next player will open |
+| [SciPy 1.17.1](https://github.com/scipy/scipy) | an empty array written as WAV comes back with shape `(0,)` at 8,000 Hz | a dropped bilateral tone is a readable file |
+| [soundfile 0.14.0](https://github.com/bastibe/python-soundfile) | the same empty WAV reads as length 0 | same, for the library a game uses to play it |
+| [Pillow 11.3.0](https://github.com/python-pillow/Pillow) | `Image.new` accepts a **0×0** RGB image | a world-model frame can exist with no pixels |
+| [OpenCV 5.0.0](https://github.com/opencv/opencv) | an empty image has **0** nonzero pixels | “nothing was seen” looks like a counted zero |
+| [Open3D 0.20.0](https://github.com/isl-org/Open3D) | an empty cloud has **0** points and an empty mesh has **0** vertices | a hand scan that did not arrive is still a geometry object |
 
 The shortcoming is the same in each row. Absence is stored as a number. The next module cannot tell “nothing was measured” from “the measurement was zero.”
 
 每一行的不足是一样的。缺失被存成一个数。下一模块分不出“什么都没测到”和“测到的是零”。
+
+声音、画面和点云是同一种形状。合法的文件可以有 0 帧，合法的图像可以是 0×0，合法的点云可以有 0 个点。8 个采样的一段声音类别是 1。空的采样会拒绝。同一批 2,000 张手部地图，单核和 10 个核数出来的碰撞都是 1,439。
+
+A sound file, a frame, and a cloud have the same shape. A legal file can hold 0 frames, a legal image can be 0×0, and a legal cloud can hold 0 points. An 8-sample tone is class 1. Empty samples raise. The same 2,000 hand maps crash 1,439 times on one core and on 10 cores.
+
+![Empty sound, blank image, empty cloud.](docs/figures/media.png)
+
+![Serial crashes 1,439. Parallel crashes 1,439. Ten workers.](docs/figures/fleet.png)
 
 On the same empty inputs this repository raises. On the occupied input the value is unchanged: a 2×2 assignment stays cost 2, the string `CAKE` stays distance 3, a recorded EEG clip stays 8 samples with markers `go` and `end`, one lidar pair counts as 1, three observations count as 3, and a three-cell chain reaches 2 in one step and 3 at the fixed point.
 
@@ -273,6 +291,8 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `decisive.py` | one question after the first crash |
 | `askdepth.py` | how many questions until the path is clear |
 | `session.py` | hold the sound on a dropped window; do not draw a grasp through an unseen cell |
+| `fleet.py` | the same 2,000 maps on one core and on many; the crash count matches |
+| `media.py` | empty WAV, empty image, empty cloud, beside a held session |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

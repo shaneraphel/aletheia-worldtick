@@ -42,6 +42,7 @@ jobs:
           python decisive.py
           python askdepth.py
           python session.py
+          python fleet.py
           python show_policy.py
           python tick_bench.py
       - name: paper

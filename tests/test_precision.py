@@ -192,6 +192,21 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(coach_audio(hidden, 1), "hold")
         self.assertEqual(coach_audio(hidden, 0), "rest")
 
+    def test_parallel_count_matches_serial(self) -> None:
+        from fleet import run as fleet_run
+
+        rec = fleet_run(n=24, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["workers"], 2)
+
+    def test_empty_wave_is_legal_and_empty_samples_raise(self) -> None:
+        from media import wave_frames
+
+        self.assertEqual(wave_frames([]), 0)
+        self.assertEqual(wave_frames([1, 0, 2, 0, 1, 0, 3, 0]), 8)
+        with self.assertRaises(ValueError):
+            neural_class([])
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

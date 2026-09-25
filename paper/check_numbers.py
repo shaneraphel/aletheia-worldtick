@@ -93,10 +93,15 @@ def main() -> int:
     sess = load("SESSION.json")
     check(sess["audio_retunes_from_zerofill"] == 2421 and sess["audio_holds"] == 10000, "session holds every dropped window")
     check(sess["picture"]["rendered_crash"] == 1439 and sess["picture"]["coach_crash"] == 0, "coach draws no completed crash")
+    fleet = load("FLEET.json")
+    check(fleet["equal"] and fleet["serial_crashes"] == 1439 and fleet["parallel_crashes"] == 1439, "fleet matches on 10 cores")
+    media = load("MEDIA.json")
+    check(media["wave_empty_frames"] == 0 and media["wave_tone_frames"] == 8 and media["tone_class"] == 1, "wave 0 frames, tone 8")
+    check(media["libraries"]["open3d"]["empty_points"] == 0 and media["libraries"]["pillow"]["empty_size"] == [0, 0], "empty cloud and empty image")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D"]:
         check(token in text, f"paper cites {token}")
-    print("all 43 number checks passed")
+    print("all 46 number checks passed")
     return 0
 
 

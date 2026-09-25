@@ -1,0 +1,45 @@
+{
+  "schema": "worldtick.media.v1",
+  "wave_empty_frames": 0,
+  "wave_tone_frames": 8,
+  "tone_class": 1,
+  "libraries": {
+    "scipy": {
+      "present": true,
+      "version": "1.17.1",
+      "empty_rate": 8000,
+      "empty_shape": [
+        0
+      ]
+    },
+    "soundfile": {
+      "present": true,
+      "version": "0.14.0",
+      "empty_rate": 8000,
+      "empty_length": 0
+    },
+    "pillow": {
+      "present": true,
+      "version": "11.3.0",
+      "empty_size": [
+        0,
+        0
+      ],
+      "empty_mode": "RGB"
+    },
+    "opencv": {
+      "present": true,
+      "version": "5.0.0",
+      "empty_nonzero": 0
+    },
+    "open3d": {
+      "present": true,
+      "version": "0.20.0",
+      "empty_points": 0,
+      "empty_has_points": false,
+      "empty_vertices": 0
+    }
+  },
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

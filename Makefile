@@ -44,6 +44,8 @@ evidence:
 	$(PYTHON) decisive.py
 	$(PYTHON) askdepth.py
 	$(PYTHON) session.py
+	$(PYTHON) fleet.py
+	$(PYTHON) media.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py
