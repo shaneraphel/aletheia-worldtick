@@ -23,5 +23,6 @@ jobs:
           python campaign.py
           python hidden.py
           python sweep.py
+          python horizon.py
           python show_policy.py
           python tick_bench.py

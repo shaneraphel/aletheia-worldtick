@@ -95,6 +95,27 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 
 Each point is 10,000 roads of 32 cells. Obstacle rate stays 0.20. Dropout runs 0.00 to 0.50. Completion walks in more often as the hole rate rises. One tick stays 0. Counts are in `results/SWEEP.json`. `python3.12 sweep.py` recomputes 70,000 roads.
 
+## 走多少步收敛 / Horizon
+
+同一张 256 节点图。步数从 0 放到 256。补全一次回答 214。
+
+![步数 0 到 256，可达数 8、24、50、92、138、205、212，到 12 步收敛到 214。](docs/figures/horizon.png)
+
+| 步数 horizon | 可达 reach |
+|---|---|
+| 0 | **8** |
+| 1 | **24** |
+| 2 | **50** |
+| 3 | **92** |
+| 4 | **138** |
+| 6 | **205** |
+| 8 | **212** |
+| 12 | **214** |
+
+12 步收敛，之后不动。数在 `results/HORIZON.json`。`python3.12 horizon.py` 重算。
+
+One tick reaches 24. Twelve ticks reach the closure 214. Completion answers 214 in one call. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
+
 The true road has obstacles. The sensor drops 30% of the cells. Completion writes each drop as free space and walks on. One tick stops at the first unseen cell.
 
 32 cells, 10,000 roads, seed `20260919`.

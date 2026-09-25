@@ -1,0 +1,74 @@
+{
+  "schema": "worldtick.horizon.v1",
+  "seed": 20260919,
+  "n_nodes": 256,
+  "n_facts": 8,
+  "n_edges": 512,
+  "one_tick": 24,
+  "closure": 214,
+  "steps_to_closure": 12,
+  "points": [
+    {
+      "horizon": 0,
+      "reach": 8
+    },
+    {
+      "horizon": 1,
+      "reach": 24
+    },
+    {
+      "horizon": 2,
+      "reach": 50
+    },
+    {
+      "horizon": 3,
+      "reach": 92
+    },
+    {
+      "horizon": 4,
+      "reach": 138
+    },
+    {
+      "horizon": 6,
+      "reach": 205
+    },
+    {
+      "horizon": 8,
+      "reach": 212
+    },
+    {
+      "horizon": 12,
+      "reach": 214
+    },
+    {
+      "horizon": 16,
+      "reach": 214
+    },
+    {
+      "horizon": 24,
+      "reach": 214
+    },
+    {
+      "horizon": 32,
+      "reach": 214
+    },
+    {
+      "horizon": 48,
+      "reach": 214
+    },
+    {
+      "horizon": 64,
+      "reach": 214
+    },
+    {
+      "horizon": 128,
+      "reach": 214
+    },
+    {
+      "horizon": 256,
+      "reach": 214
+    }
+  ],
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
