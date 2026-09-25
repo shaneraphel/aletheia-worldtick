@@ -116,6 +116,22 @@ Each point is 10,000 roads of 32 cells. Obstacle rate stays 0.20. Dropout runs 0
 
 One tick reaches 24. Twelve ticks reach the closure 214. Completion answers 214 in one call. Counts are in `results/HORIZON.json`. `python3.12 horizon.py` recomputes them.
 
+## 远见从哪里翻转答案 / Foresight
+
+陷阱表 `[[10,1],[-100,-100]]`：动作 0 眼前多 9 分，但走进 −100。折扣过 **9/101**，答案从动作 **0** 翻到动作 **1**。策略评估解 `(I−dP)V = r`，精确有理数，所以阈值是 sharp 的。
+
+![折扣 0 到 0.95，0.05 之前是动作 0，0.10 之后是动作 1。红线是 9/101。一千张随机陷阱表全部翻转。](docs/figures/foresight.png)
+
+| 折扣 discount | 动作 action |
+|---|---|
+| 0.00–0.08 | **0** |
+| 0.09–0.95 | **1** |
+| 随机陷阱表 1,000 张，折扣 0 对 0.9 | **1,000** 张翻转 |
+
+数在 `results/FORESIGHT.json`。`python3.12 foresight.py` 重算。
+
+The trap pays 10 now for action 0 and steps into −100. Past discount **9/101** the answer flips from action **0** to action **1**. Policy evaluation solves `(I−dP)V = r` in exact rationals, so the threshold is sharp. Counts are in `results/FORESIGHT.json`. `python3.12 foresight.py` recomputes them.
+
 The true road has obstacles. The sensor drops 30% of the cells. Completion writes each drop as free space and walks on. One tick stops at the first unseen cell.
 
 32 cells, 10,000 roads, seed `20260919`.

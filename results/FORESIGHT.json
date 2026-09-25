@@ -1,0 +1,105 @@
+{
+  "schema": "worldtick.foresight.v1",
+  "trap": [
+    [
+      10,
+      1
+    ],
+    [
+      -100,
+      -100
+    ]
+  ],
+  "threshold_exact": "9/101",
+  "threshold_value": 0.0891089108910891,
+  "curve": [
+    {
+      "discount": 0.0,
+      "action": 0
+    },
+    {
+      "discount": 0.05,
+      "action": 0
+    },
+    {
+      "discount": 0.1,
+      "action": 1
+    },
+    {
+      "discount": 0.15,
+      "action": 1
+    },
+    {
+      "discount": 0.2,
+      "action": 1
+    },
+    {
+      "discount": 0.25,
+      "action": 1
+    },
+    {
+      "discount": 0.3,
+      "action": 1
+    },
+    {
+      "discount": 0.35,
+      "action": 1
+    },
+    {
+      "discount": 0.4,
+      "action": 1
+    },
+    {
+      "discount": 0.45,
+      "action": 1
+    },
+    {
+      "discount": 0.5,
+      "action": 1
+    },
+    {
+      "discount": 0.55,
+      "action": 1
+    },
+    {
+      "discount": 0.6,
+      "action": 1
+    },
+    {
+      "discount": 0.65,
+      "action": 1
+    },
+    {
+      "discount": 0.7,
+      "action": 1
+    },
+    {
+      "discount": 0.75,
+      "action": 1
+    },
+    {
+      "discount": 0.8,
+      "action": 1
+    },
+    {
+      "discount": 0.85,
+      "action": 1
+    },
+    {
+      "discount": 0.9,
+      "action": 1
+    },
+    {
+      "discount": 0.95,
+      "action": 1
+    }
+  ],
+  "first_flip_discount": 0.1,
+  "n_random": 1000,
+  "random_myopic_action_0": 1000,
+  "random_farsighted_action_1": 1000,
+  "random_flips": 1000,
+  "seed": 20260919,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

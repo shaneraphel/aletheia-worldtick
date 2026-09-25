@@ -24,5 +24,6 @@ jobs:
           python hidden.py
           python sweep.py
           python horizon.py
+          python foresight.py
           python show_policy.py
           python tick_bench.py
