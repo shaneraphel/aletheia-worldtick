@@ -43,6 +43,7 @@ jobs:
           python askdepth.py
           python session.py
           python fleet.py
+          python pace.py
           python show_policy.py
           python tick_bench.py
       - name: paper

@@ -86,6 +86,8 @@ On 10,000 signed windows with the last 4 samples dropped, the filled class would
 
 The same refusal applies to the file the picture and the sound are stored in. Python's `wave` module writes a legal file with 0 frames. SciPy 1.17.1 and soundfile 0.14.0 read that emptiness back as a length-0 array at 8,000 Hz. Pillow 11.3.0 constructs a 0×0 RGB image. OpenCV 5.0.0 counts 0 nonzero pixels in an empty image. Open3D 0.20.0 returns a cloud with 0 points and a mesh with 0 vertices. An 8-sample tone is class 1 and is 8 frames. Empty samples raise. Splitting the 2,000 hand maps across 10 cores does not change the crash count: serial and parallel are both 1,439.
 
+**The rate already playing.** A complete window may set the left-right rate: 2 clicks a second when the recorded sum is not positive, 6 when it is. An incomplete window keeps whatever rate is already playing. On 10,000 steps, seed 20260919, a window is dropped with probability 0.30, which happened 3057 times. On those dropped steps a zero-fill would have chosen the other rate 712 times. The rate already playing changed 0 times. On complete windows the rate is allowed to follow the recording, and it did so on 3379 steps. This is not a reading of fright. It is the condition under which the sound may change.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

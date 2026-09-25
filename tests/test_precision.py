@@ -207,6 +207,14 @@ class PrecisionTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             neural_class([])
 
+    def test_a_dropped_window_does_not_change_the_rate(self) -> None:
+        from pace import hz_of, label, naive_label
+
+        samples = [1, 0, 0, 0, 0, 0, 0, -2]
+        self.assertEqual(label(samples), "rest")
+        self.assertEqual(naive_label(samples), "movement")
+        self.assertEqual((hz_of("rest"), hz_of("movement")), (2, 6))
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

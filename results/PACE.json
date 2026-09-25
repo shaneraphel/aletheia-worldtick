@@ -1,0 +1,15 @@
+{
+  "schema": "worldtick.pace.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "drop_p": 0.3,
+  "rest_hz": 2,
+  "movement_hz": 6,
+  "dropped": 3057,
+  "naive_disagrees_while_dropped": 712,
+  "hold_changes_while_dropped": 0,
+  "allowed_changes": 3379,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "trace_len": 40
+}

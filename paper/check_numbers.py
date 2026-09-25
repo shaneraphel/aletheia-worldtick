@@ -98,10 +98,12 @@ def main() -> int:
     media = load("MEDIA.json")
     check(media["wave_empty_frames"] == 0 and media["wave_tone_frames"] == 8 and media["tone_class"] == 1, "wave 0 frames, tone 8")
     check(media["libraries"]["open3d"]["empty_points"] == 0 and media["libraries"]["pillow"]["empty_size"] == [0, 0], "empty cloud and empty image")
+    pace = load("PACE.json")
+    check((pace["dropped"], pace["naive_disagrees_while_dropped"], pace["hold_changes_while_dropped"], pace["allowed_changes"]) == (3057, 712, 0, 3379), "pace 3057 dropped, 712 would retune, 0 holds move")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712"]:
         check(token in text, f"paper cites {token}")
-    print("all 46 number checks passed")
+    print("all 48 number checks passed")
     return 0
 
 

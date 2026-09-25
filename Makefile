@@ -46,6 +46,7 @@ evidence:
 	$(PYTHON) session.py
 	$(PYTHON) fleet.py
 	$(PYTHON) media.py
+	$(PYTHON) pace.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

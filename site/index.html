@@ -91,6 +91,16 @@
   <p class="en">One person is learning a dexterous hand. A picture that draws an unseen cell as a finished grasp trains a motion the world does not contain. Another person is staying with a left-right sound. The sound is hard to stay with, so the game is an open place where it can continue. Changing that sound because a brain window was incomplete is not a reading of fright.</p>
   <p>10,000 个不完整窗口里，补零会改掉 2,421 次声音。会话一次都不改。2,000 张手部地图里，补全画面穿过障碍 1,439 次。引导把那种抓取画成完成的次数是 0。这不是治疗效果。</p>
   <p class="en">Of 10,000 incomplete windows, a zero-fill would retune 2,421 sounds. The session retunes none. Of 2,000 hand maps, the filled picture crosses an obstacle 1,439 times. The coach draws that finished grasp 0 times. This is not a treatment effect.</p>
+  <p>打开下面的声音。点击在左耳和右耳之间交替。窗口完整时，静息是每秒 2 下，动作是每秒 6 下。丢掉窗口时，速度留在原地。10,000 步里丢掉了 3,057 次；补零会在其中 712 次改速度；正在响的速度在丢包期间改变了 0 次。这不是惊恐检测，也不是治疗。</p>
+  <p class="en">Play the sound below. Clicks alternate left and right. On a complete window, rest is 2 a second and a movement is 6. When the window is dropped, the speed stays. Across 10,000 steps, 3,057 windows were dropped. A zero-fill would have changed the speed on 712 of them. The speed already playing changed 0 times during a dropout. This is not a detector of fright, and it is not a treatment.</p>
+  <div class="row">
+    <button id="b-play" type="button">播放左右声 · Play left-right</button>
+    <button id="b-rest" type="button">完整窗口，静息 · Complete, rest (2/s)</button>
+    <button id="b-move" type="button">完整窗口，动作 · Complete, movement (6/s)</button>
+    <button id="b-drop" type="button">丢掉窗口，速度保持 · Drop the window, hold</button>
+    <button id="b-stop" type="button">停止 · Stop</button>
+  </div>
+  <p class="out" id="pace-out">还没有播放。 Not playing.</p>
   <p>这两件事不要混在一起。第一件：机器更快，会不会看见另一个世界？同一批 2,000 张地图，一个进程算一遍，十个进程各算一段。补全后的路径走进真障碍的次数都是 1,439。手的画面不取决于哪一个核画的。第二件：传感器什么都没交回来时，库交给游戏的是什么？wave 能写出 0 帧的合法声音。SciPy 和 soundfile 把它读成 8,000 Hz 的空数组。Pillow 能造出 0×0 的图。OpenCV 在空图上数到 0。Open3D 交回 0 个点的点云。这些调用都成功，所以下一模块可以播放或渲染它们。有采样率却没有帧，不是“人处于静息”。存在却没有点，不是“手已经抓完”。八个真实采样才是类别 1。一个没有采样的列表会被拒绝。</p>
   <p class="en">Keep the two questions apart. First: does a faster machine see a different world? The same 2,000 maps, planned once in one process and once in ten slices, both walk into a real obstacle 1,439 times. The picture of the hand does not depend on which core drew it. Second: when the sensor returns nothing, what does the library hand to the game? wave writes a legal sound with 0 frames. SciPy and soundfile read it as an empty array at 8,000 Hz. Pillow builds a 0×0 image. OpenCV counts 0. Open3D returns a cloud of 0 points. Each call succeeds, so the next module can play or render it. A sample rate with no frames is not “the person is at rest.” A cloud that exists and has no points is not “the hand has finished.” Eight real samples are class 1. A list with no samples is refused.</p>
 
@@ -179,6 +189,66 @@ const recorded = [1, 0, 2, 0, 1, 0, 3, 0];
 if (recorded.reduce((a, b) => a + b, 0) <= 0) throw new Error("recorded packet should be a go");
 if ([1, 0, 0, 0, 0, 0, 0, -2].reduce((a, b) => a + b, 0) >= 0) throw new Error("signed packet should be rest");
 if ([1, 0, 0, 0, 0, 0, 0, 0].reduce((a, b) => a + b, 0) <= 0) throw new Error("erasing the negative should become a go");
+
+let audioCtx = null;
+let paceTimer = null;
+let paceHz = 2;
+let pan = -1;
+
+function ensureAudio() {
+  if (!audioCtx) audioCtx = new AudioContext();
+  if (audioCtx.state === "suspended") audioCtx.resume();
+}
+
+function clickOnce() {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const panner = audioCtx.createStereoPanner();
+  osc.frequency.value = 440;
+  panner.pan.value = pan;
+  pan = -pan;
+  const now = audioCtx.currentTime;
+  gain.gain.setValueAtTime(0.15, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  osc.connect(gain);
+  gain.connect(panner);
+  panner.connect(audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.05);
+}
+
+function schedule() {
+  if (paceTimer) clearInterval(paceTimer);
+  paceTimer = setInterval(clickOnce, 1000 / paceHz);
+}
+
+function showPace(text) {
+  document.getElementById("pace-out").textContent = text;
+}
+
+document.getElementById("b-play").onclick = () => {
+  ensureAudio();
+  schedule();
+  showPace("正在播放，每秒 " + paceHz + " 下，左右交替。 Playing " + paceHz + " a second, left then right.");
+};
+document.getElementById("b-rest").onclick = () => {
+  paceHz = 2;
+  if (paceTimer) schedule();
+  showPace("完整窗口，和不是正数，速度改为每秒 2 下。 Complete window, sum not positive, rate is 2 a second.");
+};
+document.getElementById("b-move").onclick = () => {
+  paceHz = 6;
+  if (paceTimer) schedule();
+  showPace("完整窗口，和是正数，速度改为每秒 6 下。 Complete window, sum positive, rate is 6 a second.");
+};
+document.getElementById("b-drop").onclick = () => {
+  showPace("窗口丢掉了。速度留在每秒 " + paceHz + " 下，没有改。 Window dropped. The rate stays at " + paceHz + " a second.");
+};
+document.getElementById("b-stop").onclick = () => {
+  if (paceTimer) clearInterval(paceTimer);
+  paceTimer = null;
+  showPace("停止。 Stopped.");
+};
 </script>
 </body>
 </html>

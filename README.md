@@ -90,6 +90,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 **Someone staying with a bilateral sound.** EMDR pairs recall with a left-right sound. The practical difficulty is that the sound is hard to stay with, so the game is an open place where that sound can continue, and where other people are present at low demand. A world model can also be asked to change the sound and the picture when a brain window looks frightened. If that window was incomplete and then filled with zeros, the change is not a reading of fright. On 10,000 signed windows with the last 4 samples dropped, a zero-fill would retune 2,421 of them: 1,280 movements read as rest, and 1,141 rests read as movement. The session holds all 10,000. It does not claim that holding treats anyone.
 
+**What you can hear.** Open the page and press “play the left-right sound.” Clicks alternate between the left ear and the right ear. A complete window may set the speed: **2** clicks a second when the recorded sum is not positive, **6** when it is. Press “drop the window” and the speed stays where it is. On 10,000 such steps, a window was dropped **3,057** times. A zero-fill would have switched to the other speed on **712** of those steps. The speed already playing changed **0** times while a window was dropped. When the window was complete, the speed was allowed to follow it, and it changed on **3,379** steps. This is not a reading of fright. Nothing here detects a panic, and nothing here claims to treat one. The sound is the part a person can stay with. The rule is when it may change.
+
+**你能听到的。** 打开页面，按“播放左右交替的声音”。点击在左耳和右耳之间交替。窗口完整时，速度可以设定：实录的和不是正数时，每秒 **2** 下；是正数时，每秒 **6** 下。按“丢掉这个窗口”，速度停在原来的地方。10,000 步里，窗口被丢掉 **3,057** 次。补零会在其中 **712** 步改成另一个速度。窗口被丢掉的时候，正在响的速度改变了 **0** 次。窗口完整时，速度允许跟着实录走，这样的改变有 **3,379** 步。这不是对惊恐的读取。这里没有检测惊恐发作，也没有声称在治疗。声音是人可以留下来听的那一部分。规则只规定它什么时候可以变。
+
+![First 40 steps. Gray is a dropped window. Red is the rate a zero-fill would set. Blue is the rate that plays.](docs/figures/pace.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -309,6 +315,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `session.py` | hold the sound on a dropped window; do not draw a grasp through an unseen cell |
 | `fleet.py` | the same 2,000 maps on one core and on many; the crash count matches |
 | `media.py` | empty WAV, empty image, empty cloud, beside a held session |
+| `pace.py` | left-right rate: 2 or 6 when the window is complete, unchanged when it is not |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
