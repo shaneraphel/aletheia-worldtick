@@ -161,6 +161,21 @@ Dropout 0.30, 2,000 corridors per seed, five seeds. Completion-side counts move 
 
 Counts are in `results/ROBUST.json`. `python3.12 robust.py` recomputes 20,000 corridors.
 
+## Closed loop
+
+Re-observe the next cell before every step; wait on a masked look instead of filling it. 10,000 roads, seed `20260919`.
+
+![Closed loop: 0 crashes, 9 reached, 9,991 correct stops, 20,975 waits. Open-loop optimistic crashes 2,995.](docs/figures/closedloop.png)
+
+| | Closed loop | Open-loop optimistic |
+|---|---|---|
+| Crashes | **0** | **2,995** |
+| Reached the end | **9** | **12** |
+| Correct stops | **9,991** | — |
+| Waits | **20,975** | — |
+
+Counts are in `results/CLOSEDLOOP.json`. `python3.12 closedloop.py` recomputes them.
+
 ## Foresight threshold, with proof
 
 Trap table `[[10,1],[-100,-100]]`: action 0 pays 9 more now but steps into −100. Past discount **9/101**, the optimal action flips from **0** to **1**. Proof: under "always action 0", V₀ = (10−100d)/(1−d²); Q₀(a₁) = 1+dV₀ > V₀ ⟺ 1+d > 10−100d ⟺ 101d > 9. Policy evaluation solves (I−dP)V = r in exact rationals, so the threshold is sharp.

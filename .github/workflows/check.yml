@@ -31,6 +31,7 @@ jobs:
           python audit.py
           python cost.py
           python robust.py
+          python closedloop.py
           python show_policy.py
           python tick_bench.py
       - name: paper

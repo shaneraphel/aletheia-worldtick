@@ -83,6 +83,17 @@ class PrecisionTest(unittest.TestCase):
             rec["n"],
         )
 
+    def test_closed_loop_never_crashes(self) -> None:
+        from closedloop import run as closedloop_run
+
+        rec = closedloop_run(n=200, seed=3)
+        self.assertEqual(rec["outcomes"]["crash"], 0)
+        self.assertEqual(rec["outcomes"]["timeout"], 0)
+        self.assertEqual(
+            rec["outcomes"]["reached"] + rec["outcomes"]["correct_stop"],
+            rec["n"],
+        )
+
     def test_blank_grid_refuses(self) -> None:
         with self.assertRaises(ValueError):
             occupied_points([[0, 0], [0, -1]])

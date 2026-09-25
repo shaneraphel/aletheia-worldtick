@@ -33,6 +33,7 @@ evidence:
 	$(PYTHON) audit.py
 	$(PYTHON) cost.py
 	$(PYTHON) robust.py
+	$(PYTHON) closedloop.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

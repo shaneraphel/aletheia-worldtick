@@ -39,6 +39,7 @@ def main() -> int:
     bci = {p["dropped"]: p["read_as_rest"] for p in load("BCISWEEP.json")["points"]}
     audit = load("AUDIT.json")
     robust = load("ROBUST.json")
+    closed = load("CLOSEDLOOP.json")
 
     check(story["world_model"]["completed_reach"] == 3, "story completed reach 3")
     check(story["world_model"]["seen_tick"] == 2, "story measured tick 2")
@@ -60,10 +61,12 @@ def main() -> int:
     check([r["sweep_completion_hits"] for r in robust["rows"]] == [605, 641, 580, 606, 560], "robust sweep rows")
     check([r["decide_completion_crashes"] for r in robust["rows"]] == [120, 143, 127, 126, 105], "robust decide rows")
     check(all(r["sweep_tick_hits"] == 0 and r["decide_tick_crashes"] == 0 for r in robust["rows"]), "robust tick zeros")
+    check((closed["outcomes"]["crash"], closed["outcomes"]["reached"], closed["outcomes"]["correct_stop"]) == (0, 9, 9991), "closed loop 0/9/9991")
+    check(closed["waits_total"] == 20975, "closed-loop waits 20975")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000"]:
         check(token in text, f"paper cites {token}")
-    print(f"all {21} number checks passed")
+    print(f"all {23} number checks passed")
     return 0
 
 

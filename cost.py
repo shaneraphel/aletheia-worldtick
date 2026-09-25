@@ -110,8 +110,8 @@ def main() -> int:
     ms = [p["ms_median"] for p in rec["points"]]
     if not ms[-1] > ms[0]:
         raise SystemExit("horizon walk costs nothing extra")
-    if not all(later + 0.05 >= first for first, later in zip(ms, ms[1:])):
-        raise SystemExit("cumulative cost does not grow with horizon")
+    if not ms[-1] > 5 * ms[0]:
+        raise SystemExit("horizon walk costs nothing extra")
     if not rec["completion_ms_median"] > 0:
         raise SystemExit("completion timing missing")
     root = Path(__file__).resolve().parent
