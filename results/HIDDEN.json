@@ -1,0 +1,13 @@
+{
+  "schema": "worldtick.hidden.v1",
+  "seed": 20260919,
+  "n": 10000,
+  "width": 32,
+  "drop": 0.3,
+  "obstacle": 0.2,
+  "roads_with_a_hidden_obstacle": 8564,
+  "completion_enters_hidden_obstacle": 2995,
+  "tick_enters_hidden_obstacle": 0,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

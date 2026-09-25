@@ -47,6 +47,34 @@ The counts are in `results/CAMPAIGN.json`. `python3.12 campaign.py` recomputes t
 
 上表是这一万次的结果。比对的是这些论文共用的一步：把没看见的地方写成一个数。
 
+## 补全之后会走进去的障碍
+
+真的路上有障碍。传感器丢掉 30% 的格子。补全把丢掉的格子写成空地，然后往前走。一步停在第一个没看见的格子。
+
+32 格，10,000 条路，种子 `20260919`。
+
+![8564 条路藏着没看见的障碍。补全走进 2995 次。一步走进 0 次。](docs/figures/hidden.png)
+
+| | 结果 |
+|---|---|
+| 藏着没看见的障碍 | **8,564 / 10,000** |
+| 补全走进那处障碍 | **2,995** |
+| 一步走进那处障碍 | **0** |
+
+数在 `results/HIDDEN.json`。`python3.12 hidden.py` 重算。
+
+The true road has obstacles. The sensor drops 30% of the cells. Completion writes each drop as free space and walks on. One tick stops at the first unseen cell.
+
+32 cells, 10,000 roads, seed `20260919`.
+
+| | result |
+|---|---|
+| roads with an unseen obstacle | **8,564 / 10,000** |
+| completion walks into that obstacle | **2,995** |
+| one tick walks into that obstacle | **0** |
+
+The counts are in `results/HIDDEN.json`. `python3.12 hidden.py` recomputes them.
+
 The table is the result of these 10,000 trials. The comparison is the step those papers share: writing a number into a place that was not seen.
 
 Completion writes a usable number into a place that was not seen. One tick moves only a fact that was already seen. The three fields above give that pair.
