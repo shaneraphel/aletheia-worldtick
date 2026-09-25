@@ -1,0 +1,26 @@
+{
+  "schema": "worldtick.ledger.v1",
+  "seed": 20260919,
+  "window_seed": 20260920,
+  "n": 2000,
+  "workers": 10,
+  "serial": {
+    "rows": 2000,
+    "class_on_drop": 0,
+    "unseen_cell": 0,
+    "picture_steps": 22,
+    "refused_steps": 630,
+    "classes_stored": 1428
+  },
+  "parallel": {
+    "rows": 2000,
+    "class_on_drop": 0,
+    "unseen_cell": 0,
+    "picture_steps": 22,
+    "refused_steps": 630,
+    "classes_stored": 1428
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

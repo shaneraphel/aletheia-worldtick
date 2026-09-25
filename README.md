@@ -108,6 +108,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![630 attempts were heard while the next cell was unseen. The picture does not draw those steps.](docs/figures/attempt.png)
 
+**What is kept.** Each map can leave one row. A dropped window does not store a class. The hand's cell is the last place the camera saw, and that place was free. On these 2,000 rows, **1,428** classes are stored, one for every complete window and none for a dropped window. A class written onto a drop is **0**. A hand cell that was not seen is **0**. The **630** steps that were heard but not seen are stored as refused, not as finished grasps. One core and ten cores write the same counts. This is not data taken from a person. It is the shape a record is allowed to have: useful for practicing the hand, and for the sound that stayed, without a diagnosis inside it.
+
+**留下的。** 每张地图可以留下一行。丢掉的窗口不记类别。手的格子是摄像机最后看见的地方，而且那里是空地。这 2,000 行里记下 **1,428** 个类别，每个完整窗口一个，丢掉的窗口一个都没有。把类别写进丢包的次数是 **0**。手落在没看见的格子上的次数是 **0**。那 **630** 步被听到、却没被看见的，记成拒绝，不记成已经抓完。一个核和十个核写下的计数相同。这不是从人身上采来的数据。这是记录允许长成的形状：可以用于练手，也可以用于那段留下来的声音，里面没有诊断。
+
+![1,428 classes stored. 0 classes on a dropped window. 0 hands on an unseen cell. 630 steps kept as refused.](docs/figures/ledger.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -330,6 +336,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `pace.py` | left-right rate: 2 or 6 when the window is complete, unchanged when it is not |
 | `room.py` | the picture stops at the last cell the camera saw |
 | `attempt.py` | a heard movement does not enter a cell the camera did not see |
+| `ledger.py` | a dropped window stores no class; the hand cell was seen |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

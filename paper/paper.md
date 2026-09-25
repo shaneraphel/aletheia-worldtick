@@ -92,6 +92,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **An attempt is not a step.** A complete window with a positive sum may set the rate to 6. If the next cell was not seen, the picture stays. On 2,000 maps paired with 2,000 windows (map seed 20260919, window seed 20260920), that pair happens 630 times. The window was dropped on 572 maps, and then both the rate and the picture hold. A movement with a seen next cell happens 22 times: only then may the picture step. The remaining 776 complete windows are not movements. Ten cores agree. A fill would have drawn the 630 unseen steps as grasps. The coach does not. This is not an emotion. Both facts were observed.
 
+**The record.** Each map is one row. A dropped window stores no class. The hand's cell is the last cell observed free. On these 2,000 rows, classes stored are 1428, which is every complete window and none of the dropped ones. A class written on a drop is 0. A hand cell that was not seen is 0. The 630 refused steps are stored as refused, not as grasps. Ten cores write the same counts. This is not data taken from a person. It is the shape the record is allowed to have, for the hand practice and for the sound that stayed.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

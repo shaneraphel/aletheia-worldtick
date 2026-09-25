@@ -111,6 +111,8 @@
     <button id="b-fillpic" type="button">补全后再画 · Draw the filled path</button>
   </div>
   <p class="out" id="room-out">手在起点。 The hand is at the start.</p>
+  <p>可以留下的一行是：窗口是否完整，完整时的类别，手停在哪一格已经看见的空地。丢掉的窗口不写类别。没看见的格子不写成抓取。2,000 行里记下 1,428 个类别，丢包上的类别是 0，手落在没看见的格子上是 0。这不是从人身上采来的数据。</p>
+  <p class="en">A row may keep whether the window was complete, the class if it was, and the seen free cell where the hand stopped. A dropped window stores no class. An unseen cell is not stored as a grasp. Of 2,000 rows, 1,428 classes are stored. Classes on a drop: 0. Hands on an unseen cell: 0. This is not data from a person.</p>
   <p>这两件事不要混在一起。第一件：机器更快，会不会看见另一个世界？同一批 2,000 张地图，一个进程算一遍，十个进程各算一段。补全后的路径走进真障碍的次数都是 1,439。手的画面不取决于哪一个核画的。第二件：传感器什么都没交回来时，库交给游戏的是什么？wave 能写出 0 帧的合法声音。SciPy 和 soundfile 把它读成 8,000 Hz 的空数组。Pillow 能造出 0×0 的图。OpenCV 在空图上数到 0。Open3D 交回 0 个点的点云。这些调用都成功，所以下一模块可以播放或渲染它们。有采样率却没有帧，不是“人处于静息”。存在却没有点，不是“手已经抓完”。八个真实采样才是类别 1。一个没有采样的列表会被拒绝。</p>
   <p class="en">Keep the two questions apart. First: does a faster machine see a different world? The same 2,000 maps, planned once in one process and once in ten slices, both walk into a real obstacle 1,439 times. The picture of the hand does not depend on which core drew it. Second: when the sensor returns nothing, what does the library hand to the game? wave writes a legal sound with 0 frames. SciPy and soundfile read it as an empty array at 8,000 Hz. Pillow builds a 0×0 image. OpenCV counts 0. Open3D returns a cloud of 0 points. Each call succeeds, so the next module can play or render it. A sample rate with no frames is not “the person is at rest.” A cloud that exists and has no points is not “the hand has finished.” Eight real samples are class 1. A list with no samples is refused.</p>
 

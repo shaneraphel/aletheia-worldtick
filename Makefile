@@ -49,6 +49,7 @@ evidence:
 	$(PYTHON) pace.py
 	$(PYTHON) room.py
 	$(PYTHON) attempt.py
+	$(PYTHON) ledger.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

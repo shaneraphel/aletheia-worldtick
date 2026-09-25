@@ -238,6 +238,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(classify(true, seen, samples, False), "attempt_unseen")
         self.assertEqual(classify(true, seen, samples, True), "hold")
 
+    def test_a_dropped_window_stores_no_class(self) -> None:
+        from ledger import run as ledger_run
+
+        rec = ledger_run(n=12, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["class_on_drop"], 0)
+        self.assertEqual(rec["serial"]["unseen_cell"], 0)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid
