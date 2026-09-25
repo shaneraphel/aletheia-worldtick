@@ -94,6 +94,8 @@ The same refusal applies to the file the picture and the sound are stored in. Py
 
 **The record.** Each map is one row. A dropped window stores no class. The hand's cell is the last cell observed free. On these 2,000 rows, classes stored are 1428, which is every complete window and none of the dropped ones. A class written on a drop is 0. A hand cell that was not seen is 0. The 630 refused steps are stored as refused, not as grasps. Ten cores write the same counts. This is not data taken from a person. It is the shape the record is allowed to have, for the hand practice and for the sound that stayed.
 
+**Who is in the room.** Two people stand on the same cells of every map, (4, 4) and (8, 8). They do not move, and the hand is not sent to them. A person is drawn only when that cell was seen. Across 4,000 person-cells, 3003 were seen and 997 were not, so those 997 are absent from the picture. The filled path walks through an unseen person 19 times. The path that stays on seen cells walks through a seen person 2 times. The extra crossings exist because a missing cell was written free. Ten cores agree with one.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

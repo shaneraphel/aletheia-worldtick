@@ -50,6 +50,7 @@ evidence:
 	$(PYTHON) room.py
 	$(PYTHON) attempt.py
 	$(PYTHON) ledger.py
+	$(PYTHON) company.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

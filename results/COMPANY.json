@@ -1,0 +1,33 @@
+{
+  "schema": "worldtick.company.v1",
+  "seed": 20260919,
+  "n": 2000,
+  "people": [
+    [
+      4,
+      4
+    ],
+    [
+      8,
+      8
+    ]
+  ],
+  "workers": 10,
+  "serial": {
+    "hidden": 997,
+    "shown": 3003,
+    "filled_through_hidden": 19,
+    "drawn_through": 2,
+    "maps": 2000
+  },
+  "parallel": {
+    "hidden": 997,
+    "shown": 3003,
+    "filled_through_hidden": 19,
+    "drawn_through": 2,
+    "maps": 2000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

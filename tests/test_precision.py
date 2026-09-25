@@ -246,6 +246,15 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(rec["serial"]["class_on_drop"], 0)
         self.assertEqual(rec["serial"]["unseen_cell"], 0)
 
+    def test_an_unseen_person_is_not_drawn(self) -> None:
+        from company import one_map
+
+        seen = [[0] * 16 for _ in range(16)]
+        true = [[0] * 16 for _ in range(16)]
+        seen[4][4] = None
+        row = one_map(true, seen)
+        self.assertGreaterEqual(row["hidden"], 1)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

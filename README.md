@@ -114,6 +114,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![1,428 classes stored. 0 classes on a dropped window. 0 hands on an unseen cell. 630 steps kept as refused.](docs/figures/ledger.png)
 
+**Who is in the room.** Two people stand on every map, at the same two cells, (4, 4) and (8, 8). They do not move. The hand is not sent to them. A person is drawn only if that cell was seen. Of 4,000 person-cells, **3,003** were seen and **997** were not, so those 997 are not in the picture. The filled path walks through an unseen person **19** times. The path that stays on seen cells walks through a seen person **2** times. Those 19 crossings are there because a missing cell was written free. One core and ten cores agree. The room does not become safer or more social by drawing people the camera did not see.
+
+**谁在房间里。** 两个人站在每张地图的同一处，(4, 4) 和 (8, 8)。他们不移动。手也不被派去找他们。一个人只有在那一格被看见时才画出来。4,000 个人格里，**3,003** 个被看见，**997** 个没有，所以这 997 个不在画面里。补全后的路径穿过没看见的人 **19** 次。只走已看见格子的路径，穿过一个已经被看见的人 **2** 次。这 19 次穿过，是因为没看见的格子被写成了空地。一个核和十个核一致。把摄像机没看见的人画进来，房间不会因此更安全，也不会因此更适合待着。
+
+![3,003 people seen. 997 not drawn. The filled path walks through an unseen person 19 times.](docs/figures/company.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -337,6 +343,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `room.py` | the picture stops at the last cell the camera saw |
 | `attempt.py` | a heard movement does not enter a cell the camera did not see |
 | `ledger.py` | a dropped window stores no class; the hand cell was seen |
+| `company.py` | a person is drawn only if their cell was seen |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
