@@ -8,6 +8,10 @@ A boundary in front of a world model, a neural decoder, or a planner. Cells that
 
 可以打开的页面：[shaneraphel.github.io/aletheia-worldtick](https://shaneraphel.github.io/aletheia-worldtick/)。
 
+这页在讲一件事。世界模型要交回一幅完整的画面，脑电解码要交回一个类别，灵巧手的引导要交回一只已经摆好的手。没测到的地方一旦被写成一个能用的值，下一模块就会把它当成测到的。我们把这次写入挡住。空的声音文件、空白的图、没有点的扫描，库都会交出来；会话不把它们读成“人是平静的”或“手已经抓完”。
+
+This page is about one action. A world model is asked for a finished picture, a neural decoder is asked for a class, and a hand coach is asked for a pose that has already happened. Once an unmeasured place is written as a usable value, the next module treats it as measured. We stop that write. An empty sound file, a blank image, and a scan with no points are all objects the libraries return. The session does not read them as “the person is calm” or “the hand has finished the grasp.”
+
 ## How to read this
 
 Read in this order. The page is the product. This file is the reason the product is shaped that way. The proofs are a separate note.
@@ -147,13 +151,25 @@ The shortcoming is the same in each row. Absence is stored as a number. The next
 
 每一行的不足是一样的。缺失被存成一个数。下一模块分不出“什么都没测到”和“测到的是零”。
 
-声音、画面和点云是同一种形状。合法的文件可以有 0 帧，合法的图像可以是 0×0，合法的点云可以有 0 个点。8 个采样的一段声音类别是 1。空的采样会拒绝。同一批 2,000 张手部地图，单核和 10 个核数出来的碰撞都是 1,439。
+## What those two measurements are
 
-A sound file, a frame, and a cloud have the same shape. A legal file can hold 0 frames, a legal image can be 0×0, and a legal cloud can hold 0 points. An 8-sample tone is class 1. Empty samples raise. The same 2,000 hand maps crash 1,439 times on one core and on 10 cores.
+Two questions, asked separately, because they are easy to mix together.
 
-![Empty sound, blank image, empty cloud.](docs/figures/media.png)
+**Does a faster machine see a different world?** Take the same 2,000 maps, seed 20260919. One process plans every map. Ten processes plan disjoint slices of that same sequence, so each map is planned once. Count how often the filled path walks into a real obstacle. Both counts are **1,439**. The picture of the hand does not depend on which core drew it. A faster schedule is not a different product.
 
-![Serial crashes 1,439. Parallel crashes 1,439. Ten workers.](docs/figures/fleet.png)
+机器更快，会不会看见另一个世界？同一批 2,000 张地图，种子 20260919。一个进程规划全部地图。十个进程规划这条序列里互不重叠的片段，每张地图只规划一次。数一数补全后的路径走进真障碍的次数。两个数都是 **1,439**。手的画面不取决于哪一个核画的。更快的安排不是另一个产品。
+
+![The same 2,000 maps. One core: 1,439 crashes. Ten cores: 1,439 crashes.](docs/figures/fleet.png)
+
+**When the sensor returns nothing, what does the library hand to the game?** A sound file, a picture, and a hand scan are the three objects this product stores. Python’s `wave` module writes a legal file with **0** frames. SciPy 1.17.1 and soundfile 0.14.0 read that file back as an array of length 0 at 8,000 Hz. Pillow 11.3.0 builds an image whose size is **0×0**. OpenCV 5.0.0 counts **0** nonzero pixels in an empty image. Open3D 0.20.0 returns a cloud with **0** points and a mesh with **0** vertices. Each call succeeds. The next module can play, show, or render the result.
+
+传感器什么都没交回来时，库交给游戏的是什么？声音文件、画面、手部扫描，是这个产品要存的三样东西。Python 的 `wave` 能写出 **0** 帧的合法文件。SciPy 1.17.1 和 soundfile 0.14.0 把它读回成长度为 0、采样率 8,000 Hz 的数组。Pillow 11.3.0 能造出尺寸为 **0×0** 的图。OpenCV 5.0.0 在空图上数到 **0** 个非零像素。Open3D 0.20.0 交回 **0** 个点的点云和 **0** 个顶点的网格。这些调用都成功。下一模块可以播放、显示或渲染这个结果。
+
+That success is the product problem. A file with a sample rate and no frames is not the same thing as a person at rest. A cloud that exists and contains no points is not a finished grasp. Eight real samples are a different object: they are class **1**, a movement, and they occupy **8** frames. A list with no samples is refused.
+
+这次成功就是产品的问题。一个有采样率、却没有帧的文件，不是“人处于静息”。一个存在、却没有点的点云，不是一次已经完成的抓取。八个真实采样是另一个对象：类别是 **1**，一次动作，占 **8** 帧。一个没有采样的列表会被拒绝。
+
+![A legal empty sound, a legal empty image, a legal empty cloud.](docs/figures/media.png)
 
 On the same empty inputs this repository raises. On the occupied input the value is unchanged: a 2×2 assignment stays cost 2, the string `CAKE` stays distance 3, a recorded EEG clip stays 8 samples with markers `go` and `end`, one lidar pair counts as 1, three observations count as 3, and a three-cell chain reaches 2 in one step and 3 at the fixed point.
 
