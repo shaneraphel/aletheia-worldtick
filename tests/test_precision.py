@@ -271,6 +271,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(rec["serial"]["drop_frame"], 0)
         self.assertEqual(rec["serial"]["drop_rate"], 0)
 
+    def test_filled_nearness_is_not_seen_ground(self) -> None:
+        from near import distances
+
+        origin = (0, 0)
+        dist = distances(origin, lambda p: p != (1, 0))
+        self.assertNotIn((1, 0), dist)
+        self.assertIn((0, 1), dist)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

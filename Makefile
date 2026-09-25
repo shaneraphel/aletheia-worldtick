@@ -53,6 +53,7 @@ evidence:
 	$(PYTHON) company.py
 	$(PYTHON) framecheck.py
 	$(PYTHON) clock.py
+	$(PYTHON) near.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

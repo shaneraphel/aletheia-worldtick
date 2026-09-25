@@ -50,6 +50,7 @@ jobs:
           python company.py
           python framecheck.py
           python clock.py
+          python near.py
           python show_policy.py
           python tick_bench.py
       - name: paper

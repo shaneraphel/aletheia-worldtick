@@ -135,6 +135,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![A dropped window moves neither clock. After the seen path ends, the sound is still heard 6,414 times.](docs/figures/clock.png)
 
+**How far someone is.** The two people stay at (4, 4) and (8, 8). The hand starts at the last cell the camera saw to be free. One walk may enter only cells that were observed free. The other walk treats a missing cell as free. The second walk reaches a person the first walk cannot reach **2,301** times. When both walks arrive, the filled walk is strictly shorter **560** times, out of **1,192** arrivals by both. The people do not move, and the hand is not sent to them. The shorter number is what a filled picture would call nearby. It is shorter because it crosses cells the camera did not see. One core and ten cores agree.
+
+**离别人有多远。** 两个人仍站在 (4, 4) 和 (8, 8)。手从摄像机最后看见的那格空地出发。一条路只能进入已经观测为空的格子。另一条路把没看见的格子当成空地。第二条路能走到、第一条路走不到的人，有 **2,301** 次。两条路都能走到时，补全的那条严格更短 **560** 次，两条都能到的一共 **1,192** 次。人不动，手也不被派过去。更小的那个数，是补全画面会称作「近」的数。它更近，是因为它穿过了摄像机没看见的格子。一个核和十个核一致。
+
+![The filled walk reaches 2,301 people the seen walk cannot. When both arrive, the fill is shorter 560 times.](docs/figures/near.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -361,6 +367,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `company.py` | a person is drawn only if their cell was seen |
 | `framecheck.py` | a second drawing of the held frame matches; the filled frame does not |
 | `clock.py` | a dropped window moves neither the rate nor the frame |
+| `near.py` | distance to a person on seen ground, and on the filled map |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
