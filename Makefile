@@ -47,6 +47,7 @@ evidence:
 	$(PYTHON) fleet.py
 	$(PYTHON) media.py
 	$(PYTHON) pace.py
+	$(PYTHON) room.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

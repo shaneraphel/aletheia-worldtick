@@ -215,6 +215,17 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(naive_label(samples), "movement")
         self.assertEqual((hz_of("rest"), hz_of("movement")), (2, 6))
 
+    def test_the_picture_stops_at_the_camera(self) -> None:
+        from room import run as room_run
+        from room import split_path
+
+        admitted, tail = split_path([(0, 0), (1, 0), (2, 0)], [[0, 1, 0]], [[0, None, 0]])
+        self.assertEqual(admitted, [(0, 0)])
+        self.assertEqual(tail[0], (1, 0))
+        rec = room_run(n=16, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["admitted_hits"], 0)
+
     def test_visual_selector_trails_the_oracle(self) -> None:
         from selector import choose
         from grid2d import make_grid

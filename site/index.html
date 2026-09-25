@@ -101,6 +101,15 @@
     <button id="b-stop" type="button">停止 · Stop</button>
   </div>
   <p class="out" id="pace-out">还没有播放。 Not playing.</p>
+  <p>画面里的手只走到已经看见的空地。灰色格子不画成已经走过。房间里的另外两个人站着，不要求你走过去。</p>
+  <p class="en">The hand in the picture walks only on ground that was seen. A gray cell is not drawn as already crossed. The other two people stay where they are. You are not asked to go to them.</p>
+  <canvas id="room" width="640" height="220" style="width:100%; max-width:640px; background:#161b22; border-radius:12px;"></canvas>
+  <div class="row">
+    <button id="b-step" type="button">完整窗口，向前一格 · Complete window, one cell</button>
+    <button id="b-holdpic" type="button">丢掉窗口，画面保持 · Drop the window, hold the picture</button>
+    <button id="b-fillpic" type="button">补全后再画 · Draw the filled path</button>
+  </div>
+  <p class="out" id="room-out">手在起点。 The hand is at the start.</p>
   <p>这两件事不要混在一起。第一件：机器更快，会不会看见另一个世界？同一批 2,000 张地图，一个进程算一遍，十个进程各算一段。补全后的路径走进真障碍的次数都是 1,439。手的画面不取决于哪一个核画的。第二件：传感器什么都没交回来时，库交给游戏的是什么？wave 能写出 0 帧的合法声音。SciPy 和 soundfile 把它读成 8,000 Hz 的空数组。Pillow 能造出 0×0 的图。OpenCV 在空图上数到 0。Open3D 交回 0 个点的点云。这些调用都成功，所以下一模块可以播放或渲染它们。有采样率却没有帧，不是“人处于静息”。存在却没有点，不是“手已经抓完”。八个真实采样才是类别 1。一个没有采样的列表会被拒绝。</p>
   <p class="en">Keep the two questions apart. First: does a faster machine see a different world? The same 2,000 maps, planned once in one process and once in ten slices, both walk into a real obstacle 1,439 times. The picture of the hand does not depend on which core drew it. Second: when the sensor returns nothing, what does the library hand to the game? wave writes a legal sound with 0 frames. SciPy and soundfile read it as an empty array at 8,000 Hz. Pillow builds a 0×0 image. OpenCV counts 0. Open3D returns a cloud of 0 points. Each call succeeds, so the next module can play or render it. A sample rate with no frames is not “the person is at rest.” A cloud that exists and has no points is not “the hand has finished.” Eight real samples are class 1. A list with no samples is refused.</p>
 
@@ -249,6 +258,77 @@ document.getElementById("b-stop").onclick = () => {
   paceTimer = null;
   showPace("停止。 Stopped.");
 };
+
+const roomCells = [
+  { seen: true, obstacle: false },
+  { seen: false, obstacle: true },
+  { seen: true, obstacle: false },
+  { seen: false, obstacle: true },
+  { seen: true, obstacle: false },
+];
+let handAt = 0;
+const others = [1.6, 3.4];
+
+function drawRoom(showFilled) {
+  const canvas = document.getElementById("room");
+  const g = canvas.getContext("2d");
+  g.clearRect(0, 0, canvas.width, canvas.height);
+  g.fillStyle = "#161b22";
+  g.fillRect(0, 0, canvas.width, canvas.height);
+  const x0 = 40;
+  const y = 90;
+  const w = 100;
+  roomCells.forEach((cell, i) => {
+    const x = x0 + i * (w + 12);
+    if (!cell.seen) g.fillStyle = "#6e7681";
+    else if (cell.obstacle) g.fillStyle = "#21262d";
+    else g.fillStyle = "#1f6f4a";
+    g.fillRect(x, y, w, 64);
+    if (showFilled && !cell.seen && cell.obstacle) {
+      g.fillStyle = "#da3633";
+      g.fillRect(x, y, w, 64);
+    }
+  });
+  others.forEach((at) => {
+    const x = x0 + at * (w + 12);
+    g.fillStyle = "#79c0ff";
+    g.beginPath();
+    g.arc(x, 48, 10, 0, Math.PI * 2);
+    g.fill();
+  });
+  const hx = x0 + handAt * (w + 12) + w / 2;
+  g.fillStyle = "#e6edf3";
+  g.beginPath();
+  g.arc(hx, y + 32, 14, 0, Math.PI * 2);
+  g.fill();
+}
+
+function roomSay(text) {
+  document.getElementById("room-out").textContent = text;
+}
+
+document.getElementById("b-step").onclick = () => {
+  const next = handAt + 1;
+  if (next < roomCells.length && roomCells[next].seen && !roomCells[next].obstacle) {
+    handAt = next;
+    drawRoom(false);
+    roomSay("完整窗口。手走到下一格已看见的空地。 Complete window. The hand steps onto the next seen free cell.");
+  } else {
+    drawRoom(false);
+    roomSay("下一格没看见。手留在原地。 The next cell was not seen. The hand stays.");
+  }
+};
+document.getElementById("b-holdpic").onclick = () => {
+  drawRoom(false);
+  roomSay("窗口丢掉了。画面停在这一帧，手没有移动。 Window dropped. The picture holds. The hand did not move.");
+};
+document.getElementById("b-fillpic").onclick = () => {
+  const next = handAt + 1;
+  if (next < roomCells.length) handAt = next;
+  drawRoom(true);
+  roomSay("补全后再画：手进了没看见的格子。那一格是障碍。 Drawn after the fill: the hand entered a cell that was not seen. That cell is an obstacle.");
+};
+drawRoom(false);
 </script>
 </body>
 </html>

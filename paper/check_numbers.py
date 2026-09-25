@@ -100,10 +100,13 @@ def main() -> int:
     check(media["libraries"]["open3d"]["empty_points"] == 0 and media["libraries"]["pillow"]["empty_size"] == [0, 0], "empty cloud and empty image")
     pace = load("PACE.json")
     check((pace["dropped"], pace["naive_disagrees_while_dropped"], pace["hold_changes_while_dropped"], pace["allowed_changes"]) == (3057, 712, 0, 3379), "pace 3057 dropped, 712 would retune, 0 holds move")
+    room = load("ROOM.json")
+    s = room["serial"]
+    check(room["equal"] and (s["admitted"], s["tail"], s["tail_hits"], s["admitted_hits"], s["drew_past_camera"]) == (6657, 53456, 2474, 0, 1938), "picture stops: 6657 seen, 2474 obstacles undrawn")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938"]:
         check(token in text, f"paper cites {token}")
-    print("all 48 number checks passed")
+    print("all 53 number checks passed")
     return 0
 
 

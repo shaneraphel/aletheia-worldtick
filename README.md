@@ -96,6 +96,12 @@ The page is aimed at two groups, and both are injured by the same write.
 
 ![First 40 steps. Gray is a dropped window. Red is the rate a zero-fill would set. Blue is the rate that plays.](docs/figures/pace.png)
 
+**What you see.** The hand in the picture is drawn only as far as the camera has seen, and only on cells that were free. On the same 2,000 maps that drawn part is **6,657** cells and contains **0** obstacles. The filled path keeps going for another **53,456** cells. **2,474** of those are real obstacles. On **1,938** maps the filled picture would have drawn past the camera. One core and ten cores count the same cells. The other people in the room stand still. They are the low-demand place: present, not a route, and not a score. The picture does not walk the hand through them, and it does not walk the hand through a cell the camera did not see. When the brain window drops, the picture holds on the same frame, just as the sound holds its rate.
+
+**你看见的。** 画面里的手只画到摄像机已经看见的地方，而且只画在当时是空地的格子上。同一批 2,000 张地图，画出来的部分是 **6,657** 个格子，里面的障碍是 **0**。补全后的路径还要再走 **53,456** 个格子，其中 **2,474** 个是真障碍。**1,938** 张地图上，补全后的画面会画过摄像机看见的最后一格。一个核和十个核数到的格子相同。房间里的其他人站着不动。他们是那个低消耗的地方：在场，但不是一条要走的路，也不是一个分数。画面不把手穿过他们，也不把手穿过摄像机没看见的格子。脑电窗口丢掉时，画面停在同一帧，和声音把速度留在原地是同一条规则。
+
+![The drawn part has 0 obstacles. The undrawn tail contains 2,474.](docs/figures/room.png)
+
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
 一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
@@ -316,6 +322,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `fleet.py` | the same 2,000 maps on one core and on many; the crash count matches |
 | `media.py` | empty WAV, empty image, empty cloud, beside a held session |
 | `pace.py` | left-right rate: 2 or 6 when the window is complete, unchanged when it is not |
+| `room.py` | the picture stops at the last cell the camera saw |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

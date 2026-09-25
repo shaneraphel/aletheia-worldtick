@@ -44,6 +44,7 @@ jobs:
           python session.py
           python fleet.py
           python pace.py
+          python room.py
           python show_policy.py
           python tick_bench.py
       - name: paper
