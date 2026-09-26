@@ -250,6 +250,16 @@
   </div>
   <p class="out" id="replay-out"></p>
 
+  <h2>三路 · Three streams</h2>
+  <p>脑电加两根手指。按“来一步”，三块各显示到没到。三路都到，画面才是全新的。再加一路，再打七折。</p>
+  <p class="en">The brain recording and two fingers. Press “one step”: each block shows whether it arrived. The frame is new only when all three arrive. Each added stream multiplies by 0.7 again.</p>
+  <div class="cells" id="trio"></div>
+  <div class="row">
+    <button id="b-trio-one" type="button">来一步 · One step</button>
+    <button id="b-trio-clear" type="button">清零 · Clear</button>
+  </div>
+  <p class="out" id="trio-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -881,6 +891,37 @@ document.getElementById("b-replay-clear").onclick = () => {
   paintReplay("清零了。 Cleared. ");
 };
 paintReplay("按“来一步”，再按“重算”。 Press “one step,” then “replay.” ");
+
+let trioCount = { steps: 0, fresh: 0 };
+
+function paintTrio(arrived, note) {
+  const box = document.getElementById("trio");
+  box.replaceChildren();
+  const names = ["脑电 brain", "手指一 finger 1", "手指二 finger 2"];
+  names.forEach((name, i) => {
+    const v = !arrived ? "—" : (arrived[i] ? "到" : "晚");
+    const d = document.createElement("div");
+    d.className = "cell " + (v === "到" ? "free" : "mask");
+    d.textContent = name + "\n" + v;
+    box.appendChild(d);
+  });
+  const fresh = arrived && arrived[0] && arrived[1] && arrived[2];
+  document.getElementById("trio-out").textContent =
+    note + "走了 " + trioCount.steps + " 步，全新的 " + trioCount.fresh + " 步。" +
+    " " + trioCount.steps + " steps, " + trioCount.fresh + " new." + (arrived ? (fresh ? " 这一步是全新的。" : " 这一步留着。") : "");
+}
+
+document.getElementById("b-trio-one").onclick = () => {
+  const arrived = [Math.random() >= 0.3, Math.random() >= 0.3, Math.random() >= 0.3];
+  trioCount.steps += 1;
+  if (arrived[0] && arrived[1] && arrived[2]) trioCount.fresh += 1;
+  paintTrio(arrived, "来了一步。 One step. ");
+};
+document.getElementById("b-trio-clear").onclick = () => {
+  trioCount = { steps: 0, fresh: 0 };
+  paintTrio(null, "清零了。 Cleared. ");
+};
+paintTrio(null, "按“来一步”。 Press “one step.” ");
 </script>
 </body>
 </html>

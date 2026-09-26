@@ -410,6 +410,17 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["clean"], s["sessions"])
         self.assertEqual(s["replayed"], s["sessions"] * 16)
 
+    def test_each_stream_multiplies_the_new_frame_share(self) -> None:
+        from trio import run as trio_run
+
+        first = trio_run(n=4, workers=2)
+        second = trio_run(n=4, workers=1)
+        self.assertTrue(first["equal"])
+        self.assertEqual(first["serial"], second["serial"])
+        s = first["serial"]
+        self.assertLessEqual(s["new"] + s["none"], s["sessions"] * 16)
+        self.assertLessEqual(s["differ"], s["sessions"] * 16)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

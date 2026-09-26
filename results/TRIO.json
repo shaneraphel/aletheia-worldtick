@@ -1,0 +1,24 @@
+{
+  "schema": "worldtick.trio.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "new": 55321,
+    "differ": 85303,
+    "none": 4306,
+    "sessions": 10000
+  },
+  "parallel": {
+    "new": 55321,
+    "differ": 85303,
+    "none": 4306,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

@@ -63,6 +63,7 @@ jobs:
           python dose.py
           python worst.py
           python replay.py
+          python trio.py
           python show_policy.py
           python tick_bench.py
       - name: paper
