@@ -64,6 +64,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 交出去的画面，事后算不回来，对不上账。 | 每一步留一行记录，专从记录重算。两套算法各算一遍，步步一样。 | 十六万步重算，对不上零步。一万段全对。笔记里的定理 22 写的是这件事。 |
 | 路越加越多，画面还每步都是新的。 | 三路都到，画面才是全新的。再加一路，全新的再打七折。 | 两路时全新占一半，三路时只剩三分之一。笔记里的定理 23 写的是这件事。 |
 | 开放世界里，人没传来，画面也把他画到你身边，看起来你们已经在一起。手每步都走，还会从他身边走过去，把本来站在一起的两个人拉开。 | 在不在一起，只看两边最后一次真正传到的位置。隔两步以内才算站在一起。人没传来，他留在原地。你自己走过去，算你走过去。 | 每步都走的那只手，说你们在一起的次数更少，因为它已经走过他了。留下的画面还有六万五千多步说在一起，猜的画面并没有。猜的画面另有两万七千多步说在一起，位置其实还没到。 |
+| 对方屏幕上的你，用每步都在走的那只手来画。他看着你从身边走过，最后站进树桩。 | 他看见的位置，只在这一步真正送到的时候才更新，更新成传感器已经走到的地方，不会更远。 | 每步都走的手，有五万步说自己在他旁边。那是每一段里固定的五步。真正送到的位置说在旁边的少得多。两个位置对不上的有十五万多步。送到的位置一次都没有跑在传感器前面。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -234,6 +235,12 @@ Whether two people are beside each other is how many steps apart they are on the
 
 ![每步都走的那只手，已经从人身边走过去了。留下的画面还在他旁边。](docs/figures/beside.png)
 
+对方看见的你，是最后一次送到他那边的位置，不是每步都在走的那只手。那只手每一段都有固定的五步说自己在他旁边，然后走到树桩上。送到的位置说在旁边的次数少得多，而且不会比传感器已经走到的地方更远。页面上的橙圈就是送到的位置。你走了、这一步没送到，橙圈留在后面。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+What the other person sees of you is the last place that was delivered, not the hand that moves every step. That hand spends five fixed steps of every session beside them, then stands on the stump. The delivered place says you are beside them less often, and it never runs ahead of where the sensors have already gone. On the page the amber ring is the delivered place. When you move and that step is not sent, the ring stays behind. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![他看见的，是送到的那一包。每步都走的那只手会先从他身边走过去。](docs/figures/relay.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -327,6 +334,7 @@ python3.12 show_policy.py
 | `approach.py` | 这个人没传来，画面不把他带到你面前 |
 | `bill.py` | 没发生的那一行，不开账 |
 | `beside.py` | 隔两步以内才算站在一起。每步都走的手会从人身边走过去 |
+| `relay.py` | 对方看见的，是送到的那一包，不会跑在传感器前面 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

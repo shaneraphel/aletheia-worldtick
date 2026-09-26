@@ -495,6 +495,17 @@ class PrecisionTest(unittest.TestCase):
         s = rec["serial"]
         self.assertEqual(s["differ"] + s["same"], s["sessions"] * 16)
 
+    def test_what_they_see_is_the_last_place_that_was_delivered(self) -> None:
+        from relay import run as relay_run
+
+        rec = relay_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["walk_beside"], 5 * s["sessions"])
+        self.assertEqual(s["walk_stump"], s["sessions"])
+        self.assertEqual(s["only_walk"] + s["only_packet"] + s["both"] + s["neither"], s["sessions"] * 16)
+
     def test_standing_beside_someone_uses_two_places_that_arrived(self) -> None:
         from beside import run as beside_run
 

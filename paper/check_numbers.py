@@ -19,7 +19,12 @@ def load(name: str) -> dict:
     return json.loads((RES / name).read_text())
 
 
+_checks = 0
+
+
 def check(cond: bool, label: str) -> None:
+    global _checks
+    _checks += 1
     if not cond:
         raise SystemExit(f"number check failed: {label}")
     print(f"ok: {label}")
@@ -172,10 +177,14 @@ def main() -> int:
     check((beside["only_guess"], beside["only_held"], beside["both"], beside["apart"]) == (27971, 65303, 4712, 62014), "beside disagreement 27971/65303/4712/62014")
     check(beside["only_guess"] + beside["only_held"] == 93274, "beside pictures disagree on 93274 steps")
     check((beside["you_closed"], beside["they_pulled"], beside["guess_shrunk_on_miss"], beside["held_moved_on_miss"]) == (3691, 3657, 17000, 0), "you walk in on 3691, the guessed picture pulls them on 3657")
+    relay = load("RELAY.json")["serial"]
+    check((relay["only_walk"], relay["only_packet"], relay["both"], relay["neither"]) == (47175, 15006, 2825, 94994), "relay beside accounts 47175/15006/2825/94994")
+    check(relay["only_walk"] + relay["only_packet"] == 62181 and relay["packet_beside"] == 17831 and relay["walk_beside"] == 5 * relay["sessions"], "relay disagrees on 62181, delivered beside 17831")
+    check((relay["differ"], relay["ahead"], relay["deliveries"], relay["lag_sum"], relay["overshoot"], relay["packet_stump"]) == (153195, 27192, 112198, 32098, 0, 0), "delivered place differs on 153195 steps and is never ahead")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417", "2981", "4078", "3922", "63903", "199886", "75353", "81428", "21801", "48700", "19448", "4938", "6022", "42145", "150000", "96605", "132416", "13146", "13117", "129652", "40037", "90720", "360000", "75184", "46715", "71442", "78861", "58450", "55321", "85303", "4306", "783232", "586904", "2138", "7862", "2912", "34142", "27605", "38725", "154689", "5311", "107227", "27971", "65303", "4712", "62014", "93274", "3691", "3657", "17000"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417", "2981", "4078", "3922", "63903", "199886", "75353", "81428", "21801", "48700", "19448", "4938", "6022", "42145", "150000", "96605", "132416", "13146", "13117", "129652", "40037", "90720", "360000", "75184", "46715", "71442", "78861", "58450", "55321", "85303", "4306", "783232", "586904", "2138", "7862", "2912", "34142", "27605", "38725", "154689", "5311", "107227", "27971", "65303", "4712", "62014", "93274", "3691", "3657", "17000", "50,000", "17831", "47175", "15006", "2825", "94994", "62181", "153195", "27192", "112198", "32098"]:
         check(token in text, f"paper cites {token}")
-    print("all 156 number checks passed")
+    print(f"all {_checks} number checks passed")
     return 0
 
 
