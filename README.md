@@ -66,6 +66,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 开放世界里，人没传来，画面也把他画到你身边，看起来你们已经在一起。手每步都走，还会从他身边走过去，把本来站在一起的两个人拉开。 | 在不在一起，只看两边最后一次真正传到的位置。隔两步以内才算站在一起。人没传来，他留在原地。你自己走过去，算你走过去。 | 每步都走的那只手，说你们在一起的次数更少，因为它已经走过他了。留下的画面还有六万五千多步说在一起，猜的画面并没有。猜的画面另有两万七千多步说在一起，位置其实还没到。 |
 | 对方屏幕上的你，用每步都在走的那只手来画。他看着你从身边走过，最后站进树桩。 | 他看见的位置，只在这一步真正送到的时候才更新，更新成传感器已经走到的地方，不会更远。 | 每步都走的手，有五万步说自己在他旁边。那是每一段里固定的五步。真正送到的位置说在旁边的少得多。两个位置对不上的有十五万多步。送到的位置一次都没有跑在传感器前面。 |
 | 世界模型每一拍都要一张新画面。包到了，就算新的。 | 位置没变，就还是这一张。包到了、人还在原地，不叫模型再画。 | 同一批送到的位置里，九万五千多步位置没变。六万四千多步才换了地方。四万七千多步是包到了、画面却还是原处。 |
+| 开放世界里两人之间只有一个距离，画在同一张画面上。 | 你量的是你真正走到的地方离他多远。他量的是最后一次送到的地方离他多远。 | 同一万段里，这两个距离有两万七千多步不一样。绝大多数是你比他所以为的更近。只有几百步是他以为你更近，因为你已经走过他，送到的位置还在近的一侧。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -248,6 +249,12 @@ A repeated place is not a new picture. On the same deliveries, most steps do not
 
 ![位置没变，就还是这一张。](docs/figures/once.png)
 
+你量到的距离，和他量到的，不是同一个数。你量的是白点离蓝点多远。他量的是橙圈离蓝点多远。同一万段里，这两个距离有 27,143 步不一样。其中 26,761 步是你比他所以为的更近。只有 382 步是他以为你更近：你已经走过他，送到的位置还在近的一侧。另有 49 步，送到的位置落在后面，两边的距离却一样，因为两个位置到他是同样远、方向相反。页面上每走一步都会写出这两个数。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+The distance on your screen and the distance on theirs are not the same number. You measure how far the white dot is from the blue dot. They measure how far the amber ring is from the blue dot. On the same ten thousand sessions those two distances differ on 27,143 steps. On 26,761 of them you are closer than they think. On 382 they think you are closer: you have walked past them, and the place that was sent is still on the near side. On another 49 steps the sent place is behind and the distances still match, because the two places are equally far from them in opposite directions. Every step on the page states both numbers. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![你往往比他所以为的更近。](docs/figures/apart.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -343,6 +350,7 @@ python3.12 show_policy.py
 | `beside.py` | 隔两步以内才算站在一起。每步都走的手会从人身边走过去 |
 | `relay.py` | 对方看见的，是送到的那一包，不会跑在传感器前面 |
 | `once.py` | 位置没变，就还是这一张 |
+| `apart.py` | 你量到的距离，和他量到的，不是同一个数 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

@@ -408,7 +408,15 @@ function paintCamp(note) {
   const guessEn = guessApart <= 2 ? "Gray and dim are beside each other" : "Gray and dim are still apart";
   const relayEn = campRelay === campHeld ? "The amber ring is on the white dot. They have the place you are at." : "The amber ring is still behind the white dot. That step was not sent.";
   const relayZh = campRelay === campHeld ? "橙圈和白点在同一处，这一步送到了。" : "橙圈还在白点后面，这一步没送到。";
-  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn;
+  const youSteps = Math.abs(campHeld - campPerson);
+  const themSteps = Math.abs(campRelay - campPerson);
+  const distZh = youSteps === themSteps
+    ? "两边量到的距离一样，隔 " + youSteps + " 步。"
+    : "你这边隔 " + youSteps + " 步，他那边隔 " + themSteps + " 步。";
+  const distEn = youSteps === themSteps
+    ? "Both screens measure " + youSteps + " steps."
+    : "Your screen measures " + youSteps + " steps. Theirs measures " + themSteps + ".";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn;
 }
 
 function campMusic() {

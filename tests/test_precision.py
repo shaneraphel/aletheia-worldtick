@@ -495,6 +495,17 @@ class PrecisionTest(unittest.TestCase):
         s = rec["serial"]
         self.assertEqual(s["differ"] + s["same"], s["sessions"] * 16)
 
+    def test_the_two_screens_measure_different_distances(self) -> None:
+        from apart import run as apart_run
+
+        rec = apart_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["you_closer"] + s["them_closer"], s["differ"])
+        self.assertEqual(s["differ"] + s["mirror"], s["ahead"])
+        self.assertEqual(s["same"] + s["differ"], s["sessions"] * 16)
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 
