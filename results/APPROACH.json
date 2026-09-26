@@ -1,0 +1,26 @@
+{
+  "schema": "worldtick.approach.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "visitor_at": 10,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "invented": 34142,
+    "observed": 27605,
+    "stay_moved_on_miss": 0,
+    "guess_moved_on_miss": 38725,
+    "sessions": 10000
+  },
+  "parallel": {
+    "invented": 34142,
+    "observed": 27605,
+    "stay_moved_on_miss": 0,
+    "guess_moved_on_miss": 38725,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

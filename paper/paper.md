@@ -184,6 +184,10 @@ On 10,000 sessions of 16 steps, 160000 steps, seed 20260919, steps where all thr
 
 On 10,000 sessions the guessed hand is drawn as a grip on the stump 2912 times. The hand the user sees is drawn as a grip on the stump 0 times, and as a grip on any model 0 times. One core and ten cores agree. These are not angles from a hand.
 
+**A missing signal does not walk someone toward you.** The other person starts at place 10. When their signal arrives, they step one place toward the hand with probability 1/2. When it does not arrive, the guessed picture still steps them toward the hand, and the picture the user sees leaves them where they are. A meeting is a shared place.
+
+On 10,000 sessions the guessed picture shows a meeting the other picture does not on 34142 steps. Meetings both pictures show are 27605. Steps on which the person the user sees moves while their signal is missing: 0. The guessed person does move on 38725 of those missing steps. One core and ten cores agree. This person is not a recording of anyone.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

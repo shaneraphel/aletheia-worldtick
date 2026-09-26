@@ -41,6 +41,7 @@
     <button id="b-camp-both" type="button">这一步，两边都到了 · Both arrived</button>
     <button id="b-camp-late" type="button">这一步，有一路晚了 · One is late</button>
     <button id="b-camp-clear" type="button">回到起点 · Back to the start</button>
+    <button id="b-camp-person" type="button">这个人没传来 · Their signal did not arrive</button>
   </div>
   <p class="out" id="camp-out"></p>
 
@@ -357,6 +358,8 @@ const campPath = [];
 for (let i = 0; i < 17; i++) campPath.push([-1.35 + i * 0.15, -0.55 + i * 0.08]);
 let campHeld = 0;
 let campGuess = 0;
+let campPerson = 10;
+let campPersonGuess = 10;
 const campImg = new Image();
 campImg.src = "clearing-camp.png";
 
@@ -369,7 +372,12 @@ function paintCamp(note) {
   const g = canvas.getContext("2d");
   g.clearRect(0, 0, canvas.width, canvas.height);
   if (campImg.complete && campImg.naturalWidth) g.drawImage(campImg, 0, 0, canvas.width, canvas.height);
-  const person = campProject(campPath[10][0], campPath[10][1]);
+  const person = campProject(campPath[campPerson][0], campPath[campPerson][1]);
+  const personGuess = campProject(campPath[campPersonGuess][0], campPath[campPersonGuess][1]);
+  g.fillStyle = "#3d4f66";
+  g.beginPath();
+  g.arc(personGuess[0], personGuess[1], 12, 0, Math.PI * 2);
+  g.fill();
   g.fillStyle = "#79c0ff";
   g.beginPath();
   g.arc(person[0], person[1], 12, 0, Math.PI * 2);
@@ -404,7 +412,15 @@ document.getElementById("b-camp-late").onclick = () => {
 document.getElementById("b-camp-clear").onclick = () => {
   campHeld = 0;
   campGuess = 0;
+  campPerson = 10;
+  campPersonGuess = 10;
   paintCamp("回到起点。 Back to the start.");
+};
+document.getElementById("b-camp-person").onclick = () => {
+  campMusic();
+  if (campPersonGuess > campHeld) campPersonGuess -= 1;
+  else if (campPersonGuess < campHeld) campPersonGuess += 1;
+  paintCamp("这个人没传来。蓝点留在原地。淡蓝的点被带到你这边。曲子不换。 Their signal did not arrive. The blue dot stays. The dim dot is walked toward you. The piece does not switch.");
 };
 campImg.onload = () => paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
 paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");

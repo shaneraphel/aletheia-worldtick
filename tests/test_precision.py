@@ -480,6 +480,13 @@ class PrecisionTest(unittest.TestCase):
         self.assertGreaterEqual(s["guess_grip"], s["guess_stump"])
         self.assertLessEqual(s["held_stump"], s["held_grip"])
 
+    def test_a_missing_signal_does_not_walk_them_over(self) -> None:
+        from approach import run as approach_run
+
+        rec = approach_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["stay_moved_on_miss"], 0)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 
