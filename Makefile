@@ -62,6 +62,7 @@ evidence:
 	$(PYTHON) luck.py
 	$(PYTHON) catchup.py
 	$(PYTHON) rate.py
+	$(PYTHON) duo.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

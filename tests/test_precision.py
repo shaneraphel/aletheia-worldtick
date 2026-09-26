@@ -359,6 +359,16 @@ class PrecisionTest(unittest.TestCase):
         self.assertLessEqual(s["new_frames"], 6 * s["sessions"])
         self.assertLessEqual(s["differ"], s["sessions"] * 16)
 
+    def test_two_hands_in_one_room_move_independently(self) -> None:
+        from duo import run as duo_run
+
+        rec = duo_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["bothmove"] + s["onlyA"] + s["onlyB"] + s["still"], s["pairs"] * 16)
+        self.assertEqual(s["order_mismatch"], 0)
+        self.assertEqual((s["a_dark_b_moves"], s["b_dark_a_moves"]), (s["onlyB"], s["onlyA"]))
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

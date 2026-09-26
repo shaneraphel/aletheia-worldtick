@@ -1,0 +1,32 @@
+{
+  "schema": "worldtick.duo.v1",
+  "seed": 20260919,
+  "pairs": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "bothmove": 132416,
+    "onlyA": 13146,
+    "onlyB": 13117,
+    "still": 1321,
+    "a_dark_b_moves": 13117,
+    "b_dark_a_moves": 13146,
+    "order_mismatch": 0,
+    "pairs": 10000
+  },
+  "parallel": {
+    "bothmove": 132416,
+    "onlyA": 13146,
+    "onlyB": 13117,
+    "still": 1321,
+    "a_dark_b_moves": 13117,
+    "b_dark_a_moves": 13146,
+    "order_mismatch": 0,
+    "pairs": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

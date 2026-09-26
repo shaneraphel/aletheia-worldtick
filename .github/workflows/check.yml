@@ -59,6 +59,7 @@ jobs:
           python luck.py
           python catchup.py
           python rate.py
+          python duo.py
           python show_policy.py
           python tick_bench.py
       - name: paper
