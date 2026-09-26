@@ -18,11 +18,11 @@ We do not replace the model that draws the future. The same path-finding routine
 
 ## 怎么读
 
-1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，谁蒙对了，断完第几步追上，两路不一样快时画面有几步是全新的，一间房里两只手各动各的，以及越晚、全新的越少，最坏能坏到哪，记下来再算一遍，以及三路都到才是全新的。
+1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，谁蒙对了，断完第几步追上，两路不一样快时画面有几步是全新的，一间房里两只手各动各的，以及越晚、全新的越少，最坏能坏到哪，记下来再算一遍，三路都到才是全新的，以及同一批两种芯片数出来一样。
 2. 再读下面三节：这幅画面给谁；别人的方法和我们的方法差在哪；今晚交出去的是什么。
 3. 要核对一个数，或要看证明，打开笔记。这份说明不把实验次数再念一遍。
 
-1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, see who is right by luck, see how many steps a catch-up takes after a burst, see how many frames are new when the streams run at different speeds, see two hands in one room move independently, see new frames fall as arrivals get later, see how bad a miss budget can get, see the record replay itself, and see three streams make one new frame.
+1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, see who is right by luck, see how many steps a catch-up takes after a burst, see how many frames are new when the streams run at different speeds, see two hands in one room move independently, see new frames fall as arrivals get later, see how bad a miss budget can get, see the record replay itself, see three streams make one new frame, and see one batch counted the same on two chips.
 2. Then read who the picture is for, how this method differs from the others, and what is actually handed over.
 3. The note has the proofs and the counts. This file does not recite them.
 
@@ -184,6 +184,12 @@ With revenue, we build our own things: the hand, the headset connection, the gam
 
 ![十六家排着来，和轮着来，每家看见的画面相同。多一家从不发货的，其余不受影响。](docs/figures/tenant.png)
 
+同一批随机数，两种芯片各数一遍。十万段、每段十六步，全新的和不一样的，CPU 和 GPU 数出来完全相同。这不是更快，是同一个答案换了一颗芯片。
+
+One batch of random numbers, counted once on each of two chips. One hundred thousand sessions of sixteen steps: new frames and disagreements come out identical on the CPU and the GPU. This is not about speed. It is the same answer on another chip.
+
+![同一批随机数，CPU 和 GPU 各数一遍，数出来完全相同。](docs/figures/gpu.png)
+
 ## 谁在做：能点开验证的上游记录
 
 这一版一晚上能交出来，因为交出去的不是生成器，是检查：一个网页，一次调用，每个结果都能重算。生成画面的那一层按季度算时间，我们不在那张时间表上。
@@ -200,15 +206,21 @@ Every upstream record below can be opened. CP2K has one merged fix: [FIST dipole
 
 One call, three outcomes. It sits in front of a planner the product already runs.
 
+长什么样，看这张图。脑电和手指先进检查，再进世界模型，再出来画面和声音。检查下面接着记录，记录重算一遍，对上了才算完。
+
+What it looks like is in this diagram. The brain recording and the finger enter the check first, then the world model, then come out as picture and sound. Below the check hangs the record; the replay has to match before the work is done.
+
+![检查坐在世界模型前面，记录坐在检查下面。重算对上了，才算完。](docs/figures/system.png)
+
 | 调用 | 人拿到的 |
 |---|---|
 | `measure` | 只用已经送到的信息往下走。两条路一样长时，走只经过看见的地面的那条。脑电没传全，不写成零。手指角度没到，不画成已经握紧。脑电和手指有一边晚了，画面留在上一次两边都到过的样子。 |
 | `impute` | 旁边的对照。同一个规划，在场景被补完之后会怎么走。用来给人看两边不一样。正式交出去的是上一行。 |
 | 停住 | 什么都没送来。不交回零，不交回一个里面什么都没有的列表，也不交回一个会悄悄传下去的非数。 |
 
-页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步；断完第几步追上，页面上断三步再一步一步来；手指三步来一次，页面上按一步看一步，全新的最多六步；一间房里两只手各动各的，谁没到冻谁；三档晚点各走十六步，越晚全新的越少；三档预算，看十六步的年龄，最老就是预算；来一步记一行，重算一遍步步一样；三块各显示到没到，三路都到才是全新的。
+页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步；断完第几步追上，页面上断三步再一步一步来；手指三步来一次，页面上按一步看一步，全新的最多六步；一间房里两只手各动各的，谁没到冻谁；三档晚点各走十六步，越晚全新的越少；三档预算，看十六步的年龄，最老就是预算；来一步记一行，重算一遍步步一样；三块各显示到没到，三路都到才是全新的；同一批随机数两种芯片各数一遍，页面上只说结论。
 
-On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time. After a burst, break three steps and walk back one at a time to see when it catches up. With the finger scheduled every third step, press step by step: at most six frames are new. Two hands in one room move independently; a miss freezes only that hand. Three missing rates, sixteen steps each: the later, the fewer new frames. Three budgets, sixteen ages each: the oldest is the budget. Log one row per step and replay it: every step matches. Three blocks show what arrived; the frame is new only when all three arrive.
+On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time. After a burst, break three steps and walk back one at a time to see when it catches up. With the finger scheduled every third step, press step by step: at most six frames are new. Two hands in one room move independently; a miss freezes only that hand. Three missing rates, sixteen steps each: the later, the fewer new frames. Three budgets, sixteen ages each: the oldest is the budget. Log one row per step and replay it: every step matches. Three blocks show what arrived; the frame is new only when all three arrive. One batch is counted on two chips; the page states the result.
 
 这次没有训练好的视频模型，没有头戴设备的开发包，没有机器人成功率，也没有治疗效果。
 
@@ -280,6 +292,8 @@ python3.12 show_policy.py
 | `worst.py` | 预算晚几步，画面最老几步 |
 | `replay.py` | 记下来再算一遍，步步一样 |
 | `trio.py` | 三路都到，画面才是全新的 |
+| `system.py` | 检查、模型、记录长什么样 |
+| `gpurun.py` · `gpucount/` | 同一批随机数，CPU 和 GPU 各数一遍 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

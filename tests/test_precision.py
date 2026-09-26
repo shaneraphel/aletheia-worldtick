@@ -421,6 +421,31 @@ class PrecisionTest(unittest.TestCase):
         self.assertLessEqual(s["new"] + s["none"], s["sessions"] * 16)
         self.assertLessEqual(s["differ"], s["sessions"] * 16)
 
+    def test_cpu_and_gpu_count_the_same_batch(self) -> None:
+        import shutil
+        import sys
+
+        if sys.platform == "darwin" and shutil.which("swiftc") is not None:
+            from gpurun import run as gpu_run
+
+            rec = gpu_run(n=512)
+            self.assertTrue(rec["arrays_match"])
+            self.assertEqual(rec["mismatch"], 0)
+        else:
+            rec = json.loads((ROOT / "results" / "GPU.json").read_text())
+            self.assertTrue(rec["arrays_match"])
+            self.assertEqual((rec["cpu"]["new"], rec["cpu"]["differ"]), (783232, 586904))
+            self.assertEqual((rec["gpu"]["new"], rec["gpu"]["differ"]), (783232, 586904))
+
+    def test_system_diagram_matches_its_manifest(self) -> None:
+        manifest = json.loads((ROOT / "results" / "SYSTEM.json").read_text())
+        self.assertEqual(len(manifest["nodes"]), 6)
+        self.assertEqual(len(manifest["edges"]), 6)
+        ids = [n["id"] for n in manifest["nodes"]]
+        for a, b in manifest["edges"]:
+            self.assertIn(a, ids)
+            self.assertIn(b, ids)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

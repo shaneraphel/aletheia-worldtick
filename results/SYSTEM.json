@@ -1,0 +1,73 @@
+{
+  "schema": "worldtick.system.v1",
+  "nodes": [
+    {
+      "id": "arrivals",
+      "cn": "\u8111\u7535\u548c\u624b\u6307",
+      "en": "brain and finger",
+      "col": 0,
+      "row": 1
+    },
+    {
+      "id": "check",
+      "cn": "\u68c0\u67e5",
+      "en": "the check",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "model",
+      "cn": "\u4e16\u754c\u6a21\u578b",
+      "en": "world model",
+      "col": 2,
+      "row": 1
+    },
+    {
+      "id": "scene",
+      "cn": "\u753b\u9762\u548c\u58f0\u97f3",
+      "en": "picture and sound",
+      "col": 3,
+      "row": 1
+    },
+    {
+      "id": "record",
+      "cn": "\u8bb0\u5f55",
+      "en": "record",
+      "col": 1,
+      "row": 2
+    },
+    {
+      "id": "replay",
+      "cn": "\u91cd\u7b97",
+      "en": "replay",
+      "col": 2,
+      "row": 2
+    }
+  ],
+  "edges": [
+    [
+      "arrivals",
+      "check"
+    ],
+    [
+      "check",
+      "model"
+    ],
+    [
+      "model",
+      "scene"
+    ],
+    [
+      "check",
+      "record"
+    ],
+    [
+      "record",
+      "replay"
+    ],
+    [
+      "replay",
+      "check"
+    ]
+  ]
+}

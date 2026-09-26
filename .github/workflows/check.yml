@@ -12,6 +12,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      # Figures need Pillow and a CJK font at the path the figure code reads.
+      # Ubuntu has no /Library/Fonts, so a Noto CJK face is placed there.
+      - name: figures
+        run: |
+          python -m pip install --quiet pillow==11.3.0
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          sudo mkdir -p /Library/Fonts
+          sudo cp "$(find /usr/share/fonts -iname '*NotoSansCJK-Regular*' | head -1)" "/Library/Fonts/Arial Unicode.ttf"
+          python -c "from PIL import ImageFont; ImageFont.truetype('/Library/Fonts/Arial Unicode.ttf', 18); print('font ok')"
       - name: precision
         run: python worldtick.py --verify-precision
       - name: unit
@@ -64,7 +74,10 @@ jobs:
           python worst.py
           python replay.py
           python trio.py
+          python system.py
           python show_policy.py
           python tick_bench.py
+      # gpurun.py stays out: it needs macOS with Swift and Metal.
+      # Its pinned Mac artifact results/GPU.json is verified by the paper step.
       - name: paper
         run: python paper/check_numbers.py

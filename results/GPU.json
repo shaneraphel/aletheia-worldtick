@@ -1,0 +1,21 @@
+{
+  "schema": "worldtick.gpu.v1",
+  "seed": 20260919,
+  "sessions": 100000,
+  "steps_each": 16,
+  "steps": 1600000,
+  "threshold": 1288490188,
+  "cpu": {
+    "new": 783232,
+    "differ": 586904
+  },
+  "gpu": {
+    "new": 783232,
+    "differ": 586904,
+    "device": "Apple M4"
+  },
+  "mismatch": 0,
+  "arrays_match": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

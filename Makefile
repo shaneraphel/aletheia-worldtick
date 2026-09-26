@@ -1,6 +1,6 @@
 PYTHON ?= python3.12
 
-.PHONY: check show bench evidence paper
+.PHONY: check show bench evidence paper gpu
 
 check:
 	$(PYTHON) worldtick.py --verify-precision
@@ -67,6 +67,11 @@ evidence:
 	$(PYTHON) worst.py
 	$(PYTHON) replay.py
 	$(PYTHON) trio.py
+	$(PYTHON) system.py
+
+# macOS-only Metal run; not in CI.
+gpu:
+	$(PYTHON) gpurun.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py
