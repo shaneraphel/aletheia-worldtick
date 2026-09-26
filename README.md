@@ -2,344 +2,185 @@
 
 [![check](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml/badge.svg)](https://github.com/shaneraphel/aletheia-worldtick/actions/workflows/check.yml)
 
-A boundary in front of a world model, a neural decoder, or a planner. Cells that were not observed stay unobserved. Empty input is refused, and does not come back as zero.
+世界模型要交回下一帧，脑电解码要交回“动了还是没动”，灵巧手的画面要交回一只已经摆好的手。有一块没测到的时候，常见做法是先填一个能接着用的值，后面的程序就把它当成测到的。这个仓库挡在那一步前面：只按已经到的信息继续；什么都没送来，就停住，不交回一个看起来像测量结果的零。
 
-放在世界模型、神经解码器或规划器前面的一道边界。没观测到的格子保持没观测到。空输入被拒绝，不会变成 0。
+A world model is asked for the next frame, a brain decoder is asked whether the person moved, and a picture of a dexterous hand is asked for a pose that has already happened. When part of the input never arrived, the usual next step writes in a usable value, and the program after that treats the value as a measurement. This repository sits in front of that step. It continues only from what arrived. When nothing arrived, it stops, and it does not hand back a zero that looks like a measurement.
 
 可以打开的页面：[shaneraphel.github.io/aletheia-worldtick](https://shaneraphel.github.io/aletheia-worldtick/)。
 
-这页在讲一件事。世界模型要交回一幅完整的画面，脑电解码要交回一个类别，灵巧手的引导要交回一只已经摆好的手。没测到的地方一旦被写成一个能用的值，下一模块就会把它当成测到的。我们把这次写入挡住。空的声音文件、空白的图、没有点的扫描，库都会交出来；会话不把它们读成“人是平静的”或“手已经抓完”。
+## 怎么读
 
-This page is about one action. A world model is asked for a finished picture, a neural decoder is asked for a class, and a hand coach is asked for a pose that has already happened. Once an unmeasured place is written as a usable value, the next module treats it as measured. We stop that write. An empty sound file, a blank image, and a scan with no points are all objects the libraries return. The session does not read them as “the person is calm” or “the hand has finished the grasp.”
+按这个顺序。页面是可以交给别人试的东西。这份说明讲它为什么长这样。证明、和每篇论文的对照、全部计数，都在 [`paper/paper.md`](paper/paper.md)，这里不把那些数再念一遍。
 
-## How to read this
+1. 打开页面，先按按钮。走廊上的三种走法，一段脑电，奖励表上的下一步，左右声，再看一根手指。先看见它做什么。
+2. 回来读：这幅画面给谁，市面上的产品卡在哪，常用的库在信号没来时会交回什么，为什么挡在模型前面就够，交出去的是哪一次调用。
+3. 下面的说法表只收这份说明里会反复用到的几个词。同一个词在页面上是同一个意思。
 
-Read in this order. The page is the product. This file is the reason the product is shaped that way. The proofs are a separate note.
+Read in that order. The page is the thing you can hand someone. This file is why it is shaped this way. The proofs, the comparison with each paper, and the full counts are in [`paper/paper.md`](paper/paper.md). They are not repeated here.
 
-1. Open the page and press the three buttons on the corridor, then the EEG window, then the reward row. Do this before reading any count.
-2. If a word is unfamiliar, use the list below. The same word means the same thing in the page, in this file, and in the note.
-3. Read where shipped products get stuck, then where common libraries still return a number. That is the problem the page is for.
-4. Read why a check in front of the model is enough. The counts there are witnesses of those statements, not a separate result.
-5. The proofs, and the comparison with each cited method, are in [`paper/paper.md`](paper/paper.md).
+1. Open the page and press the buttons first: the three ways to walk the corridor, the brain recording, the next action on the reward table, the left-right sound, then one finger.
+2. Then read who the picture is for, where shipped products get stuck, what common libraries return when a signal never arrived, why a check in front of the model is enough, and which call is actually shipped.
+3. The short list below is only the words this file keeps using. The same word means the same thing on the page.
 
-按这个顺序读。页面是产品。这份文件说明产品为什么是这个形状。证明在另一份笔记里。
+拿融资去做视频世界模型的团队，时间花在数据、训练和机器人测试上。那是生成画面的那一层。这里交付的是它前面的检查：一个页面，一次调用。它不训练，也不把别人论文里的机器人分数说成自己跑出来的。
 
-1. 先打开页面，按走廊上的三个按钮，再看脑电窗口，再看奖励表。在看任何计数之前做完这一步。
-2. 有不认识的词，用下面的名单。同一个词在页面、这份文件和笔记里是同一个意思。
-3. 再读业界产品卡在哪里，以及常用的库为什么仍会交回一个数。那就是这个页面要处理的问题。
-4. 再读为什么模型前面的一道检查就够。那里的计数是这些陈述的见证，不是另一项结果。
-5. 证明，以及和每篇参考文献的方法对照，在 [`paper/paper.md`](paper/paper.md)。
+A team funded to ship a video world model spends the work on data, training, and a robot test. That is the layer that generates the picture. What this repository ships is the check in front of that layer: a page, and one call. It does not train, and it does not present robot scores from other papers as its own runs.
 
-A team funded to ship a video world model spends the work on data, training, and a robot test. That is the generator. This repository ships the check in front of the generator. The two do not share a schedule, because they are not the same product. The check is a page and a library call. It does not train anything, and it does not claim the generator's robot score.
+别的项目的 issue 是留给那个项目自己的缺陷的。这里不把这个页面贴到别人的 issue 下面。某个库在“什么都没送来”时确有缺陷，而且能用测试修好，贡献的形式是一个 pull request。
 
-拿融资去做视频世界模型的团队，时间花在数据、训练和机器人测试上。那是生成器。本仓库交付的是生成器前面的检查。两件事不是同一张时间表，因为它们不是同一个产品。检查是一个页面和一次库调用。它不训练，也不声称自己有生成器的机器人分数。
+Issues on another project are for defects in that project. This page is not posted there. When a library really does the wrong thing on a missing recording, and a test can fix it, the contribution is a pull request.
 
-We do not post the page on another project's issue tracker. Those issues are for defects in that project. A comment that is really a product announcement gets removed, and it should. When a library has an empty-input defect we can fix with a test, the contribution is a pull request.
+## 说法
 
-我们不把页面发到别的项目的 issue 里。那些 issue 是为了那个项目自己的缺陷。一条实际内容是产品公告的评论会被删掉，也应该被删掉。某个库在空输入上确有缺陷、而且我们能用测试修好时，贡献的形式是一个 pull request。
-
-## Words
-
-| Word | Meaning |
-|---|---|
-| Partial observation | Some entries of the input were not measured. They are not the same thing as a measured zero. |
-| Fill, imputation | Writing a usable value into an entry that was not measured, then treating the result as if it had been measured. |
-| Optimistic fill | The written value is “free” on a map, or zero on a signal. The hole disappears. |
-| Pessimistic fill | The written value is “blocked.” The planner may not enter a cell it did not see. |
-| Measured step | A transition that uses only entries that were actually observed. An unseen cell is not entered. |
-| Mask | The mark that an entry was not observed. A fill deletes this mark. After the fill, a checker that looks for the mark finds nothing. |
-| Empty input | An input with nothing in it. Here it is refused. It is not returned as zero, as an empty list, or as not-a-number. |
-| Tie | Two plans with the same length. On a tie, the shipped decision keeps the plan that uses only observed free cells. |
-| Oracle | A score that knows which plan hits a real obstacle. It is a reference, not a sensor the product has at deployment. |
-| Discount `9/101` | The point at which one backup changes the action on the trap table. Below it, the visible row wins. Above it, the backup wins. |
-| Fixed point | The set of everything reachable if the walk is allowed to finish. One step is a smaller set. Returning the fixed point in one call reports the finished walk as the present. |
-| One question | Blocking the first cell where the filled path crashes, then planning again. It does not repair the other unseen cells. |
-| Closed loop | Observing again before every step, instead of trusting the rest of the fill. |
-| Scene hold | The music and the picture stay as they are, because the brain window was incomplete. A class computed after filling that window is not allowed to change them. |
-| Bilateral sound | Alternating left-right sound, the sensory part of an EMDR session. This repository does not claim a treatment effect. The rule is when that sound may change. |
-| Grasp picture | The 3D picture of a dexterous hand in the scene. It may not show a finished grasp through a cell the camera did not see. |
-| Closed finger | Joint code 0. A missing sample is not this code. |
-| Zero buffer | A missing joint sample stored as 0, so the picture draws that finger closed. |
-| Silent file | A sound file with zero frames. Players open it. The session does not treat it as rest. |
-| Empty cloud | A point cloud or mesh with nothing in it. Geometry libraries return it. The session does not treat it as a finished hand. |
-
-| 词 | 意思 |
-|---|---|
-| 部分观测 | 输入里有些项没有测到。它们不是“测到了零”。 |
-| 补全 | 给没测到的项写上一个能用的值，然后把结果当成测到的。 |
-| 乐观补全 | 在地图上写成空地，在信号上写成零。洞消失了。 |
-| 悲观补全 | 写成挡住。规划器不能进入没看见的格子。 |
-| 实测步 | 只用真正观测到的项做一次转移。没看见的格子不进入。 |
-| 掩码 | “这一项没观测到”的标记。补全会删掉这个标记。补完之后，寻找这个标记的检查什么也找不到。 |
-| 空输入 | 里面什么都没有的输入。这里直接拒绝。不返回零，不返回空列表，也不返回非数。 |
-| 平局 | 两条路一样长。平局时，交出去的决策留下只走已观测空地的那条。 |
-| 先知 | 知道哪条路会撞上真障碍的分数。它是参照，不是产品在部署时拥有的传感器。 |
-| 折扣 `9/101` | 在陷阱表上，一次回溯改变动作的那个点。低于它，当前行赢。高于它，回溯赢。 |
-| 不动点 | 如果把路走完，所有能到达的位置。一步比它小。一次调用就返回不动点，是把走完的路当成了现在。 |
-| 一次追问 | 封住补全路径第一次撞上的格子，再规划一次。它不修理其余没看见的格子。 |
-| 闭环 | 每走一步之前再观测一次，而不是相信补全剩下的部分。 |
-| 画面保持 | 音乐和画面维持原样，因为脑电窗口不完整。用补全后的类别去改它们，是不允许的。 |
-| 双侧声音 | 左右交替的声音，是 EMDR 里的感觉部分。本仓库不声称治疗效果。规则只规定这段声音什么时候可以变。 |
-| 抓取画面 | 灵巧手在场景里的三维画面。它不能把摄像机没看见的格子画成一次已经完成的抓取。 |
-| 闭合的手指 | 关节代码 0。没到的采样不是这个代码。 |
-| 零缓冲 | 把没到的关节采样存成 0，于是画面把这根手指画成闭合。 |
-| 无声文件 | 帧数为 0 的声音文件。播放器会打开它。会话不把它当成静息。 |
-| 空点云 | 里面没有点的点云或网格。几何库会把它交回来。会话不把它当成一只已经成形的手。 |
-
-## Two people, one picture
-
-The page is aimed at two groups, and both are injured by the same write.
-
-**Someone adapting to a dexterous hand.** The world model is there to show the hand in the scene, in real time, so the person can see a reach before the hand has finished it. The failure is a picture of a grasp that passes through a cell the camera did not see. The person then practices a motion the world does not contain. On 2,000 maps the filled picture does this 1,439 times. The coach draws that completed grasp 0 times.
-
-**Someone staying with a bilateral sound.** EMDR pairs recall with a left-right sound. The practical difficulty is that the sound is hard to stay with, so the game is an open place where that sound can continue, and where other people are present at low demand. A world model can also be asked to change the sound and the picture when a brain window looks frightened. If that window was incomplete and then filled with zeros, the change is not a reading of fright. On 10,000 signed windows with the last 4 samples dropped, a zero-fill would retune 2,421 of them: 1,280 movements read as rest, and 1,141 rests read as movement. The session holds all 10,000. It does not claim that holding treats anyone.
-
-**What you can hear.** Open the page and press “play the left-right sound.” Clicks alternate between the left ear and the right ear. A complete window may set the speed: **2** clicks a second when the recorded sum is not positive, **6** when it is. Press “drop the window” and the speed stays where it is. On 10,000 such steps, a window was dropped **3,057** times. A zero-fill would have switched to the other speed on **712** of those steps. The speed already playing changed **0** times while a window was dropped. When the window was complete, the speed was allowed to follow it, and it changed on **3,379** steps. This is not a reading of fright. Nothing here detects a panic, and nothing here claims to treat one. The sound is the part a person can stay with. The rule is when it may change.
-
-**你能听到的。** 打开页面，按“播放左右交替的声音”。点击在左耳和右耳之间交替。窗口完整时，速度可以设定：实录的和不是正数时，每秒 **2** 下；是正数时，每秒 **6** 下。按“丢掉这个窗口”，速度停在原来的地方。10,000 步里，窗口被丢掉 **3,057** 次。补零会在其中 **712** 步改成另一个速度。窗口被丢掉的时候，正在响的速度改变了 **0** 次。窗口完整时，速度允许跟着实录走，这样的改变有 **3,379** 步。这不是对惊恐的读取。这里没有检测惊恐发作，也没有声称在治疗。声音是人可以留下来听的那一部分。规则只规定它什么时候可以变。
-
-![First 40 steps. Gray is a dropped window. Red is the rate a zero-fill would set. Blue is the rate that plays.](docs/figures/pace.png)
-
-**What you see.** The hand in the picture is drawn only as far as the camera has seen, and only on cells that were free. On the same 2,000 maps that drawn part is **6,657** cells and contains **0** obstacles. The filled path keeps going for another **53,456** cells. **2,474** of those are real obstacles. On **1,938** maps the filled picture would have drawn past the camera. One core and ten cores count the same cells. The other people in the room stand still. They are the low-demand place: present, not a route, and not a score. The picture does not walk the hand through them, and it does not walk the hand through a cell the camera did not see. When the brain window drops, the picture holds on the same frame, just as the sound holds its rate.
-
-**你看见的。** 画面里的手只画到摄像机已经看见的地方，而且只画在当时是空地的格子上。同一批 2,000 张地图，画出来的部分是 **6,657** 个格子，里面的障碍是 **0**。补全后的路径还要再走 **53,456** 个格子，其中 **2,474** 个是真障碍。**1,938** 张地图上，补全后的画面会画过摄像机看见的最后一格。一个核和十个核数到的格子相同。房间里的其他人站着不动。他们是那个低消耗的地方：在场，但不是一条要走的路，也不是一个分数。画面不把手穿过他们，也不把手穿过摄像机没看见的格子。脑电窗口丢掉时，画面停在同一帧，和声音把速度留在原地是同一条规则。
-
-![The drawn part has 0 obstacles. The undrawn tail contains 2,474.](docs/figures/room.png)
-
-**What the coach may say.** A complete window with a positive sum is an attempt: the left-right rate may become 6 a second. If the next cell was not seen, the picture does not take that step. The person can hear that the attempt arrived. The hand stays. On 2,000 maps, each with one window, this pair happens **630** times. The window was dropped on **572** maps, and then both the sound and the picture hold. A movement with the next cell actually seen happens **22** times. Only then may the picture advance. The other **776** complete windows are not movements. One core and ten cores agree. A fill would have drawn those 630 unseen steps as finished grasps. The coach does not. This is not a mood and not a diagnosis. The window was complete, and the cell was not seen. Both of those were observed.
-
-**教练可以说的。** 一个完整窗口、采样之和为正，是一次尝试：左右声可以变成每秒 6 下。如果下一格没被看见，画面不走这一步。人可以听见这次尝试到了。手留在原地。2,000 张地图各配一个窗口，这种配对出现 **630** 次。窗口被丢掉的有 **572** 张，那时声音和画面都保持。动作而且下一格确实看见了的，有 **22** 次。只有这时画面可以前进。其余 **776** 个完整窗口不是动作。一个核和十个核一致。补全会把那 630 步没看见的格子画成已经抓完。教练不这么画。这不是心情，也不是诊断。窗口是完整的，格子没有被看见。这两件事都是观测到的。
-
-![630 attempts were heard while the next cell was unseen. The picture does not draw those steps.](docs/figures/attempt.png)
-
-**What is kept.** Each map can leave one row. A dropped window does not store a class. The hand's cell is the last place the camera saw, and that place was free. On these 2,000 rows, **1,428** classes are stored, one for every complete window and none for a dropped window. A class written onto a drop is **0**. A hand cell that was not seen is **0**. The **630** steps that were heard but not seen are stored as refused, not as finished grasps. One core and ten cores write the same counts. This is not data taken from a person. It is the shape a record is allowed to have: useful for practicing the hand, and for the sound that stayed, without a diagnosis inside it.
-
-**留下的。** 每张地图可以留下一行。丢掉的窗口不记类别。手的格子是摄像机最后看见的地方，而且那里是空地。这 2,000 行里记下 **1,428** 个类别，每个完整窗口一个，丢掉的窗口一个都没有。把类别写进丢包的次数是 **0**。手落在没看见的格子上的次数是 **0**。那 **630** 步被听到、却没被看见的，记成拒绝，不记成已经抓完。一个核和十个核写下的计数相同。这不是从人身上采来的数据。这是记录允许长成的形状：可以用于练手，也可以用于那段留下来的声音，里面没有诊断。
-
-![1,428 classes stored. 0 classes on a dropped window. 0 hands on an unseen cell. 630 steps kept as refused.](docs/figures/ledger.png)
-
-**Who is in the room.** Two people stand on every map, at the same two cells, (4, 4) and (8, 8). They do not move. The hand is not sent to them. A person is drawn only if that cell was seen. Of 4,000 person-cells, **3,003** were seen and **997** were not, so those 997 are not in the picture. The filled path walks through an unseen person **19** times. The path that stays on seen cells walks through a seen person **2** times. Those 19 crossings are there because a missing cell was written free. One core and ten cores agree. The room does not become safer or more social by drawing people the camera did not see.
-
-**谁在房间里。** 两个人站在每张地图的同一处，(4, 4) 和 (8, 8)。他们不移动。手也不被派去找他们。一个人只有在那一格被看见时才画出来。4,000 个人格里，**3,003** 个被看见，**997** 个没有，所以这 997 个不在画面里。补全后的路径穿过没看见的人 **19** 次。只走已看见格子的路径，穿过一个已经被看见的人 **2** 次。这 19 次穿过，是因为没看见的格子被写成了空地。一个核和十个核一致。把摄像机没看见的人画进来，房间不会因此更安全，也不会因此更适合待着。
-
-![3,003 people seen. 997 not drawn. The filled path walks through an unseen person 19 times.](docs/figures/company.png)
-
-**The next frame.** The picture is a frame of pixels. Paint a cell only if it was seen, and put the hand on the last seen free cell. Paint that frame again, with no new observation: on all 2,000 maps the pixels match. The count of frames that changed on a repaint is **0**. Paint the missing cells too: the frame differs on all **2,000** maps, and **127,697** unseen cells receive a color. The picture moved because the fill wrote into cells the camera did not see. One core and ten cores get the same pixels. An example of the two frames is below: the left one holds, the right one fills.
-
-**下一帧。** 画面是一帧像素。一格只有被看见才上色，手放在最后一格看见的空地上。没有新的观测，把这一帧再画一次：2,000 张地图的像素都相同。再画时像素发生变化的次数是 **0**。把没看见的格子也涂上：帧在全部 **2,000** 张地图上都不一样，**127,697** 个没看见的格子得到了颜色。画面动了，是因为补全写进了摄像机没看见的格子。一个核和十个核得到同样的像素。下面左边是保持的那一帧，右边是补全的那一帧。
-
-![The held frame and the filled frame differ. A second drawing of the held frame does not.](docs/figures/frames.png)
-
-![Held frame: only seen cells.](docs/figures/frame-held.png)
-![Filled frame: unseen cells are painted too.](docs/figures/frame-filled.png)
-
-**One clock.** Sixteen windows arrive on each map. If the window is dropped, the rate does not change and the frame does not change. Both of those counts, over 2,000 maps, are **0**. The picture steps **3,665** times, and only when the window is a movement and a seen cell is still in front of the hand. The rate may follow a complete window after that, and it changes **10,933** times. Once the seen cells are used up, a movement is still heard **6,414** times, and the picture does not step. The sound continues. The camera has nothing new to draw. One core and ten cores agree.
-
-**一个时钟。** 每张地图上来十六个窗口。窗口丢掉时，速度不变，帧也不变。2,000 张地图上，这两件事的次数都是 **0**。画面向前 **3,665** 次，而且只在窗口是一次动作、手前面还有看见的格子时。速度在看见的格子用完之后仍可以跟着完整窗口走，这样的改变有 **10,933** 次。路走完以后，动作仍被听到 **6,414** 次，画面不再向前。声音还在。摄像机没有新的东西可画。一个核和十个核一致。
-
-![A dropped window moves neither clock. After the seen path ends, the sound is still heard 6,414 times.](docs/figures/clock.png)
-
-**How far someone is.** The two people stay at (4, 4) and (8, 8). The hand starts at the last cell the camera saw to be free. One walk may enter only cells that were observed free. The other walk treats a missing cell as free. The second walk reaches a person the first walk cannot reach **2,301** times. When both walks arrive, the filled walk is strictly shorter **560** times, out of **1,192** arrivals by both. The people do not move, and the hand is not sent to them. The shorter number is what a filled picture would call nearby. It is shorter because it crosses cells the camera did not see. One core and ten cores agree.
-
-**离别人有多远。** 两个人仍站在 (4, 4) 和 (8, 8)。手从摄像机最后看见的那格空地出发。一条路只能进入已经观测为空的格子。另一条路把没看见的格子当成空地。第二条路能走到、第一条路走不到的人，有 **2,301** 次。两条路都能走到时，补全的那条严格更短 **560** 次，两条都能到的一共 **1,192** 次。人不动，手也不被派过去。更小的那个数，是补全画面会称作「近」的数。它更近，是因为它穿过了摄像机没看见的格子。一个核和十个核一致。
-
-![The filled walk reaches 2,301 people the seen walk cannot. When both arrive, the fill is shorter 560 times.](docs/figures/near.png)
-
-**The sound is not the picture.** The frame is the map the camera saw, plus the cell the hand stands on. The left-right rate is not drawn into those pixels. On the same 2,000 maps and the same sixteen windows, the pixels change **3,665** times. That is the same number as the picture steps. The rate changes while the picture stays **8,377** times. A dropped window changes the pixels **0** times. You can hear a different speed and still be looking at the same frame. One core and ten cores agree.
-
-**声音不是画面。** 帧是摄像机看见的地图，加上手站着的那一格。左右声的速度不画进这些像素。同一批 2,000 张地图、同样的十六个窗口，像素改变 **3,665** 次，和画面向前的次数相同。速度变了、画面没变，有 **8,377** 次。丢掉的窗口让像素改变的次数是 **0**。你可以听见另一个速度，眼前仍是同一帧。一个核和十个核一致。
-
-![The pixels change 3,665 times. The sound changes while the picture stays 8,377 times.](docs/figures/reel.png)
-
-**A missing sample is not a closed finger.** Closed is joint code 0. Each finger either sends a code in 0…7, or the sample is missing, with probability 0.30. The coach keeps the last code that arrived. Before the first arrival it keeps nothing, and it does not draw the finger closed. The zero buffer writes 0 on every miss, so the picture closes a finger that was last seen open, and it also closes a finger that has never been seen. The question is how often that picture shows a closure the coach did not observe.
-
-On 2,000 hands, sixteen packets, five fingers — 160,000 finger-steps, seed 20260919 — the buffer draws a closure the coach does not draw **43,014** times. **38,623** of those fingers were last seen open. **4,391** had never sent a sample. The coach draws **19,335** closures, and the buffer draws every one of them. A closure drawn by the coach without a received 0 happens **0** times. Five joints allocated as zeros read back as five zeros: a hand drawn closed before any packet. One core and ten cores agree. These are not angles from a person.
-
-**没到的采样不是闭合。** 闭合是关节代码 0。每根手指要么送来 0 到 7 的代码，要么这次采样没到，概率是 0.30。引导保留上次真正到过的代码。第一次到达之前什么都不保留，也不把这根手指画成闭合。零缓冲在每次丢失时写上 0，于是画面会握上一根上次还张开的手指，也会握上一根从未到过采样的手指。问题是，这幅画面有多少次画出了引导没有测到的闭合。
-
-2,000 只手、每只 16 个包、五根手指，共 160,000 步，种子 20260919。零缓冲画出引导没有画出的闭合，有 **43,014** 次。其中 **38,623** 次，这根手指上次看见时是张开的。**4,391** 次，这根手指一次采样都没到过。引导画出 **19,335** 次闭合，零缓冲把这 19,335 次全都画了。引导在没有收到 0 的情况下画出闭合，是 **0** 次。五个关节按零分配，读回来就是五个零：包还没到，手已经被画成握上。一个核和十个核一致。这些不是从人身上量到的角度。
-
-![The zero buffer draws 43,014 closures the coach did not observe.](docs/figures/aperture.png)
-
-The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
-
-一个人在适应灵巧手。世界模型用来把这只手画进场景，让人在手还没走完时看见这一下。失败的画面是一次抓取穿过了摄像机没看见的格子。人会按一幅世界里并不存在的动作去练。2,000 张图上，补全后的画面这样做了 1,439 次。引导把这种“已经抓完”画出来的次数是 0。
-
-一个人留在一段双侧声音里。EMDR 把回忆和左右交替的声音放在一起。实际的困难是这段声音很难听下去，所以游戏是一个开放的地方，声音可以在那里继续，别人也可以在场，但不要求高消耗的社交。世界模型还可能被要求：脑电窗口看起来像惊恐时，就改声音和画面。如果那个窗口不完整，又被补成了零，这次改动就不是对惊恐的读取。10,000 个有符号窗口丢掉最后 4 个采样，补零会改掉其中 2,421 个：1,280 个动作被读成静息，1,141 个静息被读成动作。会话对这 10,000 个窗口全部保持。它不声称保持本身在治疗谁。
-
-世界模型是那幅画面。非侵入窗口是一次部分观测。手上的摄像机也是一次部分观测。补上其中任何一个，再让画面动起来，就是本仓库在地图、脑电和奖励表上已经拒绝的同一个决策。
-
-![An incomplete window would retune 2,421 sounds. The session holds all 10,000. A filled grasp crosses an obstacle 1,439 times. The coach draws that 0 times.](docs/figures/session.png)
-
-## Where shipped products get stuck
-
-Three products share one stuck step. The model or the map is asked to return a complete scene, and the next module treats that scene as measured.
-
-**World models.** [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) are used as “imagine the next frame, then act.” The frame that leaves the model has no holes. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) showed that a latent can win on pixels and lose on the plan. [Yuan et al.](https://arxiv.org/abs/2609.24745) showed that an oracle, which sees the real outcome of each imagined future, lifts success from 68.9% to 79.2%, while selectors that score the picture recover little of that gap. The product difficulty is not drawing the future. It is that the drawn future no longer says which part was guessed. [Zhang et al.](https://arxiv.org/abs/2609.02159) make the same point from the other side: which future you keep changes the action.
-
-**Brain–computer interfaces.** [LaBraM](https://arxiv.org/abs/2405.18765) predicts masked EEG, and [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) exists so a checkpoint always sees its training montage. A dropped packet written as zeros is classified as rest, the same class as a person who did not move. A clinical product then treats “the packet did not arrive” as “the user is at rest.”
-
-**Robots and vehicles.** An occupancy map, a lidar filter, or a log player is expected to return a scene even when the sensor returned nothing. The planner then drives through a cell the sensor did not measure, because that cell now looks free.
-
-三个产品卡在同一步。模型或地图被要求交回一幅完整场景，下一模块把这幅场景当成测到的。
-
-世界模型这边，Cosmos 和 V-JEPA 2.1 的用法是“先想象下一帧，再行动”。交出去的画面没有洞。Nilaksh 等人说明，隐变量可以在像素上赢、在规划上输。Yuan 等人说明，能看到每个想象未来真实结果的先知，把成功率从 68.9% 抬到 79.2%，只给画面打分的选择器收不回这个差距。难点不是把未来画出来，而是画完之后看不出哪一块是猜的。Zhang 等人从另一侧说了同一件事：留下哪一个未来，动作就变了。
-
-脑机接口这边，LaBraM 预测被遮住的脑电，InterpolatedLaBraM 保证检查点始终看到训练时的电极布局。丢失的数据包写成零，会被判成静息，和人没动是同一个类别。临床产品于是把“包没到”做成“用户在休息”。
-
-机器人和车辆这边，占据栅格、激光滤波、日志回放都被期望在传感器没返回时仍交出一幅场景。规划器随后开过一个传感器没测到的格子，因为那个格子现在看起来是空的。
-
-![The same split on a hand, a neural decoder, a mobile robot, and a vehicle.](docs/figures/hand-delta.png)
-![Brain–computer interface.](docs/figures/bci-delta.png)
-![Mobile robot.](docs/figures/robot-delta.png)
-![Vehicle.](docs/figures/vehicle-delta.png)
-
-## Where widely used open source still gives a number
-
-These libraries are the ones a robotics or biosignal stack actually calls. On the input they were built for, they are right. On empty input they return a value the next function will accept. That value is then a decision.
-
-这些库是机器人栈和生物信号栈真的会调用的。在它们被设计来接受的输入上，它们是对的。在空输入上，它们返回一个下一函数愿意接受的值。这个值随后就成了决策。
-
-| Project | What empty input returns | Why that is a product problem |
+| 说法 | 人话 | In plain words |
 |---|---|---|
-| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) | an empty model loads | a scene with no bodies is still a scene |
-| [munkres 1.1.4](https://github.com/bmc/munkres) | `[]` on `compute([[]])` ([issue 54](https://github.com/bmc/munkres/issues/54)) | “no assignment problem” looks like “assignment finished” |
-| [NumPy 2.4.6](https://github.com/numpy/numpy) | norm `0.0`, mean `NaN` | a missing vector looks like a zero vector, or like a number that propagates quietly |
-| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) | duration 0, zero annotations | a missing recording looks like a silent recording |
-| [NetworkX 3.6.1](https://github.com/networkx/networkx) | an empty graph has 0 nodes | “no map was loaded” looks like “the map is empty, so you are done” |
-| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) | an empty update is accepted and the state stays `0.0` | “no lidar return” looks like “the state is zero” |
-| [Foxglove MCAP](https://github.com/foxglove/mcap) | a log with zero messages | playback continues on silence |
-| [ROS 2 rosbag2](https://github.com/ros2/rosbag2) | a bag with zero messages | same, for the bag a robot records |
-| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) | a keyless filter reports non-membership | “no key was given” looks like “the key is absent” |
-| Python `wave` | a file with **0** frames is a legal sound | silence with a sample rate is still a sound the next player will open |
-| [SciPy 1.17.1](https://github.com/scipy/scipy) | an empty array written as WAV comes back with shape `(0,)` at 8,000 Hz | a dropped bilateral tone is a readable file |
-| [soundfile 0.14.0](https://github.com/bastibe/python-soundfile) | the same empty WAV reads as length 0 | same, for the library a game uses to play it |
-| [Pillow 11.3.0](https://github.com/python-pillow/Pillow) | `Image.new` accepts a **0×0** RGB image | a world-model frame can exist with no pixels |
-| [OpenCV 5.0.0](https://github.com/opencv/opencv) | an empty image has **0** nonzero pixels | “nothing was seen” looks like a counted zero |
-| [Open3D 0.20.0](https://github.com/isl-org/Open3D) | an empty cloud has **0** points and an empty mesh has **0** vertices | a hand scan that did not arrive is still a geometry object |
+| 缺口 | 这一段没测到。它和“测到了零”不是一回事。 | A part that was not measured. That is different from measuring a zero. |
+| 填上 | 给缺口写一个能接着用的值。后面的程序就会把它当成测到的。 | Write a usable value into the gap. The next program treats it as measured. |
+| 只按测到的走 | 下一步只用已经到的信息。没到的地方先停住。 | The next step uses only what arrived. Where nothing arrived, it waits. |
+| 平手 | 两条路一样长。交出去的是只走已经看见的地面的那条。 | Two routes of the same length. The one that stays on ground already seen is the one that ships. |
+| 左右声 | 左耳和右耳交替。这里不声称它在治疗。规则只规定这段声音什么时候可以变。 | Sound that alternates left and right. No treatment is claimed. The rule is when that sound may change. |
+| 画面先停 | 这一小段脑电不完整时，音乐和画面保持原样。 | When this stretch of the brain recording is incomplete, the music and the picture stay as they are. |
+| 手指没到 | 关节角度没传来。画面不把这根手指画成已经握上。 | A joint angle did not arrive. The picture does not draw that finger closed. |
 
-The shortcoming is the same in each row. Absence is stored as a number. The next module cannot tell “nothing was measured” from “the measurement was zero.”
+## 两个人，一幅画面
 
-每一行的不足是一样的。缺失被存成一个数。下一模块分不出“什么都没测到”和“测到的是零”。
+页面面对两种人。伤到他们的是同一种写法：把没测到的地方填上，再当成已经发生。
 
-## What those two measurements are
+The page is for two people. What injures both is the same write: fill in what was not measured, then treat it as something that happened.
 
-Two questions, asked separately, because they are easy to mix together.
+**正在适应一只灵巧手的人。** 世界模型把这只手画进场景里，让人在动作还没做完时看见这一下，用来练。画面只能画到摄像机已经看见的地方。没看见的地面如果被画成已经走过去，人就会去练一个场景里没有的动作。房间里可以有别人，他们站着，画面不把人派过去，也不把没看见的人画进来充数。
 
-**Does a faster machine see a different world?** Take the same 2,000 maps, seed 20260919. One process plans every map. Ten processes plan disjoint slices of that same sequence, so each map is planned once. Count how often the filled path walks into a real obstacle. Both counts are **1,439**. The picture of the hand does not depend on which core drew it. A faster schedule is not a different product.
+**Someone learning a dexterous hand.** The world model draws the hand into the scene so the person can see a motion before it is finished, and practice it. The picture stops where the camera stopped. If unseen ground is drawn as already crossed, the person practices a motion the place does not contain. Other people may stand in the room. The picture does not send the hand to them, and it does not add people the camera never saw.
 
-机器更快，会不会看见另一个世界？同一批 2,000 张地图，种子 20260919。一个进程规划全部地图。十个进程规划这条序列里互不重叠的片段，每张地图只规划一次。数一数补全后的路径走进真障碍的次数。两个数都是 **1,439**。手的画面不取决于哪一个核画的。更快的安排不是另一个产品。
+**想把左右声听下去的人。** 左右交替的声音很难一直听。游戏是一个可以待着的开阔地方：声音继续，别人在场，不要求完成任务，也不要求高消耗的社交。若要在脑电看起来紧张时改音乐、改画面，这一小段必须是完整的。不完整就先保持。把没到的采样填成零再去改，改的就不是这个人当时的状态。这里不检测惊恐，也不声称在治疗谁。数据也不是从人身上采来的。
 
-![The same 2,000 maps. One core: 1,439 crashes. Ten cores: 1,439 crashes.](docs/figures/fleet.png)
+**Someone trying to stay with the left-right sound.** That sound is hard to keep listening to. The game is an open place where it can continue, with other people present, without a task and without demanding social effort. If the music or the picture is to change because the brain recording looks tense, that stretch has to be complete. An incomplete stretch stays as it is. Filling missing samples with zeros and then changing the scene is not a reading of the person. Nothing here detects fright, and nothing here claims to treat anyone. The numbers in the note are not taken from a person.
 
-**When the sensor returns nothing, what does the library hand to the game?** A sound file, a picture, and a hand scan are the three objects this product stores. Python’s `wave` module writes a legal file with **0** frames. SciPy 1.17.1 and soundfile 0.14.0 read that file back as an array of length 0 at 8,000 Hz. Pillow 11.3.0 builds an image whose size is **0×0**. OpenCV 5.0.0 counts **0** nonzero pixels in an empty image. Open3D 0.20.0 returns a cloud with **0** points and a mesh with **0** vertices. Each call succeeds. The next module can play, show, or render the result.
+**你打开页面能做的。** 按播放，点击在左耳和右耳之间交替。这一小段信号完整时，休息是慢的，动作是快的。按“这一段丢了”，速度留在正在响的那一档。画面里的手只走到已经看见、可以走的地面。你按“我动了，下一格没看见”，声音可以变快，手留在原地。再看一根手指：张开的角度到了，两边都是张开；角度丢了，填上的那一版会画成握上，给用户看的那一版保持上次真正到过的角度；一次都没到过，就不画成握上。
 
-传感器什么都没交回来时，库交给游戏的是什么？声音文件、画面、手部扫描，是这个产品要存的三样东西。Python 的 `wave` 能写出 **0** 帧的合法文件。SciPy 1.17.1 和 soundfile 0.14.0 把它读回成长度为 0、采样率 8,000 Hz 的数组。Pillow 11.3.0 能造出尺寸为 **0×0** 的图。OpenCV 5.0.0 在空图上数到 **0** 个非零像素。Open3D 0.20.0 交回 **0** 个点的点云和 **0** 个顶点的网格。这些调用都成功。下一模块可以播放、显示或渲染这个结果。
+**What the page lets you do.** Press play, and clicks alternate left and right. On a complete stretch, rest is slow and a movement is fast. Press “this stretch dropped,” and the speed stays where it is. The hand in the picture walks only on ground the camera has seen and found clear. Press “I moved; the next place was not seen,” and the sound may speed up while the hand stays. Then one finger: an open angle arrives and both views stay open; if the angle drops, the filled view draws the finger closed, and the view for the user keeps the last angle that actually arrived; if none has ever arrived, that finger is not drawn closed.
 
-That success is the product problem. A file with a sample rate and no frames is not the same thing as a person at rest. A cloud that exists and contains no points is not a finished grasp. Eight real samples are a different object: they are class **1**, a movement, and they occupy **8** frames. A list with no samples is refused.
+![给用户看的画面停在摄像机看见的地方。把缺口填上之后，手会走进没看见的障碍。](docs/figures/session.png)
 
-这次成功就是产品的问题。一个有采样率、却没有帧的文件，不是“人处于静息”。一个存在、却没有点的点云，不是一次已经完成的抓取。八个真实采样是另一个对象：类别是 **1**，一次动作，占 **8** 帧。一个没有采样的列表会被拒绝。
+![左右声。灰色是丢掉的那段。红线是填成零以后会改成的速度。蓝线是真正在响的速度。](docs/figures/pace.png)
 
-![A legal empty sound, a legal empty image, a legal empty cloud.](docs/figures/media.png)
+![画面只画到摄像机看见的地方。没画出来的那一截里还有真实的障碍。](docs/figures/room.png)
 
-On the same empty inputs this repository raises. On the occupied input the value is unchanged: a 2×2 assignment stays cost 2, the string `CAKE` stays distance 3, a recorded EEG clip stays 8 samples with markers `go` and `end`, one lidar pair counts as 1, three observations count as 3, and a three-cell chain reaches 2 in one step and 3 at the fixed point.
+![没有新的观测，再画一次，像素不变。把没看见的地方也涂上，这一帧就变了。](docs/figures/frames.png)
 
-同样的空输入，这里直接拒绝。有内容的输入数值不变：2×2 指派代价仍是 2，`CAKE` 的距离仍是 3，一段实录脑电仍是 8 个采样、标记为 `go` 和 `end`，一对激光计数为 1，三次观测计数为 3，三格链走一步到达 2、走到不动点是 3。
+![关节角度没到。填成零的那一版把手指画成握上。给用户看的那一版不这么画。](docs/figures/aperture.png)
 
-## Why a boundary in front of the model is enough
+## 市面上的产品卡在哪
 
-We do not ship a new world model. The planner, the decoder, and the map library stay. The write that fills the hole is replaced by a function whose failure mode is proved, not trained.
+三个产品卡在同一步。模型或地图被要求交回一幅完整场景，下一家把这幅场景当成测到的。
 
-我们不交付一个新的世界模型。规划器、解码器、地图库都留着。被换掉的是那个把洞填上的写入。它的失败方式是证明出来的，不是训练出来的。
+Three products get stuck at the same step. The model or the map is asked for a finished scene, and the next module treats that scene as measured.
 
-Four statements. The proofs are in [`paper/paper.md`](paper/paper.md).
+**世界模型。** [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) 和 [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) 的用法是先想象下一帧，再按那一帧行动。交出去的画面上看不见缺口。[Nilaksh 等人](https://arxiv.org/abs/2605.06388) 说明，一个模型可以在画面上更好，拿去规划却更差。[Yuan 等人](https://arxiv.org/abs/2609.24745) 说明，如果有一个已经知道每个想象结果的对照，成功率从 68.9% 到 79.2%；只给画面打分，收不回这个差距。难点是把未来画出来以后，看不出哪一块是猜的。[Zhang 等人](https://arxiv.org/abs/2609.02159) 从另一侧说了同一件事：留下哪一个未来，下一步动作就变了。68.9% 和 79.2% 是他们论文里的数，这里没有重跑。
 
-**The fill decides, the planner does not.** Run one shortest-path routine on a completed map and on the cells that were actually observed. The two calls return different integers. No change of generator is required for them to separate. A world-model reach of 3 against a measured step of 2, an EEG class of 0 against a recorded class of 1, and a myopic action of 0 against a lookahead action of 1 are the same fact in three products.
+**World models.** [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) and [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) are used as “imagine the next frame, then act.” The frame that leaves the model shows no gap. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) showed that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) showed that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. The hard part is that a finished drawing no longer says which part was guessed. [Zhang et al.](https://arxiv.org/abs/2609.02159) say the same thing from the other side: which future you keep changes the next action. Those two percentages are theirs. They are not re-run here.
 
-**Nested plans.** A pessimistic plan may enter only cells that were observed free. An optimistic plan may also enter masked cells. Every pessimistic path is therefore still legal after the fill, and it cannot be strictly shorter than the optimistic path. A score that prefers the shorter path, and on a tie prefers the optimistic one, returns the filled plan on every trial. On 2,000 grids the inclusion held on all 2,000. The oracle reaches 297 goals that this score misses. Of those 297, the filled path is strictly shorter on 129, and the two paths have equal length on 168. The 168 are the tie rule, not a shorter path. The 378 goals that only the filled plan reaches each step through a masked cell that was truly free: that is the set of goals a wall-fill refuses.
+**脑机。** [LaBraM](https://arxiv.org/abs/2405.18765) 会把遮住的脑电补出来。[InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) 让一个已经训练好的模型始终看到它训练时的电极布局。包没到、被写成零，会和“人没动”得到同一个类别。产品于是把“信号没到”做成“用户在休息”。信号如果有正有负，同一种填法还可以把休息读成动作。方向取决于被删掉的那段是正还是负。
 
-**The discount at which lookahead flips is a fraction.** On the trap table `[[10, 1], [-100, -100]]`, action 0 pays more now and steps into −100. Solving `(I − dP)V = r` in exact rationals gives the flip at `9/101`. Iterating a scaled integer backup flips too early, because the backup does not keep a common denominator. One real backup already matches the infinite horizon on this family. Depth 0 is the raw row. Treating that row as a backup reports the flip one step late.
+**Brain–computer interfaces.** [LaBraM](https://arxiv.org/abs/2405.18765) fills in masked brain recordings, and [InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) makes a trained model always see the electrode layout it was trained on. A dropped packet written as zeros gets the same class as a person who did not move. A product then treats “the packet did not arrive” as “the user is at rest.” When the voltage can be negative, the same fill can also read rest as a movement. The direction follows the sign of the samples that were deleted.
 
-**After the fill, a missing-data check sees nothing.** The completed object lives in the fully observed domain, so a checker that looks for a mask marker has recall 0. Empty input raises instead of returning 0. That is the entire product difference with the libraries in the table above.
+**机器人和车。** 传感器没返回时，地图、激光滤波、行车日志仍被期望交出一幅能规划的场景。车就会开过一块其实没测过的地方，因为那里现在看起来能走。
 
-证明在 [`paper/paper.md`](paper/paper.md)。
+**Robots and vehicles.** When the sensor returns nothing, the map, the lidar filter, and the log player are still expected to hand back a scene a planner can drive. The vehicle then crosses a place the sensor never measured, because that place now looks clear.
 
-补全做决定，规划器不做决定。同一套最短路，在补全后的地图上跑一次，在真正观测到的格子上再跑一次，得到两个整数。不需要换生成器，这两个整数就会分开。世界模型可达 3 对实测一步 2，脑电类别 0 对实录类别 1，只看当前行的动作 0 对前视动作 1，是三个产品里的同一件事。
+![同一处分歧，出现在手上、脑电、移动机器人和车上。](docs/figures/hand-delta.png)
 
-路径是嵌套的。悲观方案只能进入已观测为空的格子。乐观方案还可以进入被遮住的格子。所以每条悲观路径在补全之后仍然合法，而且不会严格短于乐观路径。偏好更短路径、平局时偏好乐观方案的分数，每次都返回补全后的方案。2,000 张图上包含关系全部成立。先知能到达、这个分数到不了的目标有 297 个。其中 129 次补全路径严格更短，168 次两条路一样长。168 是平局规则，不是更短。只有补全方案能到达的 378 个目标，每一条都踩过一个被遮住、实际上是空的格子。那是把遮挡当成墙时拒绝掉的目标。
+## 常用的库在信号没来时会交回什么
 
-前视把动作翻过来的折扣是一个分数。陷阱表 `[[10, 1], [-100, -100]]` 上，动作 0 眼前收益更高，下一步走进 −100。用精确有理数解 `(I − dP)V = r`，翻转点是 `9/101`。把折扣值放大成整数再迭代，会翻得太早，因为迭代保不住公分母。在这一族问题上，一次真正的回溯已经等于无限视界。深度 0 是原始的那一行。把那一行也算成一次回溯，翻转会晚报一步。
+下面这些库，机器人软件和脑电软件真的会调用。在它们被设计来接受的输入上，它们是对的。信号没来的时候，它们仍交回一个下一层程序愿意接着用的结果。这个结果随后就成了一次决策。
 
-**A tie is not indifference.** When the two paths have the same length, the observed-free path exists, so it arrives. Switching the tie from the filled plan to that path recovers every tied miss and gives up none of the goals that only the filled plan can reach, because those goals have no second path. The misses that remain are the paths that became shorter by crossing a masked cell. Most of those shorter paths still crash. Length is not a safety certificate.
+These are libraries a robotics stack or a biosignal stack actually calls. On the input they were built for, they are right. When the signal never arrived, they still return something the next function will accept. That return then becomes a decision.
 
-**Zero is not “nothing happened.”** On a non-negative code, writing zeros can only turn a movement into rest. On a signed voltage, erasing a negative sample can turn rest into a movement. A decoder that zero-fills a dropout is not choosing the conservative error. The direction of the error is the sign of the samples it deleted. LaBraM-style interpolation has the same shape: the filled window is a decision, and the missingness is gone.
-
-平局不是“两条路都行”。两条路一样长时，已观测为空的那条路存在，所以它能到达。把平局从补全方案改判给这条路，能收回每一次平局造成的错过，而且不会丢掉只有补全方案能到达的目标，因为那些目标根本没有第二条路。剩下的错过，是靠踩被遮格子才变短的路。这些更短的路里，多数仍然会撞。更短不是安全证明。
-
-零不是“什么都没发生”。信号非负时，补零只能把动作读成静息。电压有正负时，删掉一段负数可以把静息读成动作。把丢包补成零的解码器并没有选择更保守的错误。错误的方向等于被删采样的符号。LaBraM 那种插值是同一形状：补完的窗口已经是一个决策，缺失本身消失了。
-
-补全之后，缺失检查什么也看不见。补完的对象落在全观测的值域里，寻找掩码标记的检查召回率是 0。空输入会拒绝，而不是返回 0。这就是和上面那些库的全部产品差别。
-
-![One split, three products. Filled input returns the larger integer. One measured step returns the smaller integer. Empty input raises.](docs/figures/story.png)
-
-![Both plans reach on 122 grids. Only the filled plan reaches on 378. Only the safe plan reaches on 297. A tie, switched to the observed-free path, recovers the tied misses and none of the 378.](docs/figures/partition.png)
-
-![Non-negative codes: false go is zero. Signed voltages, last four samples zeroed: false rest and false go both occur.](docs/figures/signfill.png)
-
-## What the MVP hands over
-
-The delivery is one call with three outcomes. It sits in front of a planner the product already runs.
-
-交付是一次调用、三种结果。它坐在产品已经在跑的规划器前面。
-
-| Call | What it does | What it refuses to do |
+| Library | When nothing arrived | What the next program hears |
 |---|---|---|
-| `measure` | Uses only entries that were observed. On a tie between a filled path and an observed-free path, it keeps the observed-free path. On a signed EEG window it does not write zeros over a dropout. | It does not invent a value for a hole, and it does not break a tie toward the filled plan. |
-| `impute` | The audit twin. Same planner after the hole has been written free, written zero, or replaced by the visible row. | It is not the shipped decision. It exists so a demo can show the disagreement. |
-| refuse | The result on empty input. | No zero, no empty list, no NaN. |
+| [MuJoCo 3.13.0](https://github.com/google-deepmind/mujoco) | 没有物体的模型也能载入。A model with no bodies still loads. | 没有身体，仍是一场场景。A scene with no bodies is still a scene. |
+| [munkres 1.1.4](https://github.com/bmc/munkres) | `compute([[]])` 得到 `[]`（[issue 54](https://github.com/bmc/munkres/issues/54)） | 没有指派问题，看起来像指派已经做完。No assignment problem looks like a finished assignment. |
+| [NumPy 2.4.6](https://github.com/numpy/numpy) | 范数 `0.0`，均值 `NaN`。Norm `0.0`, mean `NaN`. | 缺了一条向量，看起来像零向量，或像一个会悄悄传下去的数。A missing vector looks like a zero vector, or like a number that propagates quietly. |
+| [MNE-Python 1.9.0](https://github.com/mne-tools/mne-python) | 时长为 0，标注也是零。Duration 0, zero annotations. | 没录上的脑电，看起来像一段安静的录音。A missing recording looks like a quiet one. |
+| [NetworkX 3.6.1](https://github.com/networkx/networkx) | 一张没有节点的图。A graph with no nodes. | 地图没载入，看起来像图上没有路、人已经到了。A map that never loaded looks like a graph with nowhere left to go. |
+| [FilterPy 1.4.5](https://github.com/rlabbe/filterpy) | 没有测量的更新被接受，状态留在 `0.0`。An update with no measurement is accepted and the state stays `0.0`. | 激光没返回，看起来像状态就是零。No lidar return looks like a state of zero. |
+| [Foxglove MCAP](https://github.com/foxglove/mcap) | 一条没有消息的日志。A log with no messages. | 回放在沉默上继续。Playback continues through silence. |
+| [ROS 2 rosbag2](https://github.com/ros2/rosbag2) | 一个没有消息的包。A bag with no messages. | 机器人录下来的包也一样。Same for the bag a robot records. |
+| [pybloom-live 4.0.0](https://github.com/joseph-fox/python-bloomfilter) | 没给键，也报告不在里面。A missing key is reported absent. | 没给键，看起来像这个键不存在。No key was given, and it looks as if that key is absent. |
+| Python `wave` | 零帧的文件仍是合法声音。A file with no frames is still a legal sound. | 有采样率、没有波形，播放器仍会打开。A sample rate and no waveform is a file the next player opens. |
+| [SciPy 1.17.1](https://github.com/scipy/scipy) | 写成 WAV 再读回来，长度为零，采样率 8,000 Hz。A WAV round-trip comes back with length 0 at 8,000 Hz. | 丢掉的左右声仍是一个能读的文件。A dropped left-right tone is still a readable file. |
+| [soundfile 0.14.0](https://github.com/bastibe/python-soundfile) | 同一个文件读出来长度为零。The same file reads back with length 0. | 游戏用来播放的库也一样。Same for the library a game uses to play it. |
+| [Pillow 11.3.0](https://github.com/python-pillow/Pillow) | 可以造出一张 0×0 的图。`Image.new` accepts a 0×0 RGB image. | 一帧可以存在，里面却没有像素。A frame can exist with no pixels. |
+| [OpenCV 5.0.0](https://github.com/opencv/opencv) | 没有像素的图，非零像素数是 0。An image with no pixels has 0 nonzero pixels. | 什么都没看见，看起来像数到了零。Seeing nothing looks like a counted zero. |
+| [Open3D 0.20.0](https://github.com/isl-org/Open3D) | 点云零个点，网格零个顶点。A cloud with no points, a mesh with no vertices. | 没到的手部扫描仍是一个几何对象。A hand scan that did not arrive is still a geometry object. |
 
-What a caller sees on the pinned demo:
+每一行是同一件事。缺失被存成一个数。后面的程序分不出“什么都没测到”和“测到的是零”。
 
-| Input | Shipped decision | What a fill would have returned |
+Each row is the same fact. A gap is stored as a number. The next program cannot tell “nothing was measured” from “the measurement was zero.”
+
+这段脑电如果真有采样，类别跟着这些采样走，文件里也真有波形。什么都没送来时，上面那些调用仍然成功，于是下一层可以播放、显示、渲染。这里在同样的情况下停住。有内容的输入，数值和原来一样。
+
+A brain stretch that really has samples keeps the class of those samples, and the file really has a waveform. When nothing arrived, the calls above still succeed, so the next layer can play, show, or render the result. On that same input, this repository stops. When the input has content, the values stay what they were.
+
+![合法的无声文件、没有像素的图、没有点的扫描。调用都成功。](docs/figures/media.png)
+
+## 为什么挡在模型前面就够
+
+不另做一个世界模型。规划、解码、地图都留着。换掉的是“把缺口填上，再交给下一家”。这一步错在哪里，可以写下来核对，不靠训练。证明在 [`paper/paper.md`](paper/paper.md)。
+
+We do not ship another world model. The planner, the decoder, and the map stay. What changes is the step that fills the gap and passes it on. How that step fails can be written down and checked. It is not trained. The proofs are in [`paper/paper.md`](paper/paper.md).
+
+**填上的那一版已经做了决定。** 同一条最短路，在填完的地图上走一遍，再只在看见的地面上走一遍，得到的不是同一步。页面上那条走廊就是这个形状：中间没看见，填上以后会走进障碍；只按看见的走，会在那里停住。八段脑电被写成零，会把动作读成休息。奖励表只看眼前，和往前多看一步，选出的动作不同。三个产品是同一件事。
+
+**The filled version has already decided.** The same shortest path, walked on the filled map and walked again only on ground that was seen, does not take the same step. The corridor on the page has that shape: the middle was not seen, the filled walk enters an obstacle, and the walk that stays with what was seen stops there. Eight brain samples written as zeros are read as rest instead of a movement. On the reward table, the action you pick from the row in front of you and the action you pick after looking one step ahead are different. Three products, one fact.
+
+**更短，加上平手时偏向填上的那条，每次都会交回填上的方案。** 只走看见的地面，是填上之后仍然合法的一条路，而且不会比填上的那条更长。所以“选更短的，一样长就选填上的”每次都选中填上的方案。一样长的时候，只走看见的地面那条路是存在的，交出去的应该是它。只有填上以后才出现的那些目的地，本来就没有第二条路。剩下真正更短的那些，是靠走进没看见的地方才变短的，其中多数仍然会撞上。更短本身说明不了安全。
+
+**Preferring the shorter route, and on a tie preferring the filled one, returns the filled route every time.** The route that stays on seen ground is still legal after the fill, and it is never strictly longer. So a score that wants the shorter route, and breaks a tie toward the filled route, selects the filled route on every try. When the lengths match, the route on seen ground exists, and that is the one to ship. Destinations that appear only after the fill have no second route. The routes that really are shorter got shorter by crossing ground that was not seen, and most of those still hit something. A shorter length does not show that the path is safe.
+
+**往前多看一步，会在一个分数上改主意。** 表是 `[[10, 1], [-100, −100]]`。眼前选收益更高的那一列，下一步掉下去。用分数精确解，改主意的折扣是 `9/101`。先把这个分数放大再迭代，会改得太早，因为公分母丢了。从眼前那一行算起，真正多看一次，就已经和一直看下去相同。把眼前那一行也算成“已经多看了”，改主意会晚报一步。
+
+**Looking one step ahead changes the choice at one fraction.** The table is `[[10, 1], [-100, −100]]`. The column that pays more now steps into −100. Solved in exact fractions, the discount where the choice flips is `9/101`. Scaling that fraction and iterating flips too early, because the common denominator is lost. Counted from the row in front of you, one real look ahead already matches looking forever on this table. Counting that raw row as a look ahead reports the flip one step late.
+
+**缺口填上以后，再查“这里没测到”，什么也查不到。** 标记已经被擦掉，对象看起来和全程都测到了一样。这就是和上面那张表的差别：那些库交回一个能用的数，这里停住。
+
+**After the gap is filled, a later look for “this was not measured” finds nothing.** The mark is gone, and the object looks like everything was measured. That is the difference from the table above. Those libraries hand back a usable number. Here the call stops.
+
+![三条产品上的同一种分叉。填上以后走得更远。只按测到的走，停得更早。什么都没送来，就停住。](docs/figures/story.png)
+
+![两条路都能到，是一种情况。只有填上以后才能到，是另一种。只有停在看见的地面上才能到，又是一种。一样长时，留下看见的那条。](docs/figures/partition.png)
+
+![信号不能为负时，填零只会把动作读成休息。信号有正有负时，两种读错都会出现。](docs/figures/signfill.png)
+
+页面上还有一个容易误会的按钮：只堵住第一次撞上的地方，再规划。后面没看见的地方还在，路可以再撞一次。一直问到能走通，多数会撞的图要问很多次。所以“问一次”不是这层检查。检查是：没看见，就不走进去。
+
+The page has a button that is easy to misread: block the first collision, then plan again. Unseen ground remains, and the route can hit something again. Asking until the route is clear takes more than one question on most of the maps that hit something. One question is not this check. The check is: if it was not seen, do not walk into it.
+
+## 交出去的是什么
+
+一次调用，三种结果。它坐在产品已经在跑的规划前面。
+
+One call, three outcomes. It sits in front of a planner the product already runs.
+
+| 调用 | 人拿到的 | 它不做的 |
 |---|---|---|
-| Three cells, middle unseen | reach **2** | reach **3**, the fully observed map |
-| Eight EEG samples, packet dropped and written as zeros | class **1** on the recorded samples | class **0**, identical to rest |
-| Reward table, next action | lookahead action **1** | myopic action **0** |
-| Empty input | raises | a usable number, in the libraries above |
+| `measure` | 只用已经到的信息。平手时留在看见的地面上。脑电的缺口不填零。 | 不给缺口编一个值，平手时也不改选填上的那条路。 |
+| `impute` | 旁边的对照。同一个规划，在缺口被填上之后会怎么走。演示用它给人看两边不一样。 | 这不是交出去的那一版。 |
+| 停住 | 什么都没送来时的结果。 | 不交回零，不交回一个里面什么都没有的列表，也不交回一个会悄悄传下去的非数。 |
 
-Not in this MVP: a trained video model, a headset SDK, a robot success rate, or a claim that 68.9% and 79.2% were re-run. Those percentages belong to Yuan et al. The MVP shows the same kind of gap as an integer a reviewer can recompute.
+页面上能对上的三件事：走廊中间没看见，填上以后会走完，只按看见的会提前停下；八段脑电写成零，类别从动作变成休息；奖励表往前看一步，和只看眼前，动作不同。
 
-这次 MVP 里没有：训练好的视频模型、头戴设备 SDK、机器人成功率，也没有“我们重跑了 68.9% 和 79.2%”这种说法。那两个百分比属于 Yuan 等人。MVP 把同一类差距做成一个可以重算的整数。
+The page lines up with three cases. On the corridor the middle was not seen: the filled walk finishes, the walk that stays with what was seen stops early. Eight brain samples written as zeros change the class from a movement to rest. On the reward table, looking one step ahead and looking only at the current row pick different actions.
 
-## The page a person can open
+这次没有训练好的视频模型，没有头戴设备的开发包，没有机器人成功率，也没有治疗效果。68.9% 和 79.2% 属于 Yuan 等人。
 
-The thing to hand someone is a static page: [`site/index.html`](site/index.html). It runs the three decisions in the browser. The map, the EEG window, and the reward row each show the filled answer next to the measured answer. Nothing on that page is trained.
+Not in this delivery: a trained video model, a headset SDK, a robot success rate, or a treatment effect. 68.9% and 79.2% belong to Yuan et al.
 
-一个人可以打开的东西是一个静态页面：[`site/index.html`](site/index.html)。三个决策在浏览器里算完。地图、脑电窗口、奖励表，各自把补全后的答案和实测答案摆在一起。这个页面上没有训练。
+## 一个人可以打开的页面
 
-A team that raises a round to build a video world model is building the generator. This page is the check in front of that generator. The check is a file because every shipped decision is an integer with a proof. The generator is a different program, with data, training, and a robot evaluation that this MVP does not pretend to replace.
+[`site/index.html`](site/index.html) 在浏览器里做完上面三件事，也播放左右声，也演示一根手指。页面上没有训练，也不需要账号。GitHub Pages 用本仓库发布：[shaneraphel.github.io/aletheia-worldtick](https://shaneraphel.github.io/aletheia-worldtick/)。
 
-拿一轮融资去做视频世界模型的团队，做的是生成器。这个页面是放在生成器前面的检查。检查可以是一个文件，因为交出去的每个决策都是一个有证明的整数。生成器是另一件事，需要数据、训练和机器人评估。这个 MVP 不假装替代那件事。
-
-One question is not that check. On the same 2,000 grids, the filled plan crashes 1,439 times. Blocking the first crash cell, then planning again, lets 614 paths arrive and leaves 786 crashing on a later masked cell. The page shows a five-cell corridor with the same shape: fill crashes, one question crashes again, the measured step never enters the unseen cell.
-
-一次追问不是这个检查。同样的 2,000 张图上，补全方案撞了 1,439 次。封住第一次撞上的格子再规划，614 条路能到，786 条在后面另一个被遮格子上再撞。页面上有一条五格走廊，形状相同：补全会撞，问过一次还会撞，实测步不进入没看见的格子。
-
-![After one question: 614 reach, 786 crash again, 39 stop.](docs/figures/decisive.png)
-
-Asking until the path is clear does not stop at one. Of 2,000 grids, 561 need no question, 653 are done in one, and 786 need more than one. The questions total 2,814. One grid needs 9. The 786 is the majority of the grids that crash, not a thin tail.
-
-一直问到路能走通或者无路可走，并不会停在一次。2,000 张图里，561 张不用问，653 张问一次就结束，786 张要问多于一次。追问合计 2,814 次。有一张图要问 9 次。这 786 张是会撞的图里的多数，不是一条细尾巴。
-
-![Questions until the path is clear. Most crashing grids need more than one.](docs/figures/askdepth.png)
-
-The page deploys as a GitHub Pages site from this repository. It does not ask for an account.
-
-We do not post it on another project's issue tracker. Those issues are for defects in that project. A comment whose real content is a product announcement gets removed, and it should. When one of those libraries has an empty-input defect we can fix with a test, the contribution is a pull request. Traffic for this boundary is the page and this README.
-
-页面用本仓库的 GitHub Pages 发布，不需要账号。
-
-我们不把它发到别的项目的 issue 里。那些 issue 是为了那个项目自己的缺陷。一条实际内容是产品公告的评论会被删掉，也应该被删掉。某个库在空输入上确有缺陷、而且我们能用测试修好时，贡献的形式是一个 pull request。这个边界的流量来自这个页面和这份 README。
+[`site/index.html`](site/index.html) runs those three cases in the browser, plays the left-right sound, and shows one finger. Nothing on the page is trained, and it asks for no account. GitHub Pages serves it from this repository: [shaneraphel.github.io/aletheia-worldtick](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ```bash
 make check
@@ -347,59 +188,61 @@ python3.12 show_story.py
 python3.12 show_policy.py
 ```
 
-`make check` recomputes the pinned identities. The proofs and the method-by-method comparison with the papers above are in [`paper/paper.md`](paper/paper.md). Counts live in `results/`. Side-by-side callers need the versions in `requirements-show.txt`.
+`make check` 把笔记里的计数重新算一遍。计数在 `results/`。和每篇论文的方法对照在 [`paper/paper.md`](paper/paper.md)。要并排调用那些库，用 `requirements-show.txt` 里的版本。
 
-## Projects this boundary is meant to sit in front of
+`make check` recomputes the counts cited in the note. The counts live in `results/`. The comparison with each paper’s method is in [`paper/paper.md`](paper/paper.md). Callers that import those libraries side by side need the versions in `requirements-show.txt`.
 
-| Project | URL | Where the boundary attaches |
+## 这层检查要坐在谁前面
+
+| 项目 | 它交出来的 | 这层检查做什么 |
 |---|---|---|
-| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) | masked video tokens | do not treat a predicted patch as a measured cell |
-| [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) | predicted frames | same, for a rendered future |
-| [LaBraM](https://arxiv.org/abs/2405.18765) | masked EEG | do not classify a zero-filled dropout as rest |
-| NetworkX | https://github.com/networkx/networkx | one observed step versus the fixed point |
-| MNE-Python | https://github.com/mne-tools/mne-python | a recording with no samples raises |
-| MuJoCo | https://github.com/google-deepmind/mujoco | an empty model raises |
-| Foxglove MCAP | https://github.com/foxglove/mcap | a log with no messages raises |
-| ROS 2 rosbag2 | https://github.com/ros2/rosbag2 | a bag with no messages raises |
-| ROS map_server | https://wiki.ros.org/map_server | unknown cells stay unknown |
-| FilterPy | https://github.com/rlabbe/filterpy | an empty update raises |
+| [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) | 补出来的画面碎片 | 不把预测出来的一块当成已经看见 |
+| [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) | 预测的下一帧 | 同一条，用在画出来的未来上 |
+| [LaBraM](https://arxiv.org/abs/2405.18765) | 补出来的脑电 | 不把填成零的丢包读成休息 |
+| [NetworkX](https://github.com/networkx/networkx) | 整张图上能走到的全部 | 只走已经看见的下一步，不把走完的路当成现在 |
+| [MNE-Python](https://github.com/mne-tools/mne-python) | 一段录音 | 一个采样都没有时停住 |
+| [MuJoCo](https://github.com/google-deepmind/mujoco) | 一个模型 | 没有物体的模型上停住 |
+| [Foxglove MCAP](https://github.com/foxglove/mcap) | 一条日志 | 一条消息都没有时停住 |
+| [ROS 2 rosbag2](https://github.com/ros2/rosbag2) | 一个录包 | 一条消息都没有时停住 |
+| [ROS map_server](https://wiki.ros.org/map_server) | 一张地图 | 没测到的地方保持没测到 |
+| [FilterPy](https://github.com/rlabbe/filterpy) | 一次状态更新 | 没有测量时停住 |
 
-The kernels that implement those refusals on the occupied formats are under `locks/`. The index is [`ATLAS.md`](ATLAS.md).
+对应各个文件格式的检查在 `locks/`。索引是 [`ATLAS.md`](ATLAS.md)。
 
-## Files
+## 文件
 
-| Path | What the MVP calls |
+| 路径 | 它在产品里做什么 |
 |---|---|
-| `tick.py` | one observed step |
-| `datalog.py` | the fixed point a fill would return |
-| `complete.py` · `decode.py` · `policy.py` | the three fills: map, EEG, reward row |
-| `partition.py` | nested plans, and the tie rule |
-| `signfill.py` | zero-fill on non-negative codes versus signed voltages |
-| `decisive.py` | one question after the first crash |
-| `askdepth.py` | how many questions until the path is clear |
-| `session.py` | hold the sound on a dropped window; do not draw a grasp through an unseen cell |
-| `fleet.py` | the same 2,000 maps on one core and on many; the crash count matches |
-| `media.py` | empty WAV, empty image, empty cloud, beside a held session |
-| `pace.py` | left-right rate: 2 or 6 when the window is complete, unchanged when it is not |
-| `room.py` | the picture stops at the last cell the camera saw |
-| `attempt.py` | a heard movement does not enter a cell the camera did not see |
-| `ledger.py` | a dropped window stores no class; the hand cell was seen |
-| `company.py` | a person is drawn only if their cell was seen |
-| `framecheck.py` | a second drawing of the held frame matches; the filled frame does not |
-| `clock.py` | a dropped window moves neither the rate nor the frame |
-| `near.py` | distance to a person on seen ground, and on the filled map |
-| `reel.py` | the rate may change while every pixel stays |
-| `aperture.py` | a missing joint sample is not a closed finger |
-| `site/index.html` | the page that runs the three decisions in the browser |
-| `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
-| `tests/test_precision.py` | the identities the MVP is not allowed to move |
-| `kits/README.md` | where the local launcher, nature models, and piano recording live |
+| `tick.py` | 只按已经到的信息走下一步 |
+| `datalog.py` | 把路走完，那是填上缺口之后才会交回的结果 |
+| `complete.py` · `decode.py` · `policy.py` | 三种填法：地图、脑电、奖励表 |
+| `partition.py` | 两条路的包含关系，以及一样长时留哪一条 |
+| `signfill.py` | 不能为负的信号，和有正有负的电压，填零以后各读成什么 |
+| `decisive.py` | 只堵住第一次撞上的地方，再规划 |
+| `askdepth.py` | 要问多少次，路才清楚 |
+| `session.py` | 脑电不完整时声音保持；没看见的地方不画成已经抓完 |
+| `fleet.py` | 同一批地图，一个核和多个核，结果相同 |
+| `media.py` | 无声文件、没有像素的图、没有点的扫描，旁边是保持原样的会话 |
+| `pace.py` | 左右声：信号完整时可以变快变慢，丢了就保持 |
+| `room.py` | 画面停在摄像机看见的最后一处 |
+| `attempt.py` | 听见动作，并不等于走进还没看见的地方 |
+| `ledger.py` | 丢掉的那段不记类别；手停在已经看见的地方 |
+| `company.py` | 一个人只有被看见才画出来 |
+| `framecheck.py` | 没有新观测，再画一次像素不变；把缺口也涂上，帧就变了 |
+| `clock.py` | 丢掉的那段，速度和画面都不动 |
+| `near.py` | 离房间里的人有多远：只走看见的地面，和把没看见的当成能走 |
+| `reel.py` | 速度可以变，画面仍停在这一帧 |
+| `aperture.py` | 关节角度没到，不是这根手指已经握上 |
+| `site/index.html` | 浏览器里的页面 |
+| `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的方法对照 |
+| `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
+| `kits/README.md` | 本机的启动器、自然场景模型和钢琴录音放在哪 |
 
-## Local picture and sound kits
+## 本机的画面和声音
 
-The open-world picture is not a shipped Unreal level. On this machine the Epic Games Launcher is installed, two CC0 nature model packs are unpacked, and a public-domain recording of Beethoven's Piano Sonata No. 15 is on disk. The Unreal Editor binary is not installed: UE 4.27's Mac notes stop at macOS Big Sur, and this computer is Apple Silicon on macOS 26. Signing into the launcher is how an engine build is obtained. The files stay off GitHub. Paths and licenses are in [`kits/README.md`](kits/README.md).
+开放世界的画面还不是一个已经发布的虚幻关卡。这台机器上已经装了 Epic 启动器，解压了两套可自由使用的自然场景模型，并放了一份贝多芬第十五钢琴奏鸣曲的公有领域录音。虚幻编辑器本体没有安装：4.27 的 Mac 说明停在 macOS Big Sur，而这台电脑是 Apple Silicon 上的 macOS 26。要拿到引擎，需要登录启动器。这些文件不进 GitHub。路径和许可在 [`kits/README.md`](kits/README.md)。
 
-开放世界的画面还不是一个已经发布的虚幻关卡。这台机器上已经装了 Epic 启动器，解压了两套 CC0 自然场景模型，并放了一份贝多芬第 15 钢琴奏鸣曲的公有领域录音。虚幻编辑器本体没有安装：UE 4.27 的 Mac 说明停在 macOS Big Sur，而这台电脑是 Apple Silicon 上的 macOS 26。引擎构建要通过登录启动器取得。这些文件不进 GitHub。路径和许可在 [`kits/README.md`](kits/README.md)。
+The open-world picture is not a shipped Unreal level. On this machine the Epic Games Launcher is installed, two freely usable nature model packs are unpacked, and a public-domain recording of Beethoven's Piano Sonata No. 15 is on disk. The Unreal Editor itself is not installed: the Mac notes for 4.27 stop at macOS Big Sur, and this computer is Apple Silicon on macOS 26. An engine build means signing into the launcher. Those files stay off GitHub. Paths and licenses are in [`kits/README.md`](kits/README.md).
 
 ## License
 
