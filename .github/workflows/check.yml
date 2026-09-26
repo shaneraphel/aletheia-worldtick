@@ -61,6 +61,7 @@ jobs:
           python rate.py
           python duo.py
           python dose.py
+          python worst.py
           python show_policy.py
           python tick_bench.py
       - name: paper

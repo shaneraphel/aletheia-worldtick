@@ -228,6 +228,17 @@
   </div>
   <p class="out" id="dose-out"></p>
 
+  <h2>最坏能坏到哪 · How bad can it get</h2>
+  <p>预算晚几步，就把这几步排在最后，画面最老。三档预算，看十六步的年龄。怎么排，画面都老不过预算步数。</p>
+  <p class="en">Miss the last steps of the budget and the frame is at its oldest. Three budgets, sixteen ages each. No placement makes any frame older than the budget.</p>
+  <div class="cells" id="worst" style="flex-wrap: wrap;"></div>
+  <div class="row">
+    <button id="b-worst-0" type="button">预算 0 步 · Budget 0</button>
+    <button id="b-worst-4" type="button">预算 4 步 · Budget 4</button>
+    <button id="b-worst-8" type="button">预算 8 步 · Budget 8</button>
+  </div>
+  <p class="out" id="worst-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -790,6 +801,29 @@ document.getElementById("b-dose-0").onclick = () => paintDose(doseRun(0), "不�
 document.getElementById("b-dose-3").onclick = () => paintDose(doseRun(0.3), "晚三成。 Late 30%. ");
 document.getElementById("b-dose-5").onclick = () => paintDose(doseRun(0.5), "晚一半。 Late half. ");
 paintDose({ nNew: 16, nDiffer: 0 }, "先按一档。 Pick a rate. ");
+
+function paintWorst(budget) {
+  const box = document.getElementById("worst");
+  box.replaceChildren();
+  for (let t = 0; t < 16; t++) {
+    const age = t < 16 - budget ? 0 : t - (15 - budget);
+    const d = document.createElement("div");
+    d.className = "cell " + (age === 0 ? "free" : "mask");
+    d.style.width = "56px";
+    d.style.height = "56px";
+    d.textContent = age;
+    d.title = "第 " + t + " 步，年龄 " + age;
+    box.appendChild(d);
+  }
+  const sum = (budget * (budget + 1)) / 2;
+  document.getElementById("worst-out").textContent =
+    "预算 " + budget + " 步，最老 " + budget + " 步，年龄合计 " + sum + "。 Budget " + budget + ": oldest " + budget + ", ages sum to " + sum + ".";
+}
+
+document.getElementById("b-worst-0").onclick = () => paintWorst(0);
+document.getElementById("b-worst-4").onclick = () => paintWorst(4);
+document.getElementById("b-worst-8").onclick = () => paintWorst(8);
+paintWorst(4);
 </script>
 </body>
 </html>

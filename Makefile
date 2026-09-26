@@ -64,6 +64,7 @@ evidence:
 	$(PYTHON) rate.py
 	$(PYTHON) duo.py
 	$(PYTHON) dose.py
+	$(PYTHON) worst.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

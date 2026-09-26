@@ -380,6 +380,22 @@ class PrecisionTest(unittest.TestCase):
         news = [s[f"new_{r:.2f}"] for r in RATES]
         self.assertTrue(all(a >= b for a, b in zip(news, news[1:])))
 
+    def test_no_frame_is_older_than_its_budget(self) -> None:
+        from worst import BUDGETS, STEPS, run as worst_run
+
+        rec = worst_run(n=4, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(tuple(s[f"maxage_{k}"] for k in BUDGETS), tuple(BUDGETS))
+        self.assertEqual(
+            tuple(s[f"agesum_{k}"] for k in BUDGETS),
+            tuple(s["sessions"] * k * (k + 1) // 2 for k in BUDGETS),
+        )
+        self.assertEqual(
+            tuple(s[f"new_{k}"] for k in BUDGETS),
+            tuple((STEPS - k) * s["sessions"] for k in BUDGETS),
+        )
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 
