@@ -58,6 +58,7 @@ evidence:
 	$(PYTHON) aperture.py
 	$(PYTHON) late.py
 	$(PYTHON) tenant.py
+	$(PYTHON) stale.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

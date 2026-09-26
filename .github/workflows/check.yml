@@ -55,6 +55,7 @@ jobs:
           python aperture.py
           python late.py
           python tenant.py
+          python stale.py
           python show_policy.py
           python tick_bench.py
       - name: paper

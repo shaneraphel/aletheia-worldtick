@@ -315,6 +315,16 @@ class PrecisionTest(unittest.TestCase):
         s = rec["serial"]
         self.assertEqual(s["held_requests"] + s["full_updates"], s["requests"])
 
+    def test_the_picture_knows_how_old_it_is(self) -> None:
+        from stale import run as stale_run
+
+        rec = stale_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["burst_frozen"], 3 * s["sessions"])
+        self.assertGreaterEqual(s["age_max"], 3)
+        self.assertLessEqual(s["new_frames"], s["sessions"] * 16 - 3 * s["sessions"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

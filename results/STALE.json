@@ -1,0 +1,35 @@
+{
+  "schema": "worldtick.stale.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "burst": [
+    6,
+    7,
+    8
+  ],
+  "workers": 10,
+  "serial": {
+    "new_frames": 63903,
+    "age_sum": 199886,
+    "age_max": 12,
+    "differ": 75353,
+    "burst_frozen": 30000,
+    "old_session": 3939,
+    "sessions": 10000
+  },
+  "parallel": {
+    "new_frames": 63903,
+    "age_sum": 199886,
+    "differ": 75353,
+    "burst_frozen": 30000,
+    "old_session": 3939,
+    "sessions": 10000,
+    "age_max": 12
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
