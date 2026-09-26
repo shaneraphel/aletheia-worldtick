@@ -59,6 +59,7 @@ evidence:
 	$(PYTHON) late.py
 	$(PYTHON) tenant.py
 	$(PYTHON) stale.py
+	$(PYTHON) luck.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

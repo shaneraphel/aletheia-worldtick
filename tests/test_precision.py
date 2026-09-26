@@ -325,6 +325,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertGreaterEqual(s["age_max"], 3)
         self.assertLessEqual(s["new_frames"], s["sessions"] * 16 - 3 * s["sessions"])
 
+    def test_being_right_by_luck_is_not_a_measurement(self) -> None:
+        from luck import run as luck_run
+
+        rec = luck_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["brain_only"] + s["finger_only"] + s["both_missing"], s["late_steps"])
+        self.assertEqual(s["guess_brain_only"] + s["guess_finger_only"] + s["guess_both"], s["guess_right"])
+        self.assertEqual(s["held_brain_only"] + s["held_finger_only"] + s["held_both"], s["held_right"])
+        self.assertLessEqual(s["brain_lucky"], s["brain_missing"])
+        self.assertLessEqual(s["finger_lucky"], s["finger_missing"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

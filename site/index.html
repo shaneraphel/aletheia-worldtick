@@ -173,6 +173,17 @@
   </div>
   <p class="out" id="stale-out"></p>
 
+  <h2>蒙对了 · Right by luck</h2>
+  <p>按“来一步”。真实、猜、留三块各显示这一步。晚到的步里，猜对和留对各记一次。多按几次，留对长得更快，因为手指晚了，留着角度比总说握紧蒙对更多。这是示意，浏览器现画的随机数，能重算的数在笔记里。</p>
+  <p class="en">Press “one step.” Truth, the guess, and the held picture each show this step. On a late step, a match for either side is counted. Press several times and the held count grows faster: when the finger is late, keeping the angle beats always saying closed. This demo draws fresh random numbers in the browser. The recomputable counts are in the note.</p>
+  <div class="cells" id="luck"></div>
+  <div class="row">
+    <button id="b-luck-one" type="button">来一步 · One step</button>
+    <button id="b-luck-ten" type="button">来十步 · Ten steps</button>
+    <button id="b-luck-clear" type="button">清零 · Clear</button>
+  </div>
+  <p class="out" id="luck-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -532,6 +543,51 @@ document.getElementById("b-stale-none").onclick = () => {
   paintStale("都没到。画面不动，年龄涨一步。 Neither arrived. The picture does not move, and grows a step older.");
 };
 paintStale("按几下，画面年龄跟着涨，连按三下“都没到”就是中间那三步。 Press the buttons and watch the age grow. Three presses of “neither arrived” are the three steps in the middle.");
+
+let luckHeld = { fast: false, closed: false };
+let luckCount = { late: 0, guess: 0, held: 0 };
+
+function luckStep() {
+  const brainMissing = Math.random() < 0.3;
+  const fingerMissing = Math.random() < 0.3;
+  const truth = { fast: Math.random() < 0.5, closed: Math.floor(Math.random() * 8) === 0 };
+  const guess = {
+    fast: brainMissing ? false : truth.fast,
+    closed: fingerMissing ? true : truth.closed,
+  };
+  if (!brainMissing) luckHeld.fast = truth.fast;
+  if (!fingerMissing) luckHeld.closed = truth.closed;
+  const held = { fast: luckHeld.fast, closed: luckHeld.closed };
+  if (brainMissing || fingerMissing) {
+    luckCount.late += 1;
+    if (guess.fast === truth.fast && guess.closed === truth.closed) luckCount.guess += 1;
+    if (held.fast === truth.fast && held.closed === truth.closed) luckCount.held += 1;
+  }
+  return { truth, guess, held, late: brainMissing || fingerMissing };
+}
+
+function paintLuck(last) {
+  const box = document.getElementById("luck");
+  box.replaceChildren();
+  const views = last
+    ? [["真实 truth", last.truth], ["猜 guess", last.guess], ["留 held", last.held]]
+    : [["真实 truth", { fast: false, closed: false }], ["猜 guess", { fast: false, closed: true }], ["留 held", { fast: false, closed: false }]];
+  views.forEach(([name, v]) => {
+    const d = document.createElement("div");
+    d.className = "cell " + (v.closed ? "crash" : "free");
+    d.textContent = name + "\n" + (v.fast ? "快 fast" : "慢 slow") + "·" + (v.closed ? "握紧 closed" : "张开 open");
+    box.appendChild(d);
+  });
+  document.getElementById("luck-out").textContent =
+    "晚到 " + luckCount.late + " 步，猜对 " + luckCount.guess + "，留对 " + luckCount.held + "。" +
+    (last ? (last.late ? "上一步晚到了。" : "上一步两边都到了，不计数。") : "还没开始。") +
+    " Late " + luckCount.late + ", guess " + luckCount.guess + ", held " + luckCount.held + ".";
+}
+
+document.getElementById("b-luck-one").onclick = () => { paintLuck(luckStep()); };
+document.getElementById("b-luck-ten").onclick = () => { let last = null; for (let k = 0; k < 10; k++) last = luckStep(); paintLuck(last); };
+document.getElementById("b-luck-clear").onclick = () => { luckHeld = { fast: false, closed: false }; luckCount = { late: 0, guess: 0, held: 0 }; paintLuck(null); };
+paintLuck(null);
 </script>
 </body>
 </html>

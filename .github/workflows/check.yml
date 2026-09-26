@@ -56,6 +56,7 @@ jobs:
           python late.py
           python tenant.py
           python stale.py
+          python luck.py
           python show_policy.py
           python tick_bench.py
       - name: paper

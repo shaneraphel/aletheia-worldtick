@@ -18,11 +18,11 @@ We do not replace the model that draws the future. The same path-finding routine
 
 ## 怎么读
 
-1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，以及画面有几步没更新了。
+1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，以及谁蒙对了。
 2. 再读下面三节：这幅画面给谁；别人的方法和我们的方法差在哪；今晚交出去的是什么。
 3. 要核对一个数，或要看证明，打开笔记。这份说明不把实验次数再念一遍。
 
-1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, and see how many steps old the picture is.
+1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, and see who is right by luck.
 2. Then read who the picture is for, how this method differs from the others, and what is actually handed over.
 3. The note has the proofs and the counts. This file does not recite them.
 
@@ -55,6 +55,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 游戏每一帧都要显示。脑电晚了，就先当成没动。手指角度晚了，就先画成已经握紧。关节的内存如果一开始是零，第一个角度到来之前，手已经是握紧的。 | 这一帧先留着上一次真正到过的声音和角度。两边都到了，两种画法是同一幅。有一边没到，而且默认值和画面上现有的不一样，两幅画才分开。一个核和十个核得到同一个结果。 | 实时并不是必须先猜。晚到的那一路可以等，画面先重复上一次到齐的样子。笔记里的定理 13 写的是这件事。 |
 | 下面这张表里的库，在什么都没录上时，仍交回一个下一层程序愿意接着用的结果。 | 同样的情况下停住。有内容的输入，数值和原来一样。 | 调用成功，不等于人是平静的，也不等于手已经握完。 |
 | 脑电晚了，手指的角度晚了，画面用缺省值顶上，看起来和刚到的一样新。 | 画面留着上一次到过的，并记下是几步之前传到的。中间三步都没到，年龄涨三步，画面不动。 | 缺省值永远说自己是刚到的。留下的那一版知道自己有几步没更新了。笔记里的定理 15 写的是这件事。 |
+| 缺省值蒙对了，就当测到了，继续往下传。 | 蒙对也记成蒙对。手指晚了，留着上一次到过的角度，不说握紧。 | 只晚脑电时，两边蒙对差不多。只晚手指时，留下的蒙对六倍多，因为张开常见，握紧少见。但蒙对几回不是重点，重点是从不把蒙说成测到。笔记里的定理 16 写的是这件事。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -73,6 +74,12 @@ The libraries below still return something the next program will accept when not
 The picture also knows how many steps old it is. When both streams arrived this step, the frame is new. When one is late, the picture keeps the last arrival and grows one step older. Through a three-step burst with nothing arriving, the picture does not move and grows three steps older. A default always claims to be new. The held picture never makes that claim.
 
 ![画面知道自己有几步没更新了。中间三步都没到，画面不动，年龄涨三步。](docs/figures/stale.png)
+
+蒙也有蒙对的时候。手指晚了，猜的那一版每次都说握紧，握紧只占八分之一。留的那一版留着上一次到过的角度，一次都没到过就留着张开。只晚脑电时，两边蒙对差不多。只晚手指时，留下的蒙对六倍多。蒙对几回不是重点，重点是蒙对也记成蒙对，从不把蒙说成测到。
+
+A guess is sometimes right. When the finger is late, the guessing picture always says closed, and closed is one case in eight. The held picture keeps the last angle that arrived, and starts open. When only the brain recording is late, the two match the truth about equally often. When only the finger is late, the held picture matches more than six times as often. How often is not the point. The point is that a lucky match is recorded as luck, never presented as a measurement.
+
+![蒙对不是测到。只晚手指时，留下的那一版蒙对六倍多。](docs/figures/luck.png)
 
 ### 这些库在什么都没录上时仍会交回一个结果
 
@@ -150,9 +157,9 @@ One call, three outcomes. It sits in front of a planner the product already runs
 | `impute` | 旁边的对照。同一个规划，在场景被补完之后会怎么走。用来给人看两边不一样。正式交出去的是上一行。 |
 | 停住 | 什么都没送来。不交回零，不交回一个里面什么都没有的列表，也不交回一个会悄悄传下去的非数。 |
 
-页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步。
+页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步。
 
-On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one.
+On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time.
 
 这次没有训练好的视频模型，没有头戴设备的开发包，没有机器人成功率，也没有治疗效果。
 
@@ -216,6 +223,7 @@ python3.12 show_policy.py
 | `late.py` | 脑电和手指有一边晚到，画面先留着上一次到齐的样子 |
 | `tenant.py` | 谁晚到，也不改另一家的画面 |
 | `stale.py` | 画面知道自己有几步没更新了 |
+| `luck.py` | 蒙对不是测到 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
