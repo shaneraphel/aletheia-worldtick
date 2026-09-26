@@ -293,6 +293,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(rec["serial"]["unjustified"], 0)
         self.assertEqual(rec["zero_alloc"], [0, 0, 0, 0, 0])
 
+    def test_a_late_signal_matches_when_both_arrived(self) -> None:
+        import random
+
+        from late import run as late_run
+        from late import step
+
+        _, _, row = step(True, False, random.Random(1))
+        self.assertFalse(row["both_arrived"] and row["both_arrived_differ"])
+        rec = late_run(n=4, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["both_arrived_differ"], 0)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

@@ -53,6 +53,7 @@ jobs:
           python near.py
           python reel.py
           python aperture.py
+          python late.py
           python show_policy.py
           python tick_bench.py
       - name: paper

@@ -1,0 +1,32 @@
+{
+  "schema": "worldtick.late.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "differ": 58569,
+    "sound_differs": 21864,
+    "finger_differs": 42417,
+    "both_arrived_differ": 0,
+    "one_late": 67130,
+    "both_late": 14325,
+    "both_arrived": 78545,
+    "sessions": 10000
+  },
+  "parallel": {
+    "differ": 58569,
+    "sound_differs": 21864,
+    "finger_differs": 42417,
+    "both_arrived_differ": 0,
+    "one_late": 67130,
+    "both_late": 14325,
+    "both_arrived": 78545,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

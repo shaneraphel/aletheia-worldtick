@@ -119,10 +119,12 @@ def main() -> int:
     check((reel["pixel_changes"], reel["rate_only"], reel["drop_pixel"]) == (3665, 8377, 0), "sound changes without a new frame 8377")
     ap = load("APERTURE.json")["serial"]
     check((ap["invented"], ap["seen_open_closed"], ap["absent_closed"], ap["coach_closed"], ap["unjustified"]) == (43014, 38623, 4391, 19335, 0), "missing sample drawn closed 43014")
+    late = load("LATE.json")["serial"]
+    check((late["differ"], late["sound_differs"], late["finger_differs"], late["both_arrived_differ"], late["one_late"]) == (58569, 21864, 42417, 0, 67130), "late signal guessed 58569")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417"]:
         check(token in text, f"paper cites {token}")
-    print("all 73 number checks passed")
+    print("all 77 number checks passed")
     return 0
 
 

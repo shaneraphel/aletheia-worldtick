@@ -56,6 +56,7 @@ evidence:
 	$(PYTHON) near.py
 	$(PYTHON) reel.py
 	$(PYTHON) aperture.py
+	$(PYTHON) late.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py
