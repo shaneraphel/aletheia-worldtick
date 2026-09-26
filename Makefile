@@ -73,6 +73,7 @@ evidence:
 	$(PYTHON) grip.py
 	$(PYTHON) approach.py
 	$(PYTHON) bill.py
+	$(PYTHON) beside.py
 
 # macOS-only Metal run; not in CI.
 gpu:

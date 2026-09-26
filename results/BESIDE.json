@@ -1,0 +1,35 @@
+{
+  "schema": "worldtick.beside.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "beside": 2,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "only_guess": 27971,
+    "only_held": 65303,
+    "both": 4712,
+    "apart": 62014,
+    "you_closed": 3691,
+    "they_pulled": 3657,
+    "held_moved_on_miss": 0,
+    "guess_shrunk_on_miss": 17000,
+    "sessions": 10000
+  },
+  "parallel": {
+    "only_guess": 27971,
+    "only_held": 65303,
+    "both": 4712,
+    "apart": 62014,
+    "you_closed": 3691,
+    "they_pulled": 3657,
+    "held_moved_on_miss": 0,
+    "guess_shrunk_on_miss": 17000,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

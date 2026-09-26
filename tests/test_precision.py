@@ -495,6 +495,15 @@ class PrecisionTest(unittest.TestCase):
         s = rec["serial"]
         self.assertEqual(s["differ"] + s["same"], s["sessions"] * 16)
 
+    def test_standing_beside_someone_uses_two_places_that_arrived(self) -> None:
+        from beside import run as beside_run
+
+        rec = beside_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["held_moved_on_miss"], 0)
+        self.assertEqual(s["only_guess"] + s["only_held"] + s["both"] + s["apart"], s["sessions"] * 16)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

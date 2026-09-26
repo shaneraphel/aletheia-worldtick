@@ -391,7 +391,13 @@ function paintCamp(note) {
   }
   dot(campGuess, "#6e7681");
   dot(campHeld, "#e6edf3");
-  document.getElementById("camp-out").textContent = note;
+  const heldApart = Math.abs(campPerson - campHeld);
+  const guessApart = Math.abs(campPersonGuess - campGuess);
+  const heldSay = heldApart <= 2 ? "白点和蓝点在一起" : "白点和蓝点还分开";
+  const guessSay = guessApart <= 2 ? "灰点和淡蓝在一起" : "灰点和淡蓝还分开";
+  const heldEn = heldApart <= 2 ? "White and blue are beside each other" : "White and blue are still apart";
+  const guessEn = guessApart <= 2 ? "Gray and dim are beside each other" : "Gray and dim are still apart";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。 " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps).";
 }
 
 function campMusic() {
