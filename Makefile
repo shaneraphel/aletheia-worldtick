@@ -68,6 +68,7 @@ evidence:
 	$(PYTHON) replay.py
 	$(PYTHON) trio.py
 	$(PYTHON) system.py
+	$(PYTHON) scene.py
 
 # macOS-only Metal run; not in CI.
 gpu:

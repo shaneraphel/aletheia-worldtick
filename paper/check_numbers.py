@@ -157,10 +157,12 @@ def main() -> int:
     check((gpu["gpu"]["new"], gpu["gpu"]["differ"]) == (783232, 586904), "gpu totals equal cpu totals")
     sysm = load("SYSTEM.json")
     check((len(sysm["nodes"]), len(sysm["edges"])) == (6, 6), "system diagram has 6 nodes and 6 edges")
+    scene = load("SCENE.json")
+    check((scene["vertices"], scene["triangles"], scene["held_at"], scene["guess_at"], scene["new_steps"], scene["replay_mismatch"]) == (205, 478, 6, 16, 6, 0), "clearing hand stops at 6, guess walks to 16")
 
     for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417", "2981", "4078", "3922", "63903", "199886", "75353", "81428", "21801", "48700", "19448", "4938", "6022", "42145", "150000", "96605", "132416", "13146", "13117", "129652", "40037", "90720", "360000", "75184", "46715", "71442", "78861", "58450", "55321", "85303", "4306", "783232", "586904"]:
         check(token in text, f"paper cites {token}")
-    print("all 130 number checks passed")
+    print("all 131 number checks passed")
     return 0
 
 

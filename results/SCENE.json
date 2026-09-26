@@ -1,0 +1,21 @@
+{
+  "schema": "worldtick.scene.v1",
+  "seed": 20260919,
+  "models": [
+    "tree_simple.obj",
+    "tree_simple.obj",
+    "tree_simple.obj",
+    "rock_smallA.obj",
+    "stump_round.obj",
+    "tent_smallClosed.obj"
+  ],
+  "vertices": 205,
+  "triangles": 478,
+  "held_at": 6,
+  "guess_at": 16,
+  "new_steps": 6,
+  "replay_mismatch": 0,
+  "steps": 16,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

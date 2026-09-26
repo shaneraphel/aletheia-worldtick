@@ -75,6 +75,7 @@ jobs:
           python replay.py
           python trio.py
           python system.py
+          python scene.py
           python show_policy.py
           python tick_bench.py
       # gpurun.py stays out: it needs macOS with Swift and Metal.

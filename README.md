@@ -212,6 +212,13 @@ What it looks like is in this diagram. The brain recording and the finger enter 
 
 ![检查坐在世界模型前面，记录坐在检查下面。重算对上了，才算完。](docs/figures/system.png)
 
+用素材库里的树、石头、帐篷，画出一片营地。给用户看的那只手，只在脑电和手指都到了的时候往前走，停在营地中间。猜的那只手每步都走，走到了石头旁边。素材是 Kenney 的自然套件，可以自由使用。这还不是发布出去的关卡。
+
+The same clearing, drawn from trees, a rock, and a tent in the model pack. The hand the user sees walks forward only when both the brain recording and the finger have arrived, and it stops in the middle of the camp. The guessed hand walks on every step and ends beside the rock. The models are Kenney's nature kit, free to use. This is not a shipped level yet.
+
+![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
+![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
+
 | 调用 | 人拿到的 |
 |---|---|
 | `measure` | 只用已经送到的信息往下走。两条路一样长时，走只经过看见的地面的那条。脑电没传全，不写成零。手指角度没到，不画成已经握紧。脑电和手指有一边晚了，画面留在上一次两边都到过的样子。 |
@@ -294,6 +301,8 @@ python3.12 show_policy.py
 | `trio.py` | 三路都到，画面才是全新的 |
 | `system.py` | 检查、模型、记录长什么样 |
 | `gpurun.py` · `gpucount/` | 同一批随机数，CPU 和 GPU 各数一遍 |
+| `gate.py` | 交给画面的那一次调用 |
+| `scene.py` · `resources/kenney/` | 用素材库里的树和石头把营地画出来 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

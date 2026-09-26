@@ -446,6 +446,20 @@ class PrecisionTest(unittest.TestCase):
             self.assertIn(a, ids)
             self.assertIn(b, ids)
 
+    def test_the_clearing_hand_waits_for_both_streams(self) -> None:
+        from gate import Gate
+        from scene import walk
+
+        gate = Gate()
+        gate.step(1, 4)
+        gate.step(None, None)
+        self.assertEqual(gate.replay(), gate.shown)
+        self.assertEqual(gate.brain_age, 1)
+        walked = walk(n=16)
+        self.assertLess(walked["held_at"], walked["guess_at"])
+        self.assertEqual(walked["replay_mismatch"], 0)
+        self.assertEqual(walked["held_at"], walked["new_steps"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 
