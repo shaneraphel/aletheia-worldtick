@@ -180,6 +180,10 @@ On 10,000 sessions of 16 steps, 160000 steps, seed 20260919, steps where all thr
 
 **The clearing.** Four models from Kenney's Nature Kit, 205 vertices and 478 triangles, stand in fixed places. Over sixteen steps the hand the user sees advances on 6 arrivals and stops at place 6, inside none of the models. The guessed picture advances on every step, stops at place 16, and that place lies inside the stump. Another person stands at place 10 and does not move. On this session the hand the user sees stops at place 6, before them. The guessed hand has already passed them. Across 10,000 sessions the guessed hand reaches that person every time, 10000 of 10000. The hand the user sees reaches them on 2138 sessions, so only the guessed hand arrives on 7862. Replaying the record mismatches 0 times. The models are CC0. The other person is not a recording of anyone. This is not a shipped game level.
 
+**A missing angle is not a grip.** The only place on this path that stands inside a model is the last place, inside the stump. The guessed hand reaches it every session and is drawn closed whenever that step's finger angle is missing. The hand the user sees is drawn closed only when a closed angle arrived, and on these sessions it never stands inside a model while closed.
+
+On 10,000 sessions the guessed hand is drawn as a grip on the stump 2912 times. The hand the user sees is drawn as a grip on the stump 0 times, and as a grip on any model 0 times. One core and ten cores agree. These are not angles from a hand.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

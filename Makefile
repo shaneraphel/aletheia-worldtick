@@ -70,6 +70,7 @@ evidence:
 	$(PYTHON) system.py
 	$(PYTHON) scene.py
 	$(PYTHON) visitor.py
+	$(PYTHON) grip.py
 
 # macOS-only Metal run; not in CI.
 gpu:

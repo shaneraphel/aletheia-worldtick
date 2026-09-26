@@ -219,11 +219,13 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 ![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
 ![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
 
-营地里还站着一个人，蓝点，不走。给用户看的那只手停在他前面。猜的那只手走过他，最后站进树桩里。一万次里，猜的手每次都走到他面前；给用户看的手只有少数几次走到。页面上可以自己走，同时响起贝多芬第十五奏鸣曲开头的八秒。有一路晚了，曲子继续，不换。这不是治疗用的音乐，蓝点也不是某一个人的记录。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+营地里还站着一个人，蓝点，不走。给用户看的那只手停在他前面。猜的那只手走过他，最后站进树桩里。一万次里，猜的手每次都走到他面前；给用户看的手只有少数几次走到。猜的手走到树桩上、角度又没到，就会被画成已经握住木头。给用户看的手一次都没有。页面上可以自己走，同时响起贝多芬第十五奏鸣曲开头的八秒。有一路晚了，曲子继续，不换。这不是治疗用的音乐，蓝点也不是某一个人的记录，握住树桩也不是从人身上量到的角度。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
 
-Someone else stands in the camp, the blue dot, and does not walk. The hand the user sees stops before them. The guessed hand walks past them and ends inside the stump. On ten thousand tries the guessed hand reaches them every time. The hand the user sees reaches them only on a minority of tries. On the page you can walk it yourself, with the opening eight seconds of Beethoven’s Piano Sonata No. 15. When one stream is late, the piece keeps playing and does not switch. It is not treatment music, and the blue dot is not a record of a particular person. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+Someone else stands in the camp, the blue dot, and does not walk. The hand the user sees stops before them. The guessed hand walks past them and ends inside the stump. On ten thousand tries the guessed hand reaches them every time. The hand the user sees reaches them only on a minority of tries. When the guessed hand is on the stump and the finger angle did not arrive, the picture draws it as a grip on the wood. The hand the user sees is never drawn that way. On the page you can walk it yourself, with the opening eight seconds of Beethoven’s Piano Sonata No. 15. When one stream is late, the piece keeps playing and does not switch. It is not treatment music, the blue dot is not a record of a particular person, and the grip on the stump is not an angle taken from a hand. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
+
+![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
 
 | 调用 | 人拿到的 |
 |---|---|
@@ -310,6 +312,7 @@ python3.12 show_policy.py
 | `gate.py` | 交给画面的那一次调用 |
 | `scene.py` · `resources/kenney/` | 用素材库里的树和石头把营地画出来 |
 | `visitor.py` | 营地里的另一个人站着不走 |
+| `grip.py` | 角度没到，不是握住了树桩 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

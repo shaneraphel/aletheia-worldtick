@@ -77,6 +77,7 @@ jobs:
           python system.py
           python scene.py
           python visitor.py
+          python grip.py
           python show_policy.py
           python tick_bench.py
       # gpurun.py stays out: it needs macOS with Swift and Metal.

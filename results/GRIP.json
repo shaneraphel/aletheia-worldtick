@@ -1,0 +1,25 @@
+{
+  "schema": "worldtick.grip.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "guess_grip": 2912,
+    "held_grip": 0,
+    "guess_stump": 2912,
+    "held_stump": 0,
+    "sessions": 10000
+  },
+  "parallel": {
+    "guess_grip": 2912,
+    "held_grip": 0,
+    "guess_stump": 2912,
+    "held_stump": 0,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

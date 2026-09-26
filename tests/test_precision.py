@@ -471,6 +471,15 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["guess_reaches"], s["sessions"])
         self.assertEqual(s["only_guess"] + s["held_reaches"], s["sessions"])
 
+    def test_a_missing_angle_is_not_a_grip_on_the_stump(self) -> None:
+        from grip import run as grip_run
+
+        rec = grip_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertGreaterEqual(s["guess_grip"], s["guess_stump"])
+        self.assertLessEqual(s["held_stump"], s["held_grip"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 
