@@ -58,6 +58,8 @@ We do not post the page on another project's issue tracker. Those issues are for
 | Scene hold | The music and the picture stay as they are, because the brain window was incomplete. A class computed after filling that window is not allowed to change them. |
 | Bilateral sound | Alternating left-right sound, the sensory part of an EMDR session. This repository does not claim a treatment effect. The rule is when that sound may change. |
 | Grasp picture | The 3D picture of a dexterous hand in the scene. It may not show a finished grasp through a cell the camera did not see. |
+| Closed finger | Joint code 0. A missing sample is not this code. |
+| Zero buffer | A missing joint sample stored as 0, so the picture draws that finger closed. |
 | Silent file | A sound file with zero frames. Players open it. The session does not treat it as rest. |
 | Empty cloud | A point cloud or mesh with nothing in it. Geometry libraries return it. The session does not treat it as a finished hand. |
 
@@ -79,6 +81,8 @@ We do not post the page on another project's issue tracker. Those issues are for
 | 画面保持 | 音乐和画面维持原样，因为脑电窗口不完整。用补全后的类别去改它们，是不允许的。 |
 | 双侧声音 | 左右交替的声音，是 EMDR 里的感觉部分。本仓库不声称治疗效果。规则只规定这段声音什么时候可以变。 |
 | 抓取画面 | 灵巧手在场景里的三维画面。它不能把摄像机没看见的格子画成一次已经完成的抓取。 |
+| 闭合的手指 | 关节代码 0。没到的采样不是这个代码。 |
+| 零缓冲 | 把没到的关节采样存成 0，于是画面把这根手指画成闭合。 |
 | 无声文件 | 帧数为 0 的声音文件。播放器会打开它。会话不把它当成静息。 |
 | 空点云 | 里面没有点的点云或网格。几何库会把它交回来。会话不把它当成一只已经成形的手。 |
 
@@ -146,6 +150,16 @@ The page is aimed at two groups, and both are injured by the same write.
 **声音不是画面。** 帧是摄像机看见的地图，加上手站着的那一格。左右声的速度不画进这些像素。同一批 2,000 张地图、同样的十六个窗口，像素改变 **3,665** 次，和画面向前的次数相同。速度变了、画面没变，有 **8,377** 次。丢掉的窗口让像素改变的次数是 **0**。你可以听见另一个速度，眼前仍是同一帧。一个核和十个核一致。
 
 ![The pixels change 3,665 times. The sound changes while the picture stays 8,377 times.](docs/figures/reel.png)
+
+**A missing sample is not a closed finger.** Closed is joint code 0. Each finger either sends a code in 0…7, or the sample is missing, with probability 0.30. The coach keeps the last code that arrived. Before the first arrival it keeps nothing, and it does not draw the finger closed. The zero buffer writes 0 on every miss, so the picture closes a finger that was last seen open, and it also closes a finger that has never been seen. The question is how often that picture shows a closure the coach did not observe.
+
+On 2,000 hands, sixteen packets, five fingers — 160,000 finger-steps, seed 20260919 — the buffer draws a closure the coach does not draw **43,014** times. **38,623** of those fingers were last seen open. **4,391** had never sent a sample. The coach draws **19,335** closures, and the buffer draws every one of them. A closure drawn by the coach without a received 0 happens **0** times. Five joints allocated as zeros read back as five zeros: a hand drawn closed before any packet. One core and ten cores agree. These are not angles from a person.
+
+**没到的采样不是闭合。** 闭合是关节代码 0。每根手指要么送来 0 到 7 的代码，要么这次采样没到，概率是 0.30。引导保留上次真正到过的代码。第一次到达之前什么都不保留，也不把这根手指画成闭合。零缓冲在每次丢失时写上 0，于是画面会握上一根上次还张开的手指，也会握上一根从未到过采样的手指。问题是，这幅画面有多少次画出了引导没有测到的闭合。
+
+2,000 只手、每只 16 个包、五根手指，共 160,000 步，种子 20260919。零缓冲画出引导没有画出的闭合，有 **43,014** 次。其中 **38,623** 次，这根手指上次看见时是张开的。**4,391** 次，这根手指一次采样都没到过。引导画出 **19,335** 次闭合，零缓冲把这 19,335 次全都画了。引导在没有收到 0 的情况下画出闭合，是 **0** 次。五个关节按零分配，读回来就是五个零：包还没到，手已经被画成握上。一个核和十个核一致。这些不是从人身上量到的角度。
+
+![The zero buffer draws 43,014 closures the coach did not observe.](docs/figures/aperture.png)
 
 The world model is the picture. The non-invasive window is a partial observation. The hand camera is a partial observation. Filling either one, and then letting the picture move, is the same decision this repository already refuses on a map, on an EEG packet, and on a reward row.
 
@@ -375,6 +389,7 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `clock.py` | a dropped window moves neither the rate nor the frame |
 | `near.py` | distance to a person on seen ground, and on the filled map |
 | `reel.py` | the rate may change while every pixel stays |
+| `aperture.py` | a missing joint sample is not a closed finger |
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |

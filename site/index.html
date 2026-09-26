@@ -126,6 +126,19 @@
   <p>这两件事不要混在一起。第一件：机器更快，会不会看见另一个世界？同一批 2,000 张地图，一个进程算一遍，十个进程各算一段。补全后的路径走进真障碍的次数都是 1,439。手的画面不取决于哪一个核画的。第二件：传感器什么都没交回来时，库交给游戏的是什么？wave 能写出 0 帧的合法声音。SciPy 和 soundfile 把它读成 8,000 Hz 的空数组。Pillow 能造出 0×0 的图。OpenCV 在空图上数到 0。Open3D 交回 0 个点的点云。这些调用都成功，所以下一模块可以播放或渲染它们。有采样率却没有帧，不是“人处于静息”。存在却没有点，不是“手已经抓完”。八个真实采样才是类别 1。一个没有采样的列表会被拒绝。</p>
   <p class="en">Keep the two questions apart. First: does a faster machine see a different world? The same 2,000 maps, planned once in one process and once in ten slices, both walk into a real obstacle 1,439 times. The picture of the hand does not depend on which core drew it. Second: when the sensor returns nothing, what does the library hand to the game? wave writes a legal sound with 0 frames. SciPy and soundfile read it as an empty array at 8,000 Hz. Pillow builds a 0×0 image. OpenCV counts 0. Open3D returns a cloud of 0 points. Each call succeeds, so the next module can play or render it. A sample rate with no frames is not “the person is at rest.” A cloud that exists and has no points is not “the hand has finished.” Eight real samples are class 1. A list with no samples is refused.</p>
 
+  <h2>一根手指 · One finger</h2>
+  <p>闭合是代码 0。采样没到，不是代码 0。零缓冲把没到的采样写成 0，画面上这根手指就握上了。引导只保留上次真正到过的代码。一次都没到过，就不画成闭合。</p>
+  <p class="en">Closed is code 0. A missing sample is not code 0. The zero buffer writes 0 for a missing sample, and the picture draws the finger closed. The coach keeps the last code that arrived. If none has arrived, the finger is not drawn closed.</p>
+  <div class="cells" id="finger"></div>
+  <div class="row">
+    <button id="b-open" type="button">张开的采样到了 · An open sample arrived</button>
+    <button id="b-shut" type="button">闭合的采样到了 · A closed sample arrived</button>
+    <button id="b-miss" type="button">采样丢了 · The sample is missing</button>
+  </div>
+  <p class="out" id="finger-out"></p>
+  <p>2,000 只手、每只 16 个包、五根手指，共 160,000 步。零缓冲画成闭合、而引导没有测到闭合的，有 43,014 步。其中 38,623 步上一次看见的是张开，4,391 步这根手指一次采样都没到过。引导画出的闭合是 19,335，全部也在零缓冲里。没有收到 0 却画出闭合，是 0 次。五个关节按零分配，读出来是五个 0。这不是从人身上量到的角度。</p>
+  <p class="en">Two thousand hands, sixteen packets, five fingers: 160,000 steps. The buffer draws a closure the coach did not observe on 43,014 steps. On 38,623 of them the finger was last seen open. On 4,391 the finger had never sent a sample. The coach draws 19,335 closures, and the buffer draws all of them. A closure with no received 0: 0. Five joints allocated as zeros read back as five zeros. These are not angles from a person.</p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -353,6 +366,46 @@ document.getElementById("b-fillpic").onclick = () => {
   roomSay("补全后再画：手进了没看见的格子。那一格是障碍。 Drawn after the fill: the hand entered a cell that was not seen. That cell is an obstacle.");
 };
 drawRoom(false);
+
+let finger = { coach: null, bufferClosed: true };
+
+function paintFinger(note) {
+  const box = document.getElementById("finger");
+  box.replaceChildren();
+  function cell(title, kind, lines) {
+    const d = document.createElement("div");
+    d.className = "cell " + kind;
+    d.textContent = title + "\n" + lines;
+    box.appendChild(d);
+  }
+  if (finger.bufferClosed) cell("零缓冲\nbuffer", "crash", "闭合\nclosed");
+  else cell("零缓冲\nbuffer", "free", "张开\nopen");
+  if (finger.coach === null) cell("引导\ncoach", "mask", "没到过\nnever arrived");
+  else if (finger.coach === 0) cell("引导\ncoach", "crash", "闭合\nclosed");
+  else cell("引导\ncoach", "free", "张开\nopen");
+  document.getElementById("finger-out").textContent = note;
+}
+
+document.getElementById("b-open").onclick = () => {
+  finger = { coach: 4, bufferClosed: false };
+  paintFinger("张开的采样到了。两边都是张开。 An open sample arrived. Both stay open.");
+};
+document.getElementById("b-shut").onclick = () => {
+  finger = { coach: 0, bufferClosed: true };
+  paintFinger("闭合的采样到了。两边都画成闭合。这是测到的。 A closed sample arrived. Both draw it closed. That closure was observed.");
+};
+document.getElementById("b-miss").onclick = () => {
+  const previous = finger.coach;
+  finger = { coach: previous, bufferClosed: true };
+  if (previous === null) {
+    paintFinger("采样没到。零缓冲画成闭合。引导一次都没收到，不画成闭合。 The sample is missing. The buffer draws it closed. The coach has received nothing, and does not.");
+  } else if (previous === 0) {
+    paintFinger("采样没到。上次测到的就是闭合，两边都保持。 The sample is missing. The last code was already closed, so both stay closed.");
+  } else {
+    paintFinger("采样没到。零缓冲把张开写成了闭合。引导保持上次看见的张开。 The sample is missing. The buffer closes a finger last seen open. The coach keeps that open code.");
+  }
+};
+paintFinger("五个零分配的关节，读出来就是闭合。引导还没收到采样，不画成闭合。 Five joints allocated as zeros read back closed. The coach has received no sample, and does not draw one closed.");
 </script>
 </body>
 </html>

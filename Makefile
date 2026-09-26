@@ -55,6 +55,7 @@ evidence:
 	$(PYTHON) clock.py
 	$(PYTHON) near.py
 	$(PYTHON) reel.py
+	$(PYTHON) aperture.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

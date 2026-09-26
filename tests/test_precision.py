@@ -279,6 +279,20 @@ class PrecisionTest(unittest.TestCase):
         self.assertNotIn((1, 0), dist)
         self.assertIn((0, 1), dist)
 
+    def test_a_missing_sample_does_not_close_the_coach(self) -> None:
+        from aperture import finger_step, run as aperture_run
+
+        last, coach, buffer = finger_step(4, None)
+        self.assertEqual((last, coach, buffer), (4, False, True))
+        last, coach, buffer = finger_step(None, None)
+        self.assertEqual((last, coach, buffer), (None, False, True))
+        last, coach, buffer = finger_step(None, 0)
+        self.assertEqual((last, coach, buffer), (0, True, True))
+        rec = aperture_run(n=4, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["serial"]["unjustified"], 0)
+        self.assertEqual(rec["zero_alloc"], [0, 0, 0, 0, 0])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

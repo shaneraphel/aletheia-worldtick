@@ -1,0 +1,42 @@
+{
+  "schema": "worldtick.aperture.v1",
+  "seed": 20260919,
+  "hands": 2000,
+  "packets": 16,
+  "fingers": 5,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "zero_alloc": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "serial": {
+    "invented": 43014,
+    "agreed": 19335,
+    "absent_closed": 4391,
+    "seen_open_closed": 38623,
+    "coach_closed": 19335,
+    "buffer_closed": 62349,
+    "dropped": 48423,
+    "unjustified": 0,
+    "hands": 2000
+  },
+  "parallel": {
+    "invented": 43014,
+    "agreed": 19335,
+    "absent_closed": 4391,
+    "seen_open_closed": 38623,
+    "coach_closed": 19335,
+    "buffer_closed": 62349,
+    "dropped": 48423,
+    "unjustified": 0,
+    "hands": 2000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
