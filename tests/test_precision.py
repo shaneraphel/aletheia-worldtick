@@ -495,6 +495,17 @@ class PrecisionTest(unittest.TestCase):
         s = rec["serial"]
         self.assertEqual(s["differ"] + s["same"], s["sessions"] * 16)
 
+    def test_a_repeated_place_is_not_a_new_picture(self) -> None:
+        from once import run as once_run
+
+        rec = once_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["fresh"] + s["again"], s["sessions"] * 16)
+        self.assertEqual(s["fresh"] + s["repeat_delivery"], s["deliveries"])
+        self.assertLessEqual(s["fresh"], s["deliveries"])
+
     def test_what_they_see_is_the_last_place_that_was_delivered(self) -> None:
         from relay import run as relay_run
 

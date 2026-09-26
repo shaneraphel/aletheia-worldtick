@@ -75,6 +75,7 @@ evidence:
 	$(PYTHON) bill.py
 	$(PYTHON) beside.py
 	$(PYTHON) relay.py
+	$(PYTHON) once.py
 
 # macOS-only Metal run; not in CI.
 gpu:
