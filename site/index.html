@@ -30,7 +30,18 @@
   <h1>补上的答案，已经是一个决策。</h1>
   <p class="en">The filled answer is already a decision.</p>
   <p>世界模型交回一幅没有洞的下一帧，脑电解码把丢包写成零，规划器把没测到的格子当成空地。下一模块分不出这是测到的，还是写上去的。</p>
-  <p class="en">A world model returns a next frame with no holes. A neural decoder writes a dropped packet as zeros. A planner treats an unseen cell as free. The next module cannot tell a measurement from a write.</p>
+  <p class="en">A world model is asked for the next picture, a brain recording is asked whether the person moved, and the hand in the scene is asked for a pose that has already happened. When part of that has not arrived, the usual next step completes it and acts on the completion. This page keeps the picture on what actually arrived.</p>
+
+  <h2>营地 · The camp</h2>
+  <p>树、石头、帐篷来自素材库。白点是给用户看的手，只在脑电和手指都到了的时候往前走。灰点是猜的那只手，每步都走。</p>
+  <p class="en">The trees, the rock, and the tent come from the model pack. The white dot is the hand the user sees. It walks forward only when both the brain recording and the finger have arrived. The gray dot is the guessed hand. It walks on every step.</p>
+  <canvas id="camp" width="1040" height="640" style="width:100%; max-width:920px; background:#121c16; border-radius:12px;"></canvas>
+  <div class="row">
+    <button id="b-camp-both" type="button">这一步，两边都到了 · Both arrived</button>
+    <button id="b-camp-late" type="button">这一步，有一路晚了 · One is late</button>
+    <button id="b-camp-clear" type="button">回到起点 · Back to the start</button>
+  </div>
+  <p class="out" id="camp-out"></p>
 
   <h2>怎么读 · How to read this page</h2>
   <p>先按按钮，再看名词。数字是按钮背后的陈述的见证，不是另一篇文章。</p>
@@ -340,6 +351,51 @@ document.getElementById("b-zero").onclick = () => select("#b-go, #b-zero, #b-sig
 document.getElementById("b-sign").onclick = () => select("#b-go, #b-zero, #b-sign", "b-sign", eeg, "sign");
 document.getElementById("b-row").onclick = () => select("#b-row, #b-look", "b-row", act, "row");
 document.getElementById("b-look").onclick = () => select("#b-row, #b-look", "b-look", act, "look");
+
+const campPath = [];
+for (let i = 0; i < 17; i++) campPath.push([-1.35 + i * 0.15, -0.55 + i * 0.08]);
+let campHeld = 0;
+let campGuess = 0;
+const campImg = new Image();
+campImg.src = "clearing-camp.png";
+
+function campProject(x, z) {
+  return [520 + (x - z) * 150, 430 - 0.15 * 150 + (x + z) * 46];
+}
+
+function paintCamp(note) {
+  const canvas = document.getElementById("camp");
+  const g = canvas.getContext("2d");
+  g.clearRect(0, 0, canvas.width, canvas.height);
+  if (campImg.complete && campImg.naturalWidth) g.drawImage(campImg, 0, 0, canvas.width, canvas.height);
+  function dot(at, color) {
+    const p = campProject(campPath[at][0], campPath[at][1]);
+    g.fillStyle = color;
+    g.beginPath();
+    g.arc(p[0], p[1], 14, 0, Math.PI * 2);
+    g.fill();
+  }
+  dot(campGuess, "#6e7681");
+  dot(campHeld, "#e6edf3");
+  document.getElementById("camp-out").textContent = note;
+}
+
+document.getElementById("b-camp-both").onclick = () => {
+  if (campHeld < 16) campHeld += 1;
+  if (campGuess < 16) campGuess += 1;
+  paintCamp("两边都到了，两只手都往前走。 Both arrived. Both hands step forward.");
+};
+document.getElementById("b-camp-late").onclick = () => {
+  if (campGuess < 16) campGuess += 1;
+  paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。 One stream is late. The hand the user sees stays. The guessed hand keeps walking.");
+};
+document.getElementById("b-camp-clear").onclick = () => {
+  campHeld = 0;
+  campGuess = 0;
+  paintCamp("回到起点。 Back to the start.");
+};
+campImg.onload = () => paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
+paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
 
 paint("fill");
 eeg("go");

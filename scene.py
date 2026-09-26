@@ -92,7 +92,7 @@ def walk(seed: int = SEED, n: int = STEPS) -> dict:
     }
 
 
-def draw(tris: list, hand_at: int, path: Path) -> None:
+def draw(tris: list, hand_at: int | None, path: Path) -> None:
     from PIL import Image, ImageDraw
 
     image = Image.new("RGB", (1040, 640), (18, 28, 22))
@@ -111,14 +111,17 @@ def draw(tris: list, hand_at: int, path: Path) -> None:
         painted.append((depth, [(p[0], p[1]) for p in pts], color))
     for _, pts, color in sorted(painted, key=lambda item: -item[0]):
         draw.polygon(pts, fill=color)
-    hx, hy, _ = project(PATH[hand_at][0], 0.15, PATH[hand_at][1])
-    draw.ellipse((hx - 14, hy - 14, hx + 14, hy + 14), fill=(230, 237, 243))
+    if hand_at is not None:
+        hx, hy, _ = project(PATH[hand_at][0], 0.15, PATH[hand_at][1])
+        draw.ellipse((hx - 14, hy - 14, hx + 14, hy + 14), fill=(230, 237, 243))
     image.save(path, quality=92)
 
 
 def run(seed: int = SEED) -> dict:
     tris, verts = mesh()
     walked = walk(seed)
+    draw(tris, None, ROOT / "docs" / "figures" / "clearing-camp.png")
+    draw(tris, None, ROOT / "site" / "clearing-camp.png")
     draw(tris, walked["held_at"], ROOT / "docs" / "figures" / "clearing-held.png")
     draw(tris, walked["guess_at"], ROOT / "docs" / "figures" / "clearing-guess.png")
     return {

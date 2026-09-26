@@ -219,6 +219,10 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 ![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
 ![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
 
+页面上可以自己走。白点只在两边都到的时候往前，灰点每步都走。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+On the page you can walk it yourself. The white dot steps forward only when both have arrived. The gray dot steps every time. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
 | 调用 | 人拿到的 |
 |---|---|
 | `measure` | 只用已经送到的信息往下走。两条路一样长时，走只经过看见的地面的那条。脑电没传全，不写成零。手指角度没到，不画成已经握紧。脑电和手指有一边晚了，画面留在上一次两边都到过的样子。 |
