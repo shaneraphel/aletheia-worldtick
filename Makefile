@@ -57,6 +57,7 @@ evidence:
 	$(PYTHON) reel.py
 	$(PYTHON) aperture.py
 	$(PYTHON) late.py
+	$(PYTHON) tenant.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

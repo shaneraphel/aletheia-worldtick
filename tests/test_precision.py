@@ -305,6 +305,16 @@ class PrecisionTest(unittest.TestCase):
         self.assertTrue(rec["equal"])
         self.assertEqual(rec["serial"]["both_arrived_differ"], 0)
 
+    def test_tenants_do_not_move_each_other(self) -> None:
+        from tenant import run as tenant_run
+
+        rec = tenant_run(n_tenants=3, n_requests=12, workers=2)
+        self.assertTrue(rec["equal"])
+        self.assertEqual(rec["isolated"], 3)
+        self.assertEqual(rec["noisy_unchanged"], 3)
+        s = rec["serial"]
+        self.assertEqual(s["held_requests"] + s["full_updates"], s["requests"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

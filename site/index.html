@@ -149,6 +149,18 @@
   </div>
   <p class="out" id="late-out"></p>
 
+  <h2>两家住户 · Two tenants</h2>
+  <p>服务给每家各留一幅画面。A 来不来，只改 A 的画面，不改 B 的。反过来也一样。十六家排着来，和轮着来，每家看见的完全相同。多一家从不发货的，其余十六家不受影响。</p>
+  <p class="en">The service keeps one picture per tenant. Whether A sends anything changes only A’s picture, never B’s, and the other way around. Sixteen tenants served one after another, or round-robin, each see the same sequence. Adding a tenant that never sends anything leaves the other sixteen unchanged.</p>
+  <div class="cells" id="tenants"></div>
+  <div class="row">
+    <button id="b-tenant-a" type="button">A 来了一次 · A sends one</button>
+    <button id="b-tenant-a-miss" type="button">A 这一轮没来 · A misses</button>
+    <button id="b-tenant-b" type="button">B 来了一次 · B sends one</button>
+    <button id="b-tenant-b-miss" type="button">B 这一轮没来 · B misses</button>
+  </div>
+  <p class="out" id="tenants-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -444,6 +456,37 @@ document.getElementById("b-finger-late").onclick = () => {
   paintLate("手指角度还没到。" + guess + held);
 };
 paintLate("先按「两边都到了」，再按有一边还没到。 Press “both arrived,” then press a stream that is late.");
+
+const tenants = { A: { fast: false, closed: false }, B: { fast: false, closed: false } };
+
+function paintTenants(note) {
+  const box = document.getElementById("tenants");
+  box.replaceChildren();
+  ["A", "B"].forEach((name) => {
+    const t = tenants[name];
+    const d = document.createElement("div");
+    d.className = "cell " + (t.closed ? "crash" : "free");
+    d.textContent = name + (t.fast ? " 快 fast" : " 慢 slow") + "\n" + (t.closed ? "握紧 closed" : "张开 open");
+    box.appendChild(d);
+  });
+  document.getElementById("tenants-out").textContent = note;
+}
+
+document.getElementById("b-tenant-a").onclick = () => {
+  tenants.A = { fast: true, closed: false };
+  paintTenants("A 来了一次：人在动，手指是张开的。B 留在原来的样子。 A sent one request: a movement, an open finger. B stays as it was.");
+};
+document.getElementById("b-tenant-a-miss").onclick = () => {
+  paintTenants("A 这一轮没来。A 留在上一次的样子。B 不动。 A missed this round. A keeps its last picture. B does not move.");
+};
+document.getElementById("b-tenant-b").onclick = () => {
+  tenants.B = { fast: false, closed: true };
+  paintTenants("B 来了一次：人没动，手指是握紧的。A 留在原来的样子。 B sent one request: still, a closed finger. A stays as it was.");
+};
+document.getElementById("b-tenant-b-miss").onclick = () => {
+  paintTenants("B 这一轮没来。B 留在上一次的样子。A 不动。 B missed this round. B keeps its last picture. A does not move.");
+};
+paintTenants("两家各留各的画面。谁没来，只影响谁。 Each tenant keeps its own picture. A miss moves only the tenant that missed.");
 </script>
 </body>
 </html>

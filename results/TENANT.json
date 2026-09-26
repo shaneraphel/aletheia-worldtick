@@ -1,0 +1,27 @@
+{
+  "schema": "worldtick.tenant.v1",
+  "seed": 20260919,
+  "tenants": 16,
+  "requests_each": 500,
+  "drop": 0.3,
+  "workers": 8,
+  "serial": {
+    "differ": 2981,
+    "held_requests": 4078,
+    "full_updates": 3922,
+    "requests": 8000,
+    "tenants": 16
+  },
+  "parallel": {
+    "differ": 2981,
+    "held_requests": 4078,
+    "full_updates": 3922,
+    "requests": 8000,
+    "tenants": 16
+  },
+  "equal": true,
+  "isolated": 16,
+  "noisy_unchanged": 16,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
