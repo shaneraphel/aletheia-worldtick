@@ -369,6 +369,17 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["order_mismatch"], 0)
         self.assertEqual((s["a_dark_b_moves"], s["b_dark_a_moves"]), (s["onlyB"], s["onlyA"]))
 
+    def test_fewer_arrivals_mean_fewer_new_frames(self) -> None:
+        from dose import RATES, run as dose_run
+
+        rec = dose_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["differ_0.00"], 0)
+        self.assertEqual(s["new_0.00"], s["sessions"] * 16)
+        news = [s[f"new_{r:.2f}"] for r in RATES]
+        self.assertTrue(all(a >= b for a, b in zip(news, news[1:])))
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

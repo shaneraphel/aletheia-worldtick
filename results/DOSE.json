@@ -1,0 +1,49 @@
+{
+  "schema": "worldtick.dose.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "rates": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "workers": 10,
+  "serial": {
+    "new_0.00": 160000,
+    "differ_0.00": 0,
+    "new_0.10": 129652,
+    "differ_0.10": 20843,
+    "new_0.20": 102479,
+    "differ_0.20": 40359,
+    "new_0.30": 78572,
+    "differ_0.30": 58471,
+    "new_0.40": 57683,
+    "differ_0.40": 75109,
+    "new_0.50": 40037,
+    "differ_0.50": 90720,
+    "sessions": 10000
+  },
+  "parallel": {
+    "new_0.00": 160000,
+    "differ_0.00": 0,
+    "new_0.10": 129652,
+    "differ_0.10": 20843,
+    "new_0.20": 102479,
+    "differ_0.20": 40359,
+    "new_0.30": 78572,
+    "differ_0.30": 58471,
+    "new_0.40": 57683,
+    "differ_0.40": 75109,
+    "new_0.50": 40037,
+    "differ_0.50": 90720,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

@@ -63,6 +63,7 @@ evidence:
 	$(PYTHON) catchup.py
 	$(PYTHON) rate.py
 	$(PYTHON) duo.py
+	$(PYTHON) dose.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

@@ -60,6 +60,7 @@ jobs:
           python catchup.py
           python rate.py
           python duo.py
+          python dose.py
           python show_policy.py
           python tick_bench.py
       - name: paper

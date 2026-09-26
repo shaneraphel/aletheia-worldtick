@@ -18,11 +18,11 @@ We do not replace the model that draws the future. The same path-finding routine
 
 ## 怎么读
 
-1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，谁蒙对了，断完第几步追上，两路不一样快时画面有几步是全新的，以及一间房里两只手各动各的。
+1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，谁蒙对了，断完第几步追上，两路不一样快时画面有几步是全新的，一间房里两只手各动各的，以及越晚、全新的越少。
 2. 再读下面三节：这幅画面给谁；别人的方法和我们的方法差在哪；今晚交出去的是什么。
 3. 要核对一个数，或要看证明，打开笔记。这份说明不把实验次数再念一遍。
 
-1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, see who is right by luck, see how many steps a catch-up takes after a burst, see how many frames are new when the streams run at different speeds, and see two hands in one room move independently.
+1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, see who is right by luck, see how many steps a catch-up takes after a burst, see how many frames are new when the streams run at different speeds, see two hands in one room move independently, and see new frames fall as arrivals get later.
 2. Then read who the picture is for, how this method differs from the others, and what is actually handed over.
 3. The note has the proofs and the counts. This file does not recite them.
 
@@ -59,6 +59,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 断完之后，缺省值顶上，看起来像追上了。 | 数第几步追上。两边都到的第一步，画面和真实对上，差一步都不算追上。 | 一半左右第一步就追上，也有八十多段七步还没追上。追上之前，留下的对得多，猜对得少。笔记里的定理 17 写的是这件事。 |
 | 两路不一样快，也按每步都是新的画。 | 手指三步来一次，画面只在到过的那步更新，年龄照数。 | 十六步里最多六步是全新的。手指的年龄是固定的锯齿，和脑电到没到没关系。笔记里的定理 18 写的是这件事。 |
 | 一间房里两只手，一只没信号，整幅画面停住，或者整幅都猜。 | 谁没到，只冻谁的手，另一只照动。先算谁后算谁，两只手看到的一样。 | 一只全黑时，另一只照动上万步。顺序换过来，两只手一步都没变。笔记里的定理 19 写的是这件事。 |
+| 晚多晚少，画面看起来一样新。 | 越晚，全新的越少。一滴不晚时，猜和留一次都不分开。 | 从不晚到晚一半，全新的越晚越少，不一样的越晚越多。笔记里的定理 20 写的是这件事。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -101,6 +102,12 @@ The two streams were never the same speed. The finger sends every third step, wi
 One room can hold two hands. Each moves on its own arrivals, and a miss freezes only that hand. While one is fully dark, the other still moves on its own steps. Either serving order shows both hands the same pair; steps changed by the order are zero.
 
 ![一间房里两只手。各动各的，谁没到冻谁。](docs/figures/duo.png)
+
+越晚，全新的越少。脑电和手指各晚一半时，两边都到的步只剩四分之一。一滴不晚时，猜和留一次都不分开，因为没有东西可猜。同一批随机数，阈值越高，晚得越多，两条线一边下一上。
+
+The later the streams, the fewer new frames. When each misses half the time, both arrive on only a quarter of the steps. With nothing late, the guess and the held picture never part, because there is nothing to guess. The same uniforms under higher thresholds miss more, so one line falls while the other rises.
+
+![越晚，全新的越少。不晚时，两幅画一次都不分开。](docs/figures/dose.png)
 
 ### 这些库在什么都没录上时仍会交回一个结果
 
@@ -178,9 +185,9 @@ One call, three outcomes. It sits in front of a planner the product already runs
 | `impute` | 旁边的对照。同一个规划，在场景被补完之后会怎么走。用来给人看两边不一样。正式交出去的是上一行。 |
 | 停住 | 什么都没送来。不交回零，不交回一个里面什么都没有的列表，也不交回一个会悄悄传下去的非数。 |
 
-页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步；断完第几步追上，页面上断三步再一步一步来；手指三步来一次，页面上按一步看一步，全新的最多六步；一间房里两只手各动各的，谁没到冻谁。
+页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步；断完第几步追上，页面上断三步再一步一步来；手指三步来一次，页面上按一步看一步，全新的最多六步；一间房里两只手各动各的，谁没到冻谁；三档晚点各走十六步，越晚全新的越少。
 
-On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time. After a burst, break three steps and walk back one at a time to see when it catches up. With the finger scheduled every third step, press step by step: at most six frames are new. Two hands in one room move independently; a miss freezes only that hand.
+On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time. After a burst, break three steps and walk back one at a time to see when it catches up. With the finger scheduled every third step, press step by step: at most six frames are new. Two hands in one room move independently; a miss freezes only that hand. Three missing rates, sixteen steps each: the later, the fewer new frames.
 
 这次没有训练好的视频模型，没有头戴设备的开发包，没有机器人成功率，也没有治疗效果。
 
@@ -248,6 +255,7 @@ python3.12 show_policy.py
 | `catchup.py` | 断完之后，数第几步追上 |
 | `rate.py` | 手指三步来一次，画面全新的最多六步 |
 | `duo.py` | 一间房里两只手，各动各的 |
+| `dose.py` | 越晚，全新的越少 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
