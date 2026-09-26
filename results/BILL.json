@@ -1,0 +1,28 @@
+{
+  "schema": "worldtick.bill.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "lines": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "differ": 154689,
+    "hand": 150279,
+    "grip": 2989,
+    "person": 107227,
+    "same": 5311,
+    "sessions": 10000
+  },
+  "parallel": {
+    "differ": 154689,
+    "hand": 150279,
+    "grip": 2989,
+    "person": 107227,
+    "same": 5311,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

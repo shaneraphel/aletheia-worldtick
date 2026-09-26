@@ -188,6 +188,10 @@ On 10,000 sessions the guessed hand is drawn as a grip on the stump 2912 times. 
 
 On 10,000 sessions the guessed picture shows a meeting the other picture does not on 34142 steps. Meetings both pictures show are 27605. Steps on which the person the user sees moves while their signal is missing: 0. The guessed person does move on 38725 of those missing steps. One core and ten cores agree. This person is not a recording of anyone.
 
+**A frame is on the bill only when it happened.** Each step writes one line: where the hand is, whether it grips a model, and where the other person stands. The guessed line can move the hand, draw a grip, or walk the person while the line the user sees does not. A differing line is a charge for something that did not happen.
+
+On 10,000 sessions, 160000 lines, the two bills differ on 154689 lines and match on 5311. The hand is written farther on 150279 lines, a grip is written on 2989, and the other person is written closer on 107227. One core and ten cores agree. This is not an invoice sent to anyone.
+
 ## 4. Comparison with cited methods
 
 The comparison is the operator, not a shared benchmark. Robot percentages from those papers are not re-estimated.

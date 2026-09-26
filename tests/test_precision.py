@@ -487,6 +487,14 @@ class PrecisionTest(unittest.TestCase):
         self.assertTrue(rec["equal"])
         self.assertEqual(rec["serial"]["stay_moved_on_miss"], 0)
 
+    def test_a_frame_is_on_the_bill_only_when_it_happened(self) -> None:
+        from bill import run as bill_run
+
+        rec = bill_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["differ"] + s["same"], s["sessions"] * 16)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

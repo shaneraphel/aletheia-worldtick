@@ -402,12 +402,12 @@ document.getElementById("b-camp-both").onclick = () => {
   campMusic();
   if (campHeld < 16) campHeld += 1;
   if (campGuess < 16) campGuess += 1;
-  paintCamp("两边都到了，两只手都往前走。钢琴继续。 Both arrived. Both hands step forward. The piano keeps playing.");
+  paintCamp("两边都到了，两只手都往前走。这一步入账。钢琴继续。 Both arrived. Both hands step forward. This step is on the bill. The piano keeps playing.");
 };
 document.getElementById("b-camp-late").onclick = () => {
   campMusic();
   if (campGuess < 16) campGuess += 1;
-  paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。走到树桩上时，角度没到，灰点被画成已经握住木头。曲子不换。 One stream is late. The hand the user sees stays. The guessed hand keeps walking. On the stump, with no angle, it is drawn as a grip on the wood. The piece does not switch.");
+  paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。这一步不入账。走到树桩上时，角度没到，灰点被画成已经握住木头。曲子不换。 One stream is late. The hand the user sees stays. The guessed hand keeps walking. This step is not on the bill. On the stump, with no angle, it is drawn as a grip on the wood. The piece does not switch.");
 };
 document.getElementById("b-camp-clear").onclick = () => {
   campHeld = 0;
