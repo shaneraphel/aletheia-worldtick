@@ -349,6 +349,16 @@ class PrecisionTest(unittest.TestCase):
         self.assertLessEqual(s["held_before"], s["before_steps"])
         self.assertLessEqual(s["guess_before"], s["before_steps"])
 
+    def test_streams_were_never_the_same_speed(self) -> None:
+        from rate import run as rate_run
+
+        rec = rate_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["finger_age_sum"], 15 * s["sessions"])
+        self.assertLessEqual(s["new_frames"], 6 * s["sessions"])
+        self.assertLessEqual(s["differ"], s["sessions"] * 16)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

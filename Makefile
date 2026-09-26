@@ -61,6 +61,7 @@ evidence:
 	$(PYTHON) stale.py
 	$(PYTHON) luck.py
 	$(PYTHON) catchup.py
+	$(PYTHON) rate.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

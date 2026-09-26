@@ -195,6 +195,16 @@
   </div>
   <p class="out" id="catchup-out"></p>
 
+  <h2>两路不一样快 · Two speeds</h2>
+  <p>手指三步来一次。按“来一步”，脑电每步都可能到，手指只在第三步到。画面全新的，一段最多六步。</p>
+  <p class="en">The finger sends every third step. Press “one step”: the brain recording may arrive each step, the finger only on every third. At most six steps of sixteen are fully new.</p>
+  <div class="cells" id="rate"></div>
+  <div class="row">
+    <button id="b-rate-one" type="button">来一步 · One step</button>
+    <button id="b-rate-clear" type="button">清零 · Clear</button>
+  </div>
+  <p class="out" id="rate-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -661,6 +671,38 @@ document.getElementById("b-catch-clear").onclick = () => {
   paintCatchup("清零了。 Cleared. ");
 };
 paintCatchup("先按“断三步”。 Press “break three” first. ");
+
+let rateStep = -1;
+let rateNew = 0;
+let rateBrain = false;
+
+function paintRate(note) {
+  const box = document.getElementById("rate");
+  box.replaceChildren();
+  const brain = rateStep < 0 ? "—" : (rateBrain ? "到" : "晚");
+  const finger = rateStep < 0 ? "—" : (rateStep % 3 === 0 ? "到" : "晚 " + (rateStep % 3) + " 步前");
+  const frame = rateStep < 0 ? "还没走" : (rateBrain && rateStep % 3 === 0 ? "新" : "留着");
+  [[ "脑电 brain", brain], ["手指 finger", finger], ["画面 frame", frame]].forEach(([name, v]) => {
+    const d = document.createElement("div");
+    d.className = "cell " + ((v === "到" || v === "新") ? "free" : "mask");
+    d.textContent = name + "\n" + v;
+    box.appendChild(d);
+  });
+  document.getElementById("rate-out").textContent = note + "全新的 " + rateNew + " 步。 New frames " + rateNew + ".";
+}
+
+document.getElementById("b-rate-one").onclick = () => {
+  rateStep += 1;
+  rateBrain = Math.random() >= 0.3;
+  if (rateBrain && rateStep % 3 === 0) rateNew += 1;
+  paintRate("第 " + rateStep + " 步。 Step " + rateStep + ". ");
+};
+document.getElementById("b-rate-clear").onclick = () => {
+  rateStep = -1;
+  rateNew = 0;
+  paintRate("清零了。 Cleared. ");
+};
+paintRate("按“来一步”。 Press “one step.” ");
 </script>
 </body>
 </html>
