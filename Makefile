@@ -69,6 +69,7 @@ evidence:
 	$(PYTHON) trio.py
 	$(PYTHON) system.py
 	$(PYTHON) scene.py
+	$(PYTHON) visitor.py
 
 # macOS-only Metal run; not in CI.
 gpu:

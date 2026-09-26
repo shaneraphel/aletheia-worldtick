@@ -30,6 +30,7 @@ PLACEMENTS = [
     ("tent_smallClosed.obj", (-1.3, -1.2), 0.9),
 ]
 PATH = [(-1.35 + i * 0.15, -0.55 + i * 0.08) for i in range(17)]
+VISITOR = 10
 
 
 def load_obj(path: Path) -> tuple[list[tuple[float, float, float]], list[tuple[int, int, int]]]:
@@ -109,7 +110,7 @@ def walk(seed: int = SEED, n: int = STEPS) -> dict:
     }
 
 
-def draw(tris: list, hand_at: int | None, path: Path) -> None:
+def draw(tris: list, hand_at: int | None, path: Path, person: bool = False) -> None:
     from PIL import Image, ImageDraw
 
     image = Image.new("RGB", (1040, 640), (18, 28, 22))
@@ -128,6 +129,9 @@ def draw(tris: list, hand_at: int | None, path: Path) -> None:
         painted.append((depth, [(p[0], p[1]) for p in pts], color))
     for _, pts, color in sorted(painted, key=lambda item: -item[0]):
         draw.polygon(pts, fill=color)
+    if person:
+        px, py, _ = project(PATH[VISITOR][0], 0.15, PATH[VISITOR][1])
+        draw.ellipse((px - 12, py - 12, px + 12, py + 12), fill=(121, 192, 255))
     if hand_at is not None:
         hx, hy, _ = project(PATH[hand_at][0], 0.15, PATH[hand_at][1])
         draw.ellipse((hx - 14, hy - 14, hx + 14, hy + 14), fill=(230, 237, 243))
@@ -139,8 +143,8 @@ def run(seed: int = SEED) -> dict:
     walked = walk(seed)
     draw(tris, None, ROOT / "docs" / "figures" / "clearing-camp.png")
     draw(tris, None, ROOT / "site" / "clearing-camp.png")
-    draw(tris, walked["held_at"], ROOT / "docs" / "figures" / "clearing-held.png")
-    draw(tris, walked["guess_at"], ROOT / "docs" / "figures" / "clearing-guess.png")
+    draw(tris, walked["held_at"], ROOT / "docs" / "figures" / "clearing-held.png", person=True)
+    draw(tris, walked["guess_at"], ROOT / "docs" / "figures" / "clearing-guess.png", person=True)
     return {
         "schema": "worldtick.scene.v1",
         "seed": seed,

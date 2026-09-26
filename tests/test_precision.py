@@ -462,6 +462,15 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(walked["held_inside"], [])
         self.assertEqual(walked["guess_inside"], ["stump_round.obj"])
 
+    def test_the_other_person_does_not_move(self) -> None:
+        from visitor import run as visitor_run
+
+        rec = visitor_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["guess_reaches"], s["sessions"])
+        self.assertEqual(s["only_guess"] + s["held_reaches"], s["sessions"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

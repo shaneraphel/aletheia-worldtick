@@ -33,8 +33,8 @@
   <p class="en">A world model is asked for the next picture, a brain recording is asked whether the person moved, and the hand in the scene is asked for a pose that has already happened. When part of that has not arrived, the usual next step completes it and acts on the completion. This page keeps the picture on what actually arrived.</p>
 
   <h2>营地 · The camp</h2>
-  <p>树、石头、帐篷来自素材库。白点是给用户看的手，只在脑电和手指都到了的时候往前走。灰点是猜的那只手，每步都走，会走进树桩。钢琴是贝多芬第十五奏鸣曲开头的八秒，公有领域录音。有一路晚了，曲子继续，不换。</p>
-  <p class="en">The trees, the rock, and the tent come from the model pack. The white dot is the hand the user sees. It walks forward only when both the brain recording and the finger have arrived. The gray dot is the guessed hand. It walks on every step, and it walks into the stump. The piano is the opening eight seconds of Beethoven’s Piano Sonata No. 15, a public-domain recording. When one stream is late, the piece keeps playing. It does not switch.</p>
+  <p>树、石头、帐篷来自素材库。蓝点是另一个人，站着不走。白点是给用户看的手，只在脑电和手指都到了的时候往前走，停在这个人前面。灰点每步都走，会走过这个人，走进树桩。钢琴是贝多芬第十五奏鸣曲开头的八秒，公有领域录音。有一路晚了，曲子继续，不换。</p>
+  <p class="en">The trees, the rock, and the tent come from the model pack. The blue dot is another person. They stand and do not walk. The white dot is the hand the user sees. It walks forward only when both the brain recording and the finger have arrived, and it stops before that person. The gray dot walks every step, walks past them, and ends in the stump. The piano is the opening eight seconds of Beethoven’s Piano Sonata No. 15, a public-domain recording. When one stream is late, the piece keeps playing. It does not switch.</p>
   <canvas id="camp" width="1040" height="640" style="width:100%; max-width:920px; background:#121c16; border-radius:12px;"></canvas>
   <audio id="camp-music" src="pastoral.wav" loop></audio>
   <div class="row">
@@ -369,6 +369,11 @@ function paintCamp(note) {
   const g = canvas.getContext("2d");
   g.clearRect(0, 0, canvas.width, canvas.height);
   if (campImg.complete && campImg.naturalWidth) g.drawImage(campImg, 0, 0, canvas.width, canvas.height);
+  const person = campProject(campPath[10][0], campPath[10][1]);
+  g.fillStyle = "#79c0ff";
+  g.beginPath();
+  g.arc(person[0], person[1], 12, 0, Math.PI * 2);
+  g.fill();
   function dot(at, color) {
     const p = campProject(campPath[at][0], campPath[at][1]);
     g.fillStyle = color;
