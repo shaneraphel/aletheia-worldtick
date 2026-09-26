@@ -15,6 +15,10 @@
   "guess_at": 16,
   "new_steps": 6,
   "replay_mismatch": 0,
+  "held_inside": [],
+  "guess_inside": [
+    "stump_round.obj"
+  ],
   "steps": 16,
   "python": "3.12.8",
   "platform": "macOS-26.2-arm64-arm-64bit"

@@ -69,6 +69,21 @@ def project(x: float, y: float, z: float) -> tuple[float, float, float]:
     return sx, sy, x + z
 
 
+def footprints() -> list[tuple[str, float, float, float, float]]:
+    boxes = []
+    for name, (px, pz), scale in PLACEMENTS:
+        vs, _ = load_obj(KIT / name)
+        xs = [px + x * scale for x, _, _ in vs]
+        zs = [pz + z * scale for _, _, z in vs]
+        boxes.append((name, min(xs), max(xs), min(zs), max(zs)))
+    return boxes
+
+
+def inside(at: int) -> list[str]:
+    x, z = PATH[at]
+    return [name for name, x0, x1, z0, z1 in footprints() if x0 <= x <= x1 and z0 <= z <= z1]
+
+
 def walk(seed: int = SEED, n: int = STEPS) -> dict:
     rng = random.Random(seed)
     held = Gate()
@@ -88,6 +103,8 @@ def walk(seed: int = SEED, n: int = STEPS) -> dict:
         "guess_at": len(PATH) - 1 if n >= len(PATH) else n,
         "new_steps": sum(1 for b, f in held.rows if b is not None and f is not None),
         "replay_mismatch": sum(1 for a, b in zip(held.shown, replay) if a != b),
+        "held_inside": inside(held_at),
+        "guess_inside": inside(guess_at),
         "steps": n,
     }
 
@@ -142,6 +159,8 @@ def main() -> int:
     got = (rec["vertices"], rec["triangles"], rec["held_at"], rec["guess_at"], rec["new_steps"], rec["replay_mismatch"])
     if got != pinned:
         raise SystemExit(f"clearing counts moved: {got}")
+    if rec["held_inside"] != [] or rec["guess_inside"] != ["stump_round.obj"]:
+        raise SystemExit(f"clearing overlap moved: {rec['held_inside']} {rec['guess_inside']}")
     out = ROOT / "results" / "SCENE.json"
     out.write_text(json.dumps(rec, indent=2) + "\n")
     json.dump(

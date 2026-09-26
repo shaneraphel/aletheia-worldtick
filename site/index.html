@@ -33,9 +33,10 @@
   <p class="en">A world model is asked for the next picture, a brain recording is asked whether the person moved, and the hand in the scene is asked for a pose that has already happened. When part of that has not arrived, the usual next step completes it and acts on the completion. This page keeps the picture on what actually arrived.</p>
 
   <h2>营地 · The camp</h2>
-  <p>树、石头、帐篷来自素材库。白点是给用户看的手，只在脑电和手指都到了的时候往前走。灰点是猜的那只手，每步都走。</p>
-  <p class="en">The trees, the rock, and the tent come from the model pack. The white dot is the hand the user sees. It walks forward only when both the brain recording and the finger have arrived. The gray dot is the guessed hand. It walks on every step.</p>
+  <p>树、石头、帐篷来自素材库。白点是给用户看的手，只在脑电和手指都到了的时候往前走。灰点是猜的那只手，每步都走，会走进树桩。钢琴是贝多芬第十五奏鸣曲开头的八秒，公有领域录音。有一路晚了，曲子继续，不换。</p>
+  <p class="en">The trees, the rock, and the tent come from the model pack. The white dot is the hand the user sees. It walks forward only when both the brain recording and the finger have arrived. The gray dot is the guessed hand. It walks on every step, and it walks into the stump. The piano is the opening eight seconds of Beethoven’s Piano Sonata No. 15, a public-domain recording. When one stream is late, the piece keeps playing. It does not switch.</p>
   <canvas id="camp" width="1040" height="640" style="width:100%; max-width:920px; background:#121c16; border-radius:12px;"></canvas>
+  <audio id="camp-music" src="pastoral.wav" loop></audio>
   <div class="row">
     <button id="b-camp-both" type="button">这一步，两边都到了 · Both arrived</button>
     <button id="b-camp-late" type="button">这一步，有一路晚了 · One is late</button>
@@ -380,14 +381,20 @@ function paintCamp(note) {
   document.getElementById("camp-out").textContent = note;
 }
 
+function campMusic() {
+  const music = document.getElementById("camp-music");
+  if (music.paused) music.play();
+}
 document.getElementById("b-camp-both").onclick = () => {
+  campMusic();
   if (campHeld < 16) campHeld += 1;
   if (campGuess < 16) campGuess += 1;
-  paintCamp("两边都到了，两只手都往前走。 Both arrived. Both hands step forward.");
+  paintCamp("两边都到了，两只手都往前走。钢琴继续。 Both arrived. Both hands step forward. The piano keeps playing.");
 };
 document.getElementById("b-camp-late").onclick = () => {
+  campMusic();
   if (campGuess < 16) campGuess += 1;
-  paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。 One stream is late. The hand the user sees stays. The guessed hand keeps walking.");
+  paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。曲子不换。 One stream is late. The hand the user sees stays. The guessed hand keeps walking. The piece does not switch.");
 };
 document.getElementById("b-camp-clear").onclick = () => {
   campHeld = 0;

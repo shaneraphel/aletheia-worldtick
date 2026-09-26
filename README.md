@@ -219,9 +219,9 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 ![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
 ![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
 
-页面上可以自己走。白点只在两边都到的时候往前，灰点每步都走。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+猜的那只手最后站进树桩里。给用户看的那只手停在营地中间，没有碰到任何一件。页面上可以自己走，同时响起贝多芬第十五奏鸣曲开头的八秒。有一路晚了，曲子继续，不换。这不是治疗用的音乐。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
 
-On the page you can walk it yourself. The white dot steps forward only when both have arrived. The gray dot steps every time. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+The guessed hand ends standing inside the stump. The hand the user sees stops in the middle of the camp and touches none of the models. On the page you can walk it yourself, with the opening eight seconds of Beethoven’s Piano Sonata No. 15. When one stream is late, the piece keeps playing and does not switch. It is not treatment music. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 | 调用 | 人拿到的 |
 |---|---|

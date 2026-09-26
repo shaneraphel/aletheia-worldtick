@@ -459,6 +459,8 @@ class PrecisionTest(unittest.TestCase):
         self.assertLess(walked["held_at"], walked["guess_at"])
         self.assertEqual(walked["replay_mismatch"], 0)
         self.assertEqual(walked["held_at"], walked["new_steps"])
+        self.assertEqual(walked["held_inside"], [])
+        self.assertEqual(walked["guess_inside"], ["stump_round.obj"])
 
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run

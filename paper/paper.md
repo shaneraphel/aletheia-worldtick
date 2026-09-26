@@ -178,7 +178,7 @@ On 10,000 sessions of 16 steps, 160000 steps, seed 20260919, steps where all thr
 
 **One batch, two processors.** One hundred thousand sessions run once on the CPU and once on the Mac GPU, counting from the same integer uniforms against the threshold 1288490188. The CPU reference is one Python process. The GPU runs one thread per session under Metal. Both count 783232 new frames and 586904 disagreements, matching elementwise on all 100000 sessions. The GPU is an Apple M4 part. This is a platform witness: the same batch, the same answer, another chip. It is not a claim about speed.
 
-**The clearing.** Four models from Kenney's Nature Kit, 205 vertices and 478 triangles, stand in fixed places. Over sixteen steps the hand the user sees advances on 6 arrivals and stops at place 6. The guessed picture advances on every step and stops at place 16. Replaying the record mismatches 0 times. The models are CC0. This is not a shipped game level.
+**The clearing.** Four models from Kenney's Nature Kit, 205 vertices and 478 triangles, stand in fixed places. Over sixteen steps the hand the user sees advances on 6 arrivals and stops at place 6, inside none of the models. The guessed picture advances on every step, stops at place 16, and that place lies inside the stump. Replaying the record mismatches 0 times. The models are CC0. This is not a shipped game level.
 
 ## 4. Comparison with cited methods
 
