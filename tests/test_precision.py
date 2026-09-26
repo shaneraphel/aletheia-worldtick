@@ -337,6 +337,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertLessEqual(s["brain_lucky"], s["brain_missing"])
         self.assertLessEqual(s["finger_lucky"], s["finger_missing"])
 
+    def test_the_picture_catches_up_on_the_first_full_arrival(self) -> None:
+        from catchup import run as catchup_run
+
+        rec = catchup_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        hist = sum(s[f"delay{d}"] for d in range(1, 8))
+        self.assertEqual(hist + s["never"], s["sessions"])
+        self.assertEqual(s["resync_mismatch"], 0)
+        self.assertLessEqual(s["held_before"], s["before_steps"])
+        self.assertLessEqual(s["guess_before"], s["before_steps"])
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

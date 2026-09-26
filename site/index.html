@@ -184,6 +184,17 @@
   </div>
   <p class="out" id="luck-out"></p>
 
+  <h2>断完第几步追上 · Catch up after a burst</h2>
+  <p>按“断三步”，再按“来一步”。两边都到的第一步，留和真实对上，这才叫追上。七步还没追上，就记一次没追上。</p>
+  <p class="en">Press “break three steps,” then “one step at a time.” The first step on which both arrive is when the held picture matches the truth. Seven steps without one is counted as not caught up.</p>
+  <div class="cells" id="catchup"></div>
+  <div class="row">
+    <button id="b-catch-burst" type="button">断三步 · Break three</button>
+    <button id="b-catch-one" type="button">来一步 · One step</button>
+    <button id="b-catch-clear" type="button">清零 · Clear</button>
+  </div>
+  <p class="out" id="catchup-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -588,6 +599,68 @@ document.getElementById("b-luck-one").onclick = () => { paintLuck(luckStep()); }
 document.getElementById("b-luck-ten").onclick = () => { let last = null; for (let k = 0; k < 10; k++) last = luckStep(); paintLuck(last); };
 document.getElementById("b-luck-clear").onclick = () => { luckHeld = { fast: false, closed: false }; luckCount = { late: 0, guess: 0, held: 0 }; paintLuck(null); };
 paintLuck(null);
+
+let cu = null;
+let cuRuns = 0;
+let cuNever = 0;
+
+function paintCatchup(note) {
+  const box = document.getElementById("catchup");
+  box.replaceChildren();
+  const brain = !cu ? "—" : cu.burstLeft > 0 ? "断" : (cu.lastBrain ? "到" : "晚");
+  const finger = !cu ? "—" : cu.burstLeft > 0 ? "断" : (cu.lastFinger ? "到" : "晚");
+  const match = !cu ? "还没断" : cu.caught ? "追上了" : (cu.steps > 0 ? (cu.hit ? "对上" : "没对上") : "断着");
+  [[ "脑电 brain", brain], ["手指 finger", finger], ["留和真实 held·truth", match]].forEach(([name, v]) => {
+    const d = document.createElement("div");
+    d.className = "cell " + ((v === "到" || v === "追上了" || v === "对上") ? "free" : "mask");
+    d.textContent = name + "\n" + v;
+    box.appendChild(d);
+  });
+  document.getElementById("catchup-out").textContent = note +
+    "共断 " + cuRuns + " 回，没追上 " + cuNever + " 回。 Broke " + cuRuns + " runs, not caught up " + cuNever + ".";
+}
+
+document.getElementById("b-catch-burst").onclick = () => {
+  cu = { held: { fast: false, closed: false }, burstLeft: 3, steps: 0, caught: false, delay: 0, hit: false, lastBrain: false, lastFinger: false, done: false };
+  cuRuns += 1;
+  paintCatchup("断了三步。按“来一步”。 Three steps broke. Press “one step.” ");
+};
+document.getElementById("b-catch-one").onclick = () => {
+  if (!cu) { paintCatchup("先按“断三步”。 Press “break three” first. "); return; }
+  if (cu.steps >= 7) { paintCatchup("七步数完了，再断一次。 Seven steps are up. Break again. "); return; }
+  const truth = { fast: Math.random() < 0.5, closed: Math.floor(Math.random() * 8) === 0 };
+  if (cu.burstLeft > 0) {
+    cu.burstLeft -= 1;
+    cu.lastBrain = false;
+    cu.lastFinger = false;
+    paintCatchup("还断着，剩 " + cu.burstLeft + " 步。 Still breaking, " + cu.burstLeft + " left. ");
+    return;
+  }
+  cu.steps += 1;
+  cu.lastBrain = Math.random() >= 0.3;
+  cu.lastFinger = Math.random() >= 0.3;
+  if (cu.lastBrain) cu.held.fast = truth.fast;
+  if (cu.lastFinger) cu.held.closed = truth.closed;
+  cu.hit = cu.held.fast === truth.fast && cu.held.closed === truth.closed;
+  if (cu.lastBrain && cu.lastFinger && !cu.caught) {
+    cu.caught = true;
+    cu.delay = cu.steps;
+    paintCatchup("第 " + cu.steps + " 步两边都到了，追上了。 Caught up on step " + cu.steps + ". ");
+    return;
+  }
+  if (cu.steps >= 7 && !cu.caught && !cu.done) {
+    cu.done = true;
+    cuNever += 1;
+  }
+  paintCatchup("第 " + cu.steps + " 步，还没追上。 Step " + cu.steps + ", not yet. ");
+};
+document.getElementById("b-catch-clear").onclick = () => {
+  cu = null;
+  cuRuns = 0;
+  cuNever = 0;
+  paintCatchup("清零了。 Cleared. ");
+};
+paintCatchup("先按“断三步”。 Press “break three” first. ");
 </script>
 </body>
 </html>

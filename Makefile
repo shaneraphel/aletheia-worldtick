@@ -60,6 +60,7 @@ evidence:
 	$(PYTHON) tenant.py
 	$(PYTHON) stale.py
 	$(PYTHON) luck.py
+	$(PYTHON) catchup.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

@@ -129,10 +129,13 @@ def main() -> int:
     luck = load("LUCK.json")["serial"]
     check((luck["late_steps"], luck["guess_right"], luck["held_right"]) == (81428, 21801, 48700), "luck 81428 late, guess 21801, held 48700")
     check((luck["guess_brain_only"], luck["held_brain_only"], luck["guess_finger_only"], luck["held_finger_only"], luck["guess_both"], luck["held_both"]) == (16776, 16554, 4150, 26544, 875, 5602), "luck splits show the finger gap")
+    cu = load("CATCHUP.json")["serial"]
+    check((cu["delay_sum"], cu["never"], cu["held_before"], cu["guess_before"], cu["resync_mismatch"]) == (19448, 87, 6022, 2693, 0), "catch-up waits sum to 19448, mismatches 0")
+    check(tuple(cu[f"delay{d}"] for d in range(1, 8)) == (4938, 2531, 1230, 646, 311, 180, 77), "catch-up histogram halves each step")
 
-    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417", "2981", "4078", "3922", "63903", "199886", "75353", "81428", "21801", "48700"]:
+    for token in ["2,995", "8,564", "10,000", "9/101", "1,436", "2,353", "5,084", "214", "2494", "1,000", "129", "168", "1141", "1280", "786", "614", "2814", "1854", "2421", "Open3D", "3057", "712", "6657", "53456", "2474", "1938", "630", "1428", "3003", "997", "127697", "3665", "6414", "2301", "8377", "43014", "38623", "4391", "58569", "21864", "42417", "2981", "4078", "3922", "63903", "199886", "75353", "81428", "21801", "48700", "19448", "4938", "6022"]:
         check(token in text, f"paper cites {token}")
-    print("all 90 number checks passed")
+    print("all 95 number checks passed")
     return 0
 
 

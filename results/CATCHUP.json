@@ -1,0 +1,49 @@
+{
+  "schema": "worldtick.catchup.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "burst": [
+    6,
+    7,
+    8
+  ],
+  "workers": 10,
+  "serial": {
+    "delay_sum": 19448,
+    "never": 87,
+    "held_before": 6022,
+    "guess_before": 2693,
+    "before_steps": 10144,
+    "resync_mismatch": 0,
+    "delay1": 4938,
+    "delay2": 2531,
+    "delay3": 1230,
+    "delay4": 646,
+    "delay5": 311,
+    "delay6": 180,
+    "delay7": 77,
+    "sessions": 10000
+  },
+  "parallel": {
+    "delay_sum": 19448,
+    "never": 87,
+    "held_before": 6022,
+    "guess_before": 2693,
+    "before_steps": 10144,
+    "resync_mismatch": 0,
+    "delay1": 4938,
+    "delay2": 2531,
+    "delay3": 1230,
+    "delay4": 646,
+    "delay5": 311,
+    "delay6": 180,
+    "delay7": 77,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
