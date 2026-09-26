@@ -65,6 +65,7 @@ evidence:
 	$(PYTHON) duo.py
 	$(PYTHON) dose.py
 	$(PYTHON) worst.py
+	$(PYTHON) replay.py
 
 paper:
 	$(PYTHON) paper/check_numbers.py

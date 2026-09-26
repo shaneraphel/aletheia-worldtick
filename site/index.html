@@ -239,6 +239,17 @@
   </div>
   <p class="out" id="worst-out"></p>
 
+  <h2>记下来再算一遍 · Replay the record</h2>
+  <p>按“来一步”，这一行记下来，画面往前走。按“重算”，从记录第一行开始再算一遍，两幅画面步步一样。</p>
+  <p class="en">Press “one step”: the row is logged and the picture moves on. Press “replay”: recompute from the first logged row, and the two pictures match on every step.</p>
+  <div class="cells" id="replay"></div>
+  <div class="row">
+    <button id="b-replay-one" type="button">来一步 · One step</button>
+    <button id="b-replay-again" type="button">重算 · Replay</button>
+    <button id="b-replay-clear" type="button">清零 · Clear</button>
+  </div>
+  <p class="out" id="replay-out"></p>
+
   <h2>这是交付，不是生成器 · This is the delivery, not the generator</h2>
   <p>拿融资去做视频世界模型，做的是生成器：数据、训练、机器人评估。这个页面是放在生成器前面的检查。检查能在一个文件里算完，是因为交出去的每个数都有证明。它不替代生成器。</p>
   <p class="en">A round spent on a video world model builds the generator: data, training, a robot evaluation. This page is the check in front of that generator. The check fits in a file because each number it returns has a proof. It does not replace the generator.</p>
@@ -824,6 +835,52 @@ document.getElementById("b-worst-0").onclick = () => paintWorst(0);
 document.getElementById("b-worst-4").onclick = () => paintWorst(4);
 document.getElementById("b-worst-8").onclick = () => paintWorst(8);
 paintWorst(4);
+
+let rpLog = [];
+let rpHeld = { fast: false, closed: false };
+
+function rpApply(held, row) {
+  const out = { fast: held.fast, closed: held.closed };
+  if (row.brain !== null) out.fast = row.brain === 1;
+  if (row.finger !== null) out.closed = row.finger === 0;
+  return out;
+}
+
+function paintReplay(note) {
+  const box = document.getElementById("replay");
+  box.replaceChildren();
+  let again = { fast: false, closed: false };
+  rpLog.forEach((row) => { again = rpApply(again, row); });
+  const same = again.fast === rpHeld.fast && again.closed === rpHeld.closed;
+  [["在线 online", rpHeld], ["重算 replayed", again]].forEach(([name, v]) => {
+    const d = document.createElement("div");
+    d.className = "cell " + (v.closed ? "crash" : "free");
+    d.textContent = name + "\n" + (v.fast ? "快 fast" : "慢 slow") + "·" + (v.closed ? "握紧 closed" : "张开 open");
+    box.appendChild(d);
+  });
+  document.getElementById("replay-out").textContent =
+    note + "记了 " + rpLog.length + " 行，两幅" + (same ? "一样。" : "不一样！") +
+    " Logged " + rpLog.length + " rows. The two pictures " + (same ? "match." : "DIFFER.");
+}
+
+document.getElementById("b-replay-one").onclick = () => {
+  const row = {
+    brain: Math.random() < 0.3 ? null : (Math.random() < 0.5 ? 1 : 0),
+    finger: Math.random() < 0.3 ? null : Math.floor(Math.random() * 8),
+  };
+  rpLog.push(row);
+  rpHeld = rpApply(rpHeld, row);
+  paintReplay("来了一步。 One step. ");
+};
+document.getElementById("b-replay-again").onclick = () => {
+  paintReplay("重算了一遍。 Replayed. ");
+};
+document.getElementById("b-replay-clear").onclick = () => {
+  rpLog = [];
+  rpHeld = { fast: false, closed: false };
+  paintReplay("清零了。 Cleared. ");
+};
+paintReplay("按“来一步”，再按“重算”。 Press “one step,” then “replay.” ");
 </script>
 </body>
 </html>

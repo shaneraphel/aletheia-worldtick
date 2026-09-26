@@ -396,6 +396,20 @@ class PrecisionTest(unittest.TestCase):
             tuple((STEPS - k) * s["sessions"] for k in BUDGETS),
         )
 
+    def test_the_record_replays_itself(self) -> None:
+        from replay import online, replay_forward, replay_rescan, run as replay_run, session_stream
+
+        stream = session_stream(3, 20260919)
+        shown, record, _ = online(stream)
+        self.assertEqual(replay_forward(record), shown)
+        self.assertEqual(replay_rescan(record), shown)
+        rec = replay_run(n=4, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["mismatch"], 0)
+        self.assertEqual(s["clean"], s["sessions"])
+        self.assertEqual(s["replayed"], s["sessions"] * 16)
+
     def test_sound_can_change_while_the_picture_stays(self) -> None:
         from reel import run as reel_run
 

@@ -1,0 +1,30 @@
+{
+  "schema": "worldtick.replay.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "replayed": 160000,
+    "mismatch": 0,
+    "clean": 10000,
+    "updates": 71442,
+    "new": 78861,
+    "differ": 58450,
+    "sessions": 10000
+  },
+  "parallel": {
+    "replayed": 160000,
+    "mismatch": 0,
+    "clean": 10000,
+    "updates": 71442,
+    "new": 78861,
+    "differ": 58450,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}
