@@ -378,6 +378,13 @@ The kernels that implement those refusals on the occupied formats are under `loc
 | `site/index.html` | the page that runs the three decisions in the browser |
 | `paper/paper.md` | the theory, the way it was found, the comparison with each cited method |
 | `tests/test_precision.py` | the identities the MVP is not allowed to move |
+| `kits/README.md` | where the local launcher, nature models, and piano recording live |
+
+## Local picture and sound kits
+
+The open-world picture is not a shipped Unreal level. On this machine the Epic Games Launcher is installed, two CC0 nature model packs are unpacked, and a public-domain recording of Beethoven's Piano Sonata No. 15 is on disk. The Unreal Editor binary is not installed: UE 4.27's Mac notes stop at macOS Big Sur, and this computer is Apple Silicon on macOS 26. Signing into the launcher is how an engine build is obtained. The files stay off GitHub. Paths and licenses are in [`kits/README.md`](kits/README.md).
+
+开放世界的画面还不是一个已经发布的虚幻关卡。这台机器上已经装了 Epic 启动器，解压了两套 CC0 自然场景模型，并放了一份贝多芬第 15 钢琴奏鸣曲的公有领域录音。虚幻编辑器本体没有安装：UE 4.27 的 Mac 说明停在 macOS Big Sur，而这台电脑是 Apple Silicon 上的 macOS 26。引擎构建要通过登录启动器取得。这些文件不进 GitHub。路径和许可在 [`kits/README.md`](kits/README.md)。
 
 ## License
 
