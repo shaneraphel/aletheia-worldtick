@@ -88,6 +88,7 @@ jobs:
           python clasp.py
           python latch.py
           python blend.py
+          python pose.py
           python show_policy.py
           python tick_bench.py
       # gpurun.py stays out: it needs macOS with Swift and Metal.

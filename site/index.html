@@ -478,12 +478,16 @@ document.getElementById("b-camp-unsent").onclick = () => {
 };
 document.getElementById("b-camp-same").onclick = () => {
   campMusic();
-  const changed = campRelay !== campHeld;
+  const placeSame = campRelay === campHeld;
+  const gripSame = campLatch === campLocalClosed;
   campRelay = campHeld;
   campLatch = campLocalClosed;
-  paintCamp(changed
-    ? "这一步把已经走到的位置送到了。橙圈挪到白点上，这是新的一张。 This step sent the place you had already reached. The ring moves onto the white dot. That is a new picture."
-    : "这一步送到了，人还在原地。位置没变，还是这一张。 This step was sent, and nobody moved. The place did not change, so it is still the same picture.");
+  const note = placeSame && gripSame
+    ? "这一步送到了。位置没变，握法也没变，还是这一张。 This step was sent. The place and the grip are unchanged, so it is still the same picture."
+    : placeSame
+      ? "这一步送到了。人还在原地，握法变了，这是新的一张。 This step was sent. The person stayed, and the grip changed. That is a new picture."
+      : "这一步把已经走到的位置送到了。橙圈挪到白点上，这是新的一张。 This step sent the place you had already reached. The ring moves onto the white dot. That is a new picture.";
+  paintCamp(note);
 };
 document.getElementById("b-camp-clasp").onclick = () => {
   campMusic();

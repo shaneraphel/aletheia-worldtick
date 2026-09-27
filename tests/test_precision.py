@@ -552,6 +552,15 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["wrong"] + s["agree"], s["skipped"])
         self.assertEqual(s["closed_on_open"] + s["open_on_closed"], s["wrong"])
 
+    def test_a_picture_is_new_when_the_place_or_the_grip_changes(self) -> None:
+        from pose import run as pose_run
+
+        rec = pose_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["still"] + s["grip_only"] + s["place_only"] + s["both"], s["deliveries"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 

@@ -71,6 +71,8 @@ The difference is not that we train a larger world model. The difference is whic
 | 手合上了，就画在画面上现在的那只手上，不管那只手已经走到哪。 | 这一下合在你当时站的地方。对方的画面如果还停在旧位置，不能把这一下画在那里。每步都走的那只手，更不能当成已经握住树桩。 | 合上的一万四千多次里，三千多次对方还停在旧位置。每步都走的那只手有九百多次被画成握住树桩，你真正站的地方一次都没有。 |
 | 最新的握法一到，对方的画面马上换。 | 他看见的握法，是上次送到的那一下。这一步没送到，他的画面不换。你已经张开，他还可以看着合上。 | 两种握法不一样的有七千多次。你合上他还看着张开的有四千多次。你张开他还看着合上的有三千多次。送到的那一步，两种握法一定一样。 |
 | 跳过的几步，用最后的握法涂成一段连续的动作。 | 每一跳过的位置留着当时的握法。最后的握法只属于最后那个位置。 | 同一万两千多个被跳过的位置里，两千多次会被涂反：有的当时张开却被涂成合上，有的当时合上却被涂成张开。 |
+| 位置没变，就当画面没变，不再画。 | 位置没变、握法也没变，才是同一张。人站着没动，手张开或合上，仍要再画。 | 送到的包里，四万多次确实还是这一张。另有四千多次人没动、握法变了。人走了而握法没变的，有五万多次。 |
+| 位置没变，就不用再画。 | 位置没变，握法变了，仍是一张新画面。只有位置和握法都没变，才还是这一张。 | 位置没变的那些次里，四千多次握法变了。人走了但握法没变的，有五万多次。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -283,6 +285,12 @@ A skipped place keeps the grip it had. The grip at the end of a jump belongs to 
 
 ![涂成最后的握法，会把当时的手涂反。](docs/figures/blend.png)
 
+位置没变，不等于画面没变。人站在原地，手可以从张开变成合上。那一包仍是一张新画面。同一批送到的包里，四万多次位置和握法都没变，才真是同一张。另有四千多次人没动、握法变了。人走了、握法没变的更多。页面上先合上或张开，再按「送到了，人还在原地」：握法变了就会写明这是新的一张。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+An unchanged place is not an unchanged picture. The person can stand still and open or close the hand. That packet is still a new picture. On the same deliveries, tens of thousands really are the same picture, place and grip both unchanged. Several thousand leave the place and change the grip. Many more move the place and keep the grip. On the page, close or open, then press “sent, and nobody moved.” If the grip changed, it says this is a new picture. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![位置没变，不等于画面没变。](docs/figures/pose.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -383,6 +391,7 @@ python3.12 show_policy.py
 | `clasp.py` | 这一下合在你当时站的地方 |
 | `latch.py` | 他看见的握法，是上次送到的那一下 |
 | `blend.py` | 跳过的几步留着当时的握法，不能涂成最后那一下 |
+| `pose.py` | 位置没变、握法变了，仍是一张新画面 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
