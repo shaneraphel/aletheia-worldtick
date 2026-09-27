@@ -85,6 +85,7 @@ evidence:
 	$(PYTHON) omit.py
 	$(PYTHON) whole.py
 	$(PYTHON) phrase.py
+	$(PYTHON) tempo.py
 
 # macOS-only Metal run; not in CI.
 gpu:

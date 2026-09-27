@@ -582,6 +582,20 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_speeding_what_is_left_is_not_the_recording(self) -> None:
+        from tempo import run as tempo_run
+
+        rec = tempo_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["shortfall"] + s["sent"], s["tick"])
+        self.assertEqual(s["double_finish"] + s["double_short"], s["sessions"])
+        self.assertEqual(s["double_exact"] + s["double_past"], s["double_finish"])
+        self.assertEqual(sum(s["hist"]), s["sessions"])
+        self.assertEqual(s["left_at_nearest"], 16 - s["nearest"])
+        self.assertEqual(s["finished"], s["hist"][16])
+
     def test_the_phrase_does_not_run_ahead_of_a_picture_that_was_sent(self) -> None:
         from phrase import run as phrase_run
 

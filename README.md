@@ -190,7 +190,7 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 ![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
 ![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
 
-打开[页面](https://shaneraphel.github.io/aletheia-worldtick/)，营地里还有另一个人。蓝点是他，他自己不走。白点是给你看的那只手，只在脑电和手指角度都到了的时候往前，所以常常停在他前面。灰点每一步都往前，会从他身边走过去，最后站进树桩。贝多芬第十五钢琴奏鸣曲的开头八秒在循环。有一路晚了，曲子继续，不换段，也不因为脑电看起来紧张就变速。这不是治疗用的音乐，蓝点也不是某一个人的记录。另一件事是乐句不要跑在画面前面。每一帧都把乐句往前拨，这段八秒在每一段里都会放完。只在对方收到一张新画面时才往前拨，这些段里没有一段把八秒放完，而且多数段里乐句还停在前一半。
+打开[页面](https://shaneraphel.github.io/aletheia-worldtick/)，营地里还有另一个人。蓝点是他，他自己不走。白点是给你看的那只手，只在脑电和手指角度都到了的时候往前，所以常常停在他前面。灰点每一步都往前，会从他身边走过去，最后站进树桩。贝多芬第十五钢琴奏鸣曲的开头八秒在循环。有一路晚了，曲子继续，不换段，也不因为脑电看起来紧张就变速。这不是治疗用的音乐，蓝点也不是某一个人的记录。另一件事是乐句不要跑在画面前面。每一帧都把乐句往前拨，这段八秒在每一段里都会放完。只在对方收到一张新画面时才往前拨，这些段里没有一段把八秒放完，而且多数段里乐句还停在前一半。如果把没放完的部分加快，让这八秒赶在段尾放完，放的就不是这段录音。这个速度也不能在一开始就定下来，因为得先知道后面还会送来多少张新画面。最近的一段也还剩两步。新画面只来过一次的那几段，八秒得挤进单独的一下。改成每张新画面走两步，前一半都还没到的那些段仍然放不完，新画面比较多的段又会在曲子结束以后继续往下走。
 
 他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
 
@@ -202,7 +202,7 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 
 你量到的距离是白点离蓝点多远，他量到的是橙圈离蓝点多远，两个数经常不一样。你多半比他所以为的更近。位置没变也不等于画面没变：人可以站着不动，手仍张开或合上，那一包仍是一张新画面。只有位置和握法都跟他已经看见的一样，才还是这一张。次数和证明在笔记里。
 
-Open the [page](https://shaneraphel.github.io/aletheia-worldtick/). Someone else is in the camp. The blue dot is that person; they do not walk. The white dot is the hand you see. It steps forward only when both the brain recording and the finger angle have arrived, so it often stops in front of them. The gray dot steps every time, walks past them, and ends inside the stump. The opening eight seconds of Beethoven’s Piano Sonata No. 15 loop underneath. When a stream is late, the piece keeps playing and does not switch, and it does not change speed because the brain recording looked tense. It is not treatment music, and the blue dot is not a record of a particular person. The phrase should not run ahead of the picture. A playhead that advances on every frame finishes those eight seconds in every session. A playhead that advances only when they receive a new picture finishes in none of these sessions, and in most of them it is still in the first half.
+Open the [page](https://shaneraphel.github.io/aletheia-worldtick/). Someone else is in the camp. The blue dot is that person; they do not walk. The white dot is the hand you see. It steps forward only when both the brain recording and the finger angle have arrived, so it often stops in front of them. The gray dot steps every time, walks past them, and ends inside the stump. The opening eight seconds of Beethoven’s Piano Sonata No. 15 loop underneath. When a stream is late, the piece keeps playing and does not switch, and it does not change speed because the brain recording looked tense. It is not treatment music, and the blue dot is not a record of a particular person. The phrase should not run ahead of the picture. A playhead that advances on every frame finishes those eight seconds in every session. A playhead that advances only when they receive a new picture finishes in none of these sessions, and in most of them it is still in the first half. Speeding up what is left, so the eight seconds finish when the session ends, is no longer this recording. That speed cannot be chosen at the start, because it needs the number of new pictures still to come. Even the closest session has two steps left. In the sessions with only one new picture, the eight seconds would have to fit inside that single step. Advancing two steps on each new picture still fails to finish the sessions that are in the first half, and in the sessions with more pictures it plays on after the recording has ended.
 
 If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
 
@@ -241,6 +241,8 @@ The distance you measure is how far the white dot is from the blue dot. The dist
 ![你合上过。他从头到尾看见的是张开。](docs/figures/whole.png)
 
 ![曲子不换。按每一帧往前拨，八秒会先放完。](docs/figures/phrase.png)
+
+![加快剩下的，就不是这段录音。](docs/figures/tempo.png)
 
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
@@ -346,6 +348,7 @@ python3.12 show_policy.py
 | `omit.py` | 合上又张开，中间没送到，他的画面上就没有这一下 |
 | `whole.py` | 有的一整段，你合上过，他从头到尾看见的是张开 |
 | `phrase.py` | 曲子不换。乐句不跑在新画面前面 |
+| `tempo.py` | 把没放完的加快，放的就不是这段录音 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
