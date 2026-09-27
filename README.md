@@ -72,6 +72,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 最新的握法一到，对方的画面马上换。 | 他看见的握法，是上次送到的那一下。这一步没送到，他的画面不换。你已经张开，他还可以看着合上。 | 两种握法不一样的有七千多次。你合上他还看着张开的有四千多次。你张开他还看着合上的有三千多次。送到的那一步，两种握法一定一样。 |
 | 跳过的几步，用最后的握法涂成一段连续的动作。 | 每一跳过的位置留着当时的握法。最后的握法只属于最后那个位置。 | 同一万两千多个被跳过的位置里，两千多次会被涂反：有的当时张开却被涂成合上，有的当时合上却被涂成张开。 |
 | 位置没变，就当画面没变，不再画。 | 位置没变、握法也没变，才是同一张。人站着没动，手张开或合上，仍要再画。 | 送到的包里，四万多次确实还是这一张。另有四千多次人没动、握法变了。人走了而握法没变的，有五万多次。 |
+| 手只要合上过，对方的画面上就该有这一下。 | 合上又张开，中间没送到，他的画面上就没有这一下。画面一开始是张开的，后来的握法只有在它还维持着的时候送到，才会出现。 | 两千五百多次合上，他从来没看见。六百多次张开也一样。这些没出现的握法一共维持了三千七百多步。 |
 | 位置没变，就不用再画。 | 位置没变，握法变了，仍是一张新画面。只有位置和握法都没变，才还是这一张。 | 位置没变的那些次里，四千多次握法变了。人走了但握法没变的，有五万多次。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
@@ -291,6 +292,12 @@ An unchanged place is not an unchanged picture. The person can stand still and o
 
 ![位置没变，不等于画面没变。](docs/figures/pose.png)
 
+合上又张开，如果中间没有送到，他的画面上就没有这一下。画面一开始是张开的。后来的一次合上，只有在它还没张开之前送到，才会出现在他那边。同一万段里，有两千五百多次合上他从来没看见，六百多次张开也没出现。这不是说手没有合上。是这一下没有被送到。页面上先按合上，不送，再按张开：他那边仍然张开，中间那一下没有留下。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+A grip that ends before it is sent never appears on their picture. The picture starts open. A later closure appears there only if it is sent while the hand is still closed. On the same ten thousand sessions, thousands of closures never appear, and hundreds of openings do not either. That is not a claim that the hand did not close. The closure was not sent. On the page, close, do not send, then open. Their picture stays open. The closure in between leaves nothing. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![合上又张开，中间没送到，他就没看见。](docs/figures/omit.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -392,6 +399,7 @@ python3.12 show_policy.py
 | `latch.py` | 他看见的握法，是上次送到的那一下 |
 | `blend.py` | 跳过的几步留着当时的握法，不能涂成最后那一下 |
 | `pose.py` | 位置没变、握法变了，仍是一张新画面 |
+| `omit.py` | 合上又张开，中间没送到，他的画面上就没有这一下 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

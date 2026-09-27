@@ -1,0 +1,40 @@
+{
+  "schema": "worldtick.omit.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "episodes": 32742,
+    "seen": 29571,
+    "lost": 3171,
+    "closed_seen": 9944,
+    "closed_lost": 2507,
+    "open_seen": 19627,
+    "open_lost": 664,
+    "lost_steps": 3751,
+    "closed_lost_steps": 2830,
+    "deliveries": 112198,
+    "overshoot": 0,
+    "sessions": 10000
+  },
+  "parallel": {
+    "episodes": 32742,
+    "seen": 29571,
+    "lost": 3171,
+    "closed_seen": 9944,
+    "closed_lost": 2507,
+    "open_seen": 19627,
+    "open_lost": 664,
+    "lost_steps": 3751,
+    "closed_lost_steps": 2830,
+    "deliveries": 112198,
+    "overshoot": 0,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

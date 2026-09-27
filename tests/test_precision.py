@@ -561,6 +561,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["overshoot"], 0)
         self.assertEqual(s["still"] + s["grip_only"] + s["place_only"] + s["both"], s["deliveries"])
 
+    def test_a_grip_that_ends_before_a_delivery_never_appears(self) -> None:
+        from omit import run as omit_run
+
+        rec = omit_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["seen"] + s["lost"], s["episodes"])
+        self.assertEqual(s["closed_lost"] + s["open_lost"], s["lost"])
+        self.assertGreaterEqual(s["lost_steps"], s["lost"])
+        self.assertGreaterEqual(s["closed_lost_steps"], s["closed_lost"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 

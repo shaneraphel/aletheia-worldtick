@@ -368,6 +368,7 @@ let campRelay = 0;
 let campRelayShown = 0;
 let campLocalClosed = false;
 let campLatch = false;
+let campOmitClose = false;
 const campImg = new Image();
 campImg.src = "clearing-camp.png";
 
@@ -446,6 +447,7 @@ document.getElementById("b-camp-both").onclick = () => {
   if (campGuess < 16) campGuess += 1;
   campRelay = campHeld;
   campLatch = campLocalClosed;
+  campOmitClose = false;
   paintCamp("两边都到了，两只手都往前走。这一步入账，也送到了对方那边。钢琴继续。 Both arrived. Both hands step forward. This step is on the bill, and it was sent. The piano keeps playing.");
 };
 document.getElementById("b-camp-late").onclick = () => {
@@ -462,6 +464,7 @@ document.getElementById("b-camp-clear").onclick = () => {
   campRelayShown = 0;
   campLocalClosed = false;
   campLatch = false;
+  campOmitClose = false;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {
@@ -482,6 +485,7 @@ document.getElementById("b-camp-same").onclick = () => {
   const gripSame = campLatch === campLocalClosed;
   campRelay = campHeld;
   campLatch = campLocalClosed;
+  campOmitClose = false;
   const note = placeSame && gripSame
     ? "这一步送到了。位置没变，握法也没变，还是这一张。 This step was sent. The place and the grip are unchanged, so it is still the same picture."
     : placeSame
@@ -491,6 +495,7 @@ document.getElementById("b-camp-same").onclick = () => {
 };
 document.getElementById("b-camp-clasp").onclick = () => {
   campMusic();
+  if (!campLatch) campOmitClose = true;
   campLocalClosed = true;
   paintCamp(campRelay === campHeld
     ? "这一下合在白点上。橙圈也在这里，可以画在他的画面上。他那边的握法要等送到才换。 The hand closed at the white dot. The ring is there too. Their grip changes only when this step is sent."
@@ -498,10 +503,14 @@ document.getElementById("b-camp-clasp").onclick = () => {
 };
 document.getElementById("b-camp-open").onclick = () => {
   campMusic();
+  const omitted = campOmitClose && !campLatch;
   campLocalClosed = false;
-  paintCamp(campLatch
-    ? "这一下张开了。他那边还看着合上，因为这一步没送到。 The hand opened. They still show it closed, because this step was not sent."
-    : "这一下张开了。他那边也是张开。 The hand opened. Their picture is open too.");
+  campOmitClose = false;
+  paintCamp(omitted
+    ? "中间合上过，没送到，他的画面上没有这一下。 You closed, and then opened, and that closure was not sent. Their picture never shows it."
+    : campLatch
+      ? "这一下张开了。他那边还看着合上，因为这一步没送到。 The hand opened. They still show it closed, because this step was not sent."
+      : "这一下张开了。他那边也是张开。 The hand opened. Their picture is open too.");
 };
 campImg.onload = () => paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
 paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");

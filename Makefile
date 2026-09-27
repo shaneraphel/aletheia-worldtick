@@ -82,6 +82,7 @@ evidence:
 	$(PYTHON) latch.py
 	$(PYTHON) blend.py
 	$(PYTHON) pose.py
+	$(PYTHON) omit.py
 
 # macOS-only Metal run; not in CI.
 gpu:
