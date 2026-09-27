@@ -44,6 +44,7 @@
     <button id="b-camp-person" type="button">这个人没传来 · Their signal did not arrive</button>
     <button id="b-camp-unsent" type="button">你走了，这一步没送到 · You moved, it was not sent</button>
     <button id="b-camp-same" type="button">送到了，人还在原地 · Sent, and nobody moved</button>
+    <button id="b-camp-clasp" type="button">这一下合上了 · The hand closed</button>
   </div>
   <p class="out" id="camp-out"></p>
 
@@ -468,6 +469,12 @@ document.getElementById("b-camp-same").onclick = () => {
   paintCamp(changed
     ? "这一步把已经走到的位置送到了。橙圈挪到白点上，这是新的一张。 This step sent the place you had already reached. The ring moves onto the white dot. That is a new picture."
     : "这一步送到了，人还在原地。位置没变，还是这一张。 This step was sent, and nobody moved. The place did not change, so it is still the same picture.");
+};
+document.getElementById("b-camp-clasp").onclick = () => {
+  campMusic();
+  paintCamp(campRelay === campHeld
+    ? "这一下合在白点上。橙圈也在这里，可以画在他的画面上。 The hand closed at the white dot. The ring is there too, so their picture can show it."
+    : "这一下合在白点上。橙圈还在后面，不能把这一下画在橙圈上。 The hand closed at the white dot. The ring is still behind, so this closure does not belong on the ring.");
 };
 campImg.onload = () => paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
 paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");

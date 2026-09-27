@@ -1,0 +1,40 @@
+{
+  "schema": "worldtick.clasp.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "closed": 14138,
+    "same": 10975,
+    "behind": 3163,
+    "walk_differs": 12958,
+    "stump_walk": 915,
+    "stump_sensor": 0,
+    "stump_shown": 0,
+    "behind_sum": 3738,
+    "open_arrived": 97960,
+    "no_finger": 47902,
+    "overshoot": 0,
+    "sessions": 10000
+  },
+  "parallel": {
+    "closed": 14138,
+    "same": 10975,
+    "behind": 3163,
+    "walk_differs": 12958,
+    "stump_walk": 915,
+    "stump_sensor": 0,
+    "stump_shown": 0,
+    "behind_sum": 3738,
+    "open_arrived": 97960,
+    "no_finger": 47902,
+    "overshoot": 0,
+    "sessions": 10000
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit"
+}

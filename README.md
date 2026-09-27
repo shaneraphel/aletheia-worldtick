@@ -68,6 +68,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 世界模型每一拍都要一张新画面。包到了，就算新的。 | 位置没变，就还是这一张。包到了、人还在原地，不叫模型再画。 | 同一批送到的位置里，九万五千多步位置没变。六万四千多步才换了地方。四万七千多步是包到了、画面却还是原处。 |
 | 开放世界里两人之间只有一个距离，画在同一张画面上。 | 你量的是你真正走到的地方离他多远。他量的是最后一次送到的地方离他多远。 | 同一万段里，这两个距离有两万七千多步不一样。绝大多数是你比他所以为的更近。只有几百步是他以为你更近，因为你已经走过他，送到的位置还在近的一侧。 |
 | 世界模型把晚到的几步补成一段连续的走路。 | 人一次只走一步。包晚了再送到，画面直接跳到新的位置，中间不补。 | 一万多次是跳过去的，被跳过的位置有一万两千多步。人自己从来没有一次走两步。最远的一跳是八步。 |
+| 手合上了，就画在画面上现在的那只手上，不管那只手已经走到哪。 | 这一下合在你当时站的地方。对方的画面如果还停在旧位置，不能把这一下画在那里。每步都走的那只手，更不能当成已经握住树桩。 | 合上的一万四千多次里，三千多次对方还停在旧位置。每步都走的那只手有九百多次被画成握住树桩，你真正站的地方一次都没有。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -262,6 +263,12 @@ The person moves at most one step at a time. When a late packet is delivered, th
 
 ![人一次只走一步。送到的画面可以一下跳过中间。](docs/figures/leap.png)
 
+这一下合上的地方，是你当时站的地方。对方的画面如果还停在后面，把这一下画在那里，就合在一个你已经离开的位置上。每步都走的那只手，有九百多次在合上的时候正站在树桩里。你真正站的地方，一次都没有在树桩里合上。这不是从人身上量到的角度。页面上按「这一下合上了」：橙圈还在后面时，这一下不能画在橙圈上。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+The hand closed where you were standing. If their picture is still behind, drawing the closure there closes a place you have already left. On several hundred of these closures the picture that moves every step is standing inside the stump. The place you had actually reached never was. These are not angles from a hand. On the page, press “the hand closed.” When the amber ring is still behind, the closure does not belong on the ring. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![这一下合在你站的地方。合在旧位置上，就合错了地方。](docs/figures/clasp.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -359,6 +366,7 @@ python3.12 show_policy.py
 | `once.py` | 位置没变，就还是这一张 |
 | `apart.py` | 你量到的距离，和他量到的，不是同一个数 |
 | `leap.py` | 人一次只走一步。送到的画面可以跳过中间 |
+| `clasp.py` | 这一下合在你当时站的地方 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

@@ -517,6 +517,19 @@ class PrecisionTest(unittest.TestCase):
         self.assertGreaterEqual(s["skipped"], s["leap"])
         self.assertLessEqual(s["maxjump"], 16)
 
+    def test_a_closure_belongs_to_the_place_the_hand_was_at(self) -> None:
+        from clasp import run as clasp_run
+
+        rec = clasp_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["stump_sensor"], 0)
+        self.assertEqual(s["stump_shown"], 0)
+        self.assertEqual(s["same"] + s["behind"], s["closed"])
+        self.assertEqual(s["closed"] + s["open_arrived"] + s["no_finger"], s["sessions"] * 16)
+        self.assertGreaterEqual(s["behind_sum"], s["behind"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 
