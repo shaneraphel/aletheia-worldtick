@@ -423,8 +423,8 @@ function paintCamp(note) {
     : "Your screen measures " + youSteps + " steps. Theirs measures " + themSteps + ".";
   const leapN = campRelay - campRelayShown;
   campRelayShown = campRelay;
-  const leapZh = leapN > 1 ? "橙圈跳了 " + leapN + " 步，中间没有送到。" : "";
-  const leapEn = leapN > 1 ? " The ring jumped " + leapN + " steps. The steps in between were not sent." : "";
+  const leapZh = leapN > 1 ? "橙圈跳了 " + leapN + " 步，中间没有送到。中间那几步的握法，不是现在这一下。" : "";
+  const leapEn = leapN > 1 ? " The ring jumped " + leapN + " steps. The steps in between were not sent. Their grips are not the grip it has now." : "";
   const youGrip = campLocalClosed ? "合上" : "张开";
   const theyGrip = campLatch ? "合上" : "张开";
   const gripZh = campLocalClosed === campLatch

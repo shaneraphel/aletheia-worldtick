@@ -542,6 +542,16 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["differ"], s["unsent_differ"])
         self.assertEqual(s["same"] + s["differ"], s["sessions"] * 16)
 
+    def test_a_skipped_place_keeps_the_grip_it_had(self) -> None:
+        from blend import run as blend_run
+
+        rec = blend_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["wrong"] + s["agree"], s["skipped"])
+        self.assertEqual(s["closed_on_open"] + s["open_on_closed"], s["wrong"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 

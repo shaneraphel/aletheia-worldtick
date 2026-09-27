@@ -70,6 +70,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 世界模型把晚到的几步补成一段连续的走路。 | 人一次只走一步。包晚了再送到，画面直接跳到新的位置，中间不补。 | 一万多次是跳过去的，被跳过的位置有一万两千多步。人自己从来没有一次走两步。最远的一跳是八步。 |
 | 手合上了，就画在画面上现在的那只手上，不管那只手已经走到哪。 | 这一下合在你当时站的地方。对方的画面如果还停在旧位置，不能把这一下画在那里。每步都走的那只手，更不能当成已经握住树桩。 | 合上的一万四千多次里，三千多次对方还停在旧位置。每步都走的那只手有九百多次被画成握住树桩，你真正站的地方一次都没有。 |
 | 最新的握法一到，对方的画面马上换。 | 他看见的握法，是上次送到的那一下。这一步没送到，他的画面不换。你已经张开，他还可以看着合上。 | 两种握法不一样的有七千多次。你合上他还看着张开的有四千多次。你张开他还看着合上的有三千多次。送到的那一步，两种握法一定一样。 |
+| 跳过的几步，用最后的握法涂成一段连续的动作。 | 每一跳过的位置留着当时的握法。最后的握法只属于最后那个位置。 | 同一万两千多个被跳过的位置里，两千多次会被涂反：有的当时张开却被涂成合上，有的当时合上却被涂成张开。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -276,6 +277,12 @@ The grip they see is the one from the last delivery. You can have closed while t
 
 ![你已经张开，他还可以看着合上。](docs/figures/latch.png)
 
+跳过的那几步，不能涂成最后的握法。最后的握法只属于跳到的那个位置。同一批被跳过的位置里，有两千多次会被涂反：当时张开的被涂成合上，当时合上的被涂成张开。这不是从人身上量到的角度。页面上橙圈一下子跳过去的时候，中间那几步的握法不是现在这一下。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+A skipped place keeps the grip it had. The grip at the end of a jump belongs to the place the jump lands on. On the same skipped places, painting them with that final grip gets some of them backwards: an open place painted closed, or a closed place painted open. These are not angles from a hand. On the page, when the amber ring jumps, the grips in between are not the grip it has now. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![涂成最后的握法，会把当时的手涂反。](docs/figures/blend.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -375,6 +382,7 @@ python3.12 show_policy.py
 | `leap.py` | 人一次只走一步。送到的画面可以跳过中间 |
 | `clasp.py` | 这一下合在你当时站的地方 |
 | `latch.py` | 他看见的握法，是上次送到的那一下 |
+| `blend.py` | 跳过的几步留着当时的握法，不能涂成最后那一下 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
