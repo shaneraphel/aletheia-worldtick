@@ -363,6 +363,7 @@ let campGuess = 0;
 let campPerson = 10;
 let campPersonGuess = 10;
 let campRelay = 0;
+let campRelayShown = 0;
 const campImg = new Image();
 campImg.src = "clearing-camp.png";
 
@@ -416,7 +417,11 @@ function paintCamp(note) {
   const distEn = youSteps === themSteps
     ? "Both screens measure " + youSteps + " steps."
     : "Your screen measures " + youSteps + " steps. Theirs measures " + themSteps + ".";
-  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn;
+  const leapN = campRelay - campRelayShown;
+  campRelayShown = campRelay;
+  const leapZh = leapN > 1 ? "橙圈跳了 " + leapN + " 步，中间没有送到。" : "";
+  const leapEn = leapN > 1 ? " The ring jumped " + leapN + " steps. The steps in between were not sent." : "";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn;
 }
 
 function campMusic() {
@@ -441,6 +446,7 @@ document.getElementById("b-camp-clear").onclick = () => {
   campPerson = 10;
   campPersonGuess = 10;
   campRelay = 0;
+  campRelayShown = 0;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {

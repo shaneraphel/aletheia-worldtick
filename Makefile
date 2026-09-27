@@ -77,6 +77,7 @@ evidence:
 	$(PYTHON) relay.py
 	$(PYTHON) once.py
 	$(PYTHON) apart.py
+	$(PYTHON) leap.py
 
 # macOS-only Metal run; not in CI.
 gpu:

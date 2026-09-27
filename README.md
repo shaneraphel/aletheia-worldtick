@@ -67,6 +67,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 对方屏幕上的你，用每步都在走的那只手来画。他看着你从身边走过，最后站进树桩。 | 他看见的位置，只在这一步真正送到的时候才更新，更新成传感器已经走到的地方，不会更远。 | 每步都走的手，有五万步说自己在他旁边。那是每一段里固定的五步。真正送到的位置说在旁边的少得多。两个位置对不上的有十五万多步。送到的位置一次都没有跑在传感器前面。 |
 | 世界模型每一拍都要一张新画面。包到了，就算新的。 | 位置没变，就还是这一张。包到了、人还在原地，不叫模型再画。 | 同一批送到的位置里，九万五千多步位置没变。六万四千多步才换了地方。四万七千多步是包到了、画面却还是原处。 |
 | 开放世界里两人之间只有一个距离，画在同一张画面上。 | 你量的是你真正走到的地方离他多远。他量的是最后一次送到的地方离他多远。 | 同一万段里，这两个距离有两万七千多步不一样。绝大多数是你比他所以为的更近。只有几百步是他以为你更近，因为你已经走过他，送到的位置还在近的一侧。 |
+| 世界模型把晚到的几步补成一段连续的走路。 | 人一次只走一步。包晚了再送到，画面直接跳到新的位置，中间不补。 | 一万多次是跳过去的，被跳过的位置有一万两千多步。人自己从来没有一次走两步。最远的一跳是八步。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -255,6 +256,12 @@ The distance on your screen and the distance on theirs are not the same number. 
 
 ![你往往比他所以为的更近。](docs/figures/apart.png)
 
+人一次只走一步。送到对方那边的时候，画面可以一下跳过中间的几步。同一万段里，有一万多次是这样跳过去的，被跳过的位置一共一万两千多步。最远的一次跳了八步。把这些位置补画成一段走路，画的是没有送到的路。页面上先连着走几步不送，再送到，橙圈会一下子跳过去。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+The person moves at most one step at a time. When a late packet is delivered, their picture can jump over the steps in between. On the same ten thousand sessions that happens thousands of times, and the skipped places add up to more than twelve thousand. The farthest jump is eight steps. Drawing those places in as a walk would show a path that was not sent. On the page, walk several steps without sending them, then send: the amber ring jumps. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![人一次只走一步。送到的画面可以一下跳过中间。](docs/figures/leap.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -351,6 +358,7 @@ python3.12 show_policy.py
 | `relay.py` | 对方看见的，是送到的那一包，不会跑在传感器前面 |
 | `once.py` | 位置没变，就还是这一张 |
 | `apart.py` | 你量到的距离，和他量到的，不是同一个数 |
+| `leap.py` | 人一次只走一步。送到的画面可以跳过中间 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

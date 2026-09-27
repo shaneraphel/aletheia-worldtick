@@ -506,6 +506,17 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["differ"] + s["mirror"], s["ahead"])
         self.assertEqual(s["same"] + s["differ"], s["sessions"] * 16)
 
+    def test_a_delivery_can_jump_farther_than_the_person_moved(self) -> None:
+        from leap import run as leap_run
+
+        rec = leap_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["stay"] + s["step"] + s["leap"], s["deliveries"])
+        self.assertGreaterEqual(s["skipped"], s["leap"])
+        self.assertLessEqual(s["maxjump"], 16)
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 
