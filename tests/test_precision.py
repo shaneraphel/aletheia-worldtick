@@ -573,6 +573,15 @@ class PrecisionTest(unittest.TestCase):
         self.assertGreaterEqual(s["lost_steps"], s["lost"])
         self.assertGreaterEqual(s["closed_lost_steps"], s["closed_lost"])
 
+    def test_a_whole_session_can_hide_every_closure(self) -> None:
+        from whole import run as whole_run
+
+        rec = whole_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["saw"] + s["never"], s["closed"])
+        self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 

@@ -73,6 +73,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 跳过的几步，用最后的握法涂成一段连续的动作。 | 每一跳过的位置留着当时的握法。最后的握法只属于最后那个位置。 | 同一万两千多个被跳过的位置里，两千多次会被涂反：有的当时张开却被涂成合上，有的当时合上却被涂成张开。 |
 | 位置没变，就当画面没变，不再画。 | 位置没变、握法也没变，才是同一张。人站着没动，手张开或合上，仍要再画。 | 送到的包里，四万多次确实还是这一张。另有四千多次人没动、握法变了。人走了而握法没变的，有五万多次。 |
 | 手只要合上过，对方的画面上就该有这一下。 | 合上又张开，中间没送到，他的画面上就没有这一下。画面一开始是张开的，后来的握法只有在它还维持着的时候送到，才会出现。 | 两千五百多次合上，他从来没看见。六百多次张开也一样。这些没出现的握法一共维持了三千七百多步。 |
+| 合上过一次，整段里对方总能看见。 | 每一次合上如果都在送到之前结束，整段他看见的都是张开。 | 一万段里，合上过的有七千多段，其中他看见了的是多数。仍有八百多段，你合上过，他从头到尾看见的是张开。 |
 | 位置没变，就不用再画。 | 位置没变，握法变了，仍是一张新画面。只有位置和握法都没变，才还是这一张。 | 位置没变的那些次里，四千多次握法变了。人走了但握法没变的，有五万多次。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
@@ -201,15 +202,9 @@ One batch of random numbers, counted once on each of two chips. One hundred thou
 
 ![同一批随机数，CPU 和 GPU 各数一遍，数出来完全相同。](docs/figures/gpu.png)
 
-## 谁在做：能点开验证的上游记录
-
 这一版一晚上能交出来，因为交出去的不是生成器，是检查：一个网页，一次调用，每个结果都能重算。生成画面的那一层按季度算时间，我们不在那张时间表上。
 
 This version can ship in a night because what ships is not the generator. It is the check: a web page, one call, every result recomputable. The layer that draws the future is measured in quarters. We are not on that schedule.
-
-上游的记录每条都能点开。CP2K 有一条已合并的修复：[FIST 偶极与周期性电场符号](https://github.com/cp2k/cp2k/pull/6064)。DFTB+ 有一条正在评审：[晶格步长投影](https://github.com/dftbplus/dftbplus/pull/1920)。已经合并的还有 PySCF 的两条（[3450](https://github.com/pyscf/pyscf/pull/3450)、[3451](https://github.com/pyscf/pyscf/pull/3451)）、[OpenMM 5426](https://github.com/openmm/openmm/pull/5426)、[phonopy 988](https://github.com/phonopy/phonopy/pull/988)、[pymatgen-core 144](https://github.com/materialsproject/pymatgen-core/pull/144)、[xtb 1450](https://github.com/grimme-lab/xtb/pull/1450)。没有抬头，合并就是合并，评审就是评审。
-
-Every upstream record below can be opened. CP2K has one merged fix: [FIST dipole and periodic electric-field signs](https://github.com/cp2k/cp2k/pull/6064). DFTB+ has one under review: [lattice step projection](https://github.com/dftbplus/dftbplus/pull/1920). Merged elsewhere: two in PySCF ([3450](https://github.com/pyscf/pyscf/pull/3450), [3451](https://github.com/pyscf/pyscf/pull/3451)), [OpenMM 5426](https://github.com/openmm/openmm/pull/5426), [phonopy 988](https://github.com/phonopy/phonopy/pull/988), [pymatgen-core 144](https://github.com/materialsproject/pymatgen-core/pull/144), [xtb 1450](https://github.com/grimme-lab/xtb/pull/1450). No inflated titles. Merged is merged, and under review is under review.
 
 ## 今晚交出去的是什么
 
@@ -297,6 +292,12 @@ An unchanged place is not an unchanged picture. The person can stand still and o
 A grip that ends before it is sent never appears on their picture. The picture starts open. A later closure appears there only if it is sent while the hand is still closed. On the same ten thousand sessions, thousands of closures never appear, and hundreds of openings do not either. That is not a claim that the hand did not close. The closure was not sent. On the page, close, do not send, then open. Their picture stays open. The closure in between leaves nothing. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ![合上又张开，中间没送到，他就没看见。](docs/figures/omit.png)
+
+有的一整段里，你合上过，他从头到尾看见的都是张开。每一次合上都在送到之前结束了。一万段里，合上过的有七千多段；他看见合上的是多数；仍有八百多段，合上过，画面却一直是张开的。没合上过的另有两千多段。这不是说手没有合上。页面上先合上、不送、再张开，就是这种一小段的样子。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+In some sessions you closed the hand, and their picture stayed open from the first step to the last. Every closure ended before it was sent. Among ten thousand sessions, you closed in most of the ones that closed at all, and they saw it in most of those. In the rest, you closed and they still saw an open hand the whole time. Sessions with no closure are separate. This is not a claim that the hand did not close. On the page, close, do not send, then open: that is the short version. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![你合上过。他从头到尾看见的是张开。](docs/figures/whole.png)
 
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
@@ -400,6 +401,7 @@ python3.12 show_policy.py
 | `blend.py` | 跳过的几步留着当时的握法，不能涂成最后那一下 |
 | `pose.py` | 位置没变、握法变了，仍是一张新画面 |
 | `omit.py` | 合上又张开，中间没送到，他的画面上就没有这一下 |
+| `whole.py` | 有的一整段，你合上过，他从头到尾看见的是张开 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

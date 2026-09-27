@@ -83,6 +83,7 @@ evidence:
 	$(PYTHON) blend.py
 	$(PYTHON) pose.py
 	$(PYTHON) omit.py
+	$(PYTHON) whole.py
 
 # macOS-only Metal run; not in CI.
 gpu:
