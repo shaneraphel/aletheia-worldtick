@@ -582,6 +582,20 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_the_ending_has_to_ride_on_a_new_picture(self) -> None:
+        from ride import run as ride_run
+
+        rec = ride_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["tail"] + s["interior"], s["shortfall"])
+        self.assertEqual(s["shortfall"] + s["sent"], s["tick"])
+        self.assertEqual(s["carried"] + s["quiet"], s["sessions"])
+        self.assertEqual(s["carried"], s["hist"][0])
+        self.assertEqual(sum(s["hist"]), s["sessions"])
+        self.assertLessEqual(s["longest"], 16)
+
     def test_speeding_what_is_left_is_not_the_recording(self) -> None:
         from tempo import run as tempo_run
 
