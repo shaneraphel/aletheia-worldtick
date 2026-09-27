@@ -18,13 +18,17 @@ We do not replace the model that draws the future. The same path-finding routine
 
 ## 怎么读
 
-1. 先打开页面，按按钮。看走廊上的三种走法，一段脑电，奖励表上的下一步，左耳和右耳交替的声音，一根手指，脑电和手指有一边还没到的时候画面留在哪，两家住户各留各的画面，画面有几步没更新了，谁蒙对了，断完第几步追上，两路不一样快时画面有几步是全新的，一间房里两只手各动各的，以及越晚、全新的越少，最坏能坏到哪，记下来再算一遍，三路都到才是全新的，以及同一批两种芯片数出来一样。
-2. 再读下面三节：这幅画面给谁；别人的方法和我们的方法差在哪；今晚交出去的是什么。
-3. 要核对一个数，或要看证明，打开笔记。这份说明不把实验次数再念一遍。
+先打开[页面](https://shaneraphel.github.io/aletheia-worldtick/)，按你看见的按钮走一遍。走廊、一段脑电、奖励表、左右耳交替的声音、一根手指，还有下面这片营地，都在同一页上，不需要账号。
 
-1. Open the page and press the buttons first. Walk the corridor three ways, look at a brain recording, pick the next action, listen to clicks that alternate between the ears, look at one finger, see what the picture does when the brain recording or the finger is late, see two tenants keep separate pictures, see how many steps old the picture is, see who is right by luck, see how many steps a catch-up takes after a burst, see how many frames are new when the streams run at different speeds, see two hands in one room move independently, see new frames fall as arrivals get later, see how bad a miss budget can get, see the record replay itself, see three streams make one new frame, and see one batch counted the same on two chips.
-2. Then read who the picture is for, how this method differs from the others, and what is actually handed over.
-3. The note has the proofs and the counts. This file does not recite them.
+然后读三节：这幅画面给谁，我们和已经发表的方法差在哪，今晚交出去的是什么。
+
+次数和证明不在这里再念一遍。要核对某一个数，或要看它是怎么推出来的，打开 [`paper/paper.md`](paper/paper.md)。
+
+Open the [page](https://shaneraphel.github.io/aletheia-worldtick/) and press the buttons. The corridor, a brain recording, the reward table, the sound that alternates between the ears, one finger, and the camp below are all on that page. No account.
+
+Then read who the picture is for, how this differs from published methods, and what is actually handed over.
+
+The counts and the proofs are not repeated here. They are in [`paper/paper.md`](paper/paper.md).
 
 ## 这幅画面给谁
 
@@ -36,7 +40,7 @@ Two people would use the same picture. Nothing here was collected from a person,
 
 **Someone learning a dexterous hand.** The picture shows the motion before it is finished, so he can practice. Ground the camera did not see is not drawn as already crossed. A finger whose angle has not arrived is not drawn as already closed. Practicing a motion the place does not contain is not practice with this hand. Other people may stand in the room. The picture does not send him to them, and it does not draw people the camera never saw.
 
-**想把一段左右交替的声音听下去的人。** 这种声音本身难留，所以游戏是一个可以待着的开阔地方：声音继续，别人在场，不布置任务，也不要求高消耗的来往。若要因为脑电看起来紧张就改音乐、改画面，这一小段必须是传全的。没传全，音乐和画面先不动。把没传到的采样写成零再去改，改的就不是这个人当时的状态。这里不判断惊恐，也不把改速度说成在帮人克服恐惧。
+**想把一段左右交替的声音听下去的人。** 这种声音本身难留，所以游戏是一个可以待着的开阔地方：声音继续，别人在场，不布置任务，也不要求高消耗的来往。若要因为脑电看起来紧张就改音乐、改画面，这一小段必须是传全的。没传全，音乐和画面保持原样。把没传到的采样写成零再去改，改的就不是这个人当时的状态。这里不判断惊恐，也不把改速度说成在帮人克服恐惧。
 
 **Someone trying to stay with a sound that alternates left and right.** That sound is hard to keep listening to, so the game is an open place where it can continue, with other people present, without a task and without demanding social effort. If the music or the picture is to change because the brain recording looks tense, that stretch has to have arrived whole. If it has not, the music and the picture stay. Writing zeros into the missing samples and then changing the scene is not a reading of that person. Nothing here detects fright, and changing the speed is not described as helping someone through fear.
 
@@ -51,30 +55,11 @@ The difference is not that we train a larger world model. The difference is whic
 | 别人怎么做 | 我们怎么做 | 为什么这就是差别 |
 |---|---|---|
 | 世界模型先把下一帧画完，再按那一帧行动。[V-JEPA 2.1](https://arxiv.org/abs/2603.14482) 和 [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) 交出去的画面上看不出哪一块是猜的。[Nilaksh 等人](https://arxiv.org/abs/2605.06388) 看到：画面更好的模型，拿去规划可以更差。[Yuan 等人](https://arxiv.org/abs/2609.24745) 看到：已经知道每个想象结果的对照，能把成功率从 68.9% 抬到 79.2%；只给画面打分，收不回这个差距。[Zhang 等人](https://arxiv.org/abs/2609.02159) 看到：留下哪一个未来，下一步动作就变了。 | 不另训练一个生成器。同一套找路程序跑两遍。一遍用画完的场景，一遍只用传感器真正送来的部分。交给用户的是第二遍。第一遍放在旁边。 | 只走已经看见的地面，不会比画完之后的那条路更长。所以“选更短的，一样长就选画完的那条”，每次都会选中画完的那条。画面更顺，不代表这一步是测到的。要改的是这条规则，不是再加一个画面分数。Yuan 已经说明画面分数收不回那个差距。68.9% 和 79.2% 是他们的数，这里没有重跑。 |
-| [LaBraM](https://arxiv.org/abs/2405.18765) 把没传到的脑电补出来再分类。[InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) 让训练好的模型始终看到训练时的电极布局。包没到、写成零，会和“人没动”得到同一个类别。电压有正有负时，删掉一段负数再写成零，还可以把“没动”读成“动了”。 | 这一小段没传全，音乐和画面先不动。不根据写上去的零去改速度。 | “写成零比较安全”并不成立。错的方向跟着被删掉的那段的正负走。不改速度，就不是一次惊恐判断。 |
-| 游戏每一帧都要显示。脑电晚了，就先当成没动。手指角度晚了，就先画成已经握紧。关节的内存如果一开始是零，第一个角度到来之前，手已经是握紧的。 | 这一帧先留着上一次真正到过的声音和角度。两边都到了，两种画法是同一幅。有一边没到，而且默认值和画面上现有的不一样，两幅画才分开。一个核和十个核得到同一个结果。 | 实时并不是必须先猜。晚到的那一路可以等，画面先重复上一次到齐的样子。笔记里的定理 13 写的是这件事。 |
+| [LaBraM](https://arxiv.org/abs/2405.18765) 把没传到的脑电补出来再分类。[InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) 让训练好的模型始终看到训练时的电极布局。包没到、写成零，会和“人没动”得到同一个类别。电压有正有负时，删掉一段负数再写成零，还可以把“没动”读成“动了”。 | 这一小段没传全，音乐和画面保持原样。不根据写上去的零去改速度。 | “写成零比较安全”并不成立。错的方向跟着被删掉的那段的正负走。不改速度，就不是一次惊恐判断。 |
+| 游戏每一帧都要显示。脑电晚了，就先当成没动。手指角度晚了，就先画成已经握紧。关节的内存如果一开始是零，第一个角度到来之前，手已经是握紧的。 | 这一帧先留着上一次真正到过的声音和角度。两边都到了，两种画法是同一幅。有一边没到，而且默认值和画面上现有的不一样，两幅画才分开。一个核和十个核得到同一个结果。 | 实时并不是必须先猜。晚到的那一路可以等，画面重复上一次到齐的样子。笔记里的定理 13 写的是这件事。 |
 | 下面这张表里的库，在什么都没录上时，仍交回一个下一层程序愿意接着用的结果。 | 同样的情况下停住。有内容的输入，数值和原来一样。 | 调用成功，不等于人是平静的，也不等于手已经握完。 |
-| 脑电晚了，手指的角度晚了，画面用缺省值顶上，看起来和刚到的一样新。 | 画面留着上一次到过的，并记下是几步之前传到的。中间三步都没到，年龄涨三步，画面不动。 | 缺省值永远说自己是刚到的。留下的那一版知道自己有几步没更新了。笔记里的定理 15 写的是这件事。 |
-| 缺省值蒙对了，就当测到了，继续往下传。 | 蒙对也记成蒙对。手指晚了，留着上一次到过的角度，不说握紧。 | 只晚脑电时，两边蒙对差不多。只晚手指时，留下的蒙对六倍多，因为张开常见，握紧少见。但蒙对几回不是重点，重点是从不把蒙说成测到。笔记里的定理 16 写的是这件事。 |
-| 断完之后，缺省值顶上，看起来像追上了。 | 数第几步追上。两边都到的第一步，画面和真实对上，差一步都不算追上。 | 一半左右第一步就追上，也有八十多段七步还没追上。追上之前，留下的对得多，猜对得少。笔记里的定理 17 写的是这件事。 |
-| 两路不一样快，也按每步都是新的画。 | 手指三步来一次，画面只在到过的那步更新，年龄照数。 | 十六步里最多六步是全新的。手指的年龄是固定的锯齿，和脑电到没到没关系。笔记里的定理 18 写的是这件事。 |
-| 一间房里两只手，一只没信号，整幅画面停住，或者整幅都猜。 | 谁没到，只冻谁的手，另一只照动。先算谁后算谁，两只手看到的一样。 | 一只全黑时，另一只照动上万步。顺序换过来，两只手一步都没变。笔记里的定理 19 写的是这件事。 |
-| 晚多晚少，画面看起来一样新。 | 越晚，全新的越少。一滴不晚时，猜和留一次都不分开。 | 从不晚到晚一半，全新的越晚越少，不一样的越晚越多。笔记里的定理 20 写的是这件事。 |
-| 晚几步排在哪都一样，反正画面都一样新。 | 预算晚几步，排在最后，画面最老。十六步里晚八步，最老八步。 | 不管怎么排，画面老不过预算。排在最后就顶到预算。笔记里的定理 21 写的是这件事。 |
-| 交出去的画面，事后算不回来，对不上账。 | 每一步留一行记录，专从记录重算。两套算法各算一遍，步步一样。 | 十六万步重算，对不上零步。一万段全对。笔记里的定理 22 写的是这件事。 |
-| 路越加越多，画面还每步都是新的。 | 三路都到，画面才是全新的。再加一路，全新的再打七折。 | 两路时全新占一半，三路时只剩三分之一。笔记里的定理 23 写的是这件事。 |
-| 开放世界里，人没传来，画面也把他画到你身边，看起来你们已经在一起。手每步都走，还会从他身边走过去，把本来站在一起的两个人拉开。 | 在不在一起，只看两边最后一次真正传到的位置。隔两步以内才算站在一起。人没传来，他留在原地。你自己走过去，算你走过去。 | 每步都走的那只手，说你们在一起的次数更少，因为它已经走过他了。留下的画面还有六万五千多步说在一起，猜的画面并没有。猜的画面另有两万七千多步说在一起，位置其实还没到。 |
-| 对方屏幕上的你，用每步都在走的那只手来画。他看着你从身边走过，最后站进树桩。 | 他看见的位置，只在这一步真正送到的时候才更新，更新成传感器已经走到的地方，不会更远。 | 每步都走的手，有五万步说自己在他旁边。那是每一段里固定的五步。真正送到的位置说在旁边的少得多。两个位置对不上的有十五万多步。送到的位置一次都没有跑在传感器前面。 |
-| 世界模型每一拍都要一张新画面。包到了，就算新的。 | 位置没变，就还是这一张。包到了、人还在原地，不叫模型再画。 | 同一批送到的位置里，九万五千多步位置没变。六万四千多步才换了地方。四万七千多步是包到了、画面却还是原处。 |
-| 开放世界里两人之间只有一个距离，画在同一张画面上。 | 你量的是你真正走到的地方离他多远。他量的是最后一次送到的地方离他多远。 | 同一万段里，这两个距离有两万七千多步不一样。绝大多数是你比他所以为的更近。只有几百步是他以为你更近，因为你已经走过他，送到的位置还在近的一侧。 |
-| 世界模型把晚到的几步补成一段连续的走路。 | 人一次只走一步。包晚了再送到，画面直接跳到新的位置，中间不补。 | 一万多次是跳过去的，被跳过的位置有一万两千多步。人自己从来没有一次走两步。最远的一跳是八步。 |
-| 手合上了，就画在画面上现在的那只手上，不管那只手已经走到哪。 | 这一下合在你当时站的地方。对方的画面如果还停在旧位置，不能把这一下画在那里。每步都走的那只手，更不能当成已经握住树桩。 | 合上的一万四千多次里，三千多次对方还停在旧位置。每步都走的那只手有九百多次被画成握住树桩，你真正站的地方一次都没有。 |
-| 最新的握法一到，对方的画面马上换。 | 他看见的握法，是上次送到的那一下。这一步没送到，他的画面不换。你已经张开，他还可以看着合上。 | 两种握法不一样的有七千多次。你合上他还看着张开的有四千多次。你张开他还看着合上的有三千多次。送到的那一步，两种握法一定一样。 |
-| 跳过的几步，用最后的握法涂成一段连续的动作。 | 每一跳过的位置留着当时的握法。最后的握法只属于最后那个位置。 | 同一万两千多个被跳过的位置里，两千多次会被涂反：有的当时张开却被涂成合上，有的当时合上却被涂成张开。 |
-| 位置没变，就当画面没变，不再画。 | 位置没变、握法也没变，才是同一张。人站着没动，手张开或合上，仍要再画。 | 送到的包里，四万多次确实还是这一张。另有四千多次人没动、握法变了。人走了而握法没变的，有五万多次。 |
-| 手只要合上过，对方的画面上就该有这一下。 | 合上又张开，中间没送到，他的画面上就没有这一下。画面一开始是张开的，后来的握法只有在它还维持着的时候送到，才会出现。 | 两千五百多次合上，他从来没看见。六百多次张开也一样。这些没出现的握法一共维持了三千七百多步。 |
-| 合上过一次，整段里对方总能看见。 | 每一次合上如果都在送到之前结束，整段他看见的都是张开。 | 一万段里，合上过的有七千多段，其中他看见了的是多数。仍有八百多段，你合上过，他从头到尾看见的是张开。 |
-| 位置没变，就不用再画。 | 位置没变，握法变了，仍是一张新画面。只有位置和握法都没变，才还是这一张。 | 位置没变的那些次里，四千多次握法变了。人走了但握法没变的，有五万多次。 |
+
+营地里的差别是同一件事，放在一个人、一只手、另一个人之间。那一段写在「今晚交出去的是什么」里，不在这张表里再列一遍。
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -190,7 +175,7 @@ The starting point is this check as a callable service. A game or a robot sends 
 
 The service rests on three facts that are written down. The same input always gives the same output, on one core and on ten. One tenant arriving late never changes another tenant's picture. And it sits in front of a world model the customer already runs, so nobody has to switch models.
 
-有收入以后，做自己的东西：手、头戴的接入、游戏。路线不变：脑电传回什么，画面就按传回的部分实时生成；有一路没传到，画面先留着上一次到齐的样子。卖服务是起点，不是终点。
+有收入以后，做自己的东西：手、头戴的接入、游戏。路线不变：脑电传回什么，画面就按传回的部分实时生成；有一路没传到，画面留着上一次到齐的样子。卖服务是起点，不是终点。
 
 With revenue, we build our own things: the hand, the headset connection, the game. The direction does not change. The picture is generated in real time from what the brain recording sent back, and while a stream is late the picture stays with the last one that had everything. Selling the service is the starting point, not the destination.
 
@@ -225,77 +210,53 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 ![给用户看的手停在营地中间。](docs/figures/clearing-held.png)
 ![猜的那只手走到了石头旁边。](docs/figures/clearing-guess.png)
 
-营地里还站着一个人，蓝点，不走。给用户看的那只手停在他前面。猜的那只手走过他，最后站进树桩里。一万次里，猜的手每次都走到他面前；给用户看的手只有少数几次走到。猜的手走到树桩上、角度又没到，就会被画成已经握住木头。给用户看的手一次都没有。页面上可以自己走，同时响起贝多芬第十五奏鸣曲开头的八秒。有一路晚了，曲子继续，不换。这不是治疗用的音乐，蓝点也不是某一个人的记录，握住树桩也不是从人身上量到的角度。这个人没传来的时候，画面不把他带到你面前。猜的画面会。两张账单写的不是同一件事。没发生的那一行，不开账。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+打开[页面](https://shaneraphel.github.io/aletheia-worldtick/)，营地里还有另一个人。蓝点是他，他自己不走。白点是给你看的那只手，只在脑电和手指角度都到了的时候往前，所以常常停在他前面。灰点每一步都往前，会从他身边走过去，最后站进树桩。贝多芬第十五钢琴奏鸣曲的开头八秒在循环。有一路晚了，曲子继续，不换段。这不是治疗用的音乐，蓝点也不是某一个人的记录。
 
-Someone else stands in the camp, the blue dot, and does not walk. The hand the user sees stops before them. The guessed hand walks past them and ends inside the stump. On ten thousand tries the guessed hand reaches them every time. The hand the user sees reaches them only on a minority of tries. When the guessed hand is on the stump and the finger angle did not arrive, the picture draws it as a grip on the wood. The hand the user sees is never drawn that way. On the page you can walk it yourself, with the opening eight seconds of Beethoven’s Piano Sonata No. 15. When one stream is late, the piece keeps playing and does not switch. It is not treatment music, the blue dot is not a record of a particular person, and the grip on the stump is not an angle taken from a hand. When their signal does not arrive, the picture you see does not walk them over to you. The guessed picture does. The two bills do not say the same thing. A line for something that did not happen is not charged. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
+
+对方看见的你是橙圈，只在这一步真正送到的时候才挪到白点上。你连着走了几步都没送，再送一次，橙圈会跳过中间。人一次只走一步，跳过的位置并没有送到。把那些位置涂成最后的握法，会把当时张开的手涂成合上，或把当时合上的手涂成张开。
+
+合上这一下，属于你当时站的地方。橙圈如果还在后面，不能把这一下画在橙圈上。每步都走的那只手走到树桩上、角度又没到，会被画成已经握住木头；给你看的手一次都没有。握住树桩也不是从人身上量到的角度。
+
+他看见的握法是上次送到的那一下。你已经张开，他还可以看着合上；你已经合上，他还可以看着张开。送到的那一步，两边才一样。合上又张开，中间没送到，他的画面上就没有这一下。有的一整段都是这样：你合上过，他从头到尾看见的仍是张开。
+
+你量到的距离是白点离蓝点多远，他量到的是橙圈离蓝点多远，两个数经常不一样。你多半比他所以为的更近。位置没变也不等于画面没变：人可以站着不动，手仍张开或合上，那一包仍是一张新画面。只有位置和握法都跟他已经看见的一样，才还是这一张。次数和证明在笔记里。
+
+Open the [page](https://shaneraphel.github.io/aletheia-worldtick/). Someone else is in the camp. The blue dot is that person; they do not walk. The white dot is the hand you see. It steps forward only when both the brain recording and the finger angle have arrived, so it often stops in front of them. The gray dot steps every time, walks past them, and ends inside the stump. The opening eight seconds of Beethoven’s Piano Sonata No. 15 loop underneath. When a stream is late, the piece keeps playing and does not switch. It is not treatment music, and the blue dot is not a record of a particular person.
+
+If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
+
+What they see of you is the amber ring. It moves onto the white dot only when that step is actually sent. Walk several steps without sending them, then send once, and the ring jumps the gap. You only ever take one step at a time, so the places in between were not sent. Painting them with the grip from the end of the jump closes a hand that was open there, or opens a hand that was closed.
+
+The closure belongs to the place where you were standing. If the ring is still behind, that closure does not belong on it. When the hand that moves every step reaches the stump and the angle has not arrived, it is drawn as already gripping the wood. The hand you see is never drawn that way. The grip on the stump is not an angle taken from a hand.
+
+The grip they see is the one from the last delivery. You can have opened while they still show the hand closed, or closed while they still show it open. The two match on a step that was sent. Close and then open with nothing sent in between, and that closure never appears on their picture. In some whole sessions this is all that happens: you closed, and they saw an open hand from the first step to the last.
+
+The distance you measure is how far the white dot is from the blue dot. The distance they measure is how far the ring is from the blue dot. The two numbers often differ, and you are usually closer than they think. An unchanged place is not an unchanged picture: you can stand still and still open or close the hand, and that packet is new. The picture is the same only when both the place and the grip are already what they see. The counts and the proofs are in the note.
 
 ![没传来，人不过来。猜的画面会把这个人带到你面前。](docs/figures/approach.png)
 
-![没发生的，不开账。两张账单不一样的那一行，是猜出来的。](docs/figures/bill.png)
+![没发生的，不开账。](docs/figures/bill.png)
 
-在不在一起，看的是两个人在路上隔几步。隔两步以内，才说站在一起。每步都走的那只手会从人身边走过去，所以它说你们在一起的次数更少。留下的画面还有很多步停在他旁边。人没传来的时候，他不会自己走过来；你的手到了，你可以自己走过去。猜的画面会在他没传来时把他拉近。这不是某一个人的记录，两步也不是一种心情。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+![每步都走的那只手，已经从人身边走过去了。](docs/figures/beside.png)
 
-Whether two people are beside each other is how many steps apart they are on the path. Two steps or fewer counts as beside each other. The hand that moves every step walks past the other person, so it says you are together less often. The picture you see still spends many steps next to them. When their signal has not arrived, they do not walk over. When your hand has arrived, you can walk over yourself. The guessed picture pulls them closer while their signal is missing. This is not a record of a particular person, and two steps is not a feeling. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
-![每步都走的那只手，已经从人身边走过去了。留下的画面还在他旁边。](docs/figures/beside.png)
-
-对方看见的你，是最后一次送到他那边的位置，不是每步都在走的那只手。那只手每一段都有固定的五步说自己在他旁边，然后走到树桩上。送到的位置说在旁边的次数少得多，而且不会比传感器已经走到的地方更远。页面上的橙圈就是送到的位置。你走了、这一步没送到，橙圈留在后面。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-What the other person sees of you is the last place that was delivered, not the hand that moves every step. That hand spends five fixed steps of every session beside them, then stands on the stump. The delivered place says you are beside them less often, and it never runs ahead of where the sensors have already gone. On the page the amber ring is the delivered place. When you move and that step is not sent, the ring stays behind. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
-![他看见的，是送到的那一包。每步都走的那只手会先从他身边走过去。](docs/figures/relay.png)
-
-位置没变，就还是这一张。同一批送到对方的位置里，大多数步并没有换地方。包到了、人还在原地，那一包不是一张新画面。世界模型要是每一拍都再画一次，画的还是同一个位置。页面上可以送一次已经站着的位置：橙圈本来就在白点上时，它不动。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-A repeated place is not a new picture. On the same deliveries, most steps do not move the place. A packet that arrives while the person is still standing there is not a new picture. A world model asked to draw again on every tick would be drawing the same place. On the page you can send the place where you are already standing. When the amber ring is already on the white dot, it does not move. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+![他看见的，是送到的那一包。](docs/figures/relay.png)
 
 ![位置没变，就还是这一张。](docs/figures/once.png)
 
-你量到的距离，和他量到的，不是同一个数。你量的是白点离蓝点多远。他量的是橙圈离蓝点多远。同一万段里，这两个距离有 27,143 步不一样。其中 26,761 步是你比他所以为的更近。只有 382 步是他以为你更近：你已经走过他，送到的位置还在近的一侧。另有 49 步，送到的位置落在后面，两边的距离却一样，因为两个位置到他是同样远、方向相反。页面上每走一步都会写出这两个数。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-The distance on your screen and the distance on theirs are not the same number. You measure how far the white dot is from the blue dot. They measure how far the amber ring is from the blue dot. On the same ten thousand sessions those two distances differ on 27,143 steps. On 26,761 of them you are closer than they think. On 382 they think you are closer: you have walked past them, and the place that was sent is still on the near side. On another 49 steps the sent place is behind and the distances still match, because the two places are equally far from them in opposite directions. Every step on the page states both numbers. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
 ![你往往比他所以为的更近。](docs/figures/apart.png)
-
-人一次只走一步。送到对方那边的时候，画面可以一下跳过中间的几步。同一万段里，有一万多次是这样跳过去的，被跳过的位置一共一万两千多步。最远的一次跳了八步。把这些位置补画成一段走路，画的是没有送到的路。页面上先连着走几步不送，再送到，橙圈会一下子跳过去。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-The person moves at most one step at a time. When a late packet is delivered, their picture can jump over the steps in between. On the same ten thousand sessions that happens thousands of times, and the skipped places add up to more than twelve thousand. The farthest jump is eight steps. Drawing those places in as a walk would show a path that was not sent. On the page, walk several steps without sending them, then send: the amber ring jumps. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ![人一次只走一步。送到的画面可以一下跳过中间。](docs/figures/leap.png)
 
-这一下合上的地方，是你当时站的地方。对方的画面如果还停在后面，把这一下画在那里，就合在一个你已经离开的位置上。每步都走的那只手，有九百多次在合上的时候正站在树桩里。你真正站的地方，一次都没有在树桩里合上。这不是从人身上量到的角度。页面上按「这一下合上了」：橙圈还在后面时，这一下不能画在橙圈上。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-The hand closed where you were standing. If their picture is still behind, drawing the closure there closes a place you have already left. On several hundred of these closures the picture that moves every step is standing inside the stump. The place you had actually reached never was. These are not angles from a hand. On the page, press “the hand closed.” When the amber ring is still behind, the closure does not belong on the ring. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
-![这一下合在你站的地方。合在旧位置上，就合错了地方。](docs/figures/clasp.png)
-
-他看见的握法，是上次送到的那一下。你已经合上，他还可以看着张开。你已经张开，他还可以看着合上。送到的那一步，两种握法才变成一样。这不是从人身上量到的角度。页面上可以先合上、再张开，橙圈那边仍留着上次送到的握法；再按送到，两边才一样。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-The grip they see is the one from the last delivery. You can have closed while they still show an open hand, and you can have opened while they still show a closed hand. On a step that was sent, the two grips match. These are not angles from a hand. On the page you can close and then open. Their side keeps the grip from the last time it was sent, until you send again. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+![这一下合在你站的地方。](docs/figures/clasp.png)
 
 ![你已经张开，他还可以看着合上。](docs/figures/latch.png)
 
-跳过的那几步，不能涂成最后的握法。最后的握法只属于跳到的那个位置。同一批被跳过的位置里，有两千多次会被涂反：当时张开的被涂成合上，当时合上的被涂成张开。这不是从人身上量到的角度。页面上橙圈一下子跳过去的时候，中间那几步的握法不是现在这一下。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-A skipped place keeps the grip it had. The grip at the end of a jump belongs to the place the jump lands on. On the same skipped places, painting them with that final grip gets some of them backwards: an open place painted closed, or a closed place painted open. These are not angles from a hand. On the page, when the amber ring jumps, the grips in between are not the grip it has now. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
 ![涂成最后的握法，会把当时的手涂反。](docs/figures/blend.png)
-
-位置没变，不等于画面没变。人站在原地，手可以从张开变成合上。那一包仍是一张新画面。同一批送到的包里，四万多次位置和握法都没变，才真是同一张。另有四千多次人没动、握法变了。人走了、握法没变的更多。页面上先合上或张开，再按「送到了，人还在原地」：握法变了就会写明这是新的一张。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-An unchanged place is not an unchanged picture. The person can stand still and open or close the hand. That packet is still a new picture. On the same deliveries, tens of thousands really are the same picture, place and grip both unchanged. Several thousand leave the place and change the grip. Many more move the place and keep the grip. On the page, close or open, then press “sent, and nobody moved.” If the grip changed, it says this is a new picture. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ![位置没变，不等于画面没变。](docs/figures/pose.png)
 
-合上又张开，如果中间没有送到，他的画面上就没有这一下。画面一开始是张开的。后来的一次合上，只有在它还没张开之前送到，才会出现在他那边。同一万段里，有两千五百多次合上他从来没看见，六百多次张开也没出现。这不是说手没有合上。是这一下没有被送到。页面上先按合上，不送，再按张开：他那边仍然张开，中间那一下没有留下。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-A grip that ends before it is sent never appears on their picture. The picture starts open. A later closure appears there only if it is sent while the hand is still closed. On the same ten thousand sessions, thousands of closures never appear, and hundreds of openings do not either. That is not a claim that the hand did not close. The closure was not sent. On the page, close, do not send, then open. Their picture stays open. The closure in between leaves nothing. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
-
 ![合上又张开，中间没送到，他就没看见。](docs/figures/omit.png)
-
-有的一整段里，你合上过，他从头到尾看见的都是张开。每一次合上都在送到之前结束了。一万段里，合上过的有七千多段；他看见合上的是多数；仍有八百多段，合上过，画面却一直是张开的。没合上过的另有两千多段。这不是说手没有合上。页面上先合上、不送、再张开，就是这种一小段的样子。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
-
-In some sessions you closed the hand, and their picture stayed open from the first step to the last. Every closure ended before it was sent. Among ten thousand sessions, you closed in most of the ones that closed at all, and they saw it in most of those. In the rest, you closed and they still saw an open hand the whole time. Sessions with no closure are separate. This is not a claim that the hand did not close. On the page, close, do not send, then open: that is the short version. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
 
 ![你合上过。他从头到尾看见的是张开。](docs/figures/whole.png)
 
@@ -305,13 +266,13 @@ In some sessions you closed the hand, and their picture stayed open from the fir
 
 | 调用 | 人拿到的 |
 |---|---|
-| `measure` | 只用已经送到的信息往下走。两条路一样长时，走只经过看见的地面的那条。脑电没传全，不写成零。手指角度没到，不画成已经握紧。脑电和手指有一边晚了，画面留在上一次两边都到过的样子。 |
+| `measure` | 只用已经送到的信息往下走。两条路一样长时，走只经过看见的地面的那条。脑电没传全，不写成零。还没传来的角度，不画成已经握紧。脑电和手指有一边晚了，画面留在上一次两边都到过的样子。 |
 | `impute` | 旁边的对照。同一个规划，在场景被补完之后会怎么走。用来给人看两边不一样。正式交出去的是上一行。 |
 | 停住 | 什么都没送来。不交回零，不交回一个里面什么都没有的列表，也不交回一个会悄悄传下去的非数。 |
 
-页面上能对上的几件事：走廊中间没看见，补完以后会走进障碍，只按看见的会停住；八段脑电写成零，会把动作读成没动；奖励表往前看一步，和只看眼前，选出的动作不同；左耳右耳的声音在这一小段没传全时速度不变；一根手指的角度没到时，不画成握紧；脑电和手指有一边晚到时，给用户的画面先留着；两家住户各留各的画面，谁没来只影响谁；画面上还有年龄，几步没更新就涨几步；蒙对也记成蒙对，页面上按一步看一步；断完第几步追上，页面上断三步再一步一步来；手指三步来一次，页面上按一步看一步，全新的最多六步；一间房里两只手各动各的，谁没到冻谁；三档晚点各走十六步，越晚全新的越少；三档预算，看十六步的年龄，最老就是预算；来一步记一行，重算一遍步步一样；三块各显示到没到，三路都到才是全新的；同一批随机数两种芯片各数一遍，页面上只说结论。
+页面上的按钮和上面几节是同一件事。每个按钮只做按钮上写的那一件事。
 
-On the page: the middle of the corridor was not seen, the completed walk enters an obstacle, and the walk that stays with what was seen stops. Eight brain samples written as zeros are read as no movement. On the reward table, looking one step ahead and looking only at the current row pick different actions. The left-right clicks do not change speed when the stretch has not arrived whole. A finger whose angle has not arrived is not drawn closed. When either the brain recording or the finger is late, the picture the user sees stays with the last one that had both. Two tenants keep separate pictures, and a miss moves only the tenant that missed. The picture also shows its age: each step without an update adds one. A lucky match is recorded as luck; the page shows one step at a time. After a burst, break three steps and walk back one at a time to see when it catches up. With the finger scheduled every third step, press step by step: at most six frames are new. Two hands in one room move independently; a miss freezes only that hand. Three missing rates, sixteen steps each: the later, the fewer new frames. Three budgets, sixteen ages each: the oldest is the budget. Log one row per step and replay it: every step matches. Three blocks show what arrived; the frame is new only when all three arrive. One batch is counted on two chips; the page states the result.
+The buttons on the page are the same story. Each one does only what its label says.
 
 这次没有训练好的视频模型，没有头戴设备的开发包，没有机器人成功率，也没有治疗效果。
 
@@ -352,7 +313,7 @@ python3.12 show_policy.py
 
 | 路径 | 它做什么 |
 |---|---|
-| `tick.py` | 只按已经送到的信息走下一步 |
+| `tick.py` | 下一步只用已经送到的信息 |
 | `datalog.py` | 把路走完。那是场景被补完以后才会交回的结果 |
 | `complete.py` · `decode.py` · `policy.py` | 三种补法：地图、脑电、奖励表 |
 | `partition.py` | 两条路谁包含谁；一样长时留哪一条 |
@@ -372,7 +333,7 @@ python3.12 show_policy.py
 | `near.py` | 离房间里的人有多远：只走看见的地面，和把没看见的当成能走 |
 | `reel.py` | 速度可以变，画面仍停在这一帧 |
 | `aperture.py` | 关节角度没到，不把这根手指画成已经握紧 |
-| `late.py` | 脑电和手指有一边晚到，画面先留着上一次到齐的样子 |
+| `late.py` | 有一边晚到，就重复上一次到齐的画面 |
 | `tenant.py` | 谁晚到，也不改另一家的画面 |
 | `stale.py` | 画面知道自己有几步没更新了 |
 | `luck.py` | 蒙对不是测到 |
