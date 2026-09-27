@@ -69,6 +69,7 @@ The difference is not that we train a larger world model. The difference is whic
 | 开放世界里两人之间只有一个距离，画在同一张画面上。 | 你量的是你真正走到的地方离他多远。他量的是最后一次送到的地方离他多远。 | 同一万段里，这两个距离有两万七千多步不一样。绝大多数是你比他所以为的更近。只有几百步是他以为你更近，因为你已经走过他，送到的位置还在近的一侧。 |
 | 世界模型把晚到的几步补成一段连续的走路。 | 人一次只走一步。包晚了再送到，画面直接跳到新的位置，中间不补。 | 一万多次是跳过去的，被跳过的位置有一万两千多步。人自己从来没有一次走两步。最远的一跳是八步。 |
 | 手合上了，就画在画面上现在的那只手上，不管那只手已经走到哪。 | 这一下合在你当时站的地方。对方的画面如果还停在旧位置，不能把这一下画在那里。每步都走的那只手，更不能当成已经握住树桩。 | 合上的一万四千多次里，三千多次对方还停在旧位置。每步都走的那只手有九百多次被画成握住树桩，你真正站的地方一次都没有。 |
+| 最新的握法一到，对方的画面马上换。 | 他看见的握法，是上次送到的那一下。这一步没送到，他的画面不换。你已经张开，他还可以看着合上。 | 两种握法不一样的有七千多次。你合上他还看着张开的有四千多次。你张开他还看着合上的有三千多次。送到的那一步，两种握法一定一样。 |
 
 World models finish the next frame and then act on it. [V-JEPA 2.1](https://arxiv.org/abs/2603.14482) and [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) hand on a picture that no longer shows which part was guessed. [Nilaksh et al.](https://arxiv.org/abs/2605.06388) found that a model can look better and plan worse. [Yuan et al.](https://arxiv.org/abs/2609.24745) found that a reference which already knows how each imagined future turns out lifts success from 68.9% to 79.2%, while scores of the picture alone recover little of that gap. [Zhang et al.](https://arxiv.org/abs/2609.02159) found that which future you keep changes the next action. We do not train another generator. The same path finder runs twice, and the user receives the run that uses only what the sensors sent. A route that stays on ground already seen is never longer than the route on the completed scene, so “pick the shorter one, and if they match pick the completed one” returns the completed one every time. A smoother picture is not evidence that the step was measured. The rule is what has to change. Another score of the picture will not. Those two percentages are Yuan’s. They are not re-run here.
 
@@ -269,6 +270,12 @@ The hand closed where you were standing. If their picture is still behind, drawi
 
 ![这一下合在你站的地方。合在旧位置上，就合错了地方。](docs/figures/clasp.png)
 
+他看见的握法，是上次送到的那一下。你已经合上，他还可以看着张开。你已经张开，他还可以看着合上。送到的那一步，两种握法才变成一样。这不是从人身上量到的角度。页面上可以先合上、再张开，橙圈那边仍留着上次送到的握法；再按送到，两边才一样。[打开页面](https://shaneraphel.github.io/aletheia-worldtick/)。
+
+The grip they see is the one from the last delivery. You can have closed while they still show an open hand, and you can have opened while they still show a closed hand. On a step that was sent, the two grips match. These are not angles from a hand. On the page you can close and then open. Their side keeps the grip from the last time it was sent, until you send again. [Open the page](https://shaneraphel.github.io/aletheia-worldtick/).
+
+![你已经张开，他还可以看着合上。](docs/figures/latch.png)
+
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
 ![角度没到，不是握住了木头。给用户看的手没有握住树桩。](docs/figures/grip.png)
@@ -367,6 +374,7 @@ python3.12 show_policy.py
 | `apart.py` | 你量到的距离，和他量到的，不是同一个数 |
 | `leap.py` | 人一次只走一步。送到的画面可以跳过中间 |
 | `clasp.py` | 这一下合在你当时站的地方 |
+| `latch.py` | 他看见的握法，是上次送到的那一下 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

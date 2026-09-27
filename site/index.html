@@ -45,6 +45,7 @@
     <button id="b-camp-unsent" type="button">你走了，这一步没送到 · You moved, it was not sent</button>
     <button id="b-camp-same" type="button">送到了，人还在原地 · Sent, and nobody moved</button>
     <button id="b-camp-clasp" type="button">这一下合上了 · The hand closed</button>
+    <button id="b-camp-open" type="button">这一下张开了 · The hand opened</button>
   </div>
   <p class="out" id="camp-out"></p>
 
@@ -365,6 +366,8 @@ let campPerson = 10;
 let campPersonGuess = 10;
 let campRelay = 0;
 let campRelayShown = 0;
+let campLocalClosed = false;
+let campLatch = false;
 const campImg = new Image();
 campImg.src = "clearing-camp.png";
 
@@ -422,7 +425,15 @@ function paintCamp(note) {
   campRelayShown = campRelay;
   const leapZh = leapN > 1 ? "橙圈跳了 " + leapN + " 步，中间没有送到。" : "";
   const leapEn = leapN > 1 ? " The ring jumped " + leapN + " steps. The steps in between were not sent." : "";
-  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn;
+  const youGrip = campLocalClosed ? "合上" : "张开";
+  const theyGrip = campLatch ? "合上" : "张开";
+  const gripZh = campLocalClosed === campLatch
+    ? "两边握法一样，都是" + youGrip + "。"
+    : "你这边" + youGrip + "，他那边还是上次送到的" + theyGrip + "。";
+  const gripEn = campLocalClosed === campLatch
+    ? " Both grips are " + (campLocalClosed ? "closed" : "open") + "."
+    : " Yours is " + (campLocalClosed ? "closed" : "open") + ". Theirs is still the last one sent, " + (campLatch ? "closed" : "open") + ".";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn;
 }
 
 function campMusic() {
@@ -434,6 +445,7 @@ document.getElementById("b-camp-both").onclick = () => {
   if (campHeld < 16) campHeld += 1;
   if (campGuess < 16) campGuess += 1;
   campRelay = campHeld;
+  campLatch = campLocalClosed;
   paintCamp("两边都到了，两只手都往前走。这一步入账，也送到了对方那边。钢琴继续。 Both arrived. Both hands step forward. This step is on the bill, and it was sent. The piano keeps playing.");
 };
 document.getElementById("b-camp-late").onclick = () => {
@@ -448,6 +460,8 @@ document.getElementById("b-camp-clear").onclick = () => {
   campPersonGuess = 10;
   campRelay = 0;
   campRelayShown = 0;
+  campLocalClosed = false;
+  campLatch = false;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {
@@ -466,15 +480,24 @@ document.getElementById("b-camp-same").onclick = () => {
   campMusic();
   const changed = campRelay !== campHeld;
   campRelay = campHeld;
+  campLatch = campLocalClosed;
   paintCamp(changed
     ? "这一步把已经走到的位置送到了。橙圈挪到白点上，这是新的一张。 This step sent the place you had already reached. The ring moves onto the white dot. That is a new picture."
     : "这一步送到了，人还在原地。位置没变，还是这一张。 This step was sent, and nobody moved. The place did not change, so it is still the same picture.");
 };
 document.getElementById("b-camp-clasp").onclick = () => {
   campMusic();
+  campLocalClosed = true;
   paintCamp(campRelay === campHeld
-    ? "这一下合在白点上。橙圈也在这里，可以画在他的画面上。 The hand closed at the white dot. The ring is there too, so their picture can show it."
-    : "这一下合在白点上。橙圈还在后面，不能把这一下画在橙圈上。 The hand closed at the white dot. The ring is still behind, so this closure does not belong on the ring.");
+    ? "这一下合在白点上。橙圈也在这里，可以画在他的画面上。他那边的握法要等送到才换。 The hand closed at the white dot. The ring is there too. Their grip changes only when this step is sent."
+    : "这一下合在白点上。橙圈还在后面，不能把这一下画在橙圈上。他那边仍是上次送到的握法。 The hand closed at the white dot. The ring is still behind. Their grip is still the last one sent.");
+};
+document.getElementById("b-camp-open").onclick = () => {
+  campMusic();
+  campLocalClosed = false;
+  paintCamp(campLatch
+    ? "这一下张开了。他那边还看着合上，因为这一步没送到。 The hand opened. They still show it closed, because this step was not sent."
+    : "这一下张开了。他那边也是张开。 The hand opened. Their picture is open too.");
 };
 campImg.onload = () => paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");
 paintCamp("白点只在两边都到的时候走。灰点每步都走。 The white dot walks only when both have arrived. The gray dot walks every step.");

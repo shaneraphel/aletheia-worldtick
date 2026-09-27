@@ -79,6 +79,7 @@ evidence:
 	$(PYTHON) apart.py
 	$(PYTHON) leap.py
 	$(PYTHON) clasp.py
+	$(PYTHON) latch.py
 
 # macOS-only Metal run; not in CI.
 gpu:

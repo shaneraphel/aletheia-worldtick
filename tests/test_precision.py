@@ -530,6 +530,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["closed"] + s["open_arrived"] + s["no_finger"], s["sessions"] * 16)
         self.assertGreaterEqual(s["behind_sum"], s["behind"])
 
+    def test_the_grip_they_see_is_the_one_copied_on_the_last_delivery(self) -> None:
+        from latch import run as latch_run
+
+        rec = latch_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["delivery_mismatch"], 0)
+        self.assertEqual(s["you_closed"] + s["you_open"], s["differ"])
+        self.assertEqual(s["differ"], s["unsent_differ"])
+        self.assertEqual(s["same"] + s["differ"], s["sessions"] * 16)
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 
