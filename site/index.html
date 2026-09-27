@@ -369,6 +369,12 @@ let campRelayShown = 0;
 let campLocalClosed = false;
 let campLatch = false;
 let campOmitClose = false;
+let campPhraseTick = 0;
+let campPhraseSent = 0;
+function campPhrase(changed) {
+  campPhraseTick += 1;
+  if (changed) campPhraseSent += 1;
+}
 const campImg = new Image();
 campImg.src = "clearing-camp.png";
 
@@ -434,7 +440,9 @@ function paintCamp(note) {
   const gripEn = campLocalClosed === campLatch
     ? " Both grips are " + (campLocalClosed ? "closed" : "open") + "."
     : " Yours is " + (campLocalClosed ? "closed" : "open") + ". Theirs is still the last one sent, " + (campLatch ? "closed" : "open") + ".";
-  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn;
+  const phraseZh = campPhraseTick > 0 ? " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面走到第 " + campPhraseSent + " 步。曲子不换。" : "";
+  const phraseEn = campPhraseTick > 0 ? " The phrase is at step " + campPhraseTick + " if every frame advances it, and at step " + campPhraseSent + " if only a new picture does. The piece does not switch." : "";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + phraseZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn + phraseEn;
 }
 
 function campMusic() {
@@ -443,16 +451,20 @@ function campMusic() {
 }
 document.getElementById("b-camp-both").onclick = () => {
   campMusic();
+  const nextHeld = campHeld < 16 ? campHeld + 1 : campHeld;
+  const pictureChanged = nextHeld !== campRelay || campLocalClosed !== campLatch;
   if (campHeld < 16) campHeld += 1;
   if (campGuess < 16) campGuess += 1;
   campRelay = campHeld;
   campLatch = campLocalClosed;
   campOmitClose = false;
-  paintCamp("两边都到了，两只手都往前走。这一步入账，也送到了对方那边。钢琴继续。 Both arrived. Both hands step forward. This step is on the bill, and it was sent. The piano keeps playing.");
+  campPhrase(pictureChanged);
+  paintCamp("两边都到了，两只手都往前走。这一步入账，也送到了对方那边。钢琴继续，曲子不换。 Both arrived. Both hands step forward. This step is on the bill, and it was sent. The piano keeps playing. The piece does not switch.");
 };
 document.getElementById("b-camp-late").onclick = () => {
   campMusic();
   if (campGuess < 16) campGuess += 1;
+  campPhrase(false);
   paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。这一步不入账。走到树桩上时，角度没到，灰点被画成已经握住木头。曲子不换。 One stream is late. The hand the user sees stays. The guessed hand keeps walking. This step is not on the bill. On the stump, with no angle, it is drawn as a grip on the wood. The piece does not switch.");
 };
 document.getElementById("b-camp-clear").onclick = () => {
@@ -465,6 +477,8 @@ document.getElementById("b-camp-clear").onclick = () => {
   campLocalClosed = false;
   campLatch = false;
   campOmitClose = false;
+  campPhraseTick = 0;
+  campPhraseSent = 0;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {
@@ -477,12 +491,14 @@ document.getElementById("b-camp-unsent").onclick = () => {
   campMusic();
   if (campHeld < 16) campHeld += 1;
   if (campGuess < 16) campGuess += 1;
+  campPhrase(false);
   paintCamp("你走了，这一步没送到。白点往前，橙圈留在原地。灰点照走。 You moved. This step was not sent. The white dot steps forward and the amber ring stays. The gray dot keeps walking.");
 };
 document.getElementById("b-camp-same").onclick = () => {
   campMusic();
   const placeSame = campRelay === campHeld;
   const gripSame = campLatch === campLocalClosed;
+  campPhrase(!(placeSame && gripSame));
   campRelay = campHeld;
   campLatch = campLocalClosed;
   campOmitClose = false;

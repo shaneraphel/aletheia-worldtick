@@ -582,6 +582,18 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_the_phrase_does_not_run_ahead_of_a_picture_that_was_sent(self) -> None:
+        from phrase import run as phrase_run
+
+        rec = phrase_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["tick"], s["sessions"] * 16)
+        self.assertEqual(s["finished_tick"], s["sessions"])
+        self.assertLessEqual(s["finished_sent"], s["sessions"])
+        self.assertLessEqual(s["sent"], s["tick"])
+
     def test_a_repeated_place_is_not_a_new_picture(self) -> None:
         from once import run as once_run
 

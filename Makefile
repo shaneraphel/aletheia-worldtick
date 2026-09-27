@@ -84,6 +84,7 @@ evidence:
 	$(PYTHON) pose.py
 	$(PYTHON) omit.py
 	$(PYTHON) whole.py
+	$(PYTHON) phrase.py
 
 # macOS-only Metal run; not in CI.
 gpu:
