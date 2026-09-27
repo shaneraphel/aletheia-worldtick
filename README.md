@@ -34,15 +34,15 @@ The counts and the proofs are not repeated here. They are in [`paper/paper.md`](
 
 两个人会用同一幅画面。这里没有从人身上采数据，也不声称在治疗谁。
 
+一个是正在适应灵巧手的人。画面要在动作还没做完的时候让他看见这一下，好用来练。摄像机没拍到的地面，不能画成已经走过去；角度还没传来的手指，不能画成已经握紧。他要是按一幅场景里根本没有的动作去练，练的就不是这只手。房间里可以有别人，他们就站在那里。画面不把他派过去，也不把摄像机没看见的人画进来。
+
+另一个是想把一段左右交替的声音听下去的人。这种声音本身难留，所以游戏是一个可以待着的开阔地方：声音继续，别人在场，不布置任务，也不要求费力的来往。如果要因为脑电看起来紧张就改音乐、改画面，这一小段必须是传全的。没传全，音乐和画面保持原样。把没传到的采样写成零再去改，改的就不是这个人当时的状态。这里不判断惊恐，也不把改速度说成在帮人克服恐惧。
+
 Two people would use the same picture. Nothing here was collected from a person, and nothing here claims to treat anyone.
 
-**正在适应一只灵巧手的人。** 画面要在动作还没做完的时候，让他看见这一下，用来练。摄像机没拍到的地面，不能画成已经走过去。关节角度还没传来的手指，不能画成已经握紧。他要是按一幅场景里没有的动作去练，练的就不是这只手。房间里可以有别人。他们站着。画面不把人派过去找他们，也不把摄像机没看见的人画进来。
+One is learning a dexterous hand. The picture shows the motion before it is finished, so he can practice. Ground the camera did not see is not drawn as already crossed, and a finger whose angle has not arrived is not drawn closed. Practicing a motion the place does not contain is not practice with this hand. Other people may stand in the room. The picture does not send him over to them, and it does not draw anyone the camera never saw.
 
-**Someone learning a dexterous hand.** The picture shows the motion before it is finished, so he can practice. Ground the camera did not see is not drawn as already crossed. A finger whose angle has not arrived is not drawn as already closed. Practicing a motion the place does not contain is not practice with this hand. Other people may stand in the room. The picture does not send him to them, and it does not draw people the camera never saw.
-
-**想把一段左右交替的声音听下去的人。** 这种声音本身难留，所以游戏是一个可以待着的开阔地方：声音继续，别人在场，不布置任务，也不要求高消耗的来往。若要因为脑电看起来紧张就改音乐、改画面，这一小段必须是传全的。没传全，音乐和画面保持原样。把没传到的采样写成零再去改，改的就不是这个人当时的状态。这里不判断惊恐，也不把改速度说成在帮人克服恐惧。
-
-**Someone trying to stay with a sound that alternates left and right.** That sound is hard to keep listening to, so the game is an open place where it can continue, with other people present, without a task and without demanding social effort. If the music or the picture is to change because the brain recording looks tense, that stretch has to have arrived whole. If it has not, the music and the picture stay. Writing zeros into the missing samples and then changing the scene is not a reading of that person. Nothing here detects fright, and changing the speed is not described as helping someone through fear.
+The other is trying to stay with a sound that alternates between the ears. That sound is hard to keep listening to, so the game is an open place where it can continue, with other people present, without a task and without demanding social effort. If the music or the picture is to change because the brain recording looks tense, that stretch has to have arrived whole. Otherwise the music and the picture stay as they are. Writing zeros into the missing samples and then changing the scene is not a reading of that person. Nothing here detects fright, and changing the speed is not described as helping someone through fear.
 
 ![给用户看的画面停在摄像机看见的地方。把没拍到的地方画完之后，手会走进那里的障碍。](docs/figures/session.png)
 
@@ -73,59 +73,39 @@ The libraries below still return something the next program will accept when not
 
 ![脑电和手指有一边晚到。猜测会改画面。留给用户的那一版先不动。两边都到了，两幅画是同一幅。](docs/figures/late.png)
 
-画面还知道自己有几步没更新了。两边都是这一步到的，画面是新的。有一边晚了，画面留着上一次到过的，年龄涨一步。中间三步两边都没到，画面不动，年龄涨三步。缺省值永远说自己是刚到的，留下的那一版不会这么说。
+晚到之后，画面不会假装自己是刚到的。它留着上一次真正到过的样子，并记下已经过了几步。中间连续几步什么都没来，画面不动，这个数字继续往上加。常见的缺省值则永远声称自己是新的。
 
-The picture also knows how many steps old it is. When both streams arrived this step, the frame is new. When one is late, the picture keeps the last arrival and grows one step older. Through a three-step burst with nothing arriving, the picture does not move and grows three steps older. A default always claims to be new. The held picture never makes that claim.
+猜有时会猜对。手指晚了，常见画法是握紧，而握紧只是几种角度里的一种。我们留下上次到过的角度；一次都没到过，就保持张开。猜对了也只记成猜对，不把它说成已经测到。断了几步以后，要等脑电和手指再次都到，画面才和真实对上。有的段很快对上，也有的要再等很久。对上之前，留下的那一版更接近真实。
 
-![画面知道自己有几步没更新了。中间三步都没到，画面不动，年龄涨三步。](docs/figures/stale.png)
+两路本来就不是一样快。手指可以隔几步才来一次，画面只在到了的那一步更新。一间房里的两只手也一样：谁的信号没到，只停谁，另一只照常动，而且先算哪一只不影响结果。信号越晚，全新的画面越少。什么都不晚的时候，猜和留是同一幅，因为没有东西需要猜。晚的步数再怎么排，画面也不会比这个上限更旧。
 
-蒙也有蒙对的时候。手指晚了，猜的那一版每次都说握紧，握紧只占八分之一。留的那一版留着上一次到过的角度，一次都没到过就留着张开。只晚脑电时，两边蒙对差不多。只晚手指时，留下的蒙对六倍多。蒙对几回不是重点，重点是蒙对也记成蒙对，从不把蒙说成测到。
+交出去的每一帧，事后都能从记录里重算。两套算法对下来应当步步相同，按帧收费才有账。路还可以再加，比如脑电再加两根手指：每一路都到，画面才算新的。多一路，新画面就再少一截。
 
-A guess is sometimes right. When the finger is late, the guessing picture always says closed, and closed is one case in eight. The held picture keeps the last angle that arrived, and starts open. When only the brain recording is late, the two match the truth about equally often. When only the finger is late, the held picture matches more than six times as often. How often is not the point. The point is that a lucky match is recorded as luck, never presented as a measurement.
+After a late packet, the picture does not pretend to be new. It keeps the last arrival and remembers how many steps have passed. Through a stretch with nothing coming in, the picture stays and that count keeps rising. A default always claims to be fresh.
 
-![蒙对不是测到。只晚手指时，留下的那一版蒙对六倍多。](docs/figures/luck.png)
+A guess is sometimes right. When the finger is late, the usual drawing is a closed hand, and closed is only one of the angles. We keep the last angle that arrived, and we start open if none has. A lucky match is written down as luck. After a burst, the picture matches what actually happened only when both streams arrive again. Some sessions match quickly, and some wait. Before that, the picture that waits is closer.
 
-三步全断之后，第几步能追上，要数出来。两边都到的第一步，画面和真实对上，这才叫追上。一半左右第一步就追上，也有八十多段七步还没追上。追上之前那几步，留下的对得多，猜对得少。追上那一步，和真实不一样的次数是零。
+The two streams were never the same speed. The finger can arrive only every few steps, and the picture updates on those steps alone. Two hands in one room work the same way: a missing signal stops only that hand, and the order of the two updates does not matter. The later the signals, the fewer pictures are actually new. When nothing is late, the guess and the picture you see are the same, because there is nothing to guess. However the late steps are arranged, the picture does not get older than that budget.
 
-After a three-step burst, the steps until the catch-up have to be counted. The first step on which both streams arrive is when the picture matches the truth, and only then has it caught up. About half catch up on the first step back, and more than eighty sessions still have not after seven steps. On the steps before that, the held picture matches more often and the guess less often. On the catch-up step itself, mismatches with the truth are zero.
+Every frame that is handed over can be recomputed from the record. Two separate routines have to agree step for step before a charge per frame makes sense. More streams can be added. With the brain recording and two fingers, the picture is new only when all three arrive. Each added stream means fewer new pictures.
 
-![三步全断之后，数第几步追上。一半左右第一步就追上。](docs/figures/catchup.png)
+![画面知道自己有几步没更新了。](docs/figures/stale.png)
 
-两路本来就不是一样快。手指三步来一次，中间两步没有新的角度。画面只在到过的那步更新，年龄零、一、二轮着数。十六步里，画面全新的最多六步。猜的那一版把十六步都当新的。
+![蒙对不是测到。](docs/figures/luck.png)
 
-The two streams were never the same speed. The finger sends every third step, with no new angle in between. The picture updates only on an arrival, and the age cycles zero, one, two. At most six of sixteen steps are fully new. The guessing picture treats all sixteen as new.
+![断了之后，数第几步才对上。](docs/figures/catchup.png)
 
-![手指三步来一次。画面全新的，一段最多六步。](docs/figures/rate.png)
+![手指隔几步来一次。全新的画面只占其中几步。](docs/figures/rate.png)
 
-一间房里可以有两只手。各动各的，谁没到冻谁。一只全黑时，另一只照动上万步。先算谁后算谁，两只手看到的一样，换顺序变了的步数是零。
+![一间房里两只手。谁没到，只停谁。](docs/figures/duo.png)
 
-One room can hold two hands. Each moves on its own arrivals, and a miss freezes only that hand. While one is fully dark, the other still moves on its own steps. Either serving order shows both hands the same pair; steps changed by the order are zero.
+![越晚，全新的越少。](docs/figures/dose.png)
 
-![一间房里两只手。各动各的，谁没到冻谁。](docs/figures/duo.png)
+![晚的步数再怎么排，画面也不会更旧。](docs/figures/worst.png)
 
-越晚，全新的越少。脑电和手指各晚一半时，两边都到的步只剩四分之一。一滴不晚时，猜和留一次都不分开，因为没有东西可猜。同一批随机数，阈值越高，晚得越多，两条线一边下一上。
+![记下来再算一遍，应当步步相同。](docs/figures/replay.png)
 
-The later the streams, the fewer new frames. When each misses half the time, both arrive on only a quarter of the steps. With nothing late, the guess and the held picture never part, because there is nothing to guess. The same uniforms under higher thresholds miss more, so one line falls while the other rises.
-
-![越晚，全新的越少。不晚时，两幅画一次都不分开。](docs/figures/dose.png)
-
-最坏能坏到哪，要排出来。十六步里晚八步，排在最后，画面年龄从一涨到八。怎么排，画面都老不过预算步数。猜的那一版照样每步都说新的。
-
-How bad it can get has to be laid out. With eight late steps out of sixteen at the end, the frame age climbs from one to eight. No placement makes the frame older than the budget. The guessing picture still calls every step new.
-
-![预算晚几步，排在最后，画面最老。](docs/figures/worst.png)
-
-交出去的每一帧，事后要能从记录里算回来。记下每步到没到，再算一遍，两套算法步步一样。不一样的是零步。按帧收费，先对得上账。
-
-Every frame handed over has to recompute from the record later. Log each arrival, recompute twice with two separate routines, and every step matches. Mismatches are zero. Billing per frame starts from a record that adds up.
-
-![记下来再算一遍。十六万步，对不上零步。](docs/figures/replay.png)
-
-路可以越加越多。脑电加两根手指，三路都到，画面才是全新的。每加一路，全新的就打一次七折。猜的那一版不管几路，每步都说新的。
-
-Streams can keep being added. With the brain recording and two fingers, the frame is new only when all three arrive. Each added stream multiplies the new-frame share by 0.7 again. The guessing picture calls every step new no matter how many streams there are.
-
-![三路都到，画面才是全新的。再加一路，再打七折。](docs/figures/trio.png)
+![每一路都到，画面才算新的。](docs/figures/trio.png)
 
 ### 这些库在什么都没录上时仍会交回一个结果
 
