@@ -582,6 +582,21 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_several_bars_stacked_in_one_picture_are_not_the_recording(self) -> None:
+        from stack import run as stack_run
+
+        rec = stack_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["single"] + s["stacked"], s["pictures"])
+        self.assertEqual(s["pictures"], s["sent"])
+        self.assertEqual(s["pictures"] + s["extra"] + s["tail"], s["tick"])
+        self.assertEqual(sum(s["hist"]), s["pictures"])
+        self.assertLessEqual(s["half_sessions"], s["sessions"])
+        self.assertLessEqual(s["stacked_sessions"], s["sessions"])
+        self.assertGreaterEqual(s["widest"], 1)
+
     def test_the_ending_has_to_ride_on_a_new_picture(self) -> None:
         from ride import run as ride_run
 

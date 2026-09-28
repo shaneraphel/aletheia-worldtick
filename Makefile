@@ -87,6 +87,7 @@ evidence:
 	$(PYTHON) phrase.py
 	$(PYTHON) tempo.py
 	$(PYTHON) ride.py
+	$(PYTHON) stack.py
 
 # macOS-only Metal run; not in CI.
 gpu:

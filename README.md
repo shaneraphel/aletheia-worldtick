@@ -194,6 +194,8 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 
 还有一种改法，不用事先知道后面还有多少张。下一张新画面来了，就把刚才落下的几步在这一下里一起放掉。这样也只能放到最后一张新画面为止。它后面的几步没有画面可搭，结尾就没被听见。只有最后一步本身是一张新画面，这八秒才放得完。
 
+一起放掉，也不等于那些步还按原来的速度被听见。它们叠在这一张画面里，一下要响好几步。这样的一下，每一段里都有。有的段里，单独一张画面担起了半首曲子。那一下已经不是这段录音。
+
 他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
 
 对方看见的你是橙圈，只在这一步真正送到的时候才挪到白点上。你连着走了几步都没送，再送一次，橙圈会跳过中间。人一次只走一步，跳过的位置并没有送到。把那些位置涂成最后的握法，会把当时张开的手涂成合上，或把当时合上的手涂成张开。
@@ -207,6 +209,8 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 Open the [page](https://shaneraphel.github.io/aletheia-worldtick/). Someone else is in the camp. The blue dot is that person; they do not walk. The white dot is the hand you see. It steps forward only when both the brain recording and the finger angle have arrived, so it often stops in front of them. The gray dot steps every time, walks past them, and ends inside the stump. The opening eight seconds of Beethoven’s Piano Sonata No. 15 loop underneath. When a stream is late, the piece keeps playing and does not switch, and it does not change speed because the brain recording looked tense. It is not treatment music, and the blue dot is not a record of a particular person. The phrase should not run ahead of the picture. A playhead that advances on every frame finishes those eight seconds in every session. A playhead that advances only when they receive a new picture finishes in none of these sessions, and in most of them it is still in the first half. Speeding up what is left, so the eight seconds finish when the session ends, is no longer this recording. That speed cannot be chosen at the start, because it needs the number of new pictures still to come. Even the closest session has two steps left. In the sessions with only one new picture, the eight seconds would have to fit inside that single step. Advancing two steps on each new picture still fails to finish the sessions that are in the first half, and in the sessions with more pictures it plays on after the recording has ended.
 
 Another change does not need to know how many pictures are still coming. When the next new picture arrives, the missed steps are played all at once, inside that picture. This only reaches the last new picture. The steps after it have nothing to carry them, so the ending is not heard. The eight seconds are heard through only when the last step is itself a new picture.
+
+Playing those missed steps all at once is not hearing them at the speed of the recording. They are stacked inside that one picture, several steps in a single moment. Every session here has such a moment. In some, one picture is asked to carry half the piece. That moment is not this recording.
 
 If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
 
@@ -249,6 +253,8 @@ The distance you measure is how far the white dot is from the blue dot. The dist
 ![加快剩下的，就不是这段录音。](docs/figures/tempo.png)
 
 ![结尾要搭在一张新画面上。它后面的几步没有东西可搭。](docs/figures/ride.png)
+
+![一下里放了好几步，就不是这段录音。](docs/figures/stack.png)
 
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
@@ -356,6 +362,7 @@ python3.12 show_policy.py
 | `phrase.py` | 曲子不换。乐句不跑在新画面前面 |
 | `tempo.py` | 把没放完的加快，放的就不是这段录音 |
 | `ride.py` | 结尾要搭在一张新画面上。最后一步不是新画面，结尾就没被听见 |
+| `stack.py` | 一下里放了好几步，就不是这段录音 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

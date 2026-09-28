@@ -372,11 +372,15 @@ let campOmitClose = false;
 let campPhraseTick = 0;
 let campPhraseSent = 0;
 let campPhraseAt = 0;
+let campStack = 0;
 function campPhrase(changed) {
   campPhraseTick += 1;
   if (changed) {
     campPhraseSent += 1;
+    campStack = campPhraseTick - campPhraseAt;
     campPhraseAt = campPhraseTick;
+  } else {
+    campStack = 0;
   }
 }
 const campImg = new Image();
@@ -456,15 +460,17 @@ function paintCamp(note) {
     : (sincePicture > 0
       ? " " + sincePicture + " steps have passed since the last new picture, and they have nothing to carry them."
       : " This step is a new picture, so what was behind still has something to ride on.");
+  const stackZh = campStack > 1 ? "这一张里叠了 " + campStack + " 步，一下里放了好几步。" : "";
+  const stackEn = campStack > 1 ? " This picture stacks " + campStack + " steps into one moment." : "";
   const phraseZh = campPhraseTick > 0
     ? (phraseLeft > 0
-      ? " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面走到第 " + campPhraseSent + " 步，还剩 " + phraseLeft + " 步。把剩下的加快，就不是这段录音。" + rideZh + "曲子不换。"
-      : " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面这八秒已经走完。" + rideZh + "曲子不换。")
+      ? " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面走到第 " + campPhraseSent + " 步，还剩 " + phraseLeft + " 步。把剩下的加快，就不是这段录音。" + rideZh + stackZh + "曲子不换。"
+      : " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面这八秒已经走完。" + rideZh + stackZh + "曲子不换。")
     : "";
   const phraseEn = campPhraseTick > 0
     ? (phraseLeft > 0
-      ? " The phrase is at step " + campPhraseTick + " if every frame advances it, and at step " + campPhraseSent + " if only a new picture does, with " + phraseLeft + " steps left. Speeding what is left is not this recording." + rideEn + " The piece does not switch."
-      : " The phrase is at step " + campPhraseTick + " if every frame advances it, and the eight seconds have finished on new pictures." + rideEn + " The piece does not switch.")
+      ? " The phrase is at step " + campPhraseTick + " if every frame advances it, and at step " + campPhraseSent + " if only a new picture does, with " + phraseLeft + " steps left. Speeding what is left is not this recording." + rideEn + stackEn + " The piece does not switch."
+      : " The phrase is at step " + campPhraseTick + " if every frame advances it, and the eight seconds have finished on new pictures." + rideEn + stackEn + " The piece does not switch.")
     : "";
   document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + phraseZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn + phraseEn;
 }
@@ -504,6 +510,7 @@ document.getElementById("b-camp-clear").onclick = () => {
   campPhraseTick = 0;
   campPhraseSent = 0;
   campPhraseAt = 0;
+  campStack = 0;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {
