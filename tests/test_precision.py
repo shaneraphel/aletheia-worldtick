@@ -582,6 +582,19 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_the_stacked_bars_wear_the_later_hand(self) -> None:
+        from paste import run as paste_run
+
+        rec = paste_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["agree"] + s["closed_on_open"] + s["open_on_closed"], s["buried"])
+        self.assertEqual(s["both"] + s["grip_only"] + s["place_only"] + s["neither"], s["buried"])
+        self.assertEqual(s["both"] + s["grip_only"], s["closed_on_open"] + s["open_on_closed"])
+        self.assertEqual(s["both"] + s["place_only"], s["place_differ"])
+        self.assertLessEqual(s["buried"], s["sessions"] * 16)
+
     def test_several_bars_stacked_in_one_picture_are_not_the_recording(self) -> None:
         from stack import run as stack_run
 

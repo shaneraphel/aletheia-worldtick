@@ -196,6 +196,8 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 
 一起放掉，也不等于那些步还按原来的速度被听见。它们叠在这一张画面里，一下要响好几步。这样的一下，每一段里都有。有的段里，单独一张画面担起了半首曲子。那一下已经不是这段录音。
 
+叠在一起放，听到的却是后来那一下的手。落下的那些步里，人当时站的地方、手握成的样子，常常不是这一张画面上的。合着的手会被听成张开，张开的会被听成合上。
+
 他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
 
 对方看见的你是橙圈，只在这一步真正送到的时候才挪到白点上。你连着走了几步都没送，再送一次，橙圈会跳过中间。人一次只走一步，跳过的位置并没有送到。把那些位置涂成最后的握法，会把当时张开的手涂成合上，或把当时合上的手涂成张开。
@@ -211,6 +213,8 @@ Open the [page](https://shaneraphel.github.io/aletheia-worldtick/). Someone else
 Another change does not need to know how many pictures are still coming. When the next new picture arrives, the missed steps are played all at once, inside that picture. This only reaches the last new picture. The steps after it have nothing to carry them, so the ending is not heard. The eight seconds are heard through only when the last step is itself a new picture.
 
 Playing those missed steps all at once is not hearing them at the speed of the recording. They are stacked inside that one picture, several steps in a single moment. Every session here has such a moment. In some, one picture is asked to carry half the piece. That moment is not this recording.
+
+What those stacked steps are heard with is the hand that arrived later. The place the person was standing, and the way the hand was held, are often not what that picture shows. A hand that was closed is played open, and a hand that was open is played closed.
 
 If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
 
@@ -255,6 +259,8 @@ The distance you measure is how far the white dot is from the blue dot. The dist
 ![结尾要搭在一张新画面上。它后面的几步没有东西可搭。](docs/figures/ride.png)
 
 ![一下里放了好几步，就不是这段录音。](docs/figures/stack.png)
+
+![叠进去的步，穿的是后来的手。合着的会被听成张开。](docs/figures/paste.png)
 
 ![营地里的人站着不走。猜的那只手会走到他面前。](docs/figures/visitor.png)
 
@@ -363,6 +369,7 @@ python3.12 show_policy.py
 | `tempo.py` | 把没放完的加快，放的就不是这段录音 |
 | `ride.py` | 结尾要搭在一张新画面上。最后一步不是新画面，结尾就没被听见 |
 | `stack.py` | 一下里放了好几步，就不是这段录音 |
+| `paste.py` | 叠进去的步，穿的是后来的手 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |
