@@ -89,6 +89,7 @@ evidence:
 	$(PYTHON) ride.py
 	$(PYTHON) stack.py
 	$(PYTHON) paste.py
+	$(PYTHON) hold.py
 
 # macOS-only Metal run; not in CI.
 gpu:

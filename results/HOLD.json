@@ -1,0 +1,75 @@
+{
+  "schema": "worldtick.hold.v1",
+  "seed": 20260919,
+  "sessions": 10000,
+  "steps_each": 16,
+  "steps": 160000,
+  "drop": 0.3,
+  "workers": 10,
+  "serial": {
+    "buried": 79645,
+    "sessions": 10000,
+    "overshoot": 0,
+    "whole": [
+      16448,
+      10015,
+      53182,
+      0
+    ],
+    "grip": [
+      2762,
+      4211,
+      13663,
+      59009
+    ],
+    "place": [
+      14202,
+      10467,
+      51561,
+      3415
+    ],
+    "hand_hold": 53182,
+    "hand_paste": 10015,
+    "hand_neither": 16448,
+    "hand_both": 0,
+    "grip_hold": 72672,
+    "grip_paste": 63220,
+    "place_hold": 54976,
+    "place_paste": 13882
+  },
+  "parallel": {
+    "buried": 79645,
+    "sessions": 10000,
+    "overshoot": 0,
+    "whole": [
+      16448,
+      10015,
+      53182,
+      0
+    ],
+    "grip": [
+      2762,
+      4211,
+      13663,
+      59009
+    ],
+    "place": [
+      14202,
+      10467,
+      51561,
+      3415
+    ],
+    "hand_hold": 53182,
+    "hand_paste": 10015,
+    "hand_neither": 16448,
+    "hand_both": 0,
+    "grip_hold": 72672,
+    "grip_paste": 63220,
+    "place_hold": 54976,
+    "place_paste": 13882
+  },
+  "equal": true,
+  "python": "3.12.8",
+  "platform": "macOS-26.2-arm64-arm-64bit",
+  "cited": "https://arxiv.org/abs/2609.07299"
+}

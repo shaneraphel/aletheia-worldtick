@@ -50,7 +50,13 @@ The other is trying to stay with a sound that alternates between the ears. That 
 
 差别不在“我们也训练一个更大的世界模型”。差别在交出去的那一步用的是哪一幅画面。
 
+2026 年，Anand、Anand 和 Vishe 把这件事写清楚了：传感器不会同时到齐。不要把中间写成一个从没出现过的读数，留着上一次真正到过的。知道下一次什么时候到，并不知道下一次是什么，除非这一下本身会推动机器。脑电和手指只是在报告，到不到并不推动这只手。所以留着上一张画面，和把中间涂成下一张，不是同一只手。落下的那些步，更常常就是上一张里的那只。他们在行走机器人和执行器上的实验，这里没有重跑。
+
 The difference is not that we train a larger world model. The difference is which picture the shipped step uses.
+
+In 2026 Anand, Anand, and Vishe wrote the same distinction down. Sensors do not arrive together. Do not write a reading that never appeared; keep the last one that did. Knowing when the next sample will arrive does not say what it will be, unless that arrival itself moves the machine. The brain recording and the finger only report, so their arrival does not move the hand. Keeping the picture already shown, and painting the steps in between with the next picture, are not the same hand. The steps in between are more often the hand already shown. Their experiments on walking robots and on actuators are not re-run here.
+
+![留着上一张，和涂成下一张，不是同一只手。](docs/figures/hold.png)
 
 | 别人怎么做 | 我们怎么做 | 为什么这就是差别 |
 |---|---|---|
@@ -58,6 +64,7 @@ The difference is not that we train a larger world model. The difference is whic
 | [LaBraM](https://arxiv.org/abs/2405.18765) 把没传到的脑电补出来再分类。[InterpolatedLaBraM](https://braindecode.org/dev/generated/braindecode.models.InterpolatedLaBraM.html) 让训练好的模型始终看到训练时的电极布局。包没到、写成零，会和“人没动”得到同一个类别。电压有正有负时，删掉一段负数再写成零，还可以把“没动”读成“动了”。 | 这一小段没传全，音乐和画面保持原样。不根据写上去的零去改速度。 | “写成零比较安全”并不成立。错的方向跟着被删掉的那段的正负走。不改速度，就不是一次惊恐判断。 |
 | 游戏每一帧都要显示。脑电晚了，就先当成没动。手指角度晚了，就先画成已经握紧。关节的内存如果一开始是零，第一个角度到来之前，手已经是握紧的。 | 这一帧先留着上一次真正到过的声音和角度。两边都到了，两种画法是同一幅。有一边没到，而且默认值和画面上现有的不一样，两幅画才分开。一个核和十个核得到同一个结果。 | 实时并不是必须先猜。晚到的那一路可以等，画面重复上一次到齐的样子。笔记里的定理 13 写的是这件事。 |
 | 下面这张表里的库，在什么都没录上时，仍交回一个下一层程序愿意接着用的结果。 | 同样的情况下停住。有内容的输入，数值和原来一样。 | 调用成功，不等于人是平静的，也不等于手已经握完。 |
+| [Anand、Anand、Vishe](https://arxiv.org/abs/2609.07299) 留着每一路最后一次真正到过的读数，并记下它有多旧、下一次何时到。下一次何时到，并不告诉你下一次是什么。只有这一下会推动机器时，那个时间才有用。 | 脑电和手指只报告，不推动这只手。交给用户的是已经在画面上的那一张，不是把中间涂成下一次才会出现的手。 | 他们证明了“何时到”和“到的是什么”不是一回事。我们数的是：留着上一张，和涂成下一张，在这只手上差多远。他们的机器人实验没有在这里重跑。 |
 
 营地里的差别是同一件事，放在一个人、一只手、另一个人之间。那一段写在「今晚交出去的是什么」里，不在这张表里再列一遍。
 
@@ -198,6 +205,8 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 
 叠在一起放，听到的却是后来那一下的手。落下的那些步里，人当时站的地方、手握成的样子，常常不是这一张画面上的。合着的手会被听成张开，张开的会被听成合上。
 
+留着上一张，和把这些步涂成下一张，不是同一只手。上一张更常常就是当时的手。
+
 他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
 
 对方看见的你是橙圈，只在这一步真正送到的时候才挪到白点上。你连着走了几步都没送，再送一次，橙圈会跳过中间。人一次只走一步，跳过的位置并没有送到。把那些位置涂成最后的握法，会把当时张开的手涂成合上，或把当时合上的手涂成张开。
@@ -215,6 +224,8 @@ Another change does not need to know how many pictures are still coming. When th
 Playing those missed steps all at once is not hearing them at the speed of the recording. They are stacked inside that one picture, several steps in a single moment. Every session here has such a moment. In some, one picture is asked to carry half the piece. That moment is not this recording.
 
 What those stacked steps are heard with is the hand that arrived later. The place the person was standing, and the way the hand was held, are often not what that picture shows. A hand that was closed is played open, and a hand that was open is played closed.
+
+Keeping the picture already shown, and painting these steps with the next picture, are not the same hand. The picture already shown is more often the hand that was there.
 
 If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
 
@@ -370,6 +381,7 @@ python3.12 show_policy.py
 | `ride.py` | 结尾要搭在一张新画面上。最后一步不是新画面，结尾就没被听见 |
 | `stack.py` | 一下里放了好几步，就不是这段录音 |
 | `paste.py` | 叠进去的步，穿的是后来的手 |
+| `hold.py` | 留着上一张，和涂成下一张，不是同一只手 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

@@ -582,6 +582,20 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_holding_the_last_picture_is_not_painting_the_next_one(self) -> None:
+        from hold import run as hold_run
+
+        rec = hold_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["overshoot"], 0)
+        self.assertEqual(s["hand_hold"] + s["hand_paste"] + s["hand_neither"] + s["hand_both"], s["buried"])
+        self.assertEqual(sum(s["grip"]), s["buried"])
+        self.assertEqual(sum(s["place"]), s["buried"])
+        self.assertEqual(sum(s["whole"]), s["buried"])
+        self.assertEqual(s["hand_both"], 0)
+        self.assertLessEqual(s["hand_hold"], s["buried"])
+
     def test_the_stacked_bars_wear_the_later_hand(self) -> None:
         from paste import run as paste_run
 

@@ -460,8 +460,8 @@ function paintCamp(note) {
     : (sincePicture > 0
       ? " " + sincePicture + " steps have passed since the last new picture, and they have nothing to carry them."
       : " This step is a new picture, so what was behind still has something to ride on.");
-  const stackZh = campStack > 1 ? "这一张里叠了 " + campStack + " 步，一下里放了好几步。叠进去的步，穿的是现在这一下的手。" : "";
-  const stackEn = campStack > 1 ? " This picture stacks " + campStack + " steps into one moment. The stacked steps wear the hand from this moment." : "";
+  const stackZh = campStack > 1 ? "这一张里叠了 " + campStack + " 步，一下里放了好几步。叠进去的步，穿的是现在这一下的手。若留着上一张，穿的是上一张的手。" : "";
+  const stackEn = campStack > 1 ? " This picture stacks " + campStack + " steps into one moment. The stacked steps wear the hand from this moment. Kept as the previous picture, they wear that hand instead." : "";
   const phraseZh = campPhraseTick > 0
     ? (phraseLeft > 0
       ? " 乐句按每一帧走到第 " + campPhraseTick + " 步，按新画面走到第 " + campPhraseSent + " 步，还剩 " + phraseLeft + " 步。把剩下的加快，就不是这段录音。" + rideZh + stackZh + "曲子不换。"
