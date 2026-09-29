@@ -60,6 +60,12 @@ In 2026 Anand, Anand, and Vishe wrote the same distinction down. Sensors do not 
 
 ![画面刚写上，不代表这一下也是刚到的。什么都不漏的时候，两个年纪是同一个。](docs/figures/age.png)
 
+Vanjani、Li、Suliga、Reuss、Geraci、Jiang 和 Lioutikov 接着指出：快的传感器和慢的画面如果挤在同一个节拍上，快的那一路里一闪而过的接触就进不了画面。他们在七项接触任务上，把同步做法的成功率从 40.95% 做到 95.2%。那两个数是他们的，这里没有重跑。我们数的是这只手。一次手指读数，要在下一次手指到来之前被画进去，才算进了画面。来不及画，这一次就丢了。什么都不漏的时候，每一次都在当步进了画面。漏得越多，丢掉的比例越高；丢掉的次数却会先升后降，因为手指自己也少了。
+
+Vanjani, Li, Suliga, Reuss, Geraci, Jiang, and Lioutikov point out the next gap. If a fast sensor and a slow picture share one clock, a contact that does not last never enters the picture. On seven contact tasks they lift a synchronous setup from 40.95% to 95.2%. Those two numbers are theirs, and they are not re-run here. What we count is this hand. A finger reading enters the picture only if the picture is copied before the next finger arrives. Otherwise that reading is gone. When nothing is missed, every reading enters on its own step. As more samples are missed, a larger share is discarded. The count itself rises and then falls, because fewer fingers arrive.
+
+![下一次手指来了，上一次还没画进去，这一次就丢了。丢掉的次数先升后降。](docs/figures/unread.png)
+
 | 别人怎么做 | 我们怎么做 | 为什么这就是差别 |
 |---|---|---|
 | 世界模型先把下一帧画完，再按那一帧行动。[V-JEPA 2.1](https://arxiv.org/abs/2603.14482) 和 [Cosmos](https://github.com/nvidia-cosmos/cosmos-predict1) 交出去的画面上看不出哪一块是猜的。[Nilaksh 等人](https://arxiv.org/abs/2605.06388) 看到：画面更好的模型，拿去规划可以更差。[Yuan 等人](https://arxiv.org/abs/2609.24745) 看到：已经知道每个想象结果的对照，能把成功率从 68.9% 抬到 79.2%；只给画面打分，收不回这个差距。[Zhang 等人](https://arxiv.org/abs/2609.02159) 看到：留下哪一个未来，下一步动作就变了。 | 不另训练一个生成器。同一套找路程序跑两遍。一遍用画完的场景，一遍只用传感器真正送来的部分。交给用户的是第二遍。第一遍放在旁边。 | 只走已经看见的地面，不会比画完之后的那条路更长。所以“选更短的，一样长就选画完的那条”，每次都会选中画完的那条。画面更顺，不代表这一步是测到的。要改的是这条规则，不是再加一个画面分数。Yuan 已经说明画面分数收不回那个差距。68.9% 和 79.2% 是他们的数，这里没有重跑。 |
@@ -67,6 +73,7 @@ In 2026 Anand, Anand, and Vishe wrote the same distinction down. Sensors do not 
 | 游戏每一帧都要显示。脑电晚了，就先当成没动。手指角度晚了，就先画成已经握紧。关节的内存如果一开始是零，第一个角度到来之前，手已经是握紧的。 | 这一帧先留着上一次真正到过的声音和角度。两边都到了，两种画法是同一幅。有一边没到，而且默认值和画面上现有的不一样，两幅画才分开。一个核和十个核得到同一个结果。 | 实时并不是必须先猜。晚到的那一路可以等，画面重复上一次到齐的样子。笔记里的定理 13 写的是这件事。 |
 | 下面这张表里的库，在什么都没录上时，仍交回一个下一层程序愿意接着用的结果。 | 同样的情况下停住。有内容的输入，数值和原来一样。 | 调用成功，不等于人是平静的，也不等于手已经握完。 |
 | [Anand、Anand、Vishe](https://arxiv.org/abs/2609.07299) 留着每一路最后一次真正到过的读数，并记下它有多旧、下一次何时到。下一次何时到，并不告诉你下一次是什么。只有这一下会推动机器时，那个时间才有用。 | 脑电和手指只报告，不推动这只手。交给用户的是已经在画面上的那一张，不是把中间涂成下一次才会出现的手。画面自己的年纪，和画面里那个动作的年纪，也不是一个数。 | 他们证明了“何时到”和“到的是什么”不是一回事。我们写清他们还没拆开的一件：手指可以已经到了，还没进这张画。他们的机器人实验没有在这里重跑。 |
+| [Vanjani 等人](https://arxiv.org/abs/2606.12105) 让每一路按自己的速度更新。大家挤在同一个节拍上时，快的那一路里一闪而过的接触进不了画面。 | 画面不是手指一到就换。下一次手指来了，上一次还没画进去，这一次就丢了，包括一次还没画过的合上。 | 他们的 40.95% 和 95.2% 没有在这里重跑。我们数的是：到了的手指，有多少次根本没进过画面。 |
 
 营地里的差别是同一件事，放在一个人、一只手、另一个人之间。那一段写在「今晚交出去的是什么」里，不在这张表里再列一遍。
 
@@ -207,7 +214,7 @@ The same clearing, drawn from trees, a rock, and a tent in the model pack. The h
 
 叠在一起放，听到的却是后来那一下的手。落下的那些步里，人当时站的地方、手握成的样子，常常不是这一张画面上的。合着的手会被听成张开，张开的会被听成合上。
 
-留着上一张，和把这些步涂成下一张，不是同一只手。上一张更常常就是当时的手。画面刚换上，也不代表手里的动作是刚到的。手指可以已经到了，还没进这张画。
+留着上一张，和把这些步涂成下一张，不是同一只手。上一张更常常就是当时的手。画面刚换上，也不代表手里的动作是刚到的。手指可以已经到了，还没进这张画。若下一次手指先到，上一次就再也进不去。
 
 他的信号没到时，给你看的画面不把他拉到你面前。猜的画面会。两张账单因此写的不是同一件事：没发生的那一行，不开账。隔两步以内才算站在一起。每步都走的那只手说你们在一起的次数更少，因为它已经走过他了。你自己走到他面前，算你走过去。
 
@@ -227,7 +234,7 @@ Playing those missed steps all at once is not hearing them at the speed of the r
 
 What those stacked steps are heard with is the hand that arrived later. The place the person was standing, and the way the hand was held, are often not what that picture shows. A hand that was closed is played open, and a hand that was open is played closed.
 
-Keeping the picture already shown, and painting these steps with the next picture, are not the same hand. The picture already shown is more often the hand that was there. A picture that has just changed is not a hand that has just arrived. The finger can be here and still not be in the picture.
+Keeping the picture already shown, and painting these steps with the next picture, are not the same hand. The picture already shown is more often the hand that was there. A picture that has just changed is not a hand that has just arrived. The finger can be here and still not be in the picture. If the next finger arrives first, the previous reading never enters.
 
 If their signal has not arrived, the picture you see does not pull them over. The guessed picture does. The two bills therefore do not describe the same event: a line for something that did not happen is not charged. Two steps or fewer counts as standing together. The hand that moves every step says you are together less often, because it has already walked past. If you walk over yourself, that part is yours.
 
@@ -385,6 +392,7 @@ python3.12 show_policy.py
 | `paste.py` | 叠进去的步，穿的是后来的手 |
 | `hold.py` | 留着上一张，和涂成下一张，不是同一只手 |
 | `age.py` | 画面的年纪，不是手里那个动作的年纪 |
+| `unread.py` | 手指到了，可以再也进不了画面 |
 | `site/index.html` | 浏览器里的页面 |
 | `paper/paper.md` | 理论、它是怎么被发现的、和每篇参考文献的对照 |
 | `tests/test_precision.py` | 这些关系一旦变了，测试就失败 |

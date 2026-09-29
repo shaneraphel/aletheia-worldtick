@@ -512,9 +512,14 @@ document.getElementById("b-camp-late").onclick = () => {
 };
 document.getElementById("b-camp-finger").onclick = () => {
   campMusic();
-  campFingerIn = true;
   campPhrase(false);
-  paintCamp("手指到了，画面先不换。绿点是这一下，它还没进画面。 The finger arrived and the picture stayed. The green mark is that reading, and it is not in the picture yet.");
+  if (campFingerIn) {
+    paintCamp("又来了一次手指。上一次到了，画面还没换，那一次就再也进不去。绿点换成这一次。 Another finger arrived. The previous one never entered the picture. The green mark is this new reading.");
+  } else {
+    campFingerIn = true;
+    paintCamp("手指到了，画面先不换。绿点是这一下，它还没进画面。 The finger arrived and the picture stayed. The green mark is that reading, and it is not in the picture yet.");
+  }
+  campFingerIn = true;
 };
 document.getElementById("b-camp-clear").onclick = () => {
   campHeld = 0;

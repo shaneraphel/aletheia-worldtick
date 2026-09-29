@@ -91,6 +91,7 @@ evidence:
 	$(PYTHON) paste.py
 	$(PYTHON) hold.py
 	$(PYTHON) age.py
+	$(PYTHON) unread.py
 
 # macOS-only Metal run; not in CI.
 gpu:
