@@ -582,6 +582,22 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_storing_a_reading_is_not_showing_it(self) -> None:
+        from store import run as store_run
+        from store import shard as store_shard
+
+        rec = store_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["over"] + s["strand"], s["dropped"])
+        self.assertEqual(s["now"] + s["later"] + s["dropped"], s["arrivals"])
+        self.assertLessEqual(s["over_new_close"], s["over_close"])
+        self.assertLessEqual(s["over_close"], s["over"])
+        quiet = store_shard(0, 4, 0.0)
+        self.assertEqual(quiet["over"], 0)
+        self.assertEqual(quiet["strand"], 0)
+        self.assertEqual(quiet["now"], quiet["steps"])
+
     def test_a_finger_reading_can_arrive_and_never_enter_the_picture(self) -> None:
         from unread import run as unread_run
         from unread import shard as unread_shard

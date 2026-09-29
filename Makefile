@@ -92,6 +92,7 @@ evidence:
 	$(PYTHON) hold.py
 	$(PYTHON) age.py
 	$(PYTHON) unread.py
+	$(PYTHON) store.py
 
 # macOS-only Metal run; not in CI.
 gpu:
