@@ -46,6 +46,7 @@
     <button id="b-camp-same" type="button">送到了，人还在原地 · Sent, and nobody moved</button>
     <button id="b-camp-clasp" type="button">这一下合上了 · The hand closed</button>
     <button id="b-camp-open" type="button">这一下张开了 · The hand opened</button>
+    <button id="b-camp-finger" type="button">手指到了，画面先不换 · The finger arrived, the picture stayed</button>
   </div>
   <p class="out" id="camp-out"></p>
 
@@ -373,6 +374,7 @@ let campPhraseTick = 0;
 let campPhraseSent = 0;
 let campPhraseAt = 0;
 let campStack = 0;
+let campFingerIn = false;
 function campPhrase(changed) {
   campPhraseTick += 1;
   if (changed) {
@@ -414,6 +416,14 @@ function paintCamp(note) {
   }
   dot(campGuess, "#6e7681");
   dot(campHeld, "#e6edf3");
+  if (campFingerIn) {
+    const heldAt = campProject(campPath[campHeld][0], campPath[campHeld][1]);
+    g.strokeStyle = "#7ee787";
+    g.lineWidth = 3;
+    g.beginPath();
+    g.arc(heldAt[0] + 26, heldAt[1] - 18, 8, 0, Math.PI * 2);
+    g.stroke();
+  }
   const relayAt = campProject(campPath[campRelay][0], campPath[campRelay][1]);
   g.strokeStyle = "#e3b341";
   g.lineWidth = 3;
@@ -472,7 +482,9 @@ function paintCamp(note) {
       ? " The phrase is at step " + campPhraseTick + " if every frame advances it, and at step " + campPhraseSent + " if only a new picture does, with " + phraseLeft + " steps left. Speeding what is left is not this recording." + rideEn + stackEn + " The piece does not switch."
       : " The phrase is at step " + campPhraseTick + " if every frame advances it, and the eight seconds have finished on new pictures." + rideEn + stackEn + " The piece does not switch.")
     : "";
-  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + phraseZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn + phraseEn;
+  const ageZh = campFingerIn ? " 手指已经到了，还没进这张画。画面留了多久，不是手里那个动作有多久。" : "";
+  const ageEn = campFingerIn ? " The finger has arrived and is not in this picture yet. How long the picture has been up is not how old the hand in it is." : "";
+  document.getElementById("camp-out").textContent = note + " " + heldSay + "（隔 " + heldApart + " 步）。" + guessSay + "（隔 " + guessApart + " 步）。" + relayZh + distZh + leapZh + gripZh + phraseZh + ageZh + " " + heldEn + " (" + heldApart + " steps). " + guessEn + " (" + guessApart + " steps). " + relayEn + " " + distEn + leapEn + gripEn + phraseEn + ageEn;
 }
 
 function campMusic() {
@@ -489,6 +501,7 @@ document.getElementById("b-camp-both").onclick = () => {
   campLatch = campLocalClosed;
   campOmitClose = false;
   campPhrase(pictureChanged);
+  campFingerIn = false;
   paintCamp("两边都到了，两只手都往前走。这一步入账，也送到了对方那边。钢琴继续，曲子不换。 Both arrived. Both hands step forward. This step is on the bill, and it was sent. The piano keeps playing. The piece does not switch.");
 };
 document.getElementById("b-camp-late").onclick = () => {
@@ -496,6 +509,12 @@ document.getElementById("b-camp-late").onclick = () => {
   if (campGuess < 16) campGuess += 1;
   campPhrase(false);
   paintCamp("有一路晚了。给用户看的手留在原地，猜的那只手还在走。这一步不入账。走到树桩上时，角度没到，灰点被画成已经握住木头。曲子不换。 One stream is late. The hand the user sees stays. The guessed hand keeps walking. This step is not on the bill. On the stump, with no angle, it is drawn as a grip on the wood. The piece does not switch.");
+};
+document.getElementById("b-camp-finger").onclick = () => {
+  campMusic();
+  campFingerIn = true;
+  campPhrase(false);
+  paintCamp("手指到了，画面先不换。绿点是这一下，它还没进画面。 The finger arrived and the picture stayed. The green mark is that reading, and it is not in the picture yet.");
 };
 document.getElementById("b-camp-clear").onclick = () => {
   campHeld = 0;
@@ -511,6 +530,7 @@ document.getElementById("b-camp-clear").onclick = () => {
   campPhraseSent = 0;
   campPhraseAt = 0;
   campStack = 0;
+  campFingerIn = false;
   paintCamp("回到起点。 Back to the start.");
 };
 document.getElementById("b-camp-person").onclick = () => {
@@ -534,6 +554,7 @@ document.getElementById("b-camp-same").onclick = () => {
   campRelay = campHeld;
   campLatch = campLocalClosed;
   campOmitClose = false;
+  campFingerIn = false;
   const note = placeSame && gripSame
     ? "这一步送到了。位置没变，握法也没变，还是这一张。 This step was sent. The place and the grip are unchanged, so it is still the same picture."
     : placeSame

@@ -582,6 +582,23 @@ class PrecisionTest(unittest.TestCase):
         self.assertEqual(s["saw"] + s["never"], s["closed"])
         self.assertEqual(s["closed"] + s["quiet"], s["sessions"])
 
+    def test_the_age_of_the_picture_is_not_the_age_of_the_hand(self) -> None:
+        from age import run as age_run
+        from age import shard as age_shard
+
+        rec = age_run(n=6, workers=2)
+        self.assertTrue(rec["equal"])
+        s = rec["serial"]
+        self.assertEqual(s["older"] + s["same"], s["grip_steps"])
+        self.assertEqual(s["grip_sum"], s["hidden"] + s["screen_on_grip"])
+        self.assertLessEqual(s["newer"], s["grip_steps"])
+        self.assertLessEqual(s["fresh_old"], s["deliveries"])
+        quiet = age_shard(0, 4, 0.0)
+        self.assertEqual(quiet["newer"], 0)
+        self.assertEqual(quiet["fresh_old"], 0)
+        self.assertEqual(quiet["hidden"], 0)
+        self.assertEqual(quiet["same"], quiet["steps"])
+
     def test_holding_the_last_picture_is_not_painting_the_next_one(self) -> None:
         from hold import run as hold_run
 

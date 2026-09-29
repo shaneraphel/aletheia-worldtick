@@ -90,6 +90,7 @@ evidence:
 	$(PYTHON) stack.py
 	$(PYTHON) paste.py
 	$(PYTHON) hold.py
+	$(PYTHON) age.py
 
 # macOS-only Metal run; not in CI.
 gpu:
